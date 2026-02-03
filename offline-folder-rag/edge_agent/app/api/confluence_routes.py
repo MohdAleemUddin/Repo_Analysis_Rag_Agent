@@ -1,9 +1,10 @@
-# PRD Confluence endpoints: analyze, create, status, feedback with performance monitoring.
+# PRD Confluence endpoints: analyze, create, status, feedback with performance monitoring and PRD §9.2 error format.
 
 import logging
 from typing import Any
 
 from app.config.config import CONFLUENCE_MEMORY_LIMIT_MB
+from app.confluence.error_handler import get_actions_for_category, get_reliability_metrics, handle_error, prd_error_response
 from app.confluence.optimizer import get_optimization_suggestions
 from app.confluence.prd_monitor import (
     append_record,
@@ -20,11 +21,16 @@ logger = logging.getLogger(__name__)
 
 
 def _memory_limit_response() -> dict[str, Any]:
-    return {
-        "error": "resource_limit",
-        "message": "Resource limit reached; try fewer or smaller files.",
-        "detail": f"Memory limit {CONFLUENCE_MEMORY_LIMIT_MB} MB exceeded.",
-    }
+    r = prd_error_response(
+        error_code="resource_limit",
+        message="Resource limit reached; try fewer or smaller files.",
+        intelligence_suggestion=f"Reduce files or size. Memory limit {CONFLUENCE_MEMORY_LIMIT_MB} MB.",
+        fallback_available=True,
+        intelligence_confidence=0.0,
+        category="resource_limit",
+    )
+    r["actions"] = get_actions_for_category("resource_limit")
+    return r
 
 
 # POST /confluence/intelligent-analyze
@@ -46,7 +52,7 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
         result = run_analyze(file_contents)
     except Exception as e:
         logger.exception("intelligent-analyze failed: %s", e)
-        return {"error": "analysis_failed", "message": str(e)}
+        return handle_error(e, error_code="analysis_failed")
 
     record = get_operation_record()
     peak_mb = get_peak_memory_mb()
@@ -98,7 +104,7 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
         )
     except Exception as e:
         logger.exception("intelligent-create failed: %s", e)
-        return {"error": "create_failed", "message": str(e)}
+        return handle_error(e, error_code="create_failed")
 
     record = get_operation_record()
     peak_mb = get_peak_memory_mb()
@@ -145,12 +151,14 @@ def intelligence_status_handler() -> dict[str, Any]:
         i = int(len(s) * 0.95) or 0
         return s[min(i, len(s) - 1)]
 
+    metrics = {
+        "p95_analysis_ms": p95(analysis_times),
+        "p95_create_ms": p95(create_times),
+        "max_memory_mb": max(memory_peaks) if memory_peaks else 0,
+        **get_reliability_metrics(),
+    }
     return {
-        "metrics": {
-            "p95_analysis_ms": p95(analysis_times),
-            "p95_create_ms": p95(create_times),
-            "max_memory_mb": max(memory_peaks) if memory_peaks else 0,
-        },
+        "metrics": metrics,
         "recent_records": [r.to_dict() for r in records[-5:]],
     }
 
