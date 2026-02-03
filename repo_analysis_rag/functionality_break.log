@@ -1,0 +1,17 @@
+### Functionality Break Log
+
+Use this file to record any runtime or regression failures detected in the repository.
+
+Entry format (append a new section for each break):
+- **Date:** YYYY-MM-DD HH:MM
+- **Reporter:** <name or system>
+- **Scope:** (e.g., backend, CLI, extension)
+- **Description:** Short summary of what broke.
+- **Steps to reproduce:** List of actions or commands.
+- **Expected behavior:** What should happen.
+- **Observed behavior:** What actually happened.
+- **Logs / errors / stack trace:** Paste relevant output or log snippets.
+- **Impact:** e.g., blocking, degradation, non-functional feature.
+- **Notified:** List of developers/teams alerted (email, Slack, etc.).
+
+Keep each entry as close to the top as possible so the most recent failures are visible without scrolling.
