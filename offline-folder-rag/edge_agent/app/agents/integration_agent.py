@@ -12,7 +12,10 @@ from app.agents.learning_agent import learn
 
 logger = logging.getLogger(__name__)
 
-_learning_executor = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="confluence_learn")
+# Background executor for learning (fire-and-forget)
+_learning_executor = concurrent.futures.ThreadPoolExecutor(
+    max_workers=1, thread_name_prefix="confluence_learn"
+)
 
 
 def create_page(
@@ -42,7 +45,9 @@ def create_page(
             raise
 
 
-def schedule_learning_after_create(feedback: str, creation_metadata: dict[str, Any] | None = None) -> None:
+def schedule_learning_after_create(
+    feedback: str, creation_metadata: dict[str, Any] | None = None
+) -> None:
     """Schedule learning in background. Call only after successful create; no learning on failure."""
     def _run() -> None:
         try:

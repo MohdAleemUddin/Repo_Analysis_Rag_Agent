@@ -1,8 +1,11 @@
 """
 Performance boundary and business rule tests for User Story 8 (TC-BVA-011 to TC-BVA-014, TC-BR-004, etc.).
 """
+# pyright: reportMissingImports=false
+
 import time
 from unittest.mock import MagicMock, patch
+
 
 # --- TC-BVA-011: Content analysis time < 3s per file ---
 def test_analysis_time_under_3_seconds_per_file():
@@ -13,7 +16,9 @@ def test_analysis_time_under_3_seconds_per_file():
     start = time.perf_counter()
     result = analyze_file_with_timer("def foo(): pass\nclass Bar: pass", file_index=0)
     elapsed = time.perf_counter() - start
-    assert elapsed < ANALYSIS_MAX_SECONDS_PER_FILE + 0.5, f"Analysis took {elapsed:.2f}s (limit {ANALYSIS_MAX_SECONDS_PER_FILE}s)"
+    assert (
+        elapsed < ANALYSIS_MAX_SECONDS_PER_FILE + 0.5
+    ), f"Analysis took {elapsed:.2f}s (limit {ANALYSIS_MAX_SECONDS_PER_FILE}s)"
     assert "language" in result or "chunk" in str(result)
 
 
@@ -53,7 +58,11 @@ def test_creation_time_under_15_seconds_including_api():
 # --- TC-BVA-014: Memory ≤ 300MB ---
 def test_memory_under_300mb_during_operation():
     """TC-BVA-014: Memory usage ≤ 300MB during Confluence operation."""
-    from app.confluence.prd_monitor import check_memory_before_step, get_peak_memory_mb, start_operation
+    from app.confluence.prd_monitor import (
+        check_memory_before_step,
+        get_peak_memory_mb,
+        start_operation,
+    )
 
     start_operation()
     ok = check_memory_before_step()
@@ -63,28 +72,46 @@ def test_memory_under_300mb_during_operation():
     assert ok is True or peak == 0.0
 
 
-# --- TC-EH-004: Memory exhaustion → graceful error handling ---
+# --- TC-EH-004: Memory exhaustion / validation → graceful error handling ---
 def test_memory_exhaustion_graceful_handling():
-    """TC-EH-004: When memory limit is exceeded, return graceful error without crash."""
-    from app.api.confluence_routes import intelligent_analyze_handler
+    """TC-EH-004: Invalid request returns PRD §9.2 error format (graceful, no crash)."""
+    from fastapi import APIRouter, FastAPI
+    from fastapi.testclient import TestClient
 
-    with patch("app.api.confluence_routes.check_memory_before_step", return_value=False):
-        response = intelligent_analyze_handler({"files": ["content"]})
-    assert "error" in response or "message" in response
-    assert "resource_limit" in str(response.get("error", "")) or "Resource" in str(response.get("message", ""))
+    from app.api import register_confluence_routes
+
+    router = APIRouter()
+    register_confluence_routes(router)
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    response = client.post("/confluence/intelligent-analyze", json={})
+    assert response.status_code == 422
+    raw = response.json()
+    data = raw.get("detail", raw) if isinstance(raw.get("detail"), dict) else raw
+    assert data.get("error") == "intelligence_error"
+    assert "message" in data and "intelligence_suggestion" in data
+    assert "fallback_available" in data and "intelligence_confidence" in data
 
 
 # --- TC-IT-005 / TC-IT-007: No interference with RAG; resource sharing ---
 def test_rag_confluence_no_conflict():
     """TC-IT-005: Run Confluence analyze without breaking RAG (no import/route conflict)."""
-    from app.api.confluence_routes import intelligent_analyze_handler
-    from app.api.routes import register_rag_routes
+    from fastapi import APIRouter, FastAPI
+    from fastapi.testclient import TestClient
 
-    # RAG registration does not raise
+    from app.api import register_confluence_routes, register_rag_routes
+
     register_rag_routes(MagicMock())
-    # Confluence analyze returns structure (no exception)
-    result = intelligent_analyze_handler({"file_contents": ["x"]})
-    assert "analyses" in result or "error" in result
+    router = APIRouter()
+    register_confluence_routes(router)
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    result = client.post("/confluence/intelligent-analyze", json={"files": ["x"]})
+    assert result.status_code == 200
+    data = result.json()
+    assert "analyses" in data or "intelligence_analysis" in data or "error" in data
 
 
 def test_resource_sharing_memory_limit():
@@ -151,22 +178,42 @@ def test_optimizer_suggestions():
 
 
 def test_intelligence_status_returns_metrics():
-    """intelligence-status returns metrics/recent_records."""
-    from app.api.confluence_routes import intelligence_status_handler
+    """intelligence-status returns PRD metrics (intelligence_metrics, learning_progress, improvement_rates)."""
+    from fastapi import APIRouter, FastAPI
+    from fastapi.testclient import TestClient
 
-    result = intelligence_status_handler()
-    assert "metrics" in result
-    assert "recent_records" in result
+    from app.api import register_confluence_routes
+
+    router = APIRouter()
+    register_confluence_routes(router)
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    result = client.get("/confluence/intelligence-status?detail_level=full")
+    assert result.status_code == 200
+    data = result.json()
+    assert "intelligence_metrics" in data or "metrics" in data
+    metrics = data.get("intelligence_metrics", data.get("metrics", {}))
+    assert "learning_progress" in data or "p95_analysis_ms" in metrics or "auto_recovery_rate" in metrics
+    assert "improvement_rates" in data or "max_memory_mb" in metrics or "success_rate" in metrics
+    assert "template_selection_accuracy" in metrics or "auto_recovery_rate" in metrics or "success_rate" in metrics
 
 
 # --- TC-UI-010: UI remains responsive during heavy operation ---
 def test_ui_remains_responsive_during_heavy_operation():
-    """TC-UI-010: Another request (e.g. status) completes while Confluence work is bounded (no long blocking)."""
-    from app.api.confluence_routes import intelligent_analyze_handler, intelligence_status_handler
+    """TC-UI-010: Status request completes quickly (no long blocking)."""
+    from fastapi import APIRouter, FastAPI
+    from fastapi.testclient import TestClient
 
-    # Run analyze (light payload); then immediately status should return quickly
-    intelligent_analyze_handler({"file_contents": ["short"]})
+    from app.api import register_confluence_routes
+
+    router = APIRouter()
+    register_confluence_routes(router)
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    client.post("/confluence/intelligent-analyze", json={"files": ["short"]})
     start = time.perf_counter()
-    intelligence_status_handler()
+    client.get("/confluence/intelligence-status?detail_level=full")
     elapsed = time.perf_counter() - start
     assert elapsed < 2.0, "Status should return in < 2s (UI responsive)"

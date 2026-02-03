@@ -21,6 +21,7 @@ def _get_session() -> Any:
     if _session is None:
         try:
             import requests
+
             _session = requests.Session()
         except ImportError:
             logger.warning("requests not installed; Confluence API calls will fail")

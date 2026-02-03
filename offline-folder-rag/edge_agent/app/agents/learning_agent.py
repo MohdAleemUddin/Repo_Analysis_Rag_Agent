@@ -11,4 +11,6 @@ def learn(feedback: str, creation_metadata: dict[str, Any] | None = None) -> Non
     Record feedback / store example for future template matching.
     Must not block the create response; called from background after create returns.
     """
-    logger.info("Learning from feedback (background): %s", feedback[:200] if feedback else "")
+    logger.info(
+        "Learning from feedback (background): %s", feedback[:200] if feedback else ""
+    )

@@ -25,10 +25,10 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
 
     if hasattr(record, "per_file_analysis_ms"):
         per_file_ms = record.per_file_analysis_ms
-        targets_met = getattr(record, "targets_met", {}) or {}
+        _ = getattr(record, "targets_met", {}) or {}  # reserved for future use
     else:
         per_file_ms = record.get("per_file_analysis_ms", [])
-        targets_met = record.get("targets_met", {})
+        _ = record.get("targets_met", {})  # reserved for future use
 
     # Per-file analysis exceeded 3s
     over = [ms for ms in per_file_ms if ms > ANALYSIS_MAX_SECONDS_PER_FILE * 1000]

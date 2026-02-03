@@ -5,7 +5,9 @@ from typing import Any
 from app.confluence.prd_monitor import timer_template_selection
 
 
-def match(content: str | None, analysis: dict[str, Any] | None = None) -> dict[str, Any]:
+def match(
+    content: str | None, analysis: dict[str, Any] | None = None
+) -> dict[str, Any]:
     """
     Select template based on content/analysis. Must complete in < 2s (wrapped by timer).
     Returns e.g. {"template_id": "...", "confidence": 0.9}.

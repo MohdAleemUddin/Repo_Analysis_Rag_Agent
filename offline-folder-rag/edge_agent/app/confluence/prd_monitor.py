@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 try:
     import psutil
+
     _PSUTIL_AVAILABLE = True
 except ImportError:
     _PSUTIL_AVAILABLE = False
@@ -36,7 +37,9 @@ class PerformanceRecord:
     template_selection_ms: float = 0.0
     create_e2e_ms: float = 0.0
     peak_memory_mb: float = 0.0
-    targets_met: dict[str, bool] = field(default_factory=dict)  # e.g. analysis_per_file, template, create_e2e, memory
+    targets_met: dict[str, bool] = field(
+        default_factory=dict
+    )  # e.g. analysis_per_file, template, create_e2e, memory
     timestamp: float = field(default_factory=time.time)
 
     def to_dict(self) -> dict[str, Any]:
@@ -82,7 +85,11 @@ def check_memory_before_step() -> bool:
     mb = _update_peak()
     ok = mb < CONFLUENCE_MEMORY_LIMIT_MB
     if not ok:
-        logger.warning("PRD memory check failed: current %.1f MB >= limit %s MB", mb, CONFLUENCE_MEMORY_LIMIT_MB)
+        logger.warning(
+            "PRD memory check failed: current %.1f MB >= limit %s MB",
+            mb,
+            CONFLUENCE_MEMORY_LIMIT_MB,
+        )
     return ok
 
 
@@ -124,7 +131,9 @@ def record_confluence_operation(
     """
     if peak_memory_mb is None:
         peak_memory_mb = _current_peak_memory_mb
-    analysis_ok = all(ms <= ANALYSIS_MAX_SECONDS_PER_FILE * 1000 for ms in per_file_analysis_ms)
+    analysis_ok = all(
+        ms <= ANALYSIS_MAX_SECONDS_PER_FILE * 1000 for ms in per_file_analysis_ms
+    )
     template_ok = template_selection_ms <= TEMPLATE_SELECTION_MAX_SECONDS * 1000
     create_ok = create_e2e_ms <= CREATE_E2E_MAX_SECONDS * 1000
     memory_ok = peak_memory_mb <= CONFLUENCE_MEMORY_LIMIT_MB

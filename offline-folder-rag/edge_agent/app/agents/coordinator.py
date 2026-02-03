@@ -12,7 +12,6 @@ from app.config.config import (
 from app.confluence.prd_monitor import (
     check_memory_before_step,
     get_current_record,
-    get_peak_memory_mb,
     start_operation,
 )
 
@@ -41,7 +40,9 @@ def run_analyze(file_contents: list[str]) -> dict[str, Any]:
         return idx, analyze_file_with_timer(content, file_index=idx)
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(analyze_one, i, c): i for i, c in enumerate(file_contents)}
+        futures = {
+            executor.submit(analyze_one, i, c): i for i, c in enumerate(file_contents)
+        }
         for future in as_completed(futures):
             if CONFLUENCE_CPU_THROTTLE_ENABLED:
                 time.sleep(0)  # yield to other threads
@@ -55,7 +56,9 @@ def run_analyze(file_contents: list[str]) -> dict[str, Any]:
 
     # Template selection (single call, already timed inside match())
     combined = "\n".join(str(a) for a in analysis_list)
-    template_result = match(combined, analysis=analysis_list[0] if analysis_list else None)
+    template_result = match(
+        combined, analysis=analysis_list[0] if analysis_list else None
+    )
 
     return {
         "analyses": analysis_list,

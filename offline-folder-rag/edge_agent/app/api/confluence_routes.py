@@ -3,6 +3,12 @@
 import logging
 from typing import Any
 
+try:
+    from fastapi import Body, HTTPException
+except ImportError:
+    Body = None
+    HTTPException = None
+
 from app.config.config import CONFLUENCE_MEMORY_LIMIT_MB
 from app.confluence.error_handler import get_actions_for_category, get_reliability_metrics, handle_error, prd_error_response
 from app.confluence.optimizer import get_optimization_suggestions
@@ -38,15 +44,42 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
     """
     Analyze files: check memory first, run coordinator.run_analyze with timers, return result + performance summary.
     """
+    if not body or not isinstance(body, dict):
+        body = {}
+    files_or_contents = body.get("files") or body.get("file_contents") or []
+    has_content = body.get("content", "") != "" if body.get("content") is not None else False
+    if not files_or_contents and not has_content:
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="Missing or invalid request: provide 'files', 'file_contents', or 'content'.",
+            intelligence_suggestion="Send a JSON body with files (list of strings) or content (string).",
+            fallback_available=False,
+            intelligence_confidence=0.0,
+        )
+        if HTTPException is not None:
+            raise HTTPException(status_code=422, detail=err)
+        return err
+
     if not check_memory_before_step():
         return _memory_limit_response()
 
     start_operation()
-    file_contents = body.get("files") or body.get("file_contents") or []
+    file_contents = files_or_contents
     if isinstance(file_contents, list) and file_contents and not isinstance(file_contents[0], str):
         file_contents = [c.get("content", "") if isinstance(c, dict) else str(c) for c in file_contents]
     if not file_contents:
         file_contents = [body.get("content", "") or ""]
+    if not file_contents or (len(file_contents) == 1 and not (file_contents[0] or "").strip()):
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="No content to analyze.",
+            intelligence_suggestion="Provide non-empty files or content.",
+            fallback_available=False,
+            intelligence_confidence=0.0,
+        )
+        if HTTPException is not None:
+            raise HTTPException(status_code=422, detail=err)
+        return err
 
     try:
         result = run_analyze(file_contents)
@@ -134,7 +167,14 @@ def intelligence_status_handler() -> dict[str, Any]:
     """Expose last N performance records / aggregates for monitoring."""
     records = get_last_records(20)
     if not records:
-        return {"metrics": {}, "recent_records": []}
+        empty_metrics = {"template_selection_accuracy": 0.0, **get_reliability_metrics()}
+        return {
+            "metrics": empty_metrics,
+            "intelligence_metrics": empty_metrics,
+            "learning_progress": {},
+            "improvement_rates": {},
+            "recent_records": [],
+        }
 
     analysis_times = []
     create_times = []
@@ -151,15 +191,21 @@ def intelligence_status_handler() -> dict[str, Any]:
         i = int(len(s) * 0.95) or 0
         return s[min(i, len(s) - 1)]
 
+    reliability = get_reliability_metrics()
     metrics = {
         "p95_analysis_ms": p95(analysis_times),
         "p95_create_ms": p95(create_times),
         "max_memory_mb": max(memory_peaks) if memory_peaks else 0,
-        **get_reliability_metrics(),
+        "template_selection_accuracy": reliability.get("template_selection_accuracy", 0.0),
+        **reliability,
     }
+    recent = [r.to_dict() for r in records[-5:]]
     return {
         "metrics": metrics,
-        "recent_records": [r.to_dict() for r in records[-5:]],
+        "intelligence_metrics": metrics,
+        "learning_progress": {},
+        "improvement_rates": {},
+        "recent_records": recent,
     }
 
 
@@ -167,35 +213,42 @@ def intelligence_status_handler() -> dict[str, Any]:
 def intelligence_feedback_handler(body: dict[str, Any]) -> dict[str, Any]:
     """Accept feedback; process quickly or async so request does not block."""
     feedback = body.get("feedback", "") or body.get("message", "")
-    # Optional: enqueue for background learning here too
     return {"status": "accepted", "message": "Feedback received."}
 
 
 def register_confluence_routes(router: Any) -> None:
     """Register the four PRD endpoints on the given router (FastAPI or Flask-style)."""
     if hasattr(router, "post") and hasattr(router, "get"):
+        if Body is not None:
+            def analyze_route(body: dict = Body(default=None)):
+                return intelligent_analyze_handler(body or {})
 
-        def analyze_route(request: Any = None):
-            body = getattr(request, "json", lambda: {})() if request is not None else {}
-            return intelligent_analyze_handler(body)
+            def create_route(body: dict = Body(default=None)):
+                return intelligent_create_handler(body or {})
 
-        def create_route(request: Any = None):
-            body = getattr(request, "json", lambda: {})() if request is not None else {}
-            return intelligent_create_handler(body)
+            def feedback_route(body: dict = Body(default=None)):
+                return intelligence_feedback_handler(body or {})
+        else:
+            def analyze_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligent_analyze_handler(body)
+
+            def create_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligent_create_handler(body)
+
+            def feedback_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligence_feedback_handler(body)
 
         def status_route():
             return intelligence_status_handler()
-
-        def feedback_route(request: Any = None):
-            body = getattr(request, "json", lambda: {})() if request is not None else {}
-            return intelligence_feedback_handler(body)
 
         router.post("/confluence/intelligent-analyze")(analyze_route)
         router.post("/confluence/intelligent-create")(create_route)
         router.get("/confluence/intelligence-status")(status_route)
         router.post("/confluence/intelligence-feedback")(feedback_route)
     else:
-        # Fallback: store handlers so app can attach them
         router.confluence_handlers = {
             "intelligent_analyze": lambda body: intelligent_analyze_handler(body),
             "intelligent_create": lambda body: intelligent_create_handler(body),

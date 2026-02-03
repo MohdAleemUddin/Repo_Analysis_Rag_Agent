@@ -1,4 +1,5 @@
 """Pytest configuration. Add edge_agent to path so app package is importable."""
+
 import sys
 from pathlib import Path
 

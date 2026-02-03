@@ -29,11 +29,15 @@ def _cache_get(key: str) -> Any | None:
     if not CONFLUENCE_ANALYSIS_CACHE_ENABLED:
         return None
     import time
+
     entry = _analysis_cache.get(key)
     if not entry:
         return None
     result, ts = entry
-    if CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS > 0 and (time.time() - ts) > CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS:
+    if (
+        CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS > 0
+        and (time.time() - ts) > CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS
+    ):
         _analysis_cache.pop(key, None)
         return None
     return result
@@ -43,7 +47,11 @@ def _cache_set(key: str, value: Any) -> None:
     if not CONFLUENCE_ANALYSIS_CACHE_ENABLED:
         return
     import time
-    while len(_analysis_cache) >= CONFLUENCE_ANALYSIS_CACHE_MAX_ENTRIES and _analysis_cache:
+
+    while (
+        len(_analysis_cache) >= CONFLUENCE_ANALYSIS_CACHE_MAX_ENTRIES
+        and _analysis_cache
+    ):
         oldest_key = min(_analysis_cache, key=lambda k: _analysis_cache[k][1])
         del _analysis_cache[oldest_key]
     _analysis_cache[key] = (value, time.time())
