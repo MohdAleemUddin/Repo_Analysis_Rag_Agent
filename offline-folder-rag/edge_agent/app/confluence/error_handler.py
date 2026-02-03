@@ -118,7 +118,15 @@ def _classify(exc: BaseException) -> str:
             return "permission_denied"
     t = type(exc).__name__
     msg = str(exc).lower()
-    if "connection" in msg or "timeout" in msg or "network" in msg or t in ("ConnectionError", "Timeout", "ConnectTimeout", "ReadTimeout"):
+    is_network_type = (
+        t in ("ConnectionError", "Timeout", "ConnectTimeout", "ReadTimeout")
+        or "ConnectionError" in t
+        or "Timeout" in t
+    )
+    is_connection_os_error = isinstance(exc, OSError) and (
+        "connection" in msg or "timeout" in msg or "refused" in msg or "reach" in msg
+    )
+    if "connection" in msg or "timeout" in msg or "network" in msg or is_network_type or is_connection_os_error:
         return "network"
     if "401" in msg or "unauthorized" in msg or "auth" in msg or "credential" in msg:
         return "auth"
