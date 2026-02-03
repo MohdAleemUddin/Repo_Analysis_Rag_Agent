@@ -3,9 +3,9 @@ name: Staging CI/CD Pipeline
 # Notification: configure repository secrets for SENDGRID_API_KEY, NOTIFICATION_EMAILS, SLACK_WEBHOOK_URL
 on:
   push:
-    branches: [main, develop, staging]
+    branches: [main,Confluence-agents]
   pull_request:
-    branches: [main, develop, staging]
+    branches: [main,Confluence-agents]
   workflow_dispatch:
 
 env:
