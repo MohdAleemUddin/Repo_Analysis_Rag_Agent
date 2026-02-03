@@ -8,3 +8,4 @@ bandit-report.json
 test-results-*.xml
 htmlcov/
 .coverage
+docs/
