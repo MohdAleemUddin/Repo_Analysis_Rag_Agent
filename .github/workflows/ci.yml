@@ -1,0 +1,8 @@
+# Placeholder CI workflow
+name: ci
+on: [push]
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CI placeholder"

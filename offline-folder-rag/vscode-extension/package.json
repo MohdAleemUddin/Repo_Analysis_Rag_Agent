@@ -1,0 +1,7 @@
+{
+  "name": "confluence-extension",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.0.0" },
+  "main": "./out/extension.js",
+  "activationEvents": []
+}

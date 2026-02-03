@@ -1,0 +1,2 @@
+-- Placeholder: Confluence tables migration
+-- TODO: implement schema

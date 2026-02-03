@@ -1,0 +1,2 @@
+# Defaults placeholder
+DEFAULTS: dict = {}

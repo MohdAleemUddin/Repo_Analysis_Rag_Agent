@@ -1,0 +1,4 @@
+# Placeholder Dockerfile for Confluence service
+FROM python:3.11-slim
+WORKDIR /app
+# TODO: add steps

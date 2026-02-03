@@ -1,0 +1,2 @@
+-- Placeholder: Confluence tables (DB story)
+-- TODO: implement schema

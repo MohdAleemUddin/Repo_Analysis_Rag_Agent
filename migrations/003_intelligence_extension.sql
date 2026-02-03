@@ -1,0 +1,2 @@
+-- Placeholder: Intelligence extension migration
+-- TODO: implement schema
