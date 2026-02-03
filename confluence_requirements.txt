@@ -1,1 +1,2 @@
 # Placeholder confluence requirements
+httpx>=0.24.0
