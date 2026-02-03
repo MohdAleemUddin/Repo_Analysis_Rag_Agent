@@ -4817,11 +4817,74 @@ _**Agent (model default, mode Agent)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
 
-Status: **loading**
-
 </details>
 
 </tool-use>
+
+---
+
+
+Created the staging CI/CD workflow in `.github/workflows/ci.yml`. Summary:
+
+- **Triggers:** Push/PR on `main`, `develop`, `staging`; `workflow_dispatch`.
+- **Jobs:** `setup` → `lint`, `security`, `unit-tests` → `build-docker` (on push) → `verify-staging-deployment` → `notify` (always).
+- **Paths:** Lint/security use `repo_analysis_rag/`, `offline-folder-rag/edge_agent/`, `tests/`; no `src/`.
+- **Deps:** `requirements.txt`, `confluence_requirements.txt`, `offline-folder-rag/requirements.txt`.
+- **Tests:** Pytest on `tests/confluence/`, `tests/edge_agent/unit/`, then integration/functional/e2e with `continue-on-error` where needed; TypeScript in `offline-folder-rag/vscode-extension` (build + Jest if config exists).
+- **Services:** One Postgres (pgvector) and Redis for unit-tests; `PYTHONPATH` set for `edge_agent`.
+- **Docker:** Builds and pushes `docker/Dockerfile.confluence` to GHCR.
+- **Notify:** Writes status to a GitHub issue; optional SendGrid and Slack if secrets are set.
+
+No other repo files were modified.
+
+---
+
+_**User**_
+
+give me virtual enviromet command to run it
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Use these to create and use a virtual environment so you can run the project (and `run-local-cicd.ps1`).
+
+**Windows (PowerShell)** — from repo root:
+
+```powershell
+# Create
+python -m venv .venv
+
+# Activate
+.\.venv\Scripts\Activate.ps1
+```
+
+If execution policy blocks the script:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then run the pipeline:
+
+```powershell
+.\run-local-cicd.ps1
+```
+
+**Windows (CMD):**
+
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+**Linux / macOS (bash/zsh):**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 ---
 
