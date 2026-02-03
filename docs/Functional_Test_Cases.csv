@@ -1,0 +1,431 @@
+Test ID,Test Type,Test Name,Precondition,Test Steps,Expected Result,Priority,PRD Reference,Test_Category
+TC-POS-001,Positive,Valid Python file to Confluence,"Valid .py file, correct credentials","1. Select python_file.py
+2. Click Create Perfect Page",Page created with Python template,High,§3.2 Workflow 1,POSITIVE TESTS
+TC-POS-002,Positive,Multiple valid files (code + docs),3+ related files,"1. Select main.py, README.md, config.yaml
+2. Create page",Single organized page created,High,§3.2 Workflow 3,POSITIVE TESTS
+TC-POS-003,Positive,Valid credentials test connection,Correct Confluence credentials,"1. Enter valid credentials
+2. Click Test Connection",Connection successful,High,§5.2 FR6,POSITIVE TESTS
+TC-POS-004,Positive,Edit suggested title,Title suggested by AI,"1. Click ""Edit Title""
+2. Modify title
+3. Create page",Page created with edited title,Medium,§6.1 Step 2,POSITIVE TESTS
+TC-POS-005,Positive,Right-click on code selection,Valid code selected in editor,"1. Select code
+2. Right-click → Save to Confluence
+3. Create page",Page created with selected code,High,§6.2,POSITIVE TESTS
+TC-POS-006,Positive,Command palette execution,Command palette accessible,"1. Ctrl+Shift+P → PRD: Save to Confluence
+2. Complete flow",Page created via command,Medium,§6.3,POSITIVE TESTS
+TC-POS-007,Positive,Export learned examples,Successful creations exist,"1. Open export settings
+2. Export examples",JSON file created,Medium,§7.2,POSITIVE TESTS
+TC-POS-008,Positive,Import valid examples,Valid export JSON file,"1. Import JSON file
+2. Check database",Examples imported,Medium,§7.2,POSITIVE TESTS
+TC-POS-009,Positive,Document entire project,Project folder with files,"1. Type /confluence document-project
+2. Confirm",Comprehensive page created,High,§3.2 Workflow 4,POSITIVE TESTS
+TC-POS-010,Positive,Provide positive feedback,Page created successfully,"1. Rate creation 5 stars
+2. Submit feedback",Feedback accepted,Low,§9.1,POSITIVE TESTS
+TC-POS-011,Positive,4-Agent sequential execution,All agents configured,"1. Start creation
+2. Monitor agent execution",Analysis → Matching → Formatting → Integration sequentially,High,§7.1,POSITIVE TESTS
+TC-POS-012,Positive,Intelligence confidence display,AI confidence >90%,"1. Create page with high confidence
+2. Check success message","Shows ""Confidence: 94%"" exactly as PRD §6.1",High,§6.4,POSITIVE TESTS
+TC-POS-013,Positive,Explain AI Choice expansion,Creation completed,"1. Click ""Explain AI Choice""
+2. Expand section",Shows intelligence_reason with detailed reasoning,Medium,§6.4,POSITIVE TESTS
+TC-POS-014,Positive,Learning indicator display,Successful creation,"1. Complete successful creation
+2. Watch for indicator","Shows ""🎓 Intelligence Learning: System learned...""",Medium,§6.4,POSITIVE TESTS
+TC-POS-015,Positive,Context-aware file suggestions,Chat history exists,"1. Discuss code in chat
+2. Click Save to Confluence",Pre-selects files mentioned in chat with badge,High,§5.1 UR4,POSITIVE TESTS
+TC-NEG-001,Negative,Invalid file type (.exe),.exe file selected,"1. Select program.exe
+2. Attempt creation","Error: ""Cannot process executable file""",High,§5.2 FR1,NEGATIVE TESTS
+TC-NEG-002,Negative,Empty file selection,No files selected,"1. Click Create without files
+2. Check response","Error: ""Please select files""",High,§5.2 FR1,NEGATIVE TESTS
+TC-NEG-003,Negative,Invalid credentials,Wrong API token,"1. Enter invalid credentials
+2. Attempt operation",Auth error with settings prompt,High,§9.2,NEGATIVE TESTS
+TC-NEG-004,Negative,Network unavailable,Internet disconnected,"1. Disable network
+2. Attempt creation",Network error with retry option,High,NFR2,NEGATIVE TESTS
+TC-NEG-005,Negative,Title too long (>255 chars),Long title entered,"1. Edit title to 300 chars
+2. Attempt save","Validation error: ""Title too long""",Medium,§3.2,NEGATIVE TESTS
+TC-NEG-006,Negative,Invalid JSON import,Corrupted JSON file,"1. Import invalid.json
+2. Check response","Validation error: ""Invalid format""",Medium,§7.2,NEGATIVE TESTS
+TC-NEG-007,Negative,Rate limit exceeded,Rapid API calls,"1. Make 100 rapid requests
+2. Check response",Rate limit error with wait time,Medium,§5.2 FR4,NEGATIVE TESTS
+TC-NEG-008,Negative,Invalid Confluence URL,Malformed URL,"1. Enter ""not-a-url""
+2. Test connection","Validation error: ""Invalid URL""",High,§5.2 FR6,NEGATIVE TESTS
+TC-NEG-009,Negative,Insufficient permissions,Read-only space,"1. Try to write to read-only space
+2. Attempt creation",Permission error,Medium,§9.2,NEGATIVE TESTS
+TC-NEG-010,Negative,Corrupted file content,Binary in text file,"1. Select corrupted.txt
+2. Attempt analysis",Content error with suggestion,Medium,§9.2,NEGATIVE TESTS
+TC-NEG-011,Negative,Intelligence error exact format,AI cannot determine format,"1. Provide confusing files
+2. Attempt creation",Returns EXACT PRD §9.2 error format,High,§9.2,NEGATIVE TESTS
+TC-NEG-012,Negative,Low confidence warning,AI confidence <70%,"1. Trigger low confidence case
+2. Check UI","Shows ""Intelligence Confidence Low"" warning",High,§6.4,NEGATIVE TESTS
+TC-NEG-013,Negative,No template match found,Unusual content type,"1. Provide novel file type
+2. Attempt creation",Uses intelligent fallback template,Medium,§5.2 FR2,NEGATIVE TESTS
+TC-NEG-014,Negative,MCP task failure,MCP server error,"1. Simulate MCP failure
+2. Start creation",Task fails gracefully with recovery option,High,§7.3,NEGATIVE TESTS
+TC-NEG-015,Negative,Example import validation fail,Invalid example format,"1. Import malformed examples
+2. Check response",Clear error with format guidance,Medium,§7.2,NEGATIVE TESTS
+TC-BVA-001,Boundary,Title length = 255 chars,Maximum allowed length,"1. Edit title to exactly 255 chars
+2. Save",Successfully saves,High,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-002,Boundary,Title length = 256 chars,Just over maximum,"1. Edit title to 256 chars
+2. Save",Validation error,High,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-003,Boundary,Title length = 1 char,Minimum valid length,"1. Edit title to ""A""
+2. Save",Successfully saves,Medium,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-004,Boundary,Title length = 0 chars,Empty title,"1. Clear title field
+2. Save","Validation error: ""Title required""",High,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-005,Boundary,File count = 0,No files selected,1. Attempt with 0 files,"Error: ""Select files""",High,§5.2 FR1,BOUNDARY VALUE TESTS
+TC-BVA-006,Boundary,File count = 1,Minimum files,"1. Select 1 file
+2. Create",Successfully creates,Medium,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-007,Boundary,File count = 20,Large but acceptable,"1. Select 20 files
+2. Create",Successfully creates,Medium,§3.2,BOUNDARY VALUE TESTS
+TC-BVA-008,Boundary,File size = 0 bytes,Empty file,"1. Select empty.txt (0 bytes)
+2. Analyze",Handles gracefully,Low,§5.2 FR1,BOUNDARY VALUE TESTS
+TC-BVA-009,Boundary,File size = 10MB,Large file boundary,"1. Select 10MB file
+2. Analyze",Processes within time limit,Medium,NFR1,BOUNDARY VALUE TESTS
+TC-BVA-010,Boundary,Confidence score = 70%,Low confidence threshold,"1. Trigger low confidence case
+2. Check warning","Shows ""Intelligence Confidence Low""",Medium,§6.4,BOUNDARY VALUE TESTS
+TC-BVA-011,Boundary,Content analysis time = 3s,PRD performance target,"1. Time analysis of standard file
+2. Measure duration",Completes in <3 seconds,High,NFR1,BOUNDARY VALUE TESTS
+TC-BVA-012,Boundary,Template selection time = 2s,PRD performance target,"1. Time template selection
+2. Measure duration",Completes in <2 seconds,High,NFR1,BOUNDARY VALUE TESTS
+TC-BVA-013,Boundary,Complete creation time = 15s,PRD performance target,"1. Time end-to-end creation
+2. Measure duration",Completes in <15 seconds,High,NFR1,BOUNDARY VALUE TESTS
+TC-BVA-014,Boundary,Memory usage = 300MB,PRD memory limit,"1. Monitor memory during operation
+2. Check peak usage",Memory usage ≤300MB,High,NFR1,BOUNDARY VALUE TESTS
+TC-BVA-015,Boundary,Learning curve time = 2min,PRD UX target,"1. New user starts
+2. Time to first successful creation",Completes in <2 minutes,High,NFR5,BOUNDARY VALUE TESTS
+TC-EP-001,Equivalence,"Code file types (.py, .js, .java)",Valid code files,1. Test each file type,All processed as code,High,§5.2 FR1,EQUIVALENCE PARTITIONING
+TC-EP-002,Equivalence,"Text file types (.txt, .md, .rst)",Valid text files,1. Test each text format,All processed as documentation,High,§5.2 FR1,EQUIVALENCE PARTITIONING
+TC-EP-003,Equivalence,"Config file types (.yaml, .json, .toml)",Valid config files,1. Test each config type,All processed as configuration,High,§5.2 FR1,EQUIVALENCE PARTITIONING
+TC-EP-004,Equivalence,"Image file types (.png, .jpg, .svg)",Valid image files,1. Test each image type,All processed with alt text,Medium,§5.2 FR1,EQUIVALENCE PARTITIONING
+TC-EP-005,Equivalence,"Invalid file types (.exe, .dll, .bin)",Invalid executables,1. Test each invalid type,All rejected appropriately,High,§5.2 FR1,EQUIVALENCE PARTITIONING
+TC-EP-006,Equivalence,URL formats (Cloud vs Server),Valid URL patterns,"1. Test *.atlassian.net (Cloud)
+2. Test internal URLs (Server)",Both detected correctly,Medium,§5.2 FR4,EQUIVALENCE PARTITIONING
+TC-EP-007,Equivalence,Space names (valid vs invalid),Space validation,"1. Test ""DEV"" (valid)
+2. Test ""Invalid Space!""","Valid accepted, invalid rejected",Medium,§5.2 FR4,EQUIVALENCE PARTITIONING
+TC-EP-008,Equivalence,Confidence scores (High/Med/Low),Score ranges,"1. Test >90% (High)
+2. Test 70-90% (Medium)
+3. Test <70% (Low)",Appropriate UI for each,Medium,§6.4,EQUIVALENCE PARTITIONING
+TC-EP-009,Equivalence,File sizes (Small/Medium/Large),Size categories,"1. Test <1KB
+2. Test 1KB-1MB
+3. Test >1MB",All processed within limits,Medium,NFR1,EQUIVALENCE PARTITIONING
+TC-EP-010,Equivalence,Agent confidence partitions,Different confidence levels,"1. Test High (>90%)
+2. Test Medium (70-90%)
+3. Test Low (<70%)",Different agent behaviors,High,§7.1,EQUIVALENCE PARTITIONING
+TC-EP-011,Equivalence,Template match partitions,Match accuracy levels,"1. Exact match (95%+)
+2. Similar match (70-95%)
+3. Fallback match (<70%)",Appropriate template selected,High,§5.2 FR2,EQUIVALENCE PARTITIONING
+TC-EP-012,Equivalence,User experience partitions,User skill levels,"1. First-time user
+2. Intermediate user
+3. Power user",Progressive feature disclosure,Medium,§14.3,EQUIVALENCE PARTITIONING
+TC-DT-001,Decision,File selected? × Valid type?,Process × Error,"1. Yes × Yes
+2. Yes × No
+3. No × Yes
+4. No × No",Process × Error × Error × Error,High,§5.2 FR1,DECISION TABLE TESTS
+TC-DT-002,Decision,Credentials valid? × Network up?,Create × Auth error × Network error,"1. Yes × Yes = Create
+2. Yes × No = Network error
+3. No × Yes = Auth error
+4. No × No = Network error",Correct error based on conditions,High,§9.2,DECISION TABLE TESTS
+TC-DT-003,Decision,Confidence >90%? × User accepts?,Create × Show warning × Fallback,"1. Yes × Yes = Create
+2. Yes × No = Show warning
+3. No × Yes = Fallback option
+4. No × No = Reject",Appropriate action for each combination,Medium,§6.4,DECISION TABLE TESTS
+TC-DT-004,Decision,First time? × Learning enabled?,Show tutorial × Skip,"1. Yes × Yes = Tutorial
+2. Yes × No = Skip
+3. No × Yes = Skip
+4. No × No = Skip",Tutorial only on first use with learning enabled,Low,§14.3,DECISION TABLE TESTS
+TC-DT-005,Decision,Content Analysis Agent decisions,File type detection,"1. Python file → AST analysis
+2. Text file → NLP analysis
+3. Image file → Metadata extraction
+4. Unknown → Fallback analysis",Appropriate analysis method per file type,High,§7.1,DECISION TABLE TESTS
+TC-DT-006,Decision,Pattern Matching Agent decisions,Template selection logic,"1. Vector similarity >90% → Exact template
+2. Similarity 70-90% → Similar template
+3. Similarity <70% → Fallback template
+4. No match → Create new template",Vector-based template selection,High,§7.1,DECISION TABLE TESTS
+TC-DT-007,Decision,Integration Agent error recovery,Error type handling,"1. Network error → Auto-retry 3x
+2. Rate limit → Wait & retry
+3. Auth error → Prompt update
+4. Content error → Suggest alternatives",Intelligent error recovery strategies,High,"§7.1, NFR2",DECISION TABLE TESTS
+TC-DT-008,Decision,Learning system triggers,When to learn,"1. Success + High confidence → Store as example
+2. Success + Low confidence → Analyze for patterns
+3. User feedback → Update metrics
+4. Multiple similar → Improve template",Learning triggered appropriately,Medium,§7.2,DECISION TABLE TESTS
+TC-DT-009,Decision,MCP task prioritization,Task queue management,"1. RAG query + Confluence create → RAG first
+2. Multiple Confluence tasks → FIFO
+3. High priority task → Jump queue
+4. Failed task → Retry with backoff",Intelligent task management,Medium,§7.3,DECISION TABLE TESTS
+TC-DT-010,Decision,UI progressive disclosure,Feature visibility,"1. First use → Basic features only
+2. Second use → Add confidence scores
+3. Third use → Add AI reasoning
+4. Power user → All features",Progressive feature introduction,Medium,§14.3,DECISION TABLE TESTS
+TC-ST-001,State,Idle → Click Save Button → File Selection,Initial state,1. Click button,File selector appears,High,§6.1,STATE TRANSITION TESTS
+TC-ST-002,State,File Selection → Select files → Analysis,Files available,1. Select files,Analysis shown,High,§6.1,STATE TRANSITION TESTS
+TC-ST-003,State,Analysis → Click Create → Processing,Analysis complete,1. Click Create,Progress shown,High,§6.1,STATE TRANSITION TESTS
+TC-ST-004,State,Processing → Success → Complete,Processing active,1. Wait for success,Success message,High,§6.1,STATE TRANSITION TESTS
+TC-ST-005,State,Processing → Failure → Error,Processing active,1. Trigger error,Error message,High,§9.2,STATE TRANSITION TESTS
+TC-ST-006,State,Error → Click Retry → Processing,Error state,1. Click Retry,Restarts processing,Medium,NFR2,STATE TRANSITION TESTS
+TC-ST-007,State,Error → Click Cancel → Idle,Error state,1. Click Cancel,Returns to idle,Medium,§6.1,STATE TRANSITION TESTS
+TC-ST-008,State,Complete → Click New → Idle,Completion state,1. Click New button,Returns to start,Low,§6.1,STATE TRANSITION TESTS
+TC-ST-009,State,Agent execution states,Agent coordination,"1. Start creation
+2. Monitor state transitions",Idle → Analyzing → Matching → Formatting → Integrating → Complete,High,§7.1,STATE TRANSITION TESTS
+TC-ST-010,State,MCP task lifecycle,Task management,"1. Submit task
+2. Monitor states",Queued → Processing → Success/Failure → Learning (if successful),High,§7.3,STATE TRANSITION TESTS
+TC-ST-011,State,Learning cycle states,Intelligence improvement,"1. Successful creation
+2. Track learning",Creation → Analysis → Storage → Vector Update → Improved Matching,Medium,§7.2,STATE TRANSITION TESTS
+TC-ST-012,State,User onboarding states,New user experience,"1. First use → Simple flow
+2. Second use → More features
+3. Third use → Advanced features",Progressive state advancement,Medium,§14.3,STATE TRANSITION TESTS
+TC-UC-001,Use Case,Save code file to Confluence,Developer,"1. Click button
+2. Select .py file
+3. AI analyzes
+4. Creates page
+5. Get link",Page created with code formatting,High,§3.2 Workflow 1,USE CASE TESTS
+TC-UC-002,Use Case,Document project automatically,Tech Lead,"1. Type command
+2. System scans
+3. Creates comprehensive docs
+4. Share link",Complete project docs,High,§3.2 Workflow 4,USE CASE TESTS
+TC-UC-003,Use Case,Share learned examples,Team Lead,"1. Export examples
+2. Share JSON
+3. Import on other machine
+4. Verify learning",Intelligence shared successfully,Medium,§7.2,USE CASE TESTS
+TC-UC-004,Use Case,Provide feedback to improve AI,Power User,"1. Rate creation
+2. Provide comments
+3. Submit feedback
+4. Verify improvement",System learns from feedback,Medium,§9.1,USE CASE TESTS
+TC-UC-005,Use Case,Intelligent selection to Confluence,Code selection workflow,"1. Select code in editor
+2. Right-click → Save
+3. AI detects content type
+4. Creates formatted page",Quick documentation with AI formatting,High,§3.2 Workflow 2,USE CASE TESTS
+TC-UC-006,Use Case,Multi-file intelligent organization,Multiple related files,"1. Select 3+ related files
+2. AI organizes intelligently
+3. Creates single page
+4. Checks organization","Comprehensive, well-organized page",High,§3.2 Workflow 3,USE CASE TESTS
+TC-UC-007,Use Case,Context-aware suggestions,Chat integration,"1. Discuss code in chat
+2. Click Save button
+3. AI suggests related files
+4. Creates contextual docs",Context-aware documentation,High,§5.1 UR4,USE CASE TESTS
+TC-UC-008,Use Case,Team collective intelligence,Team collaboration,"1. Multiple team members create docs
+2. Export/import examples
+3. Verify improved matching",Collective intelligence improves everyone,Medium,§14.4,USE CASE TESTS
+TC-SC-001,Scenario,New user first experience,Fresh installation,"1. Install extension
+2. First use","Smooth onboarding, understands quickly",High,NFR5,SCENARIO-BASED TESTS
+TC-SC-002,Scenario,Busy developer quick docs,Working on bug fix,1. Document while working,<2 minutes to document,High,NFR5,SCENARIO-BASED TESTS
+TC-SC-003,Scenario,Team knowledge sharing,Multiple developers,"1. Dev A documents API
+2. Team uses learning",Collective intelligence improves,Medium,§14.4,SCENARIO-BASED TESTS
+TC-SC-004,Scenario,Handling network issues,Network interruption,"1. Start creation
+2. Network fails",Graceful recovery,Medium,NFR2,SCENARIO-BASED TESTS
+TC-SC-005,Scenario,Team intelligence sharing,3 developers team,"1. Each creates documentation
+2. Share examples
+3. Import shared examples
+4. Verify improved matching",Collective intelligence improves everyone's results,Medium,§14.4,SCENARIO-BASED TESTS
+TC-SC-006,Scenario,Progressive disclosure,New user journey,"1. First use: Simple flow only
+2. Second use: Confidence scores added
+3. Third use: AI reasoning shown
+4. Fourth use: All features available",Progressive feature introduction,Medium,§14.3,SCENARIO-BASED TESTS
+TC-SC-007,Scenario,Continuous improvement,Long-term usage,"1. Create 10 pages over time
+2. Track confidence scores
+3. Measure improvement
+4. Verify learning",Measurable intelligence improvement,Medium,§7.2,SCENARIO-BASED TESTS
+TC-SC-008,Scenario,Exact PRD compliance,All PRD requirements,"1. Validate UI matches §6.1 exactly
+2. Validate API matches §9.1 exactly
+3. Validate performance meets NFR1 exactly
+4. Validate all requirements met",100% PRD compliance verified,High,All sections,SCENARIO-BASED TESTS
+TC-EH-001,Error,Network timeout,Slow network,1. Simulate slow response,Auto-retry with backoff,High,NFR2,ERROR HANDLING TESTS
+TC-EH-002,Error,Confluence API 404,Invalid page ID,1. Use invalid page ID,"Clear error: ""Page not found""",Medium,§9.2,ERROR HANDLING TESTS
+TC-EH-003,Error,Disk full,Storage issues,1. Simulate write failure,"Graceful error, no corruption",Medium,NFR2,ERROR HANDLING TESTS
+TC-EH-004,Error,Memory exhaustion,Large files,1. Allocate large files,Graceful degradation,Medium,NFR1,ERROR HANDLING TESTS
+TC-EH-005,Error,Database connection lost,DB failure,1. Kill DB connection,Reconnect automatically,High,NFR2,ERROR HANDLING TESTS
+TC-EH-006,Error,Invalid template format,Corrupted template,1. Use corrupt template JSON,Fallback to default template,Medium,§5.2 FR2,ERROR HANDLING TESTS
+TC-EH-007,Error,Encoding issues,Non-UTF8 file,1. File with weird encoding,Handles gracefully,Low,§9.2,ERROR HANDLING TESTS
+TC-EH-008,Error,Permission denied,Access rights,1. Access read-only location,Clear permission error,Medium,§9.2,ERROR HANDLING TESTS
+TC-EH-009,Error,Intelligence-specific error,AI cannot determine format,"1. Provide confusing content
+2. Attempt creation",Returns PRD §9.2 exact error format,High,§9.2,ERROR HANDLING TESTS
+TC-EH-010,Error,Template matching error,No suitable template found,"1. Provide novel content type
+2. Attempt creation",Uses intelligent fallback with explanation,Medium,§5.2 FR2,ERROR HANDLING TESTS
+TC-EH-011,Error,Learning system error,Example import failure,"1. Import invalid examples
+2. Check handling",Clear error with format guidance,Medium,§7.2,ERROR HANDLING TESTS
+TC-EH-012,Error,Agent coordination error,Agent failure mid-process,"1. Simulate agent crash
+2. Check recovery",System recovers or fails gracefully,High,§7.1,ERROR HANDLING TESTS
+TC-IT-001,Integration,Frontend ↔ Backend API,End-to-end flow,"1. UI button → API call
+2. API response → UI update",Seamless integration,High,§4.3.1,INTEGRATION TESTS
+TC-IT-002,Integration,Agents ↔ Database,Data persistence,"1. Agent analyzes → DB store
+2. Agent reads from DB",Data flow works,High,§8.1,INTEGRATION TESTS
+TC-IT-003,Integration,MCP Server ↔ Agents,Task orchestration,"1. MCP queues task
+2. Agent executes
+3. MCP tracks progress",Orchestration works,High,§7.3,INTEGRATION TESTS
+TC-IT-004,Integration,Confluence API ↔ Integration Agent,External API integration,"1. Agent calls Confluence API
+2. Handles response
+3. Manages rate limits",External integration stable,High,§5.2 FR4,INTEGRATION TESTS
+TC-IT-005,Integration,RAG ↔ Confluence features,Coexistence,"1. Run RAG query while creating page
+2. Check for conflicts",No interference,High,NFR4,INTEGRATION TESTS
+TC-IT-006,Integration,Settings UI ↔ Config system,Configuration integration,"1. Change settings in UI
+2. Verify agent behavior changes
+3. Verify persistence",Settings affect behavior correctly,High,§5.2 FR6,INTEGRATION TESTS
+TC-IT-007,Integration,Resource sharing verification,Shared resource limits,"1. Run RAG and Confluence simultaneously
+2. Monitor resource usage","Total memory ≤300MB, no performance degradation",High,NFR4,INTEGRATION TESTS
+TC-IT-008,Integration,Learning system ↔ Agent system,Intelligence feedback loop,"1. Agent creates page
+2. Learning system stores example
+3. Future matching improves",Complete intelligence feedback loop,Medium,§7.2,INTEGRATION TESTS
+TC-E2E-001,E2E,Complete happy path,Fresh start,"1. Open VS Code
+2. Complete creation flow",Page created successfully in <15s,High,§3.2,END-TO-END TESTS
+TC-E2E-002,E2E,Right-click flow,Code editor,"1. Select code
+2. Right-click save",Quick documentation created,High,§6.2,END-TO-END TESTS
+TC-E2E-003,E2E,Project documentation,Project folder,"1. Type command
+2. Complete flow",Comprehensive docs ready,Medium,§3.2 Workflow 4,END-TO-END TESTS
+TC-E2E-004,E2E,Learning improvement cycle,Multiple creations,"1. Create page A
+2. Create similar page B",System learns and improves,Medium,§7.2,END-TO-END TESTS
+TC-E2E-005,E2E,Full PRD compliance flow,All PRD requirements,"1. Validate UI exactly as §6.1
+2. Validate API exactly as §9.1
+3. Validate performance as NFR1
+4. Validate all workflows as §3.2",Complete PRD compliance verified,High,All sections,END-TO-END TESTS
+TC-E2E-006,E2E,Complete learning cycle,Intelligence improvement,"1. Create page (record confidence)
+2. Provide feedback
+3. Create similar page
+4. Compare confidence scores",Measurable improvement in intelligence,High,§7.2,END-TO-END TESTS
+TC-E2E-007,E2E,Team collaboration flow,Multiple users,"1. User A exports examples
+2. User B imports examples
+3. User B creates page
+4. Verify improved matching",Collective intelligence working,Medium,§14.4,END-TO-END TESTS
+TC-E2E-008,E2E,All agent coordination,Complete agent system,"1. Start creation
+2. Monitor all 4 agents
+3. Verify sequential execution
+4. Verify intelligence applied",Complete agent system working,High,§7.1,END-TO-END TESTS
+TC-SM-001,Smoke,Installation,Fresh install,1. Install extension,Extension loads without errors,High,§4.3.1,SMOKE TESTS
+TC-SM-002,Smoke,Basic UI,RAG chat open,1. Open RAG chat,"""Save to Confluence"" button visible",High,§6.1,SMOKE TESTS
+TC-SM-003,Smoke,Button click,UI loaded,1. Click button,File selector appears,High,§6.1,SMOKE TESTS
+TC-SM-004,Smoke,Simple file,File available,1. Select single .txt file,Analysis starts,High,§3.2,SMOKE TESTS
+TC-SM-005,Smoke,Configuration,Settings access,1. Open settings,Confluence section exists,Medium,§5.2 FR6,SMOKE TESTS
+TC-SM-006,Smoke,AI decision making,Intelligent automation,"1. Select file
+2. Verify no template selection UI",AI makes all decisions automatically,High,UR2,SMOKE TESTS
+TC-SM-007,Smoke,No new interfaces,UI compliance,"1. Check for new tabs/panels
+2. Verify only chat extensions",No new UI elements created,High,§4.2.1,SMOKE TESTS
+TC-SM-008,Smoke,PRD compliance check,Critical requirements,"1. Check button position
+2. Check no modals
+3. Check chat-only interface",Key PRD requirements met,High,§6.1,SMOKE TESTS
+TC-SN-001,Sanity,Critical feature,One-click save,"1. Click button
+2. Select file
+3. Create",Page created,High,§3.2,SANITY TESTS
+TC-SN-002,Sanity,Credentials,Settings configured,"1. Enter creds
+2. Test",Connection successful,High,§5.2 FR6,SANITY TESTS
+TC-SN-003,Sanity,Right-click,Basic functionality,"1. Select text
+2. Right-click",Option appears,High,§6.2,SANITY TESTS
+TC-SN-004,Sanity,Command palette,Basic command,"1. Open palette
+2. Type PRD:",Commands appear,Medium,§6.3,SANITY TESTS
+TC-SN-005,Sanity,Exact button placement,PRD §6.1 compliance,"1. Check button position
+2. Verify ""right side of input""",Button exactly where send button is,High,§6.1,SANITY TESTS
+TC-SN-006,Sanity,No modal dialogs,PRD §4.3.1 compliance,"1. Perform all operations
+2. Check for modals",No modal dialogs block chat,High,§4.3.1,SANITY TESTS
+TC-SN-007,Sanity,Intelligence badge,PRD §6.4 compliance,"1. Create successful page
+2. Check for badge","""AI-Formatted"" badge appears",Medium,§6.4,SANITY TESTS
+TC-SN-008,Sanity,All UI in chat,Single interface principle,"1. Perform all Confluence operations
+2. Verify all in chat",No operations open new tabs/panels,High,§4.2.1,SANITY TESTS
+TC-RG-001,Regression,Existing RAG features,RAG functionality,1. Test all RAG functions,RAG still works 100%,High,NFR4,REGRESSION TESTS
+TC-RG-002,Regression,Performance,Creation speed,1. Test after optimizations,Still <15s,High,NFR1,REGRESSION TESTS
+TC-RG-003,Regression,Error handling,Error management,1. Test after error handling changes,Still handles all errors,High,NFR2,REGRESSION TESTS
+TC-RG-004,Regression,UI consistency,UI compliance,1. Test after UI tweaks,Still matches PRD exactly,High,§6.1,REGRESSION TESTS
+TC-RG-005,Regression,PRD compliance,All requirements,"1. Test all PRD requirements
+2. After any change",All requirements still met,High,All sections,REGRESSION TESTS
+TC-RG-006,Regression,Intelligence system,Learning functionality,"1. Test learning after changes
+2. Test example import/export",Intelligence system still works,Medium,§7.2,REGRESSION TESTS
+TC-RG-007,Regression,Agent coordination,4-agent system,"1. Test agent execution after changes
+2. Test coordination",Agent system still works correctly,High,§7.1,REGRESSION TESTS
+TC-RG-008,Regression,API exact formats,PRD §9.1 compliance,"1. Test all API endpoints
+2. Verify exact formats",All APIs still match PRD exactly,High,§9.1,REGRESSION TESTS
+TC-UI-001,UI,"""Save to Confluence"" button",Button appearance,"1. Check position (right of input)
+2. Verify 💾 icon
+3. Check tooltip",Exactly as PRD §6.1,High,§6.1,UI TESTS
+TC-UI-002,UI,File selector in chat,Selector display,"1. Click button
+2. Verify appears as chat message
+3. Test file browsing",Interactive chat component,High,§6.1,UI TESTS
+TC-UI-003,UI,Analysis results display,Analysis format,"1. Select files
+2. Check display format",Matches PRD §6.1 Step 2 exactly,High,§6.1,UI TESTS
+TC-UI-004,UI,Progress message,Progress display,"1. Start creation
+2. Watch progress",Single message updates (not multiple),Medium,§6.1,UI TESTS
+TC-UI-005,UI,Success message,Success format,"1. Complete creation
+2. Check message","✅ with badges, links, confidence",High,§6.1,UI TESTS
+TC-UI-006,UI,Error messages,Error format,"1. Trigger error
+2. Check display",PRD §9.2 format with actions,High,§9.2,UI TESTS
+TC-UI-007,UI,Right-click context menu,Menu option,"1. Select text
+2. Right-click","""🤖 Save to Confluence (AI will format perfectly)""",High,§6.2,UI TESTS
+TC-UI-008,UI,Command palette,Commands display,"1. Open palette
+2. Search PRD:",All 5 commands with exact names,Medium,§6.3,UI TESTS
+TC-UI-009,UI,Settings interface,Settings integration,"1. Open settings
+2. Find Confluence section",Under existing RAG settings,High,§5.2 FR6,UI TESTS
+TC-UI-010,UI,Responsiveness,UI performance,"1. Start heavy operation
+2. Interact with UI",UI remains responsive,High,NFR1,UI TESTS
+TC-UI-011,UI,Intelligence indicators,Intelligence display,"1. Check confidence display
+2. Check learning indicator
+3. Check AI-Formatted badge",All intelligence indicators present,High,§6.4,UI TESTS
+TC-UI-012,UI,Progressive disclosure,Feature introduction,"1. First use check
+2. Second use check
+3. Third use check",Features introduced progressively,Medium,§14.3,UI TESTS
+TC-API-001,API,POST /confluence/intelligent-analyze,Content analysis endpoint,"1. Send files
+2. Validate response",PRD §9.1 exact format,High,§9.1,API FUNCTIONAL TESTS
+TC-API-002,API,POST /confluence/intelligent-create,Page creation endpoint,"1. Send creation request
+2. Check response","Page created, PRD format",High,§9.1,API FUNCTIONAL TESTS
+TC-API-003,API,GET /confluence/intelligence-status,System status endpoint,"1. Call endpoint
+2. Check metrics",Returns intelligence metrics,Medium,§9.1,API FUNCTIONAL TESTS
+TC-API-004,API,POST /confluence/intelligence-feedback,Learning feedback endpoint,"1. Submit feedback
+2. Verify processing",Updates learning system,Low,§9.1,API FUNCTIONAL TESTS
+TC-API-005,API,Error responses,Error format,"1. Trigger error
+2. Check format",PRD §9.2 exact format,High,§9.2,API FUNCTIONAL TESTS
+TC-API-006,API,Rate limiting,API throttling,"1. Send rapid requests
+2. Check limiting",Rate limits enforced,Medium,§5.2 FR4,API FUNCTIONAL TESTS
+TC-API-007,API,Authentication,Credential validation,"1. Use invalid token
+2. Check response",Proper auth error,High,§9.2,API FUNCTIONAL TESTS
+TC-API-008,API,Parameter validation,Input validation,"1. Send invalid parameters
+2. Check validation",Proper validation errors,High,§9.1,API FUNCTIONAL TESTS
+TC-API-009,API,EXACT format validation - Analyze,PRD §9.1 compliance,"1. Call intelligent-analyze
+2. Validate ALL fields exactly",Matches PRD §9.1 format character-for-character,High,§9.1,API FUNCTIONAL TESTS
+TC-API-010,API,EXACT format validation - Create,PRD §9.1 compliance,"1. Call intelligent-create
+2. Validate ALL fields exactly",Matches PRD §9.1 format character-for-character,High,§9.1,API FUNCTIONAL TESTS
+TC-API-011,API,All 4 endpoint validation,Complete API coverage,"1. Test all 4 PRD endpoints
+2. Validate formats",All endpoints match PRD exactly,High,§9.1,API FUNCTIONAL TESTS
+TC-API-012,API,Intelligence metrics validation,Learning system integration,"1. Submit feedback
+2. Check status endpoint
+3. Verify metrics updated",Intelligence metrics track learning,Medium,§7.2,API FUNCTIONAL TESTS
+TC-BR-001,Business,No new interfaces,UI constraint,"1. Check for new tabs/panels
+2. Verify only chat extensions",No new UI elements created,High,§4.2.1,BUSINESS RULE TESTS
+TC-BR-002,Business,Zero manual decisions,AI automation,"1. Attempt to select template
+2. Attempt to choose format",No template/format selection UI,High,UR2,BUSINESS RULE TESTS
+TC-BR-003,Business,Maximum 3 clicks,UX efficiency,1. Count clicks in happy path,≤3 clicks total,High,UR3,BUSINESS RULE TESTS
+TC-BR-004,Business,<15 seconds creation,Performance requirement,1. Time complete creation,<15 seconds including API,High,NFR1,BUSINESS RULE TESTS
+TC-BR-005,Business,>95% success rate,Reliability requirement,"1. Execute 100 operations
+2. Calculate success rate",>95% success,High,NFR2,BUSINESS RULE TESTS
+TC-BR-006,Business,Learning from success,Continuous improvement,"1. Create successful page
+2. Check if learned",System learns and stores example,Medium,§7.2,BUSINESS RULE TESTS
+TC-BR-007,Business,Team intelligence sharing,Collective learning,"1. Multiple users create
+2. Check collective metrics",Shows team intelligence count,Low,§14.4,BUSINESS RULE TESTS
+TC-BR-008,Business,Security compliance,PRD NFR3 requirements,"1. Check credential encryption
+2. Check token masking
+3. Check HTTPS",All security rules followed,High,NFR3,BUSINESS RULE TESTS
+TC-BR-009,Business,Memory limit compliance,PRD NFR1 requirement,"1. Monitor memory during operations
+2. Check peak usage",≤300MB memory usage,High,NFR1,BUSINESS RULE TESTS
+TC-BR-010,Business,Learning curve compliance,PRD NFR5 requirement,"1. New user attempts creation
+2. Time to success",<2 minutes learning curve,High,NFR5,BUSINESS RULE TESTS
+TC-DV-001,Data,Title field,Title validation,"1. Test 0 chars
+2. Test 1 char
+3. Test 255 chars
+4. Test 256 chars",Validates correctly,High,§3.2,DATA VALIDATION TESTS
+TC-DV-002,Data,File paths,Path validation,"1. Test valid path
+2. Test non-existent path
+3. Test no permission path",Validates file existence/access,High,§5.2 FR1,DATA VALIDATION TESTS
+TC-DV-003,Data,Confluence URL,URL validation,"1. Test valid URLs
+2. Test invalid URLs
+3. Test malformed URLs",URL validation works,High,§5.2 FR4,DATA VALIDATION TESTS
+TC-DV-004,Data,API token,Token validation,"1. Test valid token
+2. Test invalid format
+3. Test empty token",Token validation,High,NFR3,DATA VALIDATION TESTS
+TC-DV-005,Data,Space name,Space validation,"1. Test existing space
+2. Test non-existent space
+3. Test invalid chars",Space validation,Medium,§5.2 FR4,DATA VALIDATION TESTS
+TC-DV-006,Data,Confidence scores,Score range validation,"1. Test 0.0
+2. Test 0.5
+3. Test 1.0
+4. Test 1.5",Valid range enforced,Medium,§6.4,DATA VALIDATION TESTS
+TC-DV-007,Data,Export JSON,Export format,"1. Export data
+2. Validate schema",Matches exact PRD format,Medium,§7.2,DATA VALIDATION TESTS
+TC-DV-008,Data,Import JSON,Import validation,"1. Import valid JSON
+2. Import invalid JSON
+3. Import malformed",Validates before import,Medium,§7.2,DATA VALIDATION TESTS
+TC-DV-009,Data,PRD §7.2 exact format,Export format compliance,"1. Export examples
+2. Validate against PRD format","Matches ""Intelligent Example Data"" format exactly",High,§7.2,DATA VALIDATION TESTS
+TC-DV-010,Data,Intelligence metrics validation,Learning system data,"1. Check intelligence_score field
+2. Check confidence_avg field
+3. Check vector embeddings",All intelligence fields valid,Medium,§8.1,DATA VALIDATION TESTS

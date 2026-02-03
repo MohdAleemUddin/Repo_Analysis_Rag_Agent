@@ -9,3 +9,4 @@ test-results-*.xml
 htmlcov/
 .coverage
 docs/
+confluence_data/examples/vector_embeddings/*.index
