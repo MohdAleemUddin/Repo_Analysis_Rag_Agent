@@ -118,6 +118,8 @@ def _classify(exc: BaseException) -> str:
             return "permission_denied"
     t = type(exc).__name__
     msg = str(exc).lower()
+    if isinstance(exc, OSError) and ("ConnectionError" in t or "Timeout" in t):
+        return "network"
     is_network_type = (
         t in ("ConnectionError", "Timeout", "ConnectTimeout", "ReadTimeout")
         or "ConnectionError" in t

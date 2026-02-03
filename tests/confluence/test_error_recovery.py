@@ -1,6 +1,7 @@
 """
 User Story 13 — Intelligent Error Recovery. Test names include TC IDs for -k selection.
 """
+# pyright: reportMissingImports=false
 from unittest.mock import MagicMock, patch
 
 PRD_FIELDS = ("error", "message", "intelligence_suggestion", "fallback_available", "intelligence_confidence")
