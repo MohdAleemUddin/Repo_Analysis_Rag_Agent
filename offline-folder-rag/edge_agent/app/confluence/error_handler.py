@@ -105,6 +105,12 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
+    try:
+        import requests.exceptions as req_exc
+        if isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout)):
+            return "network"
+    except ImportError:
+        pass
     t = type(exc).__name__
     msg = str(exc).lower()
     if isinstance(exc, OSError) and (
