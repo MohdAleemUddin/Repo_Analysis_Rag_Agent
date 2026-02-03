@@ -105,6 +105,17 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
+    t = type(exc).__name__
+    msg = str(exc).lower()
+    if isinstance(exc, OSError) and (
+        "ConnectionError" in t or "Timeout" in t
+        or "connection" in msg or "timeout" in msg or "refused" in msg or "reach" in msg
+    ):
+        return "network"
+    if "connection" in msg or "timeout" in msg or "network" in msg:
+        return "network"
+    if "ConnectionError" in t or "Timeout" in t:
+        return "network"
     resp = getattr(exc, "response", None)
     if resp is not None and getattr(resp, "status_code", None) is not None:
         sc = resp.status_code
@@ -116,20 +127,6 @@ def _classify(exc: BaseException) -> str:
             return "not_found"
         if sc == 403:
             return "permission_denied"
-    t = type(exc).__name__
-    msg = str(exc).lower()
-    if isinstance(exc, OSError) and ("ConnectionError" in t or "Timeout" in t):
-        return "network"
-    is_network_type = (
-        t in ("ConnectionError", "Timeout", "ConnectTimeout", "ReadTimeout")
-        or "ConnectionError" in t
-        or "Timeout" in t
-    )
-    is_connection_os_error = isinstance(exc, OSError) and (
-        "connection" in msg or "timeout" in msg or "refused" in msg or "reach" in msg
-    )
-    if "connection" in msg or "timeout" in msg or "network" in msg or is_network_type or is_connection_os_error:
-        return "network"
     if "401" in msg or "unauthorized" in msg or "auth" in msg or "credential" in msg:
         return "auth"
     if "429" in msg or "rate" in msg or "too many" in msg:
