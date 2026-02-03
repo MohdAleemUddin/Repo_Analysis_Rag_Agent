@@ -4,7 +4,6 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-
 # ----- Request schemas (PRD §9.1) -----
 
 
@@ -12,7 +11,9 @@ class AnalyzeRequest(BaseModel):
     """POST /confluence/intelligent-analyze request."""
 
     files: list[str] = Field(..., min_length=1, description="At least one file path")
-    context: str | None = Field(default=None, description="Current project intelligence")
+    context: str | None = Field(
+        default=None, description="Current project intelligence"
+    )
 
 
 class CreateRequest(BaseModel):
@@ -22,7 +23,9 @@ class CreateRequest(BaseModel):
     intelligent_mode: bool = Field(..., description="Full AI intelligence")
     auto_title: bool = Field(..., description="AI decides title intelligently")
     space: str = Field(..., min_length=1, description="Confluence space key")
-    intelligence_context: dict[str, Any] = Field(default_factory=dict, description="Context object")
+    intelligence_context: dict[str, Any] = Field(
+        default_factory=dict, description="Context object"
+    )
 
 
 class FeedbackRequest(BaseModel):

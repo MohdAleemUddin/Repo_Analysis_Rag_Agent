@@ -53,10 +53,12 @@ _VALIDATION_SUGGESTION = (
 # ----- Handlers (stub responses per PRD; no agent/DB) -----
 
 
-async def intelligent_analyze_handler(request: Request) -> AnalyzeResponse | JSONResponse:
+async def intelligent_analyze_handler(
+    request: Request,
+) -> AnalyzeResponse | JSONResponse:
     """POST /confluence/intelligent-analyze: PRD §9.1 exact response."""
     try:
-        body = AnalyzeRequest.model_validate(await request.json())
+        AnalyzeRequest.model_validate(await request.json())
     except (ValidationError, TypeError, ValueError):
         return _prd_error_response(
             message="Invalid request body or parameters",
@@ -126,7 +128,9 @@ async def intelligent_create_handler(request: Request) -> CreateResponse | JSONR
     )
 
 
-async def intelligence_status_handler(detail_level: str | None = None) -> StatusResponse:
+async def intelligence_status_handler(
+    detail_level: str | None = None,
+) -> StatusResponse:
     """GET /confluence/intelligence-status: AC-7 explicit response."""
     return StatusResponse(
         intelligence_metrics=IntelligenceMetrics(
@@ -139,10 +143,12 @@ async def intelligence_status_handler(detail_level: str | None = None) -> Status
     )
 
 
-async def intelligence_feedback_handler(request: Request) -> FeedbackResponse | JSONResponse:
+async def intelligence_feedback_handler(
+    request: Request,
+) -> FeedbackResponse | JSONResponse:
     """POST /confluence/intelligence-feedback: AC-9 explicit response."""
     try:
-        body = FeedbackRequest.model_validate(await request.json())
+        FeedbackRequest.model_validate(await request.json())
     except (ValidationError, TypeError, ValueError):
         return _prd_error_response(
             message="Invalid request body or parameters",
