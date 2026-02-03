@@ -4,3 +4,4 @@ __pycache__/
 node_modules/
 .venv/
 confluence_data/examples/vector_embeddings/*.index
+docs/
