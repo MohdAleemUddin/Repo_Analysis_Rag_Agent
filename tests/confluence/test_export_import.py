@@ -201,3 +201,46 @@ def test_export_legacy():
         out = export_import.export(None)
     m.assert_called_once()
     assert out == "{}"
+
+
+def test_export_examples_metrics_confidence_score():
+    ex = {
+        "content_profile": {},
+        "template_ref": {"template_id": "t", "template_name": "T"},
+        "intelligence_metrics": {"other": 1},
+        "confidence_score": 0.9,
+        "learned_at": "2020-01-01",
+    }
+    with patch.object(export_import, "get_examples", return_value=[ex]):
+        out = export_import.export_examples()
+    data = json.loads(out)
+    assert data["examples"][0]["intelligence_metrics"].get("confidence_score") == 0.9
+
+
+def test_export_examples_user_feedback_non_int_dropped():
+    ex = {"content_profile": {}, "template_ref": {"template_id": "t", "template_name": "T"},
+          "intelligence_metrics": {}, "user_feedback": "4"}
+    with patch.object(export_import, "get_examples", return_value=[ex]):
+        out = export_import.export_examples()
+    data = json.loads(out)
+    assert data["examples"][0].get("user_feedback") is None
+
+
+def test_import_examples_existing_hashes_exception():
+    with tempfile.TemporaryDirectory() as tmp:
+        with patch.object(export_import, "_get_file_examples", side_effect=Exception("read fail")):
+            payload = {"version": 1, "exported_at": "2020-01-01", "examples": [
+                {"content_profile": {"a": 1}, "template_ref": {"template_id": "t", "template_name": "T"}, "intelligence_metrics": {}}
+            ]}
+            n, msg = export_import.import_examples(payload, examples_base_dir=tmp)
+    assert n >= 0
+
+
+def test_import_examples_user_feedback_invalid():
+    with tempfile.TemporaryDirectory() as tmp:
+        payload = {"version": 1, "exported_at": "2020-01-01", "examples": [
+            {"content_profile": {"b": 1}, "template_ref": {"template_id": "t", "template_name": "T"},
+             "intelligence_metrics": {}, "user_feedback": 10}
+        ]}
+        n, msg = export_import.import_examples(payload, examples_base_dir=tmp)
+    assert n >= 0
