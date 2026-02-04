@@ -1338,3 +1338,422 @@ from the repo root, `main.py` will:
 
 ---
 
+_**User**_
+
+@c:\Users\FAZLEEN ANEESA\.cursor\projects\c-Users-FAZLEEN-ANEESA-Repo-Analysis-Rag-Agent\terminals\6.txt:604-1004 make the test coverage 90 % above
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Adding tests to raise coverage above 90%. Checking the test layout and which modules need coverage.
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="list_dir_v2">
+<details>
+<summary>Tool use: **list_dir_v2**</summary>
+
+
+Parameters:
+
+```json
+{
+  "targetDirectory": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests"
+}
+```
+Result:
+
+```json
+{
+  "directoryTreeRoot": {
+    "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests",
+    "childrenDirs": [
+      {
+        "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence",
+        "childrenFiles": [
+          {
+            "name": "__init__.py"
+          },
+          {
+            "name": "RUN_TESTS.md"
+          },
+          {
+            "name": "test_api_prd_format.py"
+          },
+          {
+            "name": "test_api_router.py"
+          },
+          {
+            "name": "test_business_rules.py"
+          },
+          {
+            "name": "test_client_auth.py"
+          },
+          {
+            "name": "test_data_validation.py"
+          },
+          {
+            "name": "test_db_integration.py"
+          },
+          {
+            "name": "test_e2e_workflows.py"
+          },
+          {
+            "name": "test_error_recovery.py"
+          },
+          {
+            "name": "test_imports.py"
+          },
+          {
+            "name": "test_intelligence_learning.py"
+          },
+          {
+            "name": "test_page_tracker.py"
+          },
+          {
+            "name": "test_performance_targets.py"
+          },
+          {
+            "name": "test_prd_compliance.py"
+          },
+          {
+            "name": "test_reliability.py"
+          },
+          {
+            "name": "test_security_compliance.py"
+          },
+          {
+            "name": "test_state_machine.py"
+          },
+          {
+            "name": "test_templates.py"
+          },
+          {
+            "name": "test_ui_compliance.py"
+          }
+        ],
+        "childrenWereProcessed": true
+      },
+      {
+        "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\edge_agent",
+        "childrenDirs": [
+          {
+            "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\edge_agent\\integration",
+            "childrenFiles": [
+              {
+                "name": "README.md"
+              }
+            ],
+            "childrenWereProcessed": true
+          },
+          {
+            "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\edge_agent\\unit",
+            "childrenFiles": [
+              {
+                "name": "README.md"
+              }
+            ],
+            "childrenWereProcessed": true
+          }
+        ],
+        "childrenWereProcessed": true
+      }
+    ],
+    "childrenFiles": [
+      {
+        "name": "conftest.py"
+      },
+      {
+        "name": "pyrightconfig.json"
+      }
+    ],
+    "childrenWereProcessed": true
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\pytest.ini</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\mcp_server\task_queue.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\mcp_server\orchestrator.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\conftest.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\mcp_server\confluence_tasks.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\main.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "offline-folder-rag|edge_agent|sys\\.path",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "offline-folder-rag|edge_agent|sys\\.path",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": "tests\\conftest.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "\"\"\"Pytest configuration. Add edge_agent to path so app package is importable. Errors go to errors.log.\"\"\""
+                },
+                {
+                  "lineNumber": 7,
+                  "content": "edge_agent = root / \"offline-folder-rag\" / \"edge_agent\""
+                },
+                {
+                  "lineNumber": 8,
+                  "content": "if str(edge_agent) not in sys.path:"
+                },
+                {
+                  "lineNumber": 9,
+                  "content": "    sys.path.insert(0, str(edge_agent))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_performance_targets.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "    from offline_folder_rag.edge_agent.app.confluence.prd_monitor import ("
+                },
+                {
+                  "lineNumber": 17,
+                  "content": "    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_intelligence_learning.py",
+              "matches": [
+                {
+                  "lineNumber": 5,
+                  "content": "    from offline_folder_rag.edge_agent.app.config.confluence_config import get_confluence_config"
+                },
+                {
+                  "lineNumber": 6,
+                  "content": "    from offline_folder_rag.edge_agent.app.config.config import get_database_config"
+                },
+                {
+                  "lineNumber": 10,
+                  "content": "    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                },
+                {
+                  "lineNumber": 36,
+                  "content": "        from offline_folder_rag.edge_agent.app.agents.learning_agent import learn_from_feedback"
+                },
+                {
+                  "lineNumber": 37,
+                  "content": "        from offline_folder_rag.edge_agent.app.confluence.example_manager import _get_file_feedback"
+                },
+                {
+                  "lineNumber": 41,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                },
+                {
+                  "lineNumber": 60,
+                  "content": "        from offline_folder_rag.edge_agent.app.confluence.validation import ("
+                },
+                {
+                  "lineNumber": 68,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_data_validation.py",
+              "matches": [
+                {
+                  "lineNumber": 6,
+                  "content": "# Import from edge_agent; path may vary by run context"
+                },
+                {
+                  "lineNumber": 8,
+                  "content": "    from offline_folder_rag.edge_agent.app.confluence.validation import ("
+                },
+                {
+                  "lineNumber": 18,
+                  "content": "    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_e2e_workflows.py",
+              "matches": [
+                {
+                  "lineNumber": 8,
+                  "content": "        from offline_folder_rag.edge_agent.app.api.confluence_routes import ("
+                },
+                {
+                  "lineNumber": 15,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_db_integration.py",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "    from offline_folder_rag.edge_agent.app.confluence.db_adapter import ("
+                },
+                {
+                  "lineNumber": 17,
+                  "content": "    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                },
+                {
+                  "lineNumber": 100,
+                  "content": "            sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\confluence\\test_api_prd_format.py",
+              "matches": [
+                {
+                  "lineNumber": 27,
+                  "content": "        from offline_folder_rag.edge_agent.app.api.confluence_routes import intelligence_status_handler"
+                },
+                {
+                  "lineNumber": 31,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                },
+                {
+                  "lineNumber": 52,
+                  "content": "        from offline_folder_rag.edge_agent.app.api.confluence_routes import intelligence_feedback_handler"
+                },
+                {
+                  "lineNumber": 56,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                },
+                {
+                  "lineNumber": 113,
+                  "content": "        from offline_folder_rag.edge_agent.app.api.confluence_routes import ("
+                },
+                {
+                  "lineNumber": 120,
+                  "content": "        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / \"offline-folder-rag\" / \"edge_agent\"))"
+                }
+              ]
+            },
+            {
+              "file": "tests\\pyrightconfig.json",
+              "matches": [
+                {
+                  "lineNumber": 2,
+                  "content": "  \"extraPaths\": [\"../offline-folder-rag/edge_agent\"]"
+                }
+              ]
+            }
+          ],
+          "totalLines": 29,
+          "totalMatchedLines": 29
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+Checking how other tests import from the app:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_imports.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\mcp_server\__init__.py</summary>
+
+</details>
+</tool-use>
+
+---
+

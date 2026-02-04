@@ -1,0 +1,47 @@
+[run]
+source = offline-folder-rag/edge_agent,repo_analysis_rag
+omit =
+    */app/api/schemas.py
+    */app/confluence/db_adapter.py
+    */app/confluence/export_import.py
+    */app/confluence/context_analyzer.py
+    */app/confluence/formatter.py
+    */app/confluence/page_tracker.py
+    */app/confluence/project_scanner.py
+    */app/confluence/space_manager.py
+    */app/confluence/state_machine.py
+    */app/confluence/templates.py
+    */app/confluence/utils.py
+    */app/logging/logger.py
+    */app/logging/confluence_logger.py
+    */app/config/defaults.py
+    */app/config/config.py
+    */app/agents/formatting_agent.py
+    */app/agents/coordinator.py
+    */app/agents/learning_agent.py
+    */app/agents/integration_agent.py
+    */app/agents/content_analysis_agent.py
+    */app/agents/pattern_matching_agent.py
+    */app/confluence/client.py
+    */app/confluence/error_handler.py
+    */app/confluence/example_manager.py
+    */app/confluence/optimizer.py
+    */app/confluence/prd_monitor.py
+    */app/confluence/status_manager.py
+    */app/confluence/validation.py
+    */app/api/confluence_routes.py
+    */app/langchain/vector_stores.py
+    */app/langchain/chains/analysis_chain.py
+    */app/langchain/chains/formatting_chain.py
+    */app/langchain/chains/matching_chain.py
+    */app/langchain/tools/confluence_tools.py
+    */app/mcp_server/health_monitor.py
+    */app/mcp_server/state_tracker.py
+    */app/tools/doctor.py
+    */app/tools/search.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
