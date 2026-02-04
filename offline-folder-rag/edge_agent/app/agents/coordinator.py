@@ -1,4 +1,4 @@
-"""Coordinator: orchestrates agents with parallel analysis, memory checks, and CPU throttling."""
+"""Coordinator: parallel analysis, memory checks, CPU throttling."""
 
 import logging
 import time

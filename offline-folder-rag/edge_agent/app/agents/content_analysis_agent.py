@@ -1,4 +1,4 @@
-"""Content analysis agent: analyzes content with cache by file hash, per-file timer, and chunked processing for large files."""
+"""Content analysis agent: cache by file hash, per-file timer, chunked processing."""
 
 import hashlib
 import logging
@@ -74,8 +74,8 @@ def _analyze_small(content: str) -> dict[str, Any]:
 
 def analyze(content: str, file_index: int = 0) -> dict[str, Any]:
     """
-    Analyze content. Uses cache keyed by content hash. For large content, processes in chunks.
-    Wrapped with per-file timer by caller (coordinator) via timer_per_file_analysis.
+    Analyze content. Uses cache keyed by content hash. For large content, chunks.
+    Caller (coordinator) wraps with timer_per_file_analysis.
     """
     key = _content_hash(content)
     cached = _cache_get(key)

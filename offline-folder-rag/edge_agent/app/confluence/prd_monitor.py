@@ -1,6 +1,6 @@
 """
-PRD performance monitor for Confluence operations.
-Measures per-file analysis, template selection, e2e create; enforces memory limit; emits performance records and alerts.
+PRD performance monitor for Confluence.
+Measures per-file analysis, template selection, e2e create; memory limit; emits records.
 """
 
 import logging
@@ -79,8 +79,8 @@ def _update_peak() -> float:
 
 def check_memory_before_step() -> bool:
     """
-    Check if current memory is below limit. Call before each heavy step (e.g. next file analysis).
-    Returns True if safe to proceed, False if at or over limit (caller should abort or degrade).
+    Check if memory is below limit. Call before each heavy step.
+    Returns True if safe, False if at/over limit (caller should abort or degrade).
     """
     mb = _update_peak()
     ok = mb < CONFLUENCE_MEMORY_LIMIT_MB
@@ -94,7 +94,7 @@ def check_memory_before_step() -> bool:
 
 
 def start_operation(operation_id: str | None = None) -> str:
-    """Start a new Confluence operation; returns operation_id. Resets peak memory tracking."""
+    """Start a new Confluence operation; returns operation_id. Resets peak memory."""
     global _current_operation_id, _current_peak_memory_mb, _current_record
     _current_operation_id = operation_id or str(uuid.uuid4())
     _current_peak_memory_mb = _get_process_memory_mb()
@@ -182,7 +182,7 @@ def record_confluence_operation(
         )
 
     logger.info(
-        "Confluence operation %s: analysis_ok=%s template_ok=%s create_ok=%s memory_ok=%s",
+        "Confluence op %s: analysis_ok=%s template_ok=%s create_ok=%s memory_ok=%s",
         operation_id,
         analysis_ok,
         template_ok,

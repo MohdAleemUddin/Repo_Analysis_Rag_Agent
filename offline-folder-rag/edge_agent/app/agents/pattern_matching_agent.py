@@ -13,7 +13,7 @@ def match(
     Returns e.g. {"template_id": "...", "confidence": 0.9}.
     """
     with timer_template_selection():
-        # Placeholder: return a default template; real impl would use vector search / learned examples
+        # Placeholder: default template; real impl would use vector search
         return {
             "template_id": "default",
             "confidence": 0.9,

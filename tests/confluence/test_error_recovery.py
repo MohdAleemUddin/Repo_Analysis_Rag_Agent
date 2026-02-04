@@ -1,10 +1,17 @@
 """
 User Story 13 — Intelligent Error Recovery. Test names include TC IDs for -k selection.
 """
+
 # pyright: reportMissingImports=false
 from unittest.mock import MagicMock, patch
 
-PRD_FIELDS = ("error", "message", "intelligence_suggestion", "fallback_available", "intelligence_confidence")
+PRD_FIELDS = (
+    "error",
+    "message",
+    "intelligence_suggestion",
+    "fallback_available",
+    "intelligence_confidence",
+)
 
 
 def _assert_prd_format(resp: dict) -> None:
@@ -21,12 +28,16 @@ def test_TC_NEG_004_network_failure_auto_retry():
 
     try:
         import requests.exceptions as req_exc
+
         raise req_exc.ConnectionError("Connection refused")
     except Exception as e:
         out = handle_error(e, error_code="create_failed")
     _assert_prd_format(out)
     assert out.get("category") == "network"
-    assert "connection" in out.get("message", "").lower() or "reach" in out.get("message", "").lower()
+    assert (
+        "connection" in out.get("message", "").lower()
+        or "reach" in out.get("message", "").lower()
+    )
 
 
 def test_TC_NEG_007_rate_limit_handling():
@@ -58,10 +69,15 @@ def test_TC_NEG_003_invalid_credentials_fail_cleanly():
     out = handle_error(exc, error_code="create_failed")
     _assert_prd_format(out)
     assert out.get("category") == "auth"
-    assert "credentials" in out.get("message", "").lower() or "invalid" in out.get("message", "").lower()
+    assert (
+        "credentials" in out.get("message", "").lower()
+        or "invalid" in out.get("message", "").lower()
+    )
     with patch("app.api.confluence_routes.run_create") as m:
         m.side_effect = exc
-        r = intelligent_create_handler({"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"})
+        r = intelligent_create_handler(
+            {"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"}
+        )
     _assert_prd_format(r)
     assert "Update Settings" in r.get("actions", [])
 
@@ -110,7 +126,9 @@ def test_TC_EH_007_invalid_template_format_graceful_handling():
     """TC-EH-007: Invalid template format → graceful handling."""
     from app.confluence.error_handler import handle_error
 
-    out = handle_error(Exception("invalid template format"), error_code="template_error")
+    out = handle_error(
+        Exception("invalid template format"), error_code="template_error"
+    )
     _assert_prd_format(out)
     assert out.get("category") == "invalid_template"
     assert out.get("fallback_available") is True
@@ -157,7 +175,9 @@ def test_TC_EH_010_intelligence_error_graceful_failure():
     """TC-EH-010: Intelligence error → graceful failure."""
     from app.confluence.error_handler import handle_error
 
-    out = handle_error(Exception("AI could not determine format"), error_code="intelligence_error")
+    out = handle_error(
+        Exception("AI could not determine format"), error_code="intelligence_error"
+    )
     _assert_prd_format(out)
     assert out.get("category") == "intelligence_error"
 
@@ -188,7 +208,9 @@ def test_TC_EH_001_confluence_down_no_corruption_clear_messaging():
 
     with patch("app.api.confluence_routes.run_create") as m:
         m.side_effect = ConnectionError("Confluence unreachable")
-        r = intelligent_create_handler({"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"})
+        r = intelligent_create_handler(
+            {"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"}
+        )
     _assert_prd_format(r)
     assert r.get("error")
     assert "message" in r
@@ -203,7 +225,9 @@ def test_TC_EH_002_invalid_credentials_no_corruption_clear_messaging():
     exc = Exception("401")
     exc.response = mock_resp
     with patch("app.api.confluence_routes.run_create", side_effect=exc):
-        r = intelligent_create_handler({"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"})
+        r = intelligent_create_handler(
+            {"base_url": "https://x", "space_key": "DOC", "title": "T", "content": "c"}
+        )
     _assert_prd_format(r)
     assert r.get("category") == "auth"
 
@@ -221,7 +245,9 @@ def test_TC_SC_004_handling_network_issues_graceful_recovery():
     """TC-SC-004: Handling network issues → graceful recovery."""
     from app.confluence.error_handler import handle_error, get_actions_for_category
 
-    out = handle_error(ConnectionError("Network unreachable"), error_code="create_failed")
+    out = handle_error(
+        ConnectionError("Network unreachable"), error_code="create_failed"
+    )
     _assert_prd_format(out)
     assert out.get("category") == "network"
     assert get_actions_for_category("network") == ["Retry", "Cancel"]
@@ -231,7 +257,9 @@ def test_TC_NEG_014_mcp_task_failure_graceful_recovery_option():
     """TC-NEG-014: MCP task failure → fails gracefully with recovery option."""
     from app.confluence.error_handler import handle_error
 
-    out = handle_error(Exception("agent coordination failed"), error_code="mcp_task_failed")
+    out = handle_error(
+        Exception("agent coordination failed"), error_code="mcp_task_failed"
+    )
     _assert_prd_format(out)
     assert out.get("category") in ("agent_coordination", "other")
     assert "Retry" in out.get("actions", []) or "Cancel" in out.get("actions", [])

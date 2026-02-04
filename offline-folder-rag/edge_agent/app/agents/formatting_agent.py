@@ -1,11 +1,11 @@
-"""Formatting agent: formats content for Confluence. Uses content already in memory (no reload)."""
+"""Formatting agent: formats content for Confluence; uses content in memory."""
 
 from typing import Any
 
 
 def format_content(content: str, template: dict[str, Any] | None = None) -> str:
     """
-    Format content for Confluence storage. Does not load file again; uses provided content.
+    Format content for Confluence storage. Uses provided content (no reload).
     For streamed/chunked content, caller should pass aggregated content.
     """
     if not content:

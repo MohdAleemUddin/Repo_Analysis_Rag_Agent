@@ -167,6 +167,9 @@ function Invoke-Setup {
 function Invoke-Lint {
     Write-Section "STAGE 2: Code Quality Checks (Linting)"
 
+    $root = (Get-Location).Path
+    $env:PYTHONPATH = "$root;$root\offline-folder-rag\edge_agent"
+
     Write-Info "Ensuring linting tools are installed..."
     pip install black ruff mypy pylint flake8 -q
 

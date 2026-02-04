@@ -1,6 +1,5 @@
-"""
-Performance boundary and business rule tests for User Story 8 (TC-BVA-011 to TC-BVA-014, TC-BR-004, etc.).
-"""
+"""Performance and business rule tests for User Story 8 (TC-BVA-011 etc.)."""
+
 # pyright: reportMissingImports=false
 
 import time
@@ -24,20 +23,21 @@ def test_analysis_time_under_3_seconds_per_file():
 
 # --- TC-BVA-012: Template selection < 2s ---
 def test_template_selection_under_2_seconds():
-    """TC-BVA-012: Template selection completes in < 2 seconds."""
+    """TC-BVA-012: Template selection < 2s."""
     from app.agents.pattern_matching_agent import match
     from app.config.config import TEMPLATE_SELECTION_MAX_SECONDS
 
     start = time.perf_counter()
     result = match("some content", analysis={})
     elapsed = time.perf_counter() - start
-    assert elapsed < TEMPLATE_SELECTION_MAX_SECONDS + 0.3
+    limit = TEMPLATE_SELECTION_MAX_SECONDS + 0.3
+    assert elapsed < limit
     assert "template_id" in result
 
 
 # --- TC-BVA-013 / TC-BR-004: Page creation < 15s including API ---
 def test_creation_time_under_15_seconds_including_api():
-    """TC-BVA-013, TC-BR-004: Full page creation completes in < 15 seconds including API."""
+    """TC-BVA-013, TC-BR-004: Full page creation < 15s including API."""
     from app.agents.integration_agent import create_page
 
     with patch("app.agents.integration_agent.confluence_create_page") as mock_create:
@@ -96,7 +96,7 @@ def test_memory_exhaustion_graceful_handling():
 
 # --- TC-IT-005 / TC-IT-007: No interference with RAG; resource sharing ---
 def test_rag_confluence_no_conflict():
-    """TC-IT-005: Run Confluence analyze without breaking RAG (no import/route conflict)."""
+    """TC-IT-005: Confluence analyze without breaking RAG (no import/route conflict)."""
     from fastapi import APIRouter, FastAPI
     from fastapi.testclient import TestClient
 
@@ -178,7 +178,7 @@ def test_optimizer_suggestions():
 
 
 def test_intelligence_status_returns_metrics():
-    """intelligence-status returns PRD metrics (intelligence_metrics, learning_progress, improvement_rates)."""
+    """intelligence-status returns PRD metrics."""
     from fastapi import APIRouter, FastAPI
     from fastapi.testclient import TestClient
 
@@ -194,9 +194,21 @@ def test_intelligence_status_returns_metrics():
     data = result.json()
     assert "intelligence_metrics" in data or "metrics" in data
     metrics = data.get("intelligence_metrics", data.get("metrics", {}))
-    assert "learning_progress" in data or "p95_analysis_ms" in metrics or "auto_recovery_rate" in metrics
-    assert "improvement_rates" in data or "max_memory_mb" in metrics or "success_rate" in metrics
-    assert "template_selection_accuracy" in metrics or "auto_recovery_rate" in metrics or "success_rate" in metrics
+    assert (
+        "learning_progress" in data
+        or "p95_analysis_ms" in metrics
+        or "auto_recovery_rate" in metrics
+    )
+    assert (
+        "improvement_rates" in data
+        or "max_memory_mb" in metrics
+        or "success_rate" in metrics
+    )
+    assert (
+        "template_selection_accuracy" in metrics
+        or "auto_recovery_rate" in metrics
+        or "success_rate" in metrics
+    )
 
 
 # --- TC-UI-010: UI remains responsive during heavy operation ---

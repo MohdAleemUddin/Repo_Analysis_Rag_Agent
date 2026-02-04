@@ -42,7 +42,7 @@ def create_page(
 ) -> dict[str, Any]:
     """
     Create a Confluence page via REST API. Uses shared session.
-    Network: 3 retries with exponential backoff (1s, 2s, 4s). Rate limit (429): wait 30s then retry.
+    Network: 3 retries (1s, 2s, 4s backoff). Rate limit (429): wait 30s then retry.
     Auth/403/404: no retry; raise so routes return PRD error.
     """
     client = get_client()
@@ -65,7 +65,10 @@ def create_page(
         try:
             resp = client.post(url, **kwargs)
             if resp.status_code == 429:
-                logger.warning("Rate limit (429); waiting %s s then retry.", RATE_LIMIT_WAIT_SECONDS)
+                logger.warning(
+                    "Rate limit (429); waiting %s s then retry.",
+                    RATE_LIMIT_WAIT_SECONDS,
+                )
                 time.sleep(RATE_LIMIT_WAIT_SECONDS)
                 resp = client.post(url, **kwargs)
             if resp.status_code in (401, 403, 404):
@@ -83,9 +86,21 @@ def create_page(
                     raise
             try:
                 import requests.exceptions as req_exc
-                is_network = isinstance(e, (req_exc.ConnectionError, req_exc.Timeout, ConnectionError, OSError))
+
+                is_network = isinstance(
+                    e,
+                    (
+                        req_exc.ConnectionError,
+                        req_exc.Timeout,
+                        ConnectionError,
+                        OSError,
+                    ),
+                )
             except ImportError:
-                is_network = isinstance(e, (ConnectionError, OSError)) or "timeout" in type(e).__name__.lower()
+                is_network = (
+                    isinstance(e, (ConnectionError, OSError))
+                    or "timeout" in type(e).__name__.lower()
+                )
             if is_network and attempt < NETWORK_RETRIES:
                 time.sleep(backoff)
                 backoff *= 2

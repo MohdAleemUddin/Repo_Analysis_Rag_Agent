@@ -87,6 +87,8 @@ jobs:
         continue-on-error: true
 
       - name: Run Pylint
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag/edge_agent
         run: pylint repo_analysis_rag/ offline-folder-rag/edge_agent/ --disable=all --enable=E,F
         continue-on-error: true
 

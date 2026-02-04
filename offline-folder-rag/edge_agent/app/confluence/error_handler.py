@@ -1,6 +1,6 @@
 """
-Intelligent error recovery: PRD §9.2 error format, single classification map, reliability metrics.
-Handler only returns response dicts; no writes. Clean-failure enforced in integration_agent and client.
+Error recovery: PRD §9.2 format, classification map, reliability metrics.
+Handler returns response dicts only; no writes. Clean-failure in integration_agent.
 """
 
 from __future__ import annotations
@@ -34,7 +34,9 @@ def _iter_leaf_exceptions(exc: BaseException) -> Iterable[BaseException]:
 def _is_network_error(leaf: BaseException) -> bool:
     if isinstance(leaf, socket.gaierror):
         return True
-    if isinstance(leaf, (ConnectionError, ConnectionResetError, BrokenPipeError, TimeoutError)):
+    if isinstance(
+        leaf, (ConnectionError, ConnectionResetError, BrokenPipeError, TimeoutError)
+    ):
         return True
     if isinstance(leaf, OSError):
         network_errnos = {101, 110, 111, 113, 104}
@@ -42,18 +44,21 @@ def _is_network_error(leaf: BaseException) -> bool:
             return True
     try:
         import requests.exceptions  # type: ignore[import-untyped]
+
         if isinstance(leaf, requests.exceptions.RequestException):
             return True
     except Exception:
         pass
     try:
         import httpx  # type: ignore[import-untyped]
+
         if isinstance(leaf, httpx.RequestError):
             return True
     except Exception:
         pass
     try:
         import urllib3.exceptions  # type: ignore[import-untyped]
+
         if isinstance(leaf, urllib3.exceptions.HTTPError):
             return True
     except Exception:
@@ -67,6 +72,7 @@ def _is_network_error(leaf: BaseException) -> bool:
         "timed out",
         "temporary failure in name resolution",
         "name or service not known",
+        "name resolution",
     )
     return any(p in msg for p in network_phrases)
 
@@ -167,7 +173,7 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
-    # Network: robust detection (Linux errnos, ExceptionGroup, requests/httpx/urllib3, socket)
+    # Network: Linux errnos, ExceptionGroup, requests/httpx/urllib3, socket
     for leaf in _iter_leaf_exceptions(exc):
         if _is_network_error(leaf):
             return "network"
@@ -234,7 +240,8 @@ def prd_error_response(
     return {
         "error": error_code,
         "message": message or "Something went wrong.",
-        "intelligence_suggestion": intelligence_suggestion or "Check the message and try again.",
+        "intelligence_suggestion": intelligence_suggestion
+        or "Check the message and try again.",
         "fallback_available": fallback_available,
         "intelligence_confidence": intelligence_confidence,
         "actions": ["Retry", "Update Settings", "Cancel"],
@@ -243,9 +250,11 @@ def prd_error_response(
 
 
 def handle_error(exc: BaseException, error_code: str = "error") -> dict[str, Any]:
-    """Classify exception and return PRD §9.2 error response. No corruption; clean failure."""
+    """Classify exception and return PRD §9.2 error response. Clean failure."""
     category = _classify(exc)
-    return prd_error_response(error_code=error_code, intelligence_confidence=0.0, category=category)
+    return prd_error_response(
+        error_code=error_code, intelligence_confidence=0.0, category=category
+    )
 
 
 def get_actions_for_category(category: str) -> list[str]:
@@ -268,7 +277,11 @@ class ReliabilityMetrics:
 
     @property
     def auto_recovery_rate(self) -> float:
-        return (self.auto_recovery_count / self.failure_count * 100.0) if self.failure_count else 0.0
+        return (
+            (self.auto_recovery_count / self.failure_count * 100.0)
+            if self.failure_count
+            else 0.0
+        )
 
     @property
     def user_intervention_rate(self) -> float:
@@ -283,7 +296,9 @@ def record_success() -> None:
     _metrics.success_count += 1
 
 
-def record_failure(auto_recovered: bool = False, user_intervention: bool = False) -> None:
+def record_failure(
+    auto_recovered: bool = False, user_intervention: bool = False
+) -> None:
     _metrics.failure_count += 1
     if auto_recovered:
         _metrics.auto_recovery_count += 1

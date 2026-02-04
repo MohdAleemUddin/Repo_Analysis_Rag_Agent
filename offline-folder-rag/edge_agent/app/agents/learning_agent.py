@@ -1,4 +1,4 @@
-"""Learning agent: learns from feedback. Invoked only after main create completes (non-blocking)."""
+"""Learning agent: learns from feedback. Invoked after create completes."""
 
 import logging
 from typing import Any

@@ -1,5 +1,5 @@
 # Configuration for edge agent and Confluence integration.
-# Reuse existing DB connection pattern; only reference connection/session from app context (no new pool).
+# Reuse existing DB pattern; reference connection/session from app context.
 
 from typing import Any
 

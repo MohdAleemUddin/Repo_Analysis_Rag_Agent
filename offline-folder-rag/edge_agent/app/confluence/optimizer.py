@@ -17,10 +17,7 @@ PerformanceRecordLike = Any  # PerformanceRecord from prd_monitor
 
 
 def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
-    """
-    Given a performance record (PerformanceRecord or dict with same keys), return a list of
-    human-readable optimization suggestions. No direct throttling; suggestions only.
-    """
+    """Return optimization suggestions from a performance record. Suggestions only."""
     suggestions: list[str] = []
 
     if hasattr(record, "per_file_analysis_ms"):
@@ -35,8 +32,8 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
     if over:
         n = len(over)
         suggestions.append(
-            f"Per-file analysis exceeded {ANALYSIS_MAX_SECONDS_PER_FILE}s for {n} file(s). "
-            "Consider enabling analysis cache or reducing CONFLUENCE_MAX_PARALLEL_FILES."
+            f"Analysis exceeded {ANALYSIS_MAX_SECONDS_PER_FILE}s for {n} file(s). "
+            "Consider cache or reduce CONFLUENCE_MAX_PARALLEL_FILES."
         )
 
     # Template selection > 2s
@@ -46,8 +43,8 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         template_ms = record.get("template_selection_ms", 0)
     if template_ms > TEMPLATE_SELECTION_MAX_SECONDS * 1000:
         suggestions.append(
-            f"Template selection took {template_ms/1000:.2f}s (limit {TEMPLATE_SELECTION_MAX_SECONDS}s). "
-            "Consider caching template index or reducing vector search scope."
+            f"Template selection {template_ms/1000:.2f}s "
+            f"(limit {TEMPLATE_SELECTION_MAX_SECONDS}s). Cache template index."
         )
 
     # E2E create > 15s
@@ -57,8 +54,8 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         create_ms = record.get("create_e2e_ms", 0)
     if create_ms > CREATE_E2E_MAX_SECONDS * 1000:
         suggestions.append(
-            f"End-to-end create took {create_ms/1000:.2f}s (limit {CREATE_E2E_MAX_SECONDS}s). "
-            "Check network/API latency or reduce payload size."
+            f"E2E create {create_ms/1000:.2f}s "
+            f"(limit {CREATE_E2E_MAX_SECONDS}s). Check network or reduce."
         )
 
     # Peak memory > 300MB
@@ -68,17 +65,16 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         peak_mb = record.get("peak_memory_mb", 0)
     if peak_mb > CONFLUENCE_MEMORY_LIMIT_MB:
         suggestions.append(
-            f"Peak memory {peak_mb:.1f} MB exceeded limit {CONFLUENCE_MEMORY_LIMIT_MB} MB. "
-            "Lower CONFLUENCE_MAX_PARALLEL_FILES or process large files in smaller chunks (CONFLUENCE_CHUNK_SIZE_BYTES)."
+            f"Peak memory {peak_mb:.1f} MB exceeded limit "
+            f"{CONFLUENCE_MEMORY_LIMIT_MB} MB. "
+            "Lower CONFLUENCE_MAX_PARALLEL_FILES or use smaller chunks."
         )
 
     return suggestions
 
 
 def get_recommended_max_parallel(peak_memory_mb: float) -> int | None:
-    """
-    Suggest a lower max parallel count if memory was high. Returns None if no change suggested.
-    """
+    """Suggest lower max parallel if memory was high. None if no change suggested."""
     if peak_memory_mb <= 0 or peak_memory_mb < CONFLUENCE_MEMORY_LIMIT_MB * 0.9:
         return None
     # Simple heuristic: if we're near limit, suggest 2

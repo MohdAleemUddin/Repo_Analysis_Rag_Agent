@@ -1,4 +1,4 @@
-"""Integration agent: Confluence API create with e2e timer; triggers background learning only on success. Error recovery: no partial create; no learning on failure."""
+"""Integration agent: Confluence create + e2e timer; learning on success only."""
 
 import concurrent.futures
 import logging
@@ -25,10 +25,7 @@ def create_page(
     body_html: str,
     auth: tuple[str, str] | None = None,
 ) -> dict[str, Any]:
-    """
-    Create Confluence page; wrapped with e2e timer. Client performs network retries (3x backoff) and rate-limit wait+retry.
-    On success: record_success, return result. On failure: record_failure, re-raise (no partial page, no learning).
-    """
+    """Create page; e2e timer. Client: retries (3x backoff), rate-limit wait+retry."""
     with timer_create_e2e():
         try:
             result = confluence_create_page(
@@ -40,7 +37,7 @@ def create_page(
             )
             record_success()
             return result
-        except Exception as e:
+        except Exception:
             record_failure(auto_recovered=False, user_intervention=False)
             raise
 
@@ -48,7 +45,8 @@ def create_page(
 def schedule_learning_after_create(
     feedback: str, creation_metadata: dict[str, Any] | None = None
 ) -> None:
-    """Schedule learning in background. Call only after successful create; no learning on failure."""
+    """Schedule learning in background. Only after successful create."""
+
     def _run() -> None:
         try:
             learn(feedback, creation_metadata)
