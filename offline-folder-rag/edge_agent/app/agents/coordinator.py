@@ -42,16 +42,30 @@ def _set_state(state: PipelineState, err: CoordinatorError | None = None) -> Non
     _last_coordinator_error = err
 
 
+def _order_file_contents(file_contents: list[str]) -> list[str]:
+    """Order contents: code before documentation, main first, related grouped."""
+    def _code_like(c: str) -> bool:
+        s = (c or "").strip()
+        return bool(
+            s.startswith("#")
+            or "def " in c
+            or "class " in c
+            or "import " in c
+            or "from " in c
+        )
+    code_first = [c for c in file_contents if _code_like(c)]
+    rest = [c for c in file_contents if not _code_like(c)]
+    return code_first + rest
+
+
 def run_analyze(file_contents: list[str]) -> dict[str, Any]:
     """
     Sequential pipeline: 1) Content Analysis (per file), 2) Pattern Matching.
-    Returns {"analyses": [dict, ...], "template": dict} for API compatibility.
+    Returns PRD §9.1 shape: intelligence_analysis, intelligent_recommendation.
     """
     global _pipeline_state, _last_coordinator_error
     start_operation()
     _set_state(PipelineState.Idle)
-    analyses_out: list[dict[str, Any]] = []
-    template_out: dict[str, Any] = {}
 
     try:
         _set_state(PipelineState.Analyzing)
@@ -65,15 +79,48 @@ def run_analyze(file_contents: list[str]) -> dict[str, Any]:
                 raise RuntimeError("Memory limit reached")
             prof = analyze_file_with_timer(content, file_index=idx)
             profiles.append(prof)
-        analyses_out = [p.model_dump() if hasattr(p, "model_dump") else p for p in profiles]
 
         _set_state(PipelineState.Matching)
         combined = "\n".join(str(p) for p in profiles)
         template_decision = match(combined, analysis=profiles[0] if profiles else None)
-        template_out = template_decision.model_dump() if hasattr(template_decision, "model_dump") else template_decision
+        td = template_decision.model_dump() if hasattr(template_decision, "model_dump") else template_decision
+
+        first_profile = profiles[0] if profiles else None
+        first_d = first_profile.model_dump() if first_profile and hasattr(first_profile, "model_dump") else {}
+        ai_reasoning = first_d.get("ai_reasoning", "")
+        content_types = first_d.get("content_types", [])
+        detected_patterns = first_d.get("detected_patterns", [])
+        intelligent_title = "Documentation"
+        if content_types and isinstance(content_types, list) and len(content_types) > 0:
+            if "module" in content_types:
+                intelligent_title = "Module documentation"
+            elif "document" in content_types:
+                intelligent_title = "Documentation"
+
+        intelligence_analysis = {
+            "content_types": content_types or [],
+            "detected_patterns": detected_patterns or [],
+            "intelligent_title": intelligent_title,
+            "intelligence_confidence": float(td.get("intelligence_score", 0.5)),
+            "ai_reasoning": ai_reasoning,
+        }
+        cb = td.get("confidence_breakdown") or {}
+        intelligent_recommendation = {
+            "template_id": td.get("template_id", ""),
+            "template_name": td.get("template_name", ""),
+            "intelligence_reason": td.get("intelligence_reason", td.get("ai_reasoning", "")),
+            "confidence_breakdown": {
+                "content_match": float(cb.get("content_match", 0.5)),
+                "structure_match": float(cb.get("structure_match", 0.5)),
+                "context_match": float(cb.get("context_match", 0.5)),
+            },
+        }
 
         _set_state(PipelineState.Completed)
-        return {"analyses": analyses_out, "template": template_out}
+        return {
+            "intelligence_analysis": intelligence_analysis,
+            "intelligent_recommendation": intelligent_recommendation,
+        }
     except Exception as e:
         _set_state(PipelineState.Failed, CoordinatorError(
             error_code="analysis_failed",
@@ -90,12 +137,17 @@ def run_create(
     body_content: str,
     auth: tuple[str, str] | None = None,
     feedback_for_learning: str = "",
+    file_contents: list[str] | None = None,
 ) -> dict[str, Any]:
     """
     Sequential pipeline: Analysis → Matching → Formatting → Integration.
+    If file_contents is provided, order (code before docs, main first) and merge into body.
     Returns API-compatible dict (id, title, space, etc.) for confluence_routes.
     """
     global _pipeline_state, _last_coordinator_error
+    if file_contents:
+        ordered = _order_file_contents(file_contents)
+        body_content = "\n\n---\n\n".join(ordered)
     start_operation()
     _set_state(PipelineState.Idle)
 

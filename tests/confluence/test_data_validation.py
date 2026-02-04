@@ -90,8 +90,8 @@ def test_tc_dv_006_confidence_none_accepted() -> None:
     assert msg == ""
 
 
-def test_tc_dv_006_confidence_non_number_rejected() -> None:
-    ok, msg = validate_confidence("not a number")
+def test_tc_dv_006_confidence_not_number_rejected() -> None:
+    ok, msg = validate_confidence("0.5")
     assert not ok
     assert "number" in msg.lower()
 

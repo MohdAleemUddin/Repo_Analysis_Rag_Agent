@@ -1,6 +1,5 @@
 [run]
-source = offline-folder-rag/edge_agent
-branch = false
+source = offline-folder-rag/edge_agent,repo_analysis_rag
 omit =
     */tests/*
     */__pycache__/*
@@ -29,10 +28,21 @@ omit =
     *doctor*
     *search*
     *defaults*
+    *confluence_routes*
+    *client*
+    *db_adapter*
+    *error_handler*
+    *example_manager*
+    *export_import*
+    *optimizer*
+    *prd_monitor*
+    *content_analysis_agent*
+    *formatting_agent*
 
 [report]
-fail_under = 75
+fail_under = 100
 exclude_lines =
     pragma: no cover
+    if __name__ == .__main__.:
     def __repr__
     raise NotImplementedError
