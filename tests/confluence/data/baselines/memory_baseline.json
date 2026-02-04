@@ -1,0 +1,5 @@
+{
+  "description": "Memory baseline for Confluence intelligence (NFR1 ≤300MB).",
+  "peak_memory_mb": 150,
+  "target_mb": 300
+}

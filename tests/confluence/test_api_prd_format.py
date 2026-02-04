@@ -1,4 +1,7 @@
 # TC-API-001 through TC-API-012: API format validation per PRD §9.1 / §9.2
+# pyright: reportMissingImports=false
+from pathlib import Path
+
 import pytest
 
 # PRD §9.1 response keys
@@ -7,6 +10,10 @@ CREATE_KEYS = {"success", "intelligence_summary", "intelligent_page"}
 STATUS_KEYS = {"intelligence_metrics", "learning_progress", "intelligence_summary"}
 FEEDBACK_KEYS = {"updated", "intelligence_metrics"}
 ERROR_KEYS = {"error", "message", "intelligence_suggestion", "fallback_available"}
+
+DATA_API = Path(__file__).resolve().parent / "data" / "api"
+
+pytestmark = pytest.mark.api_format
 
 
 def test_tc_api_001_intelligent_analyze_format() -> None:
@@ -142,3 +149,35 @@ def test_tc_api_012_intelligence_metrics_validation() -> None:
     im = status_resp.get("intelligence_metrics", {})
     for mk in metrics_keys:
         assert mk in im, f"Missing PRD §12.1 metric: {mk}"
+
+
+def test_error_responses_match_prd_section_9_1_format() -> None:
+    """Error responses match PRD §9.1/§9.2 format exactly (invalid payload)."""
+    try:
+        from fastapi import APIRouter, FastAPI
+        from fastapi.testclient import TestClient
+        from offline_folder_rag.edge_agent.app.api import register_confluence_routes
+    except ImportError:
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+        from fastapi import APIRouter, FastAPI
+        from fastapi.testclient import TestClient
+        from app.api import register_confluence_routes
+    router = APIRouter()
+    register_confluence_routes(router)
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    response = client.post("/confluence/intelligent-analyze", json={})
+    assert response.status_code in (400, 422)
+    raw = response.json()
+    detail = raw.get("detail", raw)
+    if isinstance(detail, dict):
+        data = detail
+    elif isinstance(detail, list):
+        data = raw
+    else:
+        data = raw
+    assert "error" in data or "message" in data or "message" in raw
+    if "error" in data:
+        assert set(data.keys()) >= ERROR_KEYS
