@@ -105,9 +105,15 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
+    # Network: requests exceptions first (so CI always classifies ConnectionError as network)
+    try:
+        import requests.exceptions as req_exc
+        if isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout)):
+            return "network"
+    except ImportError:
+        pass
     t = type(exc).__name__
     msg = str(exc).lower()
-    # Network: by type name or message first (robust in CI when requests import context may differ)
     if "ConnectionError" in t or "Timeout" in t or "ConnectTimeout" in t or "ReadTimeout" in t:
         return "network"
     if "connection" in msg or "timeout" in msg or "network" in msg or "refused" in msg or "reach" in msg:
@@ -116,12 +122,6 @@ def _classify(exc: BaseException) -> str:
         "connection" in msg or "timeout" in msg or "refused" in msg or "reach" in msg
     ):
         return "network"
-    try:
-        import requests.exceptions as req_exc
-        if isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout)):
-            return "network"
-    except ImportError:
-        pass
     resp = getattr(exc, "response", None)
     if resp is not None and getattr(resp, "status_code", None) is not None:
         sc = resp.status_code

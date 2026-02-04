@@ -10047,3 +10047,477 @@ Install has been run with that command and completed successfully.
 
 ---
 
+_**User**_
+
+Run pytest tests/confluence/ tests/edge_agent/unit/ \
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.14/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent
+configfile: pytest.ini
+plugins: cov-7.0.0, xdist-3.8.0, asyncio-1.3.0, mock-3.15.1, anyio-4.12.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 42 items
+
+tests/confluence/test_api_prd_format.py::test_placeholder PASSED         [  2%]
+tests/confluence/test_api_router.py::test_placeholder PASSED             [  4%]
+tests/confluence/test_client_auth.py::test_placeholder PASSED            [  7%]
+tests/confluence/test_e2e_workflows.py::test_placeholder PASSED          [  9%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry FAILED [ 11%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_007_rate_limit_handling PASSED [ 14%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_003_invalid_credentials_fail_cleanly PASSED [ 16%]
+tests/confluence/test_error_recovery.py::test_TC_ST_006_retry_state_transitions_correct PASSED [ 19%]
+tests/confluence/test_error_recovery.py::test_TC_DT_007_integration_agent_error_recovery_logic PASSED [ 21%]
+tests/confluence/test_error_recovery.py::test_TC_EH_008_encoding_issue_prd_format_response PASSED [ 23%]
+tests/confluence/test_error_recovery.py::test_TC_EH_007_invalid_template_format_graceful_handling PASSED [ 26%]
+tests/confluence/test_error_recovery.py::test_TC_EH_006_confluence_api_404_graceful_handling PASSED [ 28%]
+tests/confluence/test_error_recovery.py::test_TC_EH_005_permission_denied_clear_guidance PASSED [ 30%]
+tests/confluence/test_error_recovery.py::test_TC_EH_009_db_connection_lost_graceful_recovery_option PASSED [ 33%]
+tests/confluence/test_error_recovery.py::test_TC_EH_010_intelligence_error_graceful_failure PASSED [ 35%]
+tests/confluence/test_error_recovery.py::test_TC_EH_011_template_matching_error_graceful_fallback PASSED [ 38%]
+tests/confluence/test_error_recovery.py::test_TC_EH_012_agent_coordination_error_recover_gracefully PASSED [ 40%]
+tests/confluence/test_error_recovery.py::test_TC_EH_001_confluence_down_no_corruption_clear_messaging PASSED [ 42%]
+tests/confluence/test_error_recovery.py::test_TC_EH_002_invalid_credentials_no_corruption_clear_messaging PASSED [ 45%]
+tests/confluence/test_error_recovery.py::test_TC_EH_003_disk_full_no_corruption_clear_messaging PASSED [ 47%]
+tests/confluence/test_error_recovery.py::test_TC_SC_004_handling_network_issues_graceful_recovery PASSED [ 50%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_014_mcp_task_failure_graceful_recovery_option PASSED [ 52%]
+tests/confluence/test_imports.py::test_placeholder PASSED                [ 54%]
+tests/confluence/test_intelligence_learning.py::test_placeholder PASSED  [ 57%]
+tests/confluence/test_page_tracker.py::test_placeholder PASSED           [ 59%]
+tests/confluence/test_performance_targets.py::test_analysis_time_under_3_seconds_per_file PASSED [ 61%]
+tests/confluence/test_performance_targets.py::test_template_selection_under_2_seconds PASSED [ 64%]
+tests/confluence/test_performance_targets.py::test_creation_time_under_15_seconds_including_api PASSED [ 66%]
+tests/confluence/test_performance_targets.py::test_memory_under_300mb_during_operation PASSED [ 69%]
+tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling PASSED [ 71%]
+tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict PASSED [ 73%]
+tests/confluence/test_performance_targets.py::test_resource_sharing_memory_limit PASSED [ 76%]
+tests/confluence/test_performance_targets.py::test_existing_rag_features_unchanged PASSED [ 78%]
+tests/confluence/test_performance_targets.py::test_prd_monitor_timers_and_record PASSED [ 80%]
+tests/confluence/test_performance_targets.py::test_optimizer_suggestions PASSED [ 83%]
+tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics PASSED [ 85%]
+tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation PASSED [ 88%]
+tests/confluence/test_prd_compliance.py::test_placeholder PASSED         [ 90%]
+tests/confluence/test_reliability.py::test_placeholder PASSED            [ 92%]
+tests/confluence/test_security_compliance.py::test_placeholder PASSED    [ 95%]
+tests/confluence/test_state_machine.py::test_placeholder PASSED          [ 97%]
+tests/confluence/test_templates.py::test_placeholder PASSED              [100%]
+
+=================================== FAILURES ===================================
+__________________ test_TC_NEG_004_network_failure_auto_retry __________________
+tests/confluence/test_error_recovery.py:28: in test_TC_NEG_004_network_failure_auto_retry
+    assert out.get("category") == "network"
+E   AssertionError: assert 'other' == 'network'
+E     
+E     - network
+E     + other
+- generated xml file: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent/test-results-unit.xml -
+=========================== short test summary info ============================
+FAILED tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry - AssertionError: assert 'other' == 'network'
+  
+  - network
+  + other
+========================= 1 failed, 41 passed in 7.52s =========================
+Error: Process completed with exit code 1.CONSTRAINT A: Only include code/text explicitly provided below.
+CONSTRAINT B: Ignore all prior conversation history.
+CONSTRAINT C: Use static instructions followed by dynamic content; avoid variable metadata before the task text.
+CONSTRAINT E: Limit output strictly to the requested answer; no explanations, no extra text.
+CONSTRAINT F: Do not repeat input in the output.
+CONSTRAINT G: Only perform the stated task and nothing else.
+CONSTRAINT H: Do not scan the repo and send as context. Until and unless specified explicitly
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_error_recovery.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "handle_error|category",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+  "glob": "**/error_handler*",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "handle_error|category",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\confluence\\error_handler.py",
+              "matches": [
+                {
+                  "lineNumber": 169,
+                  "content": "    category: str | None = None,"
+                },
+                {
+                  "lineNumber": 171,
+                  "content": "    \"\"\"Build PRD §9.2 error response. If category given, fill from CLASSIFICATION.\"\"\""
+                },
+                {
+                  "lineNumber": 172,
+                  "content": "    if category and category in CLASSIFICATION:"
+                },
+                {
+                  "lineNumber": 173,
+                  "content": "        msg, sugg, fallback, acts = CLASSIFICATION[category]"
+                },
+                {
+                  "lineNumber": 182,
+                  "content": "        out[\"category\"] = category"
+                },
+                {
+                  "lineNumber": 191,
+                  "content": "        \"category\": \"other\","
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "def handle_error(exc: BaseException, error_code: str = \"error\") -&gt; dict[str, Any]:"
+                },
+                {
+                  "lineNumber": 197,
+                  "content": "    category = _classify(exc)"
+                },
+                {
+                  "lineNumber": 198,
+                  "content": "    return prd_error_response(error_code=error_code, intelligence_confidence=0.0, category=category)"
+                },
+                {
+                  "lineNumber": 201,
+                  "content": "def get_actions_for_category(category: str) -&gt; list[str]:"
+                },
+                {
+                  "lineNumber": 202,
+                  "content": "    if category in CLASSIFICATION:"
+                },
+                {
+                  "lineNumber": 203,
+                  "content": "        return list(CLASSIFICATION[category][3])"
+                }
+              ]
+            }
+          ],
+          "totalLines": 12,
+          "totalMatchedLines": 12
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "undefined" • **1** result in **1** directory</summary>
+
+Directory: **c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent** (1 file)
+
+| File |
+|------|
+| `../.\offline-folder-rag\edge_agent\app\confluence\error_handler.py` |
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Checking for another `_classify` or `app.confluence` path used by the test:
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "app\\.confluence\\.error_handler|from app\\.confluence",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "app\\.confluence\\.error_handler|from app\\.confluence",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".\\tests\\confluence\\test_performance_targets.py",
+              "matches": [
+                {
+                  "lineNumber": 61,
+                  "content": "    from app.confluence.prd_monitor import ("
+                },
+                {
+                  "lineNumber": 120,
+                  "content": "    from app.confluence.prd_monitor import check_memory_before_step"
+                },
+                {
+                  "lineNumber": 141,
+                  "content": "    from app.confluence.prd_monitor import ("
+                },
+                {
+                  "lineNumber": 167,
+                  "content": "    from app.confluence.optimizer import get_optimization_suggestions"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_error_recovery.py",
+              "matches": [
+                {
+                  "lineNumber": 17,
+                  "content": "    from app.confluence.client import NETWORK_RETRIES"
+                },
+                {
+                  "lineNumber": 20,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 34,
+                  "content": "    from app.confluence.client import RATE_LIMIT_WAIT_SECONDS"
+                },
+                {
+                  "lineNumber": 35,
+                  "content": "    from app.confluence.error_handler import CLASSIFICATION, handle_error"
+                },
+                {
+                  "lineNumber": 52,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 71,
+                  "content": "    from app.confluence.client import NETWORK_RETRIES, create_page"
+                },
+                {
+                  "lineNumber": 88,
+                  "content": "    from app.confluence.error_handler import get_reliability_metrics"
+                },
+                {
+                  "lineNumber": 102,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 111,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 121,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 134,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 148,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 158,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 167,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 177,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 213,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                },
+                {
+                  "lineNumber": 222,
+                  "content": "    from app.confluence.error_handler import handle_error, get_actions_for_category"
+                },
+                {
+                  "lineNumber": 232,
+                  "content": "    from app.confluence.error_handler import handle_error"
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\agents\\integration_agent.py",
+              "matches": [
+                {
+                  "lineNumber": 7,
+                  "content": "from app.confluence.client import create_page as confluence_create_page"
+                },
+                {
+                  "lineNumber": 8,
+                  "content": "from app.confluence.error_handler import record_failure, record_success"
+                },
+                {
+                  "lineNumber": 9,
+                  "content": "from app.confluence.prd_monitor import timer_create_e2e"
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\api\\confluence_routes.py",
+              "matches": [
+                {
+                  "lineNumber": 13,
+                  "content": "from app.confluence.error_handler import get_actions_for_category, get_reliability_metrics, handle_error, prd_error_response"
+                },
+                {
+                  "lineNumber": 14,
+                  "content": "from app.confluence.optimizer import get_optimization_suggestions"
+                },
+                {
+                  "lineNumber": 15,
+                  "content": "from app.confluence.prd_monitor import ("
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\agents\\coordinator.py",
+              "matches": [
+                {
+                  "lineNumber": 12,
+                  "content": "from app.confluence.prd_monitor import ("
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\agents\\content_analysis_agent.py",
+              "matches": [
+                {
+                  "lineNumber": 14,
+                  "content": "from app.confluence.prd_monitor import timer_per_file_analysis"
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\edge_agent\\app\\agents\\pattern_matching_agent.py",
+              "matches": [
+                {
+                  "lineNumber": 5,
+                  "content": "from app.confluence.prd_monitor import timer_template_selection"
+                }
+              ]
+            }
+          ],
+          "totalLines": 31,
+          "totalMatchedLines": 31
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\conftest.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Checking whether the requests-based isinstance check runs before the type-name check — CI may use a different exception class name:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Running the requests isinstance check first so requests ConnectionError is always classified as "network" regardless of type name or message.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
