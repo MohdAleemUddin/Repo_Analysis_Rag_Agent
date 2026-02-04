@@ -287,6 +287,8 @@ function Invoke-Tests {
     Write-Info "Installing test dependencies..."
     $pythonExe = if (Test-Path ".\.venv\Scripts\python.exe") { ".\.venv\Scripts\python.exe" } else { "python" }
     & $pythonExe -m pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist -q
+    & $pythonExe -m pip install -r requirements.txt -q 2>$null
+    if (-not $?) { & $pythonExe -m pip install fastapi "uvicorn[standard]" httpx -q }
 
     Write-Info "Starting PostgreSQL/Redis services (Docker) for integration tests..."
     $dockerAvailable = $false
@@ -523,7 +525,7 @@ Write-Host "  Repo_Analysis_Rag_Agent Local CI/CD     "
 Write-Host "  Stage: $Stage"
 Write-Host "============================================`n"
 
-if ($Stage -eq 'all' -or $Stage -eq 'setup') {
+if ($Stage -eq 'all' -or $Stage -eq 'setup' -or $Stage -eq 'test') {
     Invoke-Setup
 }
 

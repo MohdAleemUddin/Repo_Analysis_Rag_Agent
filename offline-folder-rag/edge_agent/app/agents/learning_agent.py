@@ -121,17 +121,6 @@ def get_collective_intelligence_count(
     return get_collective_count(db_fetch_count=db_fetch_count, examples_base_dir=examples_base_dir, team_sharing_opt_in=team_sharing_opt_in)
 
 
-def learn(feedback: str) -> None:
-    """Legacy entrypoint; use learn_from_feedback with creation_id and score for full flow."""
-    pass
-"""Learning agent: learns from feedback. Invoked after create completes."""
-
-import logging
-from typing import Any
-
-logger = logging.getLogger(__name__)
-
-
 def learn(feedback: str, creation_metadata: dict[str, Any] | None = None) -> None:
     """
     Record feedback / store example for future template matching.
@@ -140,3 +129,6 @@ def learn(feedback: str, creation_metadata: dict[str, Any] | None = None) -> Non
     logger.info(
         "Learning from feedback (background): %s", feedback[:200] if feedback else ""
     )
+def learn(feedback: str) -> None:
+    """Legacy entrypoint; use learn_from_feedback with creation_id and score for full flow."""
+    pass

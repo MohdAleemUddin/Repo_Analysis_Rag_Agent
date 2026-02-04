@@ -326,7 +326,10 @@ def intelligence_status_handler(request: Any = None) -> Tuple[Any, int] | dict[s
 # POST /confluence/intelligence-feedback
 def intelligence_feedback_handler(body: dict[str, Any], request: Any = None) -> dict[str, Any] | Tuple[Any, int]:
     """Accept feedback; when creation_id and intelligence_score 1-5, call learn_from_feedback."""
-    if body is None and request is not None:
+    if body is not None and not isinstance(body, dict):
+        request = body
+        body = _get_json_body(request) or {}
+    elif body is None and request is not None:
         body = _get_json_body(request) or {}
     body = body or {}
     creation_id = body.get("creation_id")
@@ -348,9 +351,9 @@ def intelligence_feedback_handler(body: dict[str, Any], request: Any = None) -> 
                 db_update_template=db_update_template_confidence,
             )
             data = get_intelligence_status(detail_level="full", db_fetch_metrics=db_fetch_intelligence_metrics)
-            return {"updated": True, "intelligence_metrics": data.get("intelligence_metrics", {})}
+            return ({"updated": True, "intelligence_metrics": data.get("intelligence_metrics", {})}, 200)
     feedback_text = body.get("feedback", "") or body.get("message", "")
-    return {"status": "accepted", "message": "Feedback received.", "feedback_received": feedback_text}
+    return ({"status": "accepted", "message": "Feedback received.", "feedback_received": feedback_text}, 200)
 
 
 def register_confluence_routes(router: Any) -> None:
@@ -364,7 +367,8 @@ def register_confluence_routes(router: Any) -> None:
                 return intelligent_create_handler(body or {})
 
             def feedback_route(body: dict = Body(default=None)):
-                return intelligence_feedback_handler(body or {})
+                out = intelligence_feedback_handler(body or {})
+                return out[0] if isinstance(out, tuple) else out
 
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)
@@ -397,7 +401,8 @@ def register_confluence_routes(router: Any) -> None:
 
             def feedback_route(request: Any = None):
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
-                return intelligence_feedback_handler(body, request)
+                out = intelligence_feedback_handler(body, request)
+                return out[0] if isinstance(out, tuple) else out
 
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)

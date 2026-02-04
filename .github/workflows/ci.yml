@@ -257,6 +257,13 @@ jobs:
             test-results-functional.xml
             test-results-e2e.xml
 
+      - name: Upload errors log
+        uses: actions/upload-artifact@v4
+        if: always() && hashFiles('errors.log') != ''
+        with:
+          name: errors-log
+          path: errors.log
+
   build-docker:
     name: Build Docker Image
     runs-on: ubuntu-latest
