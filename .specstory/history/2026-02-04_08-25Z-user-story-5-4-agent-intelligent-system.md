@@ -2416,3 +2416,40 @@ Updates are in place. Lint is clean.
 
 ---
 
+_**User**_
+
+(.venv) PS C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent> cd C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent
+>> .\.venv\Scripts\Activate.ps1
+>> python -m pytest tests/ --cov=offline-folder-rag/edge_agent --cov=repo_analysis_rag --cov-report=term-missing -v giv ethe command according to my file path so that i check my test coverage
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Use this from your repo root:
+
+```powershell
+cd C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent
+.\.venv\Scripts\Activate.ps1
+python -m pytest tests/ --cov=offline-folder-rag/edge_agent --cov=repo_analysis_rag --cov-report=term-missing -v
+```
+
+If `repo_analysis_rag` isn’t a package in the repo, drop it or replace with the real package name. To only measure the edge_agent app code (the `app` package):
+
+```powershell
+cd C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent
+.\.venv\Scripts\Activate.ps1
+python -m pytest tests/ --cov=app --cov-report=term-missing -v
+```
+
+Run the second form from inside `offline-folder-rag\edge_agent` if your tests assume that as the working directory:
+
+```powershell
+cd C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent
+C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\.venv\Scripts\Activate.ps1
+python -m pytest ..\..\..\tests\ --cov=app --cov-report=term-missing -v
+```
+
+---
+
