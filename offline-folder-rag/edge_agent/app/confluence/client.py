@@ -5,11 +5,12 @@ Ollama is shared with RAG; this module does not spawn a second Ollama instance.
 Network: 3 retries with exponential backoff. Rate limit (429): wait 30s then retry.
 """
 
-import logging
 import time
 from typing import Any
 
-logger = logging.getLogger(__name__)
+from app.logging.logger import get_logger
+
+logger = get_logger(__name__)
 
 _session: Any = None
 NETWORK_RETRIES = 3
@@ -33,18 +34,41 @@ def get_client() -> Any:
     return _get_session()
 
 
+def _validate_token(token: str | None) -> None:
+    """Validate token when auth is provided (TC-DV-004). Raises ValueError if invalid or empty."""
+    if token is None or not isinstance(token, str):
+        raise ValueError("API token must be a non-empty string when auth is provided")
+    t = token.strip()
+    if not t:
+        raise ValueError("API token must be a non-empty string when auth is provided")
+
+
 def create_page(
     base_url: str,
     space_key: str,
     title: str,
     body_storage_value: str,
     auth: tuple[str, str] | None = None,
+    workspace_id: str | None = None,
 ) -> dict[str, Any]:
     """
     Create a Confluence page via REST API. Uses shared session.
+    Confluence operations use workspace-scoped credentials for project isolation when
+    workspace_id is provided (credentials from get_confluence_config(workspace_id)).
     Network: 3 retries (1s, 2s, 4s backoff). Rate limit (429): wait 30s then retry.
     Auth/403/404: no retry; raise so routes return PRD error.
     """
+    if workspace_id is not None:
+        from app.config.config import get_confluence_config
+
+        cfg = get_confluence_config(workspace_id=workspace_id)
+        base_url = cfg["base_url"]
+        auth = cfg.get("auth")
+    base = base_url.strip().lower()
+    if not base.startswith("https://"):
+        raise ValueError("Confluence base_url must use HTTPS")
+    if auth is not None:
+        _validate_token(auth[1] if len(auth) > 1 else None)
     client = get_client()
     if client is None:
         raise RuntimeError("HTTP client not available (requests not installed?)")

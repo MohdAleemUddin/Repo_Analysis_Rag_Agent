@@ -37,15 +37,30 @@ def get_database_config() -> dict[str, Any]:
     }
 
 
-def get_confluence_config() -> dict[str, Any]:
-    """Confluence config (single source: this module). database_url same as RAG when unset."""
+def get_confluence_config(workspace_id: str | None = None) -> dict[str, Any]:
+    """
+    Confluence config (single source: this module). database_url same as RAG when unset.
+    Confluence credentials must be read from the existing RAG credential store (same
+    mechanism as RAG; encrypted at rest per NFR3). Confluence operations must be
+    invoked with workspace-scoped credentials so that project isolation is preserved.
+    When workspace_id is provided, credentials (base_url, auth) are obtained from the
+    encrypted credential store only; raises if missing or not from the store.
+    """
+    from app.auth.credential_store import get_workspace_credentials
+
     db = get_database_config()
     opt_in = os.environ.get("CONFLUENCE_TEAM_SHARING_OPT_IN", "").strip().lower()
     team_sharing_opt_in = opt_in not in ("0", "false", "no") if opt_in else _DEFAULT_TEAM_SHARING_OPT_IN
-    return {
+    out: dict[str, Any] = {
         "team_sharing_opt_in": team_sharing_opt_in,
         "database_url": db.get("database_url"),
     }
+    if workspace_id is not None:
+        creds = get_workspace_credentials(service="confluence", workspace_id=workspace_id)
+        out["base_url"] = creds["base_url"]
+        out["auth"] = (creds["email"], creds["api_token"])
+        out["is_encrypted"] = creds.get("is_encrypted", True)
+    return out
 
 # --- NFR1 Performance constants (PRD) ---
 ANALYSIS_MAX_SECONDS_PER_FILE = 3
