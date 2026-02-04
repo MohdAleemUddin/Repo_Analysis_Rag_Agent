@@ -130,3 +130,51 @@ def test_get_collective_count_db():
 
 def test_load_example_no_op():
     example_manager.load_example("x")
+
+
+def test_embedding_to_db_invalid():
+    assert example_manager._embedding_to_db([0.1] * 100) is None
+    assert example_manager._embedding_to_db(None) is None
+
+
+def test_embedding_to_db_valid():
+    emb = [0.1] * 1536
+    s = example_manager._embedding_to_db(emb)
+    assert s is not None and "0.1" in s
+
+
+def test_store_example_db_exception():
+    def fail(*a, **k):
+        raise RuntimeError("db")
+    with tempfile.TemporaryDirectory() as tmp:
+        eid, learned = example_manager.store_example({"a": 1, "unique": "db_ex"}, "t", "T", db_execute=fail, examples_base_dir=tmp)
+    assert learned is True
+
+
+def test_get_examples_db_fetch_exception():
+    def fail(*a, **k):
+        raise RuntimeError("db")
+    with tempfile.TemporaryDirectory() as tmp:
+        examples = example_manager.get_examples(db_fetch=fail, examples_base_dir=tmp)
+    assert isinstance(examples, list)
+
+
+def test_update_embeddings_exception():
+    def fail(*a, **k):
+        raise RuntimeError("upsert fail")
+    example_manager.update_embeddings_for_examples(vector_store_upsert=fail)
+
+
+def test_apply_feedback_db_ensure():
+    with tempfile.TemporaryDirectory() as tmp:
+        mock_ensure = MagicMock()
+        example_manager.apply_feedback("c1", 5, db_ensure_creation=mock_ensure, examples_base_dir=tmp)
+    mock_ensure.assert_called_once_with("c1")
+
+
+def test_get_collective_count_db_exception():
+    def fail():
+        raise RuntimeError("db")
+    with tempfile.TemporaryDirectory() as tmp:
+        n = example_manager.get_collective_count(db_fetch_count=fail, examples_base_dir=tmp)
+    assert n >= 0
