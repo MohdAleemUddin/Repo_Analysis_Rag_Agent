@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "compile",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "label": "compile-rag",
+            "options": {
+                "cwd": "${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension"
+            },
+            "problemMatcher": "$tsc"
+        }
+    ]
+}

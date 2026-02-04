@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Offline RAG Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension/out/**/*.js"
+            ],
+            "preLaunchTask": "compile-rag"
+        }
+    ]
+}

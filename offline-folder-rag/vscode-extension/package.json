@@ -1,7 +1,60 @@
 {
   "name": "confluence-extension",
   "version": "0.0.1",
-  "engines": { "vscode": "^1.0.0" },
+  "engines": {
+    "vscode": "^1.0.0"
+  },
   "main": "./out/extension.js",
-  "activationEvents": []
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "confluence.saveToIntelligent",
+        "title": "PRD: Save to Confluence (Intelligent)",
+        "category": "Confluence"
+      },
+      {
+        "command": "confluence.saveSelection",
+        "title": "PRD: Save Selection (AI Formatting)",
+        "category": "Confluence"
+      },
+      {
+        "command": "confluence.documentProject",
+        "title": "PRD: Document Project Intelligently",
+        "category": "Confluence"
+      },
+      {
+        "command": "confluence.viewCreations",
+        "title": "PRD: View Intelligent Creations",
+        "category": "Confluence"
+      },
+      {
+        "command": "confluence.configureSettings",
+        "title": "PRD: Configure AI Settings",
+        "category": "Confluence"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "confluence.saveSelection",
+          "when": "editorHasSelection",
+          "group": "confluence@1"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.0",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@types/vscode": "^1.108.1",
+    "typescript": "^5.9.3"
+  }
 }

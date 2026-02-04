@@ -27,8 +27,13 @@ if ($testFilterSpecified -and $Stage -eq 'all') {
     $Stage = 'test'
 }
 
-# Repo-specific paths (no src/ at root)
-$PythonPaths = @("repo_analysis_rag/", "offline-folder-rag/edge_agent/", "tests/")
+# Repo-specific paths
+$PythonPaths = @()
+foreach ($path in @("repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/", "offline-folder-rag/", "tests/")) {
+    if (Test-Path $path) {
+        $PythonPaths += $path
+    }
+}
 $PythonPathsStr = $PythonPaths -join ", "
 
 function Write-Success {
@@ -171,11 +176,15 @@ function Invoke-Lint {
     pip install black ruff mypy pylint flake8 -q
 
     Write-Info "Running Black formatter check on $PythonPathsStr..."
-    try {
-        $blackProcess = Start-Process -FilePath "black" -ArgumentList "--check", "--diff", "repo_analysis_rag/", "offline-folder-rag/edge_agent/", "tests/" -NoNewWindow -Wait -PassThru
-        $blackExitCode = $blackProcess.ExitCode
-    } catch {
-        $blackExitCode = 999
+    if ($PythonPaths.Count -eq 0) {
+        Write-Info "No Python paths found; skipping Black"
+    } else {
+        try {
+            $blackProcess = Start-Process -FilePath "black" -ArgumentList "--check", "--diff", $PythonPaths -NoNewWindow -Wait -PassThru
+            $blackExitCode = $blackProcess.ExitCode
+        } catch {
+            $blackExitCode = 999
+        }
     }
 
     if ($blackExitCode -eq 0) {
@@ -187,11 +196,15 @@ function Invoke-Lint {
     }
 
     Write-Info "Running Ruff linter..."
-    try {
-        $ruffProcess = Start-Process -FilePath "ruff" -ArgumentList "check", "repo_analysis_rag/", "offline-folder-rag/edge_agent/", "tests/" -NoNewWindow -Wait -PassThru
-        $ruffExitCode = $ruffProcess.ExitCode
-    } catch {
-        $ruffExitCode = 999
+    if ($PythonPaths.Count -eq 0) {
+        Write-Info "No Python paths found; skipping Ruff"
+    } else {
+        try {
+            $ruffProcess = Start-Process -FilePath "ruff" -ArgumentList "check", $PythonPaths -NoNewWindow -Wait -PassThru
+            $ruffExitCode = $ruffProcess.ExitCode
+        } catch {
+            $ruffExitCode = 999
+        }
     }
 
     if ($ruffExitCode -eq 0) {
@@ -215,11 +228,15 @@ function Invoke-Lint {
     }
 
     Write-Info "Running Pylint..."
-    try {
-        $pylintProcess = Start-Process -FilePath "pylint" -ArgumentList "repo_analysis_rag/", "offline-folder-rag/edge_agent/", "--disable=all", "--enable=E,F" -NoNewWindow -Wait -PassThru
-        $pylintExitCode = $pylintProcess.ExitCode
-    } catch {
-        $pylintExitCode = 999
+    if ($PythonPaths.Count -eq 0) {
+        Write-Info "No Python paths found; skipping Pylint"
+    } else {
+        try {
+            $pylintProcess = Start-Process -FilePath "pylint" -ArgumentList $PythonPaths, "--disable=all", "--enable=E,F" -NoNewWindow -Wait -PassThru
+            $pylintExitCode = $pylintProcess.ExitCode
+        } catch {
+            $pylintExitCode = 999
+        }
     }
 
     if ($pylintExitCode -eq 0) {
@@ -229,11 +246,15 @@ function Invoke-Lint {
     }
 
     Write-Info "Running Flake8..."
-    try {
-        $flake8Process = Start-Process -FilePath "flake8" -ArgumentList "repo_analysis_rag/", "offline-folder-rag/edge_agent/", "tests/", "--max-line-length=88", "--extend-ignore=E203,W503" -NoNewWindow -Wait -PassThru
-        $flake8ExitCode = $flake8Process.ExitCode
-    } catch {
-        $flake8ExitCode = 999
+    if ($PythonPaths.Count -eq 0) {
+        Write-Info "No Python paths found; skipping Flake8"
+    } else {
+        try {
+            $flake8Process = Start-Process -FilePath "flake8" -ArgumentList $PythonPaths, "--max-line-length=88", "--extend-ignore=E203,W503" -NoNewWindow -Wait -PassThru
+            $flake8ExitCode = $flake8Process.ExitCode
+        } catch {
+            $flake8ExitCode = 999
+        }
     }
 
     if ($flake8ExitCode -eq 0) {
@@ -252,12 +273,16 @@ function Invoke-Security {
     Write-Info "Installing security tools..."
     pip install bandit safety -q
 
-    Write-Info "Running Bandit security scan on repo_analysis_rag and edge_agent..."
-    try {
-        $banditProcess = Start-Process -FilePath "bandit" -ArgumentList "-r", "repo_analysis_rag/", "offline-folder-rag/edge_agent/", "-f", "json", "-o", "bandit-report.json" -NoNewWindow -Wait -PassThru
-        $banditExitCode = $banditProcess.ExitCode
-    } catch {
-        $banditExitCode = 999
+    Write-Info "Running Bandit security scan on Python paths..."
+    if ($PythonPaths.Count -eq 0) {
+        Write-Info "No Python paths found; skipping Bandit"
+    } else {
+        try {
+            $banditProcess = Start-Process -FilePath "bandit" -ArgumentList "-r", $PythonPaths, "-f", "json", "-o", "bandit-report.json" -NoNewWindow -Wait -PassThru
+            $banditExitCode = $banditProcess.ExitCode
+        } catch {
+            $banditExitCode = 999
+        }
     }
 
     if ($banditExitCode -eq 0) {
@@ -348,11 +373,20 @@ services:
 
     if ($runPython) {
         if ($runUnit) {
-            Write-Info "Running Python unit tests (tests/confluence, tests/edge_agent/unit)..."
-            & $pythonExe -m pytest tests/confluence/ tests/edge_agent/unit/ `
-                --junitxml=test-results-unit.xml `
-                -v --tb=short 2>$null
-            if ($?) { Write-Success "Python unit tests completed" } else { Write-Warning-Message "Python unit tests failed or skipped" }
+            Write-Info "Running Python unit tests (tests/confluence)..."
+            $testDirs = @()
+            if (Test-Path "tests/confluence/") { $testDirs += "tests/confluence/" }
+            if (Test-Path "tests/edge_agent/unit/") { $testDirs += "tests/edge_agent/unit/" }
+            
+            if ($testDirs.Count -gt 0) {
+                $testDirsStr = $testDirs -join " "
+                & $pythonExe -m pytest $testDirs `
+                    --junitxml=test-results-unit.xml `
+                    -v --tb=short 2>$null
+                if ($?) { Write-Success "Python unit tests completed" } else { Write-Warning-Message "Python unit tests failed" }
+            } else {
+                Write-Info "No unit test directories found; skipping"
+            }
         }
 
         if ($runFunctional) {
