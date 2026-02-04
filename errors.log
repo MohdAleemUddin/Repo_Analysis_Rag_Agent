@@ -2718,3 +2718,213 @@ Traceback (most recent call last):
   File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
     raise effect
 Exception: 401
+2026-02-04 16:38:56,368 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 16:39:03,393 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 16:39:03,396 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 16:43:49,996 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 16:43:57,029 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 16:43:57,034 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 16:44:38,695 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 16:44:45,718 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 16:44:45,721 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 16:46:29,548 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 16:46:36,602 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 16:46:36,608 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 16:47:30,280 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 16:47:37,302 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 16:47:37,308 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\FAZLEEN ANEESA\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
