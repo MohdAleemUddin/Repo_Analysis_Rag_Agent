@@ -9,7 +9,21 @@
       {
         "command": "confluence.viewIntelligentCreations",
         "title": "PRD: View Intelligent Creations"
+      },
+      {
+        "command": "confluence.saveToConfluence",
+        "title": "Save to Confluence"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Confluence",
+      "properties": {
+        "confluence.apiBaseUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "Base URL for Confluence API (e.g. http://localhost:8000)"
+        }
+      }
+    }
   }
 }

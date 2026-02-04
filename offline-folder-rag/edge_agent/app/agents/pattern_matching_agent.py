@@ -53,10 +53,14 @@ def match(
             raw["ai_reasoning"] = (
                 raw.get("ai_reasoning", "") or "No template match; using fallback template."
             )
+            raw["intelligence_reason"] = (
+                raw.get("intelligence_reason", "") or "No template match; using fallback template."
+            )
         return TemplateDecision(
             template_id=template_id,
             template_name=template_name,
             intelligence_score=intelligence_score,
             ai_reasoning=raw.get("ai_reasoning", ""),
+            intelligence_reason=raw.get("intelligence_reason", raw.get("ai_reasoning", "")),
             confidence_breakdown=confidence_breakdown,
         )
