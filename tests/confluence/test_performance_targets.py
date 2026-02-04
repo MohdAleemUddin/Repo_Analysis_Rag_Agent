@@ -18,7 +18,8 @@ def test_analysis_time_under_3_seconds_per_file():
     assert (
         elapsed < ANALYSIS_MAX_SECONDS_PER_FILE + 0.5
     ), f"Analysis took {elapsed:.2f}s (limit {ANALYSIS_MAX_SECONDS_PER_FILE}s)"
-    assert "language" in result or "chunk" in str(result)
+    out = result.model_dump() if hasattr(result, "model_dump") else result
+    assert "languages" in out or "language" in str(out) or "chunk" in str(out)
 
 
 # --- TC-BVA-012: Template selection < 2s ---
@@ -32,7 +33,8 @@ def test_template_selection_under_2_seconds():
     elapsed = time.perf_counter() - start
     limit = TEMPLATE_SELECTION_MAX_SECONDS + 0.3
     assert elapsed < limit
-    assert "template_id" in result
+    out = result.model_dump() if hasattr(result, "model_dump") else result
+    assert "template_id" in out
 
 
 # --- TC-BVA-013 / TC-BR-004: Page creation < 15s including API ---
@@ -52,7 +54,8 @@ def test_creation_time_under_15_seconds_including_api():
         )
         elapsed = time.perf_counter() - start
         assert elapsed < 15 + 0.5
-        assert result.get("id") == "123"
+        page_id = result.page.id if hasattr(result, "page") else (result.get("id") if isinstance(result, dict) else None)
+        assert page_id == "123"
 
 
 # --- TC-BVA-014: Memory ≤ 300MB ---

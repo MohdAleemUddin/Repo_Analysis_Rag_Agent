@@ -1,21 +1,62 @@
-"""Pattern matching agent: selects template with PRD timer (< 2s)."""
+"""Pattern matching agent: template selection with vector/rule matching, fallback template. Output: TemplateDecision."""
 
 from typing import Any
 
+from app.agents.contracts import (
+    ConfidenceBreakdown,
+    ContentProfile,
+    TemplateDecision,
+)
 from app.confluence.prd_monitor import timer_template_selection
+from app.langchain.chains.matching_chain import run_matching
+
+FALLBACK_TEMPLATE_ID = "default"
+FALLBACK_TEMPLATE_NAME = "Default"
+MIN_SCORE_THRESHOLD = 0.3
 
 
 def match(
-    content: str | None, analysis: dict[str, Any] | None = None
-) -> dict[str, Any]:
+    content: str | None,
+    analysis: ContentProfile | dict[str, Any] | None = None,
+    vector_store: Any = None,
+) -> TemplateDecision:
     """
-    Select template based on content/analysis. Must complete in < 2s (wrapped by timer).
-    Returns e.g. {"template_id": "...", "confidence": 0.9}.
+    Select template via matching_chain (vector + rules). Must complete in <2s (timer).
+    If no template match found, returns deterministic fallback template (TC-NEG-013).
     """
     with timer_template_selection():
-        # Placeholder: default template; real impl would use vector search
-        return {
-            "template_id": "default",
-            "confidence": 0.9,
-            "reason": "pattern match",
-        }
+        profile_dict: dict[str, Any] = {}
+        if analysis is not None:
+            if isinstance(analysis, ContentProfile):
+                profile_dict = analysis.model_dump()
+            else:
+                profile_dict = analysis
+
+        raw = run_matching(
+            content or "",
+            profile=profile_dict,
+            vector_store=vector_store,
+        )
+        template_id = raw.get("template_id") or FALLBACK_TEMPLATE_ID
+        template_name = raw.get("template_name") or FALLBACK_TEMPLATE_NAME
+        intelligence_score = float(raw.get("intelligence_score", 0.5))
+        cb = raw.get("confidence_breakdown") or {}
+        confidence_breakdown = ConfidenceBreakdown(
+            content_match=float(cb.get("content_match", 0.5)),
+            structure_match=float(cb.get("structure_match", 0.5)),
+            context_match=float(cb.get("context_match", 0.5)),
+        )
+        if intelligence_score < MIN_SCORE_THRESHOLD:
+            template_id = FALLBACK_TEMPLATE_ID
+            template_name = FALLBACK_TEMPLATE_NAME
+            intelligence_score = 0.5
+            raw["ai_reasoning"] = (
+                raw.get("ai_reasoning", "") or "No template match; using fallback template."
+            )
+        return TemplateDecision(
+            template_id=template_id,
+            template_name=template_name,
+            intelligence_score=intelligence_score,
+            ai_reasoning=raw.get("ai_reasoning", ""),
+            confidence_breakdown=confidence_breakdown,
+        )
