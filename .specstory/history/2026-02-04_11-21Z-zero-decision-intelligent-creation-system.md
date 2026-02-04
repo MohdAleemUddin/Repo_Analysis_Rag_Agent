@@ -3189,7 +3189,177 @@ tests/edge_agent/unit/test_coordinator.py::test_run_analyze_success PASSED [100%
 **Root cause:** US3 changed `run_analyze` to return the PRD §9.1 shape (`intelligence_analysis`, `intelligent_recommendation`) instead of `analyses` and `template`. The test still expected the old keys.
 
 **Change made:** In `tests/edge_agent/unit/test_coordinator.py`, `test_run_analyze_success` was updated to:
-- Assert `intelligence_analysis` and `intelligent_reco
+- Assert `intelligence_analysis` and `intelligent_recommendation` in the result
+- Assert `intelligence_confidence` and `template_name` in those objects
+- Add `intelligence_reason` to the mocked `TemplateDecision` (required by the current contract)
+
+The test passes after this update.
+
+---
+
+_**User**_
+
+GIVE THE COMMAND TO CHECK TEST COVERAGE
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.coveragerc</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "cov|coverage",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\.github\\workflows",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "cov|coverage",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\.github\\workflows",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".github\\workflows\\ci.yml",
+              "matches": [
+                {
+                  "lineNumber": 177,
+                  "content": "          pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist"
+                }
+              ]
+            }
+          ],
+          "totalLines": 1,
+          "totalMatchedLines": 1
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+From the repo root:
+
+**Python test coverage (pytest-cov):**
+```bash
+pytest tests/confluence/ tests/edge_agent/unit/ --cov=offline-folder-rag/edge_agent --cov-report=term-missing -v
+```
+
+**Using .coveragerc:**
+```bash
+coverage run -m pytest tests/confluence/ tests/edge_agent/unit/ -v
+coverage report
+```
+
+**HTML report:**
+```bash
+pytest tests/confluence/ tests/edge_agent/unit/ --cov=offline-folder-rag/edge_agent --cov-report=html -v
+```
+Then open `htmlcov/index.html`.
+
+---
+
+_**User**_
+
+@c:\Users\FAZLEEN ANEESA\.cursor\projects\c-Users-FAZLEEN-ANEESA-Repo-Analysis-Rag-Agent\terminals\10.txt:117-1005 i want the test coverage to be 100%
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Checking the uncovered lines and adding tests to reach 100% coverage.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\coordinator.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_file_v2">
+<details>
+<summary>Tool use: **read_file_v2**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_file_v2">
+<details>
+<summary>Tool use: **read_file_v2**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_file_v2">
+<details>
+<summary>Tool use: **read_file_v2**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_file_v2">
+<details>
+<summary>Tool use: **read_file_v2**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
 
 ---
 
