@@ -84,6 +84,18 @@ def test_tc_dv_006_confidence_negative_rejected() -> None:
     assert not ok
 
 
+def test_tc_dv_006_confidence_none_accepted() -> None:
+    ok, msg = validate_confidence(None)
+    assert ok
+    assert msg == ""
+
+
+def test_tc_dv_006_confidence_non_number_rejected() -> None:
+    ok, msg = validate_confidence("not a number")
+    assert not ok
+    assert "number" in msg.lower()
+
+
 # --- TC-DV-010: Intelligence metrics validation - all intelligence fields valid ---
 def test_tc_dv_010_confidence_bounds_constants() -> None:
     """Schema and validation use consistent bounds; DECIMAL(3,2) allows 0.00-9.99, we enforce [0,1]."""
