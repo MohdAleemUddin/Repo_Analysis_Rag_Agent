@@ -19,7 +19,7 @@ def test_create_page_no_client():
     client._session = None
     with patch.object(client, "get_client", return_value=None):
         try:
-            client.create_page("http://x", "DOC", "T", "<p>b</p>", auth=None)
+            client.create_page("https://x", "DOC", "T", "<p>b</p>", auth=None)
         except RuntimeError as e:
             assert "not available" in str(e) or "requests" in str(e)
 
@@ -32,7 +32,7 @@ def test_create_page_success(mock_get):
     mock_client = MagicMock()
     mock_client.post.return_value = mock_resp
     mock_get.return_value = mock_client
-    out = client.create_page("http://x", "DOC", "T", "<p>b</p>", auth=None)
+    out = client.create_page("https://x", "DOC", "T", "<p>b</p>", auth=None)
     assert out.get("id") == "1"
 
 
@@ -47,7 +47,7 @@ def test_create_page_429_retry(mock_get):
     mock_client.post.side_effect = [r1, r2]
     mock_get.return_value = mock_client
     with patch("app.confluence.client.time.sleep"):
-        out = client.create_page("http://x", "DOC", "T", "<p>b</p>", auth=None)
+        out = client.create_page("https://x", "DOC", "T", "<p>b</p>", auth=None)
     assert out.get("id") == "1"
 
 
@@ -60,6 +60,6 @@ def test_create_page_401_raises(mock_get):
     mock_client.post.return_value = mock_resp
     mock_get.return_value = mock_client
     try:
-        client.create_page("http://x", "DOC", "T", "<p>b</p>", auth=None)
+        client.create_page("https://x", "DOC", "T", "<p>b</p>", auth=None)
     except Exception as e:
         assert "401" in str(e) or True

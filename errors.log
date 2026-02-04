@@ -3723,3 +3723,388 @@ Traceback (most recent call last):
   File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
     raise effect
 ValueError: learn fail
+2026-02-04 17:12:07,120 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:12:14,128 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:12:14,128 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:12:16,412 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:12:43,052 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:12:50,085 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:12:50,088 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:12:51,561 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:13:28,686 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:13:35,702 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:13:35,707 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:13:36,859 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:14:40,308 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:14:47,358 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:14:47,363 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:14:48,791 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:15:22,229 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:15:29,249 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:15:29,251 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:15:30,451 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:15:45,464 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:15:52,476 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:15:52,483 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:15:53,396 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-04 17:16:06,613 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-04 17:16:13,642 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-04 17:16:13,645 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py", line 235, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-04 17:16:14,895 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Users\HP\MCP_Confluence\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py", line 120, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
