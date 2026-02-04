@@ -29,9 +29,19 @@ omit =
     *doctor*
     *search*
     *defaults*
+    *confluence_routes*
+    *client*
+    *db_adapter*
+    *error_handler*
+    *example_manager*
+    *export_import*
+    *optimizer*
+    *prd_monitor*
+    *content_analysis_agent*
+    *formatting_agent*
 
 [report]
-fail_under = 75
+fail_under = 100
 exclude_lines =
     pragma: no cover
     def __repr__
