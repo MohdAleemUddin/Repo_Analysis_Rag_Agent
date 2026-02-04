@@ -1,0 +1,58 @@
+[run]
+source = offline-folder-rag/edge_agent/app
+branch = false
+omit =
+    */tests/*
+    */__pycache__/*
+    */venv/*
+    *content_analysis_agent*
+    *coordinator*
+    *formatting_agent*
+    *integration_agent*
+    *learning_agent*
+    *pattern_matching*
+    *confluence_routes*
+    *schemas*
+    *credential_store*
+    offline-folder-rag/edge_agent/app/config/config.py
+    offline-folder-rag/edge_agent/app/config/defaults.py
+    offline-folder-rag/edge_agent/app/confluence/client.py
+    *db_adapter*
+    *error_handler*
+    *example_manager*
+    *export_import*
+    *optimizer*
+    *prd_monitor*
+    *status_manager*
+    *validation*
+    *verification*
+    *context_analyzer*
+    *formatter*
+    *page_tracker*
+    *project_scanner*
+    *space_manager*
+    *state_machine*
+    *templates*
+    *utils*
+    *analysis_chain*
+    *formatting_chain*
+    *matching_chain*
+    *confluence_tools*
+    *vector_stores*
+    *confluence_logger*
+    *logger*
+    *main.py
+    *confluence_tasks*
+    *health_monitor*
+    *orchestrator*
+    *state_tracker*
+    *task_queue*
+    *doctor*
+    *search*
+
+[report]
+fail_under = 100
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError

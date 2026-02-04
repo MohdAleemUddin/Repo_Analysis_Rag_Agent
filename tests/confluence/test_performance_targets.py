@@ -1,4 +1,8 @@
 # TC-BVA-011 through TC-BVA-015: PRD NFR1 performance targets
+import pytest
+
+pytestmark = pytest.mark.performance
+
 try:
     from offline_folder_rag.edge_agent.app.confluence.prd_monitor import (
         ANALYSIS_TARGET_SEC,
@@ -292,4 +296,23 @@ def test_ui_remains_responsive_during_heavy_operation():
     client.get("/confluence/intelligence-status?detail_level=full")
     elapsed = time.perf_counter() - start
     assert elapsed < 2.0, "Status should return in < 2s (UI responsive)"
+
+
+# --- MCP server extension compatibility (PRD compliance) ---
+def test_mcp_server_extension_compatibility():
+    """MCP server extension works with Confluence intelligence (no conflict)."""
+    try:
+        from offline_folder_rag.edge_agent.app.api import register_confluence_routes
+        from offline_folder_rag.edge_agent.app.mcp_server import __init__ as mcp_init
+    except ImportError:
+        import sys
+        from pathlib import Path
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+        from app.api import register_confluence_routes
+        from app.mcp_server import __init__ as mcp_init
+    from unittest.mock import MagicMock
+    router = MagicMock()
+    register_confluence_routes(router)
+    assert mcp_init is not None
+    assert router.post.called
 

@@ -1,0 +1,7 @@
+{
+  "files": ["sample_prd_01.md"],
+  "intelligent_mode": true,
+  "auto_title": true,
+  "space": "DOC",
+  "intelligence_context": {}
+}

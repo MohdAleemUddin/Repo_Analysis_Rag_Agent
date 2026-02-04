@@ -1,0 +1,13 @@
+# Heading
+Some markdown here.
+
+---
+Plain paragraph.
+- List item 1
+- List item 2
+
+```python
+def foo():
+    return 42
+```
+End of file.

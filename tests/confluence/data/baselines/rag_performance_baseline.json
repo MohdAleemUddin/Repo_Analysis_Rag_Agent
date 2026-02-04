@@ -1,0 +1,6 @@
+{
+  "description": "Baseline RAG performance metrics for regression comparison (PRD compliance).",
+  "query_latency_p95_ms": 500,
+  "indexing_throughput_files_per_sec": 2.0,
+  "accuracy_baseline": "unchanged"
+}
