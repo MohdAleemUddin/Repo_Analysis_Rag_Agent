@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Root requirements: install confluence + offline-folder-rag deps
 -r confluence_requirements.txt
 -r offline-folder-rag/requirements.txt
@@ -6,3 +7,8 @@ pytest-cov>=4.0
 pytest-asyncio>=0.21.0
 pytest-mock>=3.10
 pytest-xdist>=3.0
+=======
+# Placeholder root requirements
+psutil>=5.9.0
+httpx>=0.24.0
+>>>>>>> 5fa35e2b268e4b9240b01b3b6ca998d64d057f27

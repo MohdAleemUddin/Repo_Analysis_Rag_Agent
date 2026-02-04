@@ -124,3 +124,19 @@ def get_collective_intelligence_count(
 def learn(feedback: str) -> None:
     """Legacy entrypoint; use learn_from_feedback with creation_id and score for full flow."""
     pass
+"""Learning agent: learns from feedback. Invoked after create completes."""
+
+import logging
+from typing import Any
+
+logger = logging.getLogger(__name__)
+
+
+def learn(feedback: str, creation_metadata: dict[str, Any] | None = None) -> None:
+    """
+    Record feedback / store example for future template matching.
+    Must not block the create response; called from background after create returns.
+    """
+    logger.info(
+        "Learning from feedback (background): %s", feedback[:200] if feedback else ""
+    )
