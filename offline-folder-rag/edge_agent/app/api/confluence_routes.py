@@ -1,202 +1,257 @@
-# PRD §9.0/§9.1 Confluence API endpoints
+# PRD Confluence endpoints: analyze, create, status, feedback with performance monitoring and PRD §9.2 error format.
 
+import logging
 from typing import Any
 
-from fastapi import Request
-from fastapi.responses import JSONResponse
-from pydantic import ValidationError
+try:
+    from fastapi import Body, HTTPException
+except ImportError:
+    Body = None
+    HTTPException = None
 
-from .schemas import (
-    AnalyzeRequest,
-    AnalyzeResponse,
-    ConfidenceBreakdown,
-    CreateRequest,
-    CreateResponse,
-    FeedbackRequest,
-    FeedbackResponse,
-    IntelligenceAnalysis,
-    IntelligenceConfidenceSummary,
-    IntelligenceErrorResponse,
-    IntelligenceMetrics,
-    IntelligenceSummary,
-    IntelligentPage,
-    IntelligentRecommendation,
-    StatusResponse,
+from app.config.config import CONFLUENCE_MEMORY_LIMIT_MB
+from app.confluence.error_handler import get_actions_for_category, get_reliability_metrics, handle_error, prd_error_response
+from app.confluence.optimizer import get_optimization_suggestions
+from app.confluence.prd_monitor import (
+    append_record,
+    check_memory_before_step,
+    get_last_records,
+    get_peak_memory_mb,
+    record_confluence_operation,
+    start_operation,
 )
 
+from app.agents.coordinator import get_operation_record, run_analyze, run_create
 
-def _prd_error_response(
-    message: str,
-    intelligence_suggestion: str,
-    fallback_available: bool = False,
-    intelligence_confidence: float = 0.0,
-    status_code: int = 422,
-) -> JSONResponse:
-    """Return PRD §9.2 exact error JSON for all failures."""
-    body = IntelligenceErrorResponse(
-        error="intelligence_error",
-        message=message,
-        intelligence_suggestion=intelligence_suggestion,
-        fallback_available=fallback_available,
-        intelligence_confidence=intelligence_confidence,
+logger = logging.getLogger(__name__)
+
+
+def _memory_limit_response() -> dict[str, Any]:
+    r = prd_error_response(
+        error_code="resource_limit",
+        message="Resource limit reached; try fewer or smaller files.",
+        intelligence_suggestion=f"Reduce files or size. Memory limit {CONFLUENCE_MEMORY_LIMIT_MB} MB.",
+        fallback_available=True,
+        intelligence_confidence=0.0,
+        category="resource_limit",
     )
-    return JSONResponse(status_code=status_code, content=body.model_dump())
+    r["actions"] = get_actions_for_category("resource_limit")
+    return r
 
 
-_VALIDATION_SUGGESTION = (
-    "Check request keys and types per PRD §9.1 (files, context for analyze; "
-    "files, intelligent_mode, auto_title, space, intelligence_context for create; "
-    "creation_id, intelligence_score 1-5, feedback for feedback)."
-)
-
-
-# ----- Handlers (stub responses per PRD; no agent/DB) -----
-
-
-async def intelligent_analyze_handler(
-    request: Request,
-) -> AnalyzeResponse | JSONResponse:
-    """POST /confluence/intelligent-analyze: PRD §9.1 exact response."""
-    try:
-        AnalyzeRequest.model_validate(await request.json())
-    except (ValidationError, TypeError, ValueError):
-        return _prd_error_response(
-            message="Invalid request body or parameters",
-            intelligence_suggestion=_VALIDATION_SUGGESTION,
+# POST /confluence/intelligent-analyze
+def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """
+    Analyze files: check memory first, run coordinator.run_analyze with timers, return result + performance summary.
+    """
+    if not body or not isinstance(body, dict):
+        body = {}
+    files_or_contents = body.get("files") or body.get("file_contents") or []
+    has_content = body.get("content", "") != "" if body.get("content") is not None else False
+    if not files_or_contents and not has_content:
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="Missing or invalid request: provide 'files', 'file_contents', or 'content'.",
+            intelligence_suggestion="Send a JSON body with files (list of strings) or content (string).",
             fallback_available=False,
             intelligence_confidence=0.0,
-            status_code=422,
         )
-    return AnalyzeResponse(
-        intelligence_analysis=IntelligenceAnalysis(
-            content_types=["python_api", "configuration"],
-            detected_patterns=["fastapi", "docker", "authentication"],
-            intelligent_title="API Authentication Service Setup",
-            intelligence_confidence=0.94,
-            ai_reasoning="Detected FastAPI patterns with JWT auth",
-        ),
-        intelligent_recommendation=IntelligentRecommendation(
-            template_id="uuid",
-            template_name="API Security Intelligence Template",
-            intelligence_reason="Matches 8 similar intelligent examples with 97% success",
-            confidence_breakdown=ConfidenceBreakdown(
-                content_match=0.96,
-                structure_match=0.92,
-                context_match=0.89,
-            ),
-        ),
-    )
+        if HTTPException is not None:
+            raise HTTPException(status_code=422, detail=err)
+        return err
 
+    if not check_memory_before_step():
+        return _memory_limit_response()
 
-async def intelligent_create_handler(request: Request) -> CreateResponse | JSONResponse:
-    """POST /confluence/intelligent-create: PRD §9.1 exact response."""
-    try:
-        body = CreateRequest.model_validate(await request.json())
-    except (ValidationError, TypeError, ValueError):
-        return _prd_error_response(
-            message="Invalid request body or parameters",
-            intelligence_suggestion=_VALIDATION_SUGGESTION,
+    start_operation()
+    file_contents = files_or_contents
+    if isinstance(file_contents, list) and file_contents and not isinstance(file_contents[0], str):
+        file_contents = [c.get("content", "") if isinstance(c, dict) else str(c) for c in file_contents]
+    if not file_contents:
+        file_contents = [body.get("content", "") or ""]
+    if not file_contents or (len(file_contents) == 1 and not (file_contents[0] or "").strip()):
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="No content to analyze.",
+            intelligence_suggestion="Provide non-empty files or content.",
             fallback_available=False,
             intelligence_confidence=0.0,
-            status_code=422,
         )
-    return CreateResponse(
-        success=True,
-        intelligence_summary=IntelligenceSummary(
-            ai_decisions_made=[
-                "Intelligently detected Python FastAPI patterns",
-                "Selected 'API Intelligence' template (94% match)",
-                "Generated intelligent title: 'Authentication Microservice API'",
-                "Applied intelligent formatting with security focus",
-            ],
-            intelligence_confidence=IntelligenceConfidenceSummary(
-                content_detection=0.96,
-                template_intelligence=0.92,
-                formatting_intelligence=0.95,
-                overall_intelligence=0.94,
-            ),
-            ai_learning_applied=True,
-            improvement_suggestions=["Add more examples for microservices"],
-        ),
-        intelligent_page=IntelligentPage(
-            url="https://confluence/...",
-            id="123456",
-            title="Authentication Microservice API",
-            space=body.space,
-            intelligence_tag="AI-Formatted",
-        ),
-    )
+        if HTTPException is not None:
+            raise HTTPException(status_code=422, detail=err)
+        return err
 
-
-async def intelligence_status_handler(
-    detail_level: str | None = None,
-) -> StatusResponse:
-    """GET /confluence/intelligence-status: AC-7 explicit response."""
-    return StatusResponse(
-        intelligence_metrics=IntelligenceMetrics(
-            template_selection_accuracy=0.92,
-            user_acceptance_rate=0.88,
-            learning_rate=0.75,
-        ),
-        learning_progress={"phase": "active", "examples_count": 0},
-        improvement_rates={"template_match": 0.02, "user_acceptance": 0.01},
-    )
-
-
-async def intelligence_feedback_handler(
-    request: Request,
-) -> FeedbackResponse | JSONResponse:
-    """POST /confluence/intelligence-feedback: AC-9 explicit response."""
     try:
-        FeedbackRequest.model_validate(await request.json())
-    except (ValidationError, TypeError, ValueError):
-        return _prd_error_response(
-            message="Invalid request body or parameters",
-            intelligence_suggestion=_VALIDATION_SUGGESTION,
-            fallback_available=False,
-            intelligence_confidence=0.0,
-            status_code=422,
+        result = run_analyze(file_contents)
+    except Exception as e:
+        logger.exception("intelligent-analyze failed: %s", e)
+        return handle_error(e, error_code="analysis_failed")
+
+    record = get_operation_record()
+    peak_mb = get_peak_memory_mb()
+    if record:
+        perf = record_confluence_operation(
+            operation_id=record.operation_id,
+            per_file_analysis_ms=record.per_file_analysis_ms,
+            template_selection_ms=record.template_selection_ms,
+            create_e2e_ms=record.create_e2e_ms,
+            peak_memory_mb=peak_mb,
         )
-    status = StatusResponse(
-        intelligence_metrics=IntelligenceMetrics(
-            template_selection_accuracy=0.92,
-            user_acceptance_rate=0.88,
-            learning_rate=0.75,
-        ),
-        learning_progress={"phase": "active", "examples_count": 0},
-        improvement_rates={"template_match": 0.02, "user_acceptance": 0.01},
-    )
-    return FeedbackResponse(
-        message="Updated intelligence metrics and learning applied",
-        metrics_updated=True,
-        learning_applied=True,
-        updated_status=status,
-    )
+        append_record(perf)
+        result["performance"] = {
+            "operation_id": perf.operation_id,
+            "analysis_timings_ms": perf.per_file_analysis_ms,
+            "template_selection_ms": perf.template_selection_ms,
+            "peak_memory_mb": perf.peak_memory_mb,
+            "targets_met": perf.targets_met,
+        }
+        if not all(perf.targets_met.values()):
+            result["optimization_suggestions"] = get_optimization_suggestions(perf)
+    return result
+
+
+# POST /confluence/intelligent-create
+def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """
+    Create page: check memory, run coordinator.run_create (e2e timed), return result then trigger background learning.
+    """
+    if not check_memory_before_step():
+        return _memory_limit_response()
+
+    start_operation()
+    base_url = body.get("base_url", "")
+    space_key = body.get("space_key", "DOC")
+    title = body.get("title", "Untitled")
+    content = body.get("content", "") or body.get("body_content", "")
+    auth = body.get("auth")  # (email, api_token) or None
+    feedback = body.get("feedback_for_learning", "")
+
+    try:
+        result = run_create(
+            base_url=base_url,
+            space_key=space_key,
+            title=title,
+            body_content=content,
+            auth=auth,
+            feedback_for_learning=feedback,
+        )
+    except Exception as e:
+        logger.exception("intelligent-create failed: %s", e)
+        return handle_error(e, error_code="create_failed")
+
+    record = get_operation_record()
+    peak_mb = get_peak_memory_mb()
+    if record:
+        perf = record_confluence_operation(
+            operation_id=record.operation_id,
+            per_file_analysis_ms=record.per_file_analysis_ms,
+            template_selection_ms=record.template_selection_ms,
+            create_e2e_ms=record.create_e2e_ms,
+            peak_memory_mb=peak_mb,
+        )
+        append_record(perf)
+        result["performance"] = {
+            "operation_id": perf.operation_id,
+            "create_e2e_ms": perf.create_e2e_ms,
+            "peak_memory_mb": perf.peak_memory_mb,
+            "targets_met": perf.targets_met,
+        }
+        if not all(perf.targets_met.values()):
+            result["optimization_suggestions"] = get_optimization_suggestions(perf)
+
+    return result
+
+
+# GET /confluence/intelligence-status
+def intelligence_status_handler() -> dict[str, Any]:
+    """Expose last N performance records / aggregates for monitoring."""
+    records = get_last_records(20)
+    if not records:
+        empty_metrics = {"template_selection_accuracy": 0.0, **get_reliability_metrics()}
+        return {
+            "metrics": empty_metrics,
+            "intelligence_metrics": empty_metrics,
+            "learning_progress": {},
+            "improvement_rates": {},
+            "recent_records": [],
+        }
+
+    analysis_times = []
+    create_times = []
+    memory_peaks = []
+    for r in records:
+        analysis_times.extend(r.per_file_analysis_ms)
+        create_times.append(r.create_e2e_ms)
+        memory_peaks.append(r.peak_memory_mb)
+
+    def p95(vals: list[float]) -> float:
+        if not vals:
+            return 0.0
+        s = sorted(vals)
+        i = int(len(s) * 0.95) or 0
+        return s[min(i, len(s) - 1)]
+
+    reliability = get_reliability_metrics()
+    metrics = {
+        "p95_analysis_ms": p95(analysis_times),
+        "p95_create_ms": p95(create_times),
+        "max_memory_mb": max(memory_peaks) if memory_peaks else 0,
+        "template_selection_accuracy": reliability.get("template_selection_accuracy", 0.0),
+        **reliability,
+    }
+    recent = [r.to_dict() for r in records[-5:]]
+    return {
+        "metrics": metrics,
+        "intelligence_metrics": metrics,
+        "learning_progress": {},
+        "improvement_rates": {},
+        "recent_records": recent,
+    }
+
+
+# POST /confluence/intelligence-feedback
+def intelligence_feedback_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """Accept feedback; process quickly or async so request does not block."""
+    feedback = body.get("feedback", "") or body.get("message", "")
+    return {"status": "accepted", "message": "Feedback received."}
 
 
 def register_confluence_routes(router: Any) -> None:
-    """Register all four PRD Confluence endpoints under /confluence/ namespace."""
-    router.add_api_route(
-        "/confluence/intelligent-analyze",
-        intelligent_analyze_handler,
-        methods=["POST"],
-        response_model=AnalyzeResponse,
-    )
-    router.add_api_route(
-        "/confluence/intelligent-create",
-        intelligent_create_handler,
-        methods=["POST"],
-        response_model=CreateResponse,
-    )
-    router.add_api_route(
-        "/confluence/intelligence-status",
-        intelligence_status_handler,
-        methods=["GET"],
-        response_model=StatusResponse,
-    )
-    router.add_api_route(
-        "/confluence/intelligence-feedback",
-        intelligence_feedback_handler,
-        methods=["POST"],
-        response_model=FeedbackResponse,
-    )
+    """Register the four PRD endpoints on the given router (FastAPI or Flask-style)."""
+    if hasattr(router, "post") and hasattr(router, "get"):
+        if Body is not None:
+            def analyze_route(body: dict = Body(default=None)):
+                return intelligent_analyze_handler(body or {})
+
+            def create_route(body: dict = Body(default=None)):
+                return intelligent_create_handler(body or {})
+
+            def feedback_route(body: dict = Body(default=None)):
+                return intelligence_feedback_handler(body or {})
+        else:
+            def analyze_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligent_analyze_handler(body)
+
+            def create_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligent_create_handler(body)
+
+            def feedback_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligence_feedback_handler(body)
+
+        def status_route():
+            return intelligence_status_handler()
+
+        router.post("/confluence/intelligent-analyze")(analyze_route)
+        router.post("/confluence/intelligent-create")(create_route)
+        router.get("/confluence/intelligence-status")(status_route)
+        router.post("/confluence/intelligence-feedback")(feedback_route)
+    else:
+        router.confluence_handlers = {
+            "intelligent_analyze": lambda body: intelligent_analyze_handler(body),
+            "intelligent_create": lambda body: intelligent_create_handler(body),
+            "intelligence_status": lambda: intelligence_status_handler(),
+            "intelligence_feedback": lambda body: intelligence_feedback_handler(body),
+        }

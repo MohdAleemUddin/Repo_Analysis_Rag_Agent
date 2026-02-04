@@ -2,20 +2,21 @@
 Confluence API client. Reuses a single HTTP session for all Confluence API calls.
 No new connection pool: one client/session per app context.
 Ollama is shared with RAG; this module does not spawn a second Ollama instance.
-Rate limiting/retries should not block the event loop for long so UI stays responsive.
+Network: 3 retries with exponential backoff. Rate limit (429): wait 30s then retry.
 """
 
 import logging
+import time
 from typing import Any
 
 logger = logging.getLogger(__name__)
 
-# One session per process; lazy-created
 _session: Any = None
+NETWORK_RETRIES = 3
+RATE_LIMIT_WAIT_SECONDS = 30
 
 
 def _get_session() -> Any:
-    """Lazy-create a single requests Session for Confluence API calls."""
     global _session
     if _session is None:
         try:
@@ -29,10 +30,6 @@ def _get_session() -> Any:
 
 
 def get_client() -> Any:
-    """
-    Return the shared Confluence HTTP client (Session).
-    Use this for all Confluence API calls so RAG and other flows do not create competing connections.
-    """
     return _get_session()
 
 
@@ -45,8 +42,8 @@ def create_page(
 ) -> dict[str, Any]:
     """
     Create a Confluence page via REST API. Uses shared session.
-    auth: (email, api_token) for Basic auth.
-    Returns response JSON or raises on error.
+    Network: 3 retries with exponential backoff (1s, 2s, 4s). Rate limit (429): wait 30s then retry.
+    Auth/403/404: no retry; raise so routes return PRD error.
     """
     client = get_client()
     if client is None:
@@ -61,6 +58,39 @@ def create_page(
     kwargs: dict[str, Any] = {"json": payload, "timeout": 30}
     if auth:
         kwargs["auth"] = auth
-    resp = client.post(url, **kwargs)
-    resp.raise_for_status()
-    return resp.json()
+
+    last_exc: BaseException | None = None
+    backoff = 1.0
+    for attempt in range(NETWORK_RETRIES + 1):
+        try:
+            resp = client.post(url, **kwargs)
+            if resp.status_code == 429:
+                logger.warning("Rate limit (429); waiting %s s then retry.", RATE_LIMIT_WAIT_SECONDS)
+                time.sleep(RATE_LIMIT_WAIT_SECONDS)
+                resp = client.post(url, **kwargs)
+            if resp.status_code in (401, 403, 404):
+                resp.raise_for_status()
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as e:
+            last_exc = e
+            r = getattr(e, "response", None)
+            if r is not None:
+                if r.status_code == 429:
+                    time.sleep(RATE_LIMIT_WAIT_SECONDS)
+                    continue
+                if r.status_code in (401, 403, 404):
+                    raise
+            try:
+                import requests.exceptions as req_exc
+                is_network = isinstance(e, (req_exc.ConnectionError, req_exc.Timeout, ConnectionError, OSError))
+            except ImportError:
+                is_network = isinstance(e, (ConnectionError, OSError)) or "timeout" in type(e).__name__.lower()
+            if is_network and attempt < NETWORK_RETRIES:
+                time.sleep(backoff)
+                backoff *= 2
+                continue
+            raise
+    if last_exc:
+        raise last_exc
+    raise RuntimeError("Create page failed after retries")
