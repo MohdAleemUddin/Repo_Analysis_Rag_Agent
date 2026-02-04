@@ -27,6 +27,9 @@ if ($testFilterSpecified -and $Stage -eq 'all') {
     $Stage = 'test'
 }
 
+# Ensure we run from repo root so linting, tests, Docker, and compose paths resolve correctly
+Set-Location $PSScriptRoot
+
 # Repo-specific paths (no src/ at root)
 $PythonPaths = @("repo_analysis_rag/", "offline-folder-rag/edge_agent/", "tests/")
 $PythonPathsStr = $PythonPaths -join ", "
@@ -343,22 +346,23 @@ services:
     $runIntegration = $Integration -or (-not $Unit -and -not $Functional -and -not $Integration -and -not $E2E)
     $runE2E = $E2E -or (-not $Unit -and -not $Functional -and -not $Integration -and -not $E2E)
 
-    # PYTHONPATH so edge_agent and repo_analysis_rag are importable
-    $env:PYTHONPATH = "$(Get-Location);$(Get-Location)\offline-folder-rag"
+    # PYTHONPATH so edge_agent and repo_analysis_rag are importable (use script dir as repo root)
+    $repoRoot = $PSScriptRoot
+    $env:PYTHONPATH = "$repoRoot;$repoRoot\offline-folder-rag"
 
     if ($runPython) {
         if ($runUnit) {
             Write-Info "Running Python unit tests (tests/confluence, tests/edge_agent/unit)..."
-            & $pythonExe -m pytest tests/confluence/ tests/edge_agent/unit/ `
-                --junitxml=test-results-unit.xml `
+            & $pythonExe -m pytest "$repoRoot\tests\confluence" "$repoRoot\tests\edge_agent\unit" `
+                --junitxml="$repoRoot\test-results-unit.xml" `
                 -v --tb=short 2>$null
             if ($?) { Write-Success "Python unit tests completed" } else { Write-Warning-Message "Python unit tests failed or skipped" }
         }
 
         if ($runFunctional) {
             Write-Info "Running Python functional tests..."
-            if (Test-Path "tests/functional") {
-                & $pythonExe -m pytest tests/functional/ --junitxml=test-results-functional.xml -v --tb=short 2>$null
+            if (Test-Path "$repoRoot\tests\functional") {
+                & $pythonExe -m pytest "$repoRoot\tests\functional" --junitxml="$repoRoot\test-results-functional.xml" -v --tb=short 2>$null
                 if ($?) { Write-Success "Python functional tests completed" } else { Write-Warning-Message "Python functional tests failed or skipped" }
             } else {
                 Write-Info "No tests/functional directory; skipping functional tests"
@@ -367,14 +371,14 @@ services:
 
         if ($runIntegration) {
             Write-Info "Running Python integration tests (tests/edge_agent/integration)..."
-            & $pythonExe -m pytest tests/edge_agent/integration/ --junitxml=test-results-integration.xml -v --tb=short 2>$null
+            & $pythonExe -m pytest "$repoRoot\tests\edge_agent\integration" --junitxml="$repoRoot\test-results-integration.xml" -v --tb=short 2>$null
             if ($?) { Write-Success "Python integration tests completed" } else { Write-Warning-Message "Python integration tests failed or skipped" }
         }
 
         if ($runE2E) {
             Write-Info "Running Python e2e tests..."
-            if (Test-Path "tests/e2e") {
-                & $pythonExe -m pytest tests/e2e/ --junitxml=test-results-e2e.xml -v --tb=short 2>$null
+            if (Test-Path "$repoRoot\tests\e2e") {
+                & $pythonExe -m pytest "$repoRoot\tests\e2e" --junitxml="$repoRoot\test-results-e2e.xml" -v --tb=short 2>$null
                 if ($?) { Write-Success "Python e2e tests completed" } else { Write-Warning-Message "Python e2e tests failed or skipped" }
             } else {
                 Write-Info "No tests/e2e directory; skipping e2e tests"
