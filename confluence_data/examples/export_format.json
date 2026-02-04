@@ -1,1 +1,59 @@
-{}
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Confluence Intelligence Examples Export",
+  "description": "PRD §7.2: Export format for learned examples. Includes content profiles, template refs, success metrics. Excludes file contents and user info.",
+  "type": "object",
+  "required": ["version", "exported_at", "examples"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "exported_at": { "type": "string", "format": "date-time" },
+    "template_type_filter": { "type": ["string", "null"] },
+    "project_path_filter": { "type": ["string", "null"] },
+    "examples": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/example" }
+    }
+  },
+  "definitions": {
+    "example": {
+      "type": "object",
+      "required": ["content_profile", "template_ref", "intelligence_metrics"],
+      "properties": {
+        "content_profile": {
+          "type": "object",
+          "description": "Intelligent analysis results; no file contents",
+          "properties": {
+            "content_types": { "type": "array", "items": { "type": "string" } },
+            "detected_patterns": { "type": "array", "items": { "type": "string" } },
+            "language": { "type": ["string", "null"] },
+            "structure_summary": { "type": ["string", "null"] }
+          },
+          "additionalProperties": true
+        },
+        "template_ref": {
+          "type": "object",
+          "required": ["template_id", "template_name"],
+          "properties": {
+            "template_id": { "type": "string", "format": "uuid" },
+            "template_name": { "type": "string" }
+          }
+        },
+        "intelligence_metrics": {
+          "type": "object",
+          "description": "Success metrics; no user identifiers",
+          "properties": {
+            "confidence_score": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "success_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "intelligence_score": { "type": ["number", "null"] }
+          },
+          "additionalProperties": true
+        },
+        "learned_at": { "type": ["string", "null"], "format": "date-time" },
+        "content_profile_hash": { "type": ["string", "null"], "description": "For deduplication on import" },
+        "confidence_score": { "type": ["number", "null"], "description": "DECIMAL(3,2)" },
+        "user_feedback": { "type": ["integer", "null"], "minimum": 1, "maximum": 5, "description": "1-5 scale" },
+        "intelligence_embedding": { "type": ["array", "null"], "items": { "type": "number" }, "minItems": 1536, "maxItems": 1536, "description": "VECTOR(1536)" }
+      }
+    }
+  }
+}

@@ -1,25 +1,19 @@
-# Root requirements (PRD + user stories)
-# Edge Agent & API (PRD §4.1, §9.0; US4, US5, US7)
+# Root requirements: install confluence + offline-folder-rag deps
+-r confluence_requirements.txt
+-r offline-folder-rag/requirements.txt
+pytest>=7.0
+pytest-cov>=4.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.10
+pytest-xdist>=3.0
+psutil>=5.9.0
+httpx>=0.25.0
+requests>=2.28.0
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 pydantic>=2.0.0
-
-# HTTP clients (Confluence REST API, error handling; PRD §4.3.4, US13)
-httpx>=0.25.0
-requests>=2.28.0
-
-# System / runtime (PRD NFR1 memory, US8)
-psutil>=5.9.0
-
-# LangChain agent system (PRD §4.3.3, §7.4; US5)
 langchain-core>=0.2.0
 langchain-community>=0.2.0
-
-# Vector store for template similarity (PRD §4.3.4 Chroma; US5, US6)
 chromadb>=0.4.0
-
-# PostgreSQL + pgvector (PRD §8.1, §4.3.4; US9)
 psycopg2-binary>=2.9.0
-
-# Migrations (US9: alembic/versions)
 alembic>=1.12.0
