@@ -19,6 +19,10 @@ _**Agent (model default, mode Agent)**_
 
 ---
 
+Cancelled
+
+---
+
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -9069,10 +9073,6 @@ Status: **completed**
 
 ---
 
-Cancelled
-
----
-
 
 
 
@@ -11486,7 +11486,11 @@ Checking for .gitmodules and submodule references; verifying the test and option
 
 ---
 
-Cancelled
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+</tool-use>
 
 ---
 
@@ -19965,11 +19969,7 @@ Status: **completed**
 
 ---
 
-<tool-use data-tool-type="read" data-tool-name="read_file_v2">
-<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
-
-</details>
-</tool-use>
+Cancelled
 
 ---
 
@@ -20781,10 +20781,6 @@ Adding type references and including the test in the TypeScript project: includi
 
 ---
 
-Cancelled
-
----
-
 _**User**_
 
 Strict, careful processing demanded: no hallucination, no assumptions, no sycophancy, no fiction. Deliver 10/10 Gold Standard Quality with elimination of all false positives. Do what is asked. 100% Accurate response, no inferences, no artificial.
@@ -20839,17 +20835,6 @@ _**Agent (model default, mode Agent)**_
 
 
 
-
----
-
-<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
-<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
-
-```bash
-cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
-```
-</details>
-</tool-use>
 
 ---
 
@@ -21134,6 +21119,2170 @@ Status: **completed**
 
 </details>
 </tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
+```
+
+```
+black : would reformat C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\client.py
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-88acfede-4ff4-4bcb-bf61-c2531d29e5c7.ps1:84 char:56
++ ... ag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (would reformat ...uence\client.py:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+would reformat C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py
+would reformat C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py
+would reformat C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py
+would reformat C:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_error_recovery.py
+would reformat C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py
+Oh no! \U0001f4a5 \U0001f494 \U0001f4a5
+6 files would be reformatted, 64 files would be left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Applying Black to the six files, then fixing Ruff F841 and checking flake8.
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black "offline-folder-rag/edge_agent/app/confluence/client.py" "offline-folder-rag/edge_agent/app/agents/integration_agent.py" "offline-folder-rag/edge_agent/app/confluence/error_handler.py" "tests/confluence/test_performance_targets.py" "tests/confluence/test_error_recovery.py" "offline-folder-rag/edge_agent/app/api/confluence_routes.py" 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black "offline-folder-rag/edge_agent/app/confluence/client.py" "offline-folder-rag/edge_agent/app/agents/integration_agent.py" "offline-folder-rag/edge_agent/app/confluence/error_handler.py" "tests/confluence/test_performance_targets.py" "tests/confluence/test_error_recovery.py" "offline-folder-rag/edge_agent/app/api/confluence_routes.py" 2>&1
+```
+
+```
+black : reformatted offline-folder-rag\edge_agent\app\agents\integration_agent.py
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-0dccf5e1-e257-43de-90ec-09e905a91c38.ps1:84 char:56
++ ... ag_Agent" ; black "offline-folder-rag/edge_agent/app/confluence/clien ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (reformatted off...ration_agent.py:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+reformatted offline-folder-rag\edge_agent\app\confluence\client.py
+reformatted tests\confluence\test_performance_targets.py
+reformatted offline-folder-rag\edge_agent\app\api\confluence_routes.py
+reformatted offline-folder-rag\edge_agent\app\confluence\error_handler.py
+reformatted tests\confluence\test_error_recovery.py
+All done! \u2728 \U0001f370 \u2728
+6 files reformatted.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\agents\content_analysis_agent.py:1:89: E501 line too long (127 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\content_analysis_agent.py:77:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\coordinator.py:1:89: E501 line too long (97 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\formatting_agent.py:1:89: E501 line too long (99 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\formatting_agent.py:8:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:1:89: E501 line too long (167 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:29:89: E501 line too long (123 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:30:89: E501 line too long (115 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:51:89: E501 line too long (101 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\learning_agent.py:1:89: E501 line too long (100 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\pattern_matching_agent.py:16:89: E501 line too long (102 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:1:89: E501 line too long (116 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:38:89: E501 line too long (103 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:50:89: E501 line too long (116 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:61:89: E501 line too long (98 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:62:89: E501 line too long (105 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:132:89: E501 line too long (118 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:237:89: E501 line too long (97 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\config\config.py:2:89: E501 line too long (105 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\client.py:45:89: E501 line too long (100 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:2:89: E501 line too long (98 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:3:89: E501 line too long (103 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:176:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:253:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:21:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:38:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:39:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:49:89: E501 line too long (106 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:60:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:71:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:72:89: E501 line too long (121 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:80:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:3:89: E501 line too long (120 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:82:89: E501 line too long (98 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:83:89: E501 line too long (96 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:97:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:185:89: E501 line too long (91 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:2:89: E501 line too long (106 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:41:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:100:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:182:89: E501 line too long (111 &gt; 88 characters)
+
+```
+</details>
+</tool-use>
+
+---
+
+
+Fixing E501 by wrapping long lines. Reading and fixing the affected files:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\content_analysis_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Fixing E501 violations: applying targeted line wraps across the affected files.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\content_analysis_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\content_analysis_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\coordinator.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\formatting_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\learning_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\pattern_matching_agent.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\coordinator.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\formatting_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\learning_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\config\config.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\client.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\pattern_matching_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\config\config.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\client.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+Fixing the prd_monitor logger.info line and adding PYTHONPATH for Pylint:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Setting PYTHONPATH for Pylint in the lint stage:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+Re-running Black on the modified files, then running ruff and flake8:
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1
+```
+
+```
+black : reformatted C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-f7e71e20-8dcf-49df-8a07-b8fe1397f51b.ps1:84 char:56
++ ... ag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (reformatted C:\...uence_routes.py:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+All done! \u2728 \U0001f370 \u2728
+1 file reformatted, 68 files left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
+```
+
+```
+All checks passed!
+
+```
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\agents\content_analysis_agent.py:1:89: E501 line too long (101 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\coordinator.py:1:89: E501 line too long (93 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\formatting_agent.py:1:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:1:89: E501 line too long (100 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:29:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:51:89: E501 line too long (96 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\learning_agent.py:1:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\pattern_matching_agent.py:16:89: E501 line too long (93 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:1:89: E501 line too long (102 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:52:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:63:89: E501 line too long (98 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:136:89: E501 line too long (100 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\config\config.py:2:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:2:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:3:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:21:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:38:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:39:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:73:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:81:89: E501 line too long (93 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:3:89: E501 line too long (97 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:83:89: E501 line too long (96 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:2:89: E501 line too long (95 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:41:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:182:89: E501 line too long (98 &gt; 88 characters)
+
+```
+</details>
+</tool-use>
+
+---
+
+
+Shortening remaining E501 lines:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\content_analysis_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\coordinator.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\formatting_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\learning_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\pattern_matching_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\config\config.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:1:89: E501 line too long (100 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:29:89: E501 line too long (91 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\learning_agent.py:1:89: E501 line too long (90 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:1:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:51:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:61:89: E501 line too long (98 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:133:89: E501 line too long (99 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:3:89: E501 line too long (94 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:20:89: E501 line too long (101 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:35:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:36:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:69:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:77:89: E501 line too long (93 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\prd_monitor.py:3:89: E501 line too long (97 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:1:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:40:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:181:89: E501 line too long (92 &gt; 88 characters)
+black : reformatted C:\Users\FAZLEEN 
+ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-22b34a21-b2ce-4a21-a4db-c770c65067a9.ps1:84 char:56
++ ... ag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (reformatted C:\...uence_routes.py:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+All done! \u2728 \U0001f370 \u2728
+1 file reformatted, 68 files left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+Shortening the remaining long lines:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\learning_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\prd_monitor.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:1:89: E501 line too long (95 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\agents\integration_agent.py:28:89: E501 line too long (107 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:62:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\api\confluence_routes.py:131:89: E501 line too long (89 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\error_handler.py:3:89: E501 line too long (90 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:35:89: E501 line too long (92 &gt; 88 characters)
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:68:89: E501 line too long (92 &gt; 88 characters)
+tests/confluence\test_performance_targets.py:40:89: E501 line too long (92 &gt; 88 characters)
+black : All done! \u2728 \U0001f370 \u2728
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-76b4c873-6016-404c-857b-551f96467b7f.ps1:84 char:56
++ ... ag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (All done! \u2728 \U0001f370 \u2728:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+69 files left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\agents\integration_agent.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+The string to replace was not found in the file.
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_performance_targets.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\api\confluence_routes.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ repo_analysis_rag/ 2>&1 ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:68:89: E501 line too long (92 &gt; 88 characters)
+All checks passed!
+black : All done! \u2728 \U0001f370 \u2728
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-972825f9-cd7b-4cf5-9dfb-58ab51d02468.ps1:84 char:56
++ ... ag_Agent" ; black offline-folder-rag/edge_agent/ tests/confluence/ re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (All done! \u2728 \U0001f370 \u2728:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+69 files left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:68:89: E501 line too long (92 &gt; 88 characters)
+black : All done! \u2728 \U0001f370 \u2728
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-aa988d51-24d1-4f38-9416-50a6167ee728.ps1:84 char:174
++ ... W503 2&gt;&amp;1 ; black --check repo_analysis_rag/ offline-folder-rag/edge_ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (All done! \u2728 \U0001f370 \u2728:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+70 files would be left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1
+```
+
+```
+offline-folder-rag/edge_agent/app\confluence\optimizer.py:68:89: E501 line too long (92 &gt; 88 characters)
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Breaking the long Peak memory line:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\optimizer.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1 ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503 2>&1 ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1 ; ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ 2>&1
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503
+```
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; $env:PYTHONPATH = (Get-Location).Path + ";" + (Get-Location).Path + "\offline-folder-rag\edge_agent"; python -m pytest tests/confluence/ tests/edge_agent/unit/ -q</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; $env:PYTHONPATH = (Get-Location).Path + ";" + (Get-Location).Path + "\offline-folder-rag\edge_agent"; python -m pytest tests/confluence/ tests/edge_agent/unit/ -q
+```
+
+```
+..........................................                               [100%]
+42 passed in 7.72s
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" ; black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/
+```
+
+```
+All done! \u2728 \U0001f370 \u2728
+70 files would be left unchanged.
+
+```
+</details>
+</tool-use>
+
+---
+
+
+---
+
+**1) Files changed**
+
+- **Black (reformatted):**  
+  `offline-folder-rag/edge_agent/app/confluence/client.py`,  
+  `offline-folder-rag/edge_agent/app/agents/integration_agent.py`,  
+  `offline-folder-rag/edge_agent/app/confluence/error_handler.py`,  
+  `tests/confluence/test_performance_targets.py`,  
+  `tests/confluence/test_error_recovery.py`,  
+  `offline-folder-rag/edge_agent/app/api/confluence_routes.py`
+
+- **Ruff F841:**  
+  `offline-folder-rag/edge_agent/app/agents/integration_agent.py`: `except Exception as e:` → `except Exception:` (e unused).  
+  `offline-folder-rag/edge_agent/app/api/confluence_routes.py`: `intelligence_feedback_handler` now returns `"feedback_received": feedback` so `feedback` is used.
+
+- **Flake8 E501:**  
+  Docstrings/comments/long lines shortened or wrapped in:  
+  `offline-folder-rag/edge_agent/app/agents/content_analysis_agent.py`,  
+  `offline-folder-rag/edge_agent/app/agents/coordinator.py`,  
+  `offline-folder-rag/edge_agent/app/agents/formatting_agent.py`,  
+  `offline-folder-rag/edge_agent/app/agents/integration_agent.py`,  
+  `offline-folder-rag/edge_agent/app/agents/learning_agent.py`,  
+  `offline-folder-rag/edge_agent/app/agents/pattern_matching_agent.py`,  
+  `offline-folder-rag/edge_agent/app/api/confluence_routes.py`,  
+  `offline-folder-rag/edge_agent/app/config/config.py`,  
+  `offline-folder-rag/edge_agent/app/confluence/client.py`,  
+  `offline-folder-rag/edge_agent/app/confluence/error_handler.py`,  
+  `offline-folder-rag/edge_agent/app/confluence/optimizer.py`,  
+  `offline-folder-rag/edge_agent/app/confluence/prd_monitor.py`,  
+  `tests/confluence/test_performance_targets.py`.
+
+- **Pylint PYTHONPATH:**  
+  `run-local-cicd.ps1`: set `$env:PYTHONPATH` at start of `Invoke-Lint` to repo root + `offline-folder-rag\edge_agent`.  
+  `.github/workflows/ci.yml`: added `env.PYTHONPATH` for the Pylint step (workspace + `offline-folder-rag/edge_agent`).
+
+**2) What each change does**
+
+- **Black:** Formatting only; no behavior change.  
+- **Ruff F841:** Removed unused `e` in one `except`; used `feedback` in the feedback response so the variable is not unused.  
+- **E501:** Shortened or wrapped docstrings, comments, and long lines to stay under 88 characters; no logic changes.  
+- **Pylint:** Lint runs with `PYTHONPATH` including `offline-folder-rag/edge_agent`, so `import app.*` resolves; no import or runtime changes.
+
+**3) Commands to verify**
+
+```powershell
+# From repo root (PowerShell). For Pylint, PYTHONPATH is set inside run-local-cicd.ps1 when running the lint stage.
+black --check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/
+ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/
+flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503
+$env:PYTHONPATH = "$(Get-Location);$(Get-Location)\offline-folder-rag\edge_agent"; pylint repo_analysis_rag/ offline-folder-rag/edge_agent/ --disable=all --enable=E,F
+pytest tests/confluence/ tests/edge_agent/unit/ -q
+```
+
+- **black --check** — passes (70 files unchanged).  
+- **ruff check** — passes.  
+- **flake8** — passes (no E501/F841).  
+- **pytest tests/confluence/ tests/edge_agent/unit/** — 42 passed.
+
+---
+
+_**User**_
+
+=================================== FAILURES ===================================
+__________________ test_TC_NEG_004_network_failure_auto_retry __________________
+tests/confluence/test_error_recovery.py:36: in test_TC_NEG_004_network_failure_auto_retry
+    assert out.get("category") == "network"
+E   AssertionError: assert 'other' == 'network'
+E     
+E     - network
+E     + other
+- generated xml file: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent/test-results-unit.xml -
+=========================== short test summary info ============================
+FAILED tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry - AssertionError: assert 'other' == 'network'
+  
+  - network
+  + other
+========================= 1 failed, 41 passed in 7.54s =========================
+Error: Process completed with exit code 1.
+
+it is showing this error @tests/confluence/test_error_recovery.py this is the file.
+but when i run @run-local-cicd.ps1 it is passing in this local ci-cd but it is showing the above error in github actions.
+find the root cause and fix it.@.github/workflows/ci.yml this is the github actions file.
+
+and compare @.github/workflows/ci.yml @run-local-cicd.ps1 these two files are correct.
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Checking the test, error classifier, and CI vs local setup to find why the test fails on GitHub Actions but passes locally.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_error_recovery.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Checking CI env and whether `requests` is installed; inspecting `_classify` and PYTHONPATH.
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\run-local-cicd.ps1</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Checking tests/conftest.py and whether CI installs requests:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\conftest.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "requests",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+  "glob": "*.{txt,yml,yaml}",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "requests",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\vendor.txt",
+              "matches": [
+                {
+                  "lineNumber": 10,
+                  "content": "requests==2.31.0"
+                }
+              ]
+            }
+          ],
+          "totalLines": 1,
+          "totalMatchedLines": 1
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+Identifying root cause: On CI, `requests` isn't installed. The test does `import requests.exceptions` then `raise req_exc.ConnectionError(...)`. When the import fails the caught exception is ImportError; `handle_error(ImportError)` returns "other". Locally `requests` is present so the exception is ConnectionError and is classified as "network". Adding `requests` to `confluence_requirements.txt` so CI installs it.
+
+
+---
+
+Write permission denied:
+
+---
+
+
+**Root cause**
+
+On GitHub Actions, **`requests` is not installed**. The test does:
+
+```python
+try:
+    import requests.exceptions as req_exc
+    raise req_exc.ConnectionError("Connection refused")
+except Exception as e:
+    out = handle_error(e, error_code="create_failed")
+```
+
+- **Locally:** `requests` is installed (e.g. from venv or another requirement), so the import succeeds, the exception is `requests.exceptions.ConnectionError`, and `handle_error` classifies it as `"network"`.
+- **On CI:** `requests` is not in `requirements.txt`, `confluence_requirements.txt`, or `offline-folder-rag/requirements.txt`, so `import requests.exceptions` raises **ImportError**. That ImportError is caught as `e`, and `handle_error(ImportError)` runs. The classifier does not treat ImportError as a network error, so it returns `"other"`.
+
+So the failure is due to CI missing the `requests` dependency, not a bug in the classifier.
+
+**Fix**
+
+Add `requests` so CI installs it (e.g. in `confluence_requirements.txt`). Then the test will raise `ConnectionError` on CI too and the test will pass.
+
+**CI vs run-local-cicd.ps1**
+
+- **ci.yml:** `PYTHONPATH` is set to `${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag`. Unit tests are run with `pytest tests/confluence/ tests/edge_agent/unit/ ...` with no extra PYTHONPATH for `edge_agent`. `tests/conftest.py` adds `offline-folder-rag/edge_agent` to `sys.path`, so `import app` works in both places.
+- **run-local-cicd.ps1:** Sets `PYTHONPATH` to repo root and `offline-folder-rag` (not `edge_agent`). Again, conftest adds `edge_agent`, so tests run the same way. The only behavioral difference for this failure is that locally `requests` is installed and on CI it is not.
+
+**Concrete change**
+
+In **confluence_requirements.txt**, add:
+
+```text
+requests>=2.28.0
+```
+
+and remove the duplicate `httpx>=0.24.0` line if present (keep a single `httpx>=0.25.0`). After that, CI will install `requests`, the test will raise `ConnectionError` on CI, and `test_TC_NEG_004_network_failure_auto_retry` should pass.
+
+I’m in **Ask mode** and can’t edit files. If you switch to **Agent mode**, I can apply this change for you; otherwise you can add `requests>=2.28.0` to `confluence_requirements.txt` yourself.
+
+---
+
+_**User**_
+
+implement the above fix
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+Update applied to `confluence_requirements.txt`:
+
+- Removed the duplicate `httpx>=0.24.0` line.
+- Added `requests>=2.28.0`.
+
+CI will now install `requests`, so the test’s `import requests.exceptions` will succeed, the exception will be `ConnectionError` (not `ImportError`), and `handle_error` will classify it as `"network"`, so `test_TC_NEG_004_network_failure_auto_retry` should pass on GitHub Actions.
 
 ---
 
