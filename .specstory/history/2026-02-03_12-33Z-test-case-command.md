@@ -34,8 +34,9660 @@ Parameters:
   "caseInsensitive": false
 }
 ```
-Status: **loading**
+Result:
 
+```json
+{
+  "success": {
+    "pattern": "pytest|unittest|test",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".\\bandit-report.json",
+              "matches": [
+                {
+                  "lineNumber": 16,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 29,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 42,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 68,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 81,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 94,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 107,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 120,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 133,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 146,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 172,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 185,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 198,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 211,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 224,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 237,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 250,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 263,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 276,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 289,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 302,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 315,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 328,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 341,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 354,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 367,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 380,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 393,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 406,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 419,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 432,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 445,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 458,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 471,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 484,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 497,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 510,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 523,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 536,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 549,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 562,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 575,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 588,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 601,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 614,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 627,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 640,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 653,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 666,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 679,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 692,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 705,
+                  "content": "      \"skipped_tests\": 0"
+                },
+                {
+                  "lineNumber": 718,
+                  "content": "      \"skipped_tests\": 0"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_performance_targets.py",
+              "matches": [
+                {
+                  "lineNumber": 2,
+                  "content": "Performance boundary and business rule tests for User Story 8 (TC-BVA-011 to TC-BVA-014, TC-BR-004, etc.)."
+                },
+                {
+                  "lineNumber": 6,
+                  "content": "from unittest.mock import MagicMock, patch"
+                },
+                {
+                  "lineNumber": 10,
+                  "content": "def test_analysis_time_under_3_seconds_per_file():"
+                },
+                {
+                  "lineNumber": 25,
+                  "content": "def test_template_selection_under_2_seconds():"
+                },
+                {
+                  "lineNumber": 38,
+                  "content": "def test_creation_time_under_15_seconds_including_api():"
+                },
+                {
+                  "lineNumber": 58,
+                  "content": "def test_memory_under_300mb_during_operation():"
+                },
+                {
+                  "lineNumber": 75,
+                  "content": "def test_memory_exhaustion_graceful_handling():"
+                },
+                {
+                  "lineNumber": 78,
+                  "content": "    from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "def test_rag_confluence_no_conflict():"
+                },
+                {
+                  "lineNumber": 99,
+                  "content": "    from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 115,
+                  "content": "def test_resource_sharing_memory_limit():"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "def test_existing_rag_features_unchanged():"
+                },
+                {
+                  "lineNumber": 137,
+                  "content": "def test_prd_monitor_timers_and_record():"
+                },
+                {
+                  "lineNumber": 152,
+                  "content": "        operation_id=\"test-op\","
+                },
+                {
+                  "lineNumber": 158,
+                  "content": "    assert record.operation_id == \"test-op\""
+                },
+                {
+                  "lineNumber": 163,
+                  "content": "def test_optimizer_suggestions():"
+                },
+                {
+                  "lineNumber": 178,
+                  "content": "def test_intelligence_status_returns_metrics():"
+                },
+                {
+                  "lineNumber": 181,
+                  "content": "    from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 200,
+                  "content": "def test_ui_remains_responsive_during_heavy_operation():"
+                },
+                {
+                  "lineNumber": 203,
+                  "content": "    from fastapi.testclient import TestClient"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\conftest.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "\"\"\"Pytest configuration. Add edge_agent to path so app package is importable.\"\"\""
+                }
+              ]
+            },
+            {
+              "file": ".\\.specstory\\history\\2026-02-03_10-51Z-prd-compliant-confluence-api-endpoints.md",
+              "matches": [
+                {
+                  "lineNumber": 240,
+                  "content": "(These keys make the endpoint stable and testable while still matching PRD’s content requirements.)"
+                },
+                {
+                  "lineNumber": 297,
+                  "content": "Important (must pass contract tests): Request validation failures (missing keys, wrong types, empty files, invalid query param) must also return this PRD error JSON shape."
+                },
+                {
+                  "lineNumber": 373,
+                  "content": "Gathering PRD specs, existing edge-agent code, and test cases to draft an implementation plan."
+                },
+                {
+                  "lineNumber": 1166,
+                  "content": "                  \"content\": \"          pytest tests/confluence/ tests/edge_agent/unit/ \\\\\""
+                },
+                {
+                  "lineNumber": 1231,
+                  "content": "                  \"content\": \"        run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/\""
+                },
+                {
+                  "lineNumber": 1235,
+                  "content": "                  \"content\": \"        run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/\""
+                },
+                {
+                  "lineNumber": 1247,
+                  "content": "                  \"content\": \"        run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503\""
+                },
+                {
+                  "lineNumber": 1259,
+                  "content": "                  \"content\": \"          pytest tests/confluence/ tests/edge_agent/unit/ \\\\\""
+                },
+                {
+                  "lineNumber": 1263,
+                  "content": "                  \"content\": \"          pytest tests/edge_agent/integration/ \\\\\""
+                },
+                {
+                  "lineNumber": 1276,
+                  "content": "                  \"content\": \"$PythonPaths = @(\\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\")\""
+                },
+                {
+                  "lineNumber": 1304,
+                  "content": "                  \"content\": \"        $blackProcess = Start-Process -FilePath \\\"black\\\" -ArgumentList \\\"--check\\\", \\\"--diff\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 1308,
+                  "content": "                  \"content\": \"        $ruffProcess = Start-Process -FilePath \\\"ruff\\\" -ArgumentList \\\"check\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 1320,
+                  "content": "                  \"content\": \"        $flake8Process = Start-Process -FilePath \\\"flake8\\\" -ArgumentList \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\", \\\"--max-line-length=88\\\", \\\"--extend-ignore=E203,W503\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 1336,
+                  "content": "                  \"content\": \"            Write-Info \\\"Running Python unit tests (tests/confluence, tests/edge_agent/unit)...\\\"\""
+                },
+                {
+                  "lineNumber": 1340,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/confluence/ tests/edge_agent/unit/ &amp;#96;\""
+                },
+                {
+                  "lineNumber": 1344,
+                  "content": "                  \"content\": \"            Write-Info \\\"Running Python integration tests (tests/edge_agent/integration)...\\\"\""
+                },
+                {
+                  "lineNumber": 1348,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/edge_agent/integration/ --junitxml=test-results-integration.xml -v --tb=short 2&amp;gt;$null\""
+                },
+                {
+                  "lineNumber": 1443,
+                  "content": "Checking for existing API/contract tests for the Confluence endpoints:"
+                },
+                {
+                  "lineNumber": 1457,
+                  "content": "  \"targetDirectory\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\""
+                },
+                {
+                  "lineNumber": 1465,
+                  "content": "    \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 1468,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\confluence\","
+                },
+                {
+                  "lineNumber": 1474,
+                  "content": "            \"name\": \"test_api_prd_format.py\""
+                },
+                {
+                  "lineNumber": 1477,
+                  "content": "            \"name\": \"test_api_router.py\""
+                },
+                {
+                  "lineNumber": 1480,
+                  "content": "            \"name\": \"test_client_auth.py\""
+                },
+                {
+                  "lineNumber": 1483,
+                  "content": "            \"name\": \"test_e2e_workflows.py\""
+                },
+                {
+                  "lineNumber": 1486,
+                  "content": "            \"name\": \"test_imports.py\""
+                },
+                {
+                  "lineNumber": 1489,
+                  "content": "            \"name\": \"test_intelligence_learning.py\""
+                },
+                {
+                  "lineNumber": 1492,
+                  "content": "            \"name\": \"test_page_tracker.py\""
+                },
+                {
+                  "lineNumber": 1495,
+                  "content": "            \"name\": \"test_performance_targets.py\""
+                },
+                {
+                  "lineNumber": 1498,
+                  "content": "            \"name\": \"test_prd_compliance.py\""
+                },
+                {
+                  "lineNumber": 1501,
+                  "content": "            \"name\": \"test_reliability.py\""
+                },
+                {
+                  "lineNumber": 1504,
+                  "content": "            \"name\": \"test_security_compliance.py\""
+                },
+                {
+                  "lineNumber": 1507,
+                  "content": "            \"name\": \"test_state_machine.py\""
+                },
+                {
+                  "lineNumber": 1510,
+                  "content": "            \"name\": \"test_templates.py\""
+                },
+                {
+                  "lineNumber": 1516,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 1519,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 1528,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 1562,
+                  "content": "  \"path\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 1572,
+                  "content": "    \"path\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 1605,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_api_prd_format.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1613,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_api_router.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1635,
+                  "content": "  \"plan\": \"# PRD-Compliant Confluence API Endpoints (User Story 4)\\n\\n## Current state\\n\\n- [confluence_routes.py](offline-folder-rag/edge_agent/app/api/confluence_routes.py): four stub handlers and &amp;#96;register_confluence_routes(router)&amp;#96; that does nothing.\\n- [schemas.py](offline-folder-rag/edge_agent/app/api/schemas.py): placeholder only; no models.\\n- [api/__init__.py](offline-folder-rag/edge_agent/app/api/__init__.py): empty; no route registration.\\n- [routes.py](offline-folder-rag/edge_agent/app/api/routes.py): **must not be modified** (existing RAG).\\n- App entrypoint ([main.py](offline-folder-rag/edge_agent/app/main.py)) is a stub; no ASGI app yet. Route registration will assume a FastAPI-style &amp;#96;APIRouter&amp;#96; (or equivalent) passed into &amp;#96;register_confluence_routes(router)&amp;#96; by the future app.\\n\\n---\\n\\n## 1. Schemas ([schemas.py](offline-folder-rag/edge_agent/app/api/schemas.py))\\n\\nAdd Pydantic models matching PRD §9.1 and §9.2 exactly.\\n\\n**Requests**\\n\\n- **A [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 2086,
+                  "content": "Verifying routes.py is untouched and running a quick import test:"
+                },
+                {
+                  "lineNumber": 2336,
+                  "content": "Running tests and verifying response shapes with a quick app test:"
+                },
+                {
+                  "lineNumber": 2344,
+                  "content": "from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 2397,
+                  "content": "from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 2469,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_command_v2** • Run command: cd \"c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\"; pip install -q -r confluence_requirements.txt 2&gt;$null; python -m pytest tests/confluence/test_api_prd_format.py tests/confluence/test_api_router.py -v 2&gt;&amp;1&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2472,
+                  "content": "cd \"c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\"; pip install -q -r confluence_requirements.txt 2&gt;$null; python -m pytest tests/confluence/test_api_prd_format.py tests/confluence/test_api_router.py -v 2&gt;&amp;1"
+                },
+                {
+                  "lineNumber": 2476,
+                  "content": "============================= test session starts ============================="
+                },
+                {
+                  "lineNumber": 2477,
+                  "content": "platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0 -- C:\\Users\\FAZLEEN ANEESA\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
+                },
+                {
+                  "lineNumber": 2478,
+                  "content": "cachedir: .pytest_cache"
+                },
+                {
+                  "lineNumber": 2480,
+                  "content": "configfile: pytest.ini"
+                },
+                {
+                  "lineNumber": 2482,
+                  "content": "asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function"
+                },
+                {
+                  "lineNumber": 2485,
+                  "content": "tests/confluence/test_api_prd_format.py::test_placeholder PASSED         [ 50%]"
+                },
+                {
+                  "lineNumber": 2486,
+                  "content": "tests/confluence/test_api_router.py::test_placeholder PASSED             [100%]"
+                },
+                {
+                  "lineNumber": 2575,
+                  "content": "- Added &#96;fastapi&#96;, &#96;uvicorn&#96;, &#96;pydantic&#96; for running and testing the API."
+                },
+                {
+                  "lineNumber": 2580,
+                  "content": "Contract check: all four endpoints return the required JSON shapes; invalid request bodies return the PRD §9.2 error JSON. Existing tests &#96;test_api_prd_format.py&#96; and &#96;test_api_router.py&#96; pass."
+                },
+                {
+                  "lineNumber": 2593,
+                  "content": "Checking how the Edge Agent API is run or tested in the repo:"
+                },
+                {
+                  "lineNumber": 2615,
+                  "content": "  \"pattern\": \"uvicorn|TestClient|pytest.*confluence|edge_agent\","
+                },
+                {
+                  "lineNumber": 2626,
+                  "content": "    \"pattern\": \"uvicorn|TestClient|pytest.*confluence|edge_agent\","
+                },
+                {
+                  "lineNumber": 2638,
+                  "content": "                  \"content\": \"        run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/\""
+                },
+                {
+                  "lineNumber": 2642,
+                  "content": "                  \"content\": \"        run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/\""
+                },
+                {
+                  "lineNumber": 2654,
+                  "content": "                  \"content\": \"        run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503\""
+                },
+                {
+                  "lineNumber": 2662,
+                  "content": "                  \"content\": \"          pytest tests/confluence/ tests/edge_agent/unit/ \\\\\""
+                },
+                {
+                  "lineNumber": 2666,
+                  "content": "                  \"content\": \"          pytest tests/edge_agent/integration/ \\\\\""
+                },
+                {
+                  "lineNumber": 2675,
+                  "content": "                  \"content\": \"$PythonPaths = @(\\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\")\""
+                },
+                {
+                  "lineNumber": 2679,
+                  "content": "                  \"content\": \"        $blackProcess = Start-Process -FilePath \\\"black\\\" -ArgumentList \\\"--check\\\", \\\"--diff\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 2683,
+                  "content": "                  \"content\": \"        $ruffProcess = Start-Process -FilePath \\\"ruff\\\" -ArgumentList \\\"check\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 2695,
+                  "content": "                  \"content\": \"        $flake8Process = Start-Process -FilePath \\\"flake8\\\" -ArgumentList \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\", \\\"--max-line-length=88\\\", \\\"--extend-ignore=E203,W503\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 2711,
+                  "content": "                  \"content\": \"            Write-Info \\\"Running Python unit tests (tests/confluence, tests/edge_agent/unit)...\\\"\""
+                },
+                {
+                  "lineNumber": 2715,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/confluence/ tests/edge_agent/unit/ &amp;#96;\""
+                },
+                {
+                  "lineNumber": 2719,
+                  "content": "                  \"content\": \"            Write-Info \\\"Running Python integration tests (tests/edge_agent/integration)...\\\"\""
+                },
+                {
+                  "lineNumber": 2723,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/edge_agent/integration/ --junitxml=test-results-integration.xml -v --tb=short 2&amp;gt;$null\""
+                },
+                {
+                  "lineNumber": 2747,
+                  "content": "**1. Run the API-related tests**"
+                },
+                {
+                  "lineNumber": 2754,
+                  "content": "python -m pytest tests/confluence/test_api_prd_format.py tests/confluence/test_api_router.py -v"
+                },
+                {
+                  "lineNumber": 2757,
+                  "content": "**2. Run all Confluence + Edge Agent unit tests (as in CI)**"
+                },
+                {
+                  "lineNumber": 2762,
+                  "content": "python -m pytest tests/confluence/ tests/edge_agent/unit/ -v"
+                },
+                {
+                  "lineNumber": 2773,
+                  "content": "from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 2816,
+                  "content": "Use (1) or (2) for automated tests; (3) for a fast contract check; (4) for manual HTTP testing."
+                },
+                {
+                  "lineNumber": 2935,
+                  "content": "                  \"content\": \"    &amp;amp; $pythonExe -m pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist -q\""
+                },
+                {
+                  "lineNumber": 2939,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/confluence/ tests/edge_agent/unit/ &amp;#96;\""
+                },
+                {
+                  "lineNumber": 2943,
+                  "content": "                  \"content\": \"                &amp;amp; $pythonExe -m pytest tests/functional/ --junitxml=test-results-functional.xml -v --tb=short 2&amp;gt;$null\""
+                },
+                {
+                  "lineNumber": 2947,
+                  "content": "                  \"content\": \"            &amp;amp; $pythonExe -m pytest tests/edge_agent/integration/ --junitxml=test-results-integration.xml -v --tb=short 2&amp;gt;$null\""
+                },
+                {
+                  "lineNumber": 2951,
+                  "content": "                  \"content\": \"                &amp;amp; $pythonExe -m pytest tests/e2e/ --junitxml=test-results-e2e.xml -v --tb=short 2&amp;gt;$null\""
+                },
+                {
+                  "lineNumber": 2991,
+                  "content": "pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist"
+                },
+                {
+                  "lineNumber": 3004,
+                  "content": "The script will create &#96;.venv&#96; if missing and use &#96;.\\.venv\\Scripts\\python.exe&#96; for tests."
+                },
+                {
+                  "lineNumber": 3006,
+                  "content": "**3. Only run tests in the active venv**"
+                },
+                {
+                  "lineNumber": 3012,
+                  "content": "python -m pytest tests/confluence/ tests/edge_agent/unit/ -v"
+                },
+                {
+                  "lineNumber": 3144,
+                  "content": "After the conflict markers are removed, the 5 failing tests should get past the import/syntax error. The later Docker error (“failed to set up container networking: network ... not found”) is separate; often fixed by running &#96;docker network prune&#96; and then &#96;docker-compose up&#96; again."
+                },
+                {
+                  "lineNumber": 3284,
+                  "content": "Merge conflict markers are removed and the PRD-compliant (HEAD) version is kept. Running the previously failing tests to confirm:"
+                },
+                {
+                  "lineNumber": 3290,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_command_v2** • Run command: cd \"c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\"; $env:PYTHONPATH = (Get-Location).Path; python -m pytest tests/confluence/test_performance_targets.py -v --tb=short 2&gt;&amp;1&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 3293,
+                  "content": "cd \"c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\"; $env:PYTHONPATH = (Get-Location).Path; python -m pytest tests/confluence/test_performance_targets.py -v --tb=short 2&gt;&amp;1"
+                },
+                {
+                  "lineNumber": 3297,
+                  "content": "============================= test session starts ============================="
+                },
+                {
+                  "lineNumber": 3298,
+                  "content": "platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0 -- C:\\Users\\FAZLEEN ANEESA\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
+                },
+                {
+                  "lineNumber": 3299,
+                  "content": "cachedir: .pytest_cache"
+                },
+                {
+                  "lineNumber": 3301,
+                  "content": "configfile: pytest.ini"
+                },
+                {
+                  "lineNumber": 3303,
+                  "content": "asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function"
+                },
+                {
+                  "lineNumber": 3306,
+                  "content": "tests/confluence/test_performance_targets.py::test_analysis_time_under_3_seconds_per_file PASSED [  8%]"
+                },
+                {
+                  "lineNumber": 3307,
+                  "content": "tests/confluence/test_performance_targets.py::test_template_selection_under_2_seconds PASSED [ 16%]"
+                },
+                {
+                  "lineNumber": 3308,
+                  "content": "tests/confluence/test_performance_targets.py::test_creation_time_under_15_seconds_including_api PASSED [ 25%]"
+                },
+                {
+                  "lineNumber": 3309,
+                  "content": "tests/confluence/test_performance_targets.py::test_memory_under_300mb_during_operation PASSED [ 33%]"
+                },
+                {
+                  "lineNumber": 3310,
+                  "content": "tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling FAILED [ 41%]"
+                },
+                {
+                  "lineNumber": 3311,
+                  "content": "tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict FAILED [ 50%]"
+                },
+                {
+                  "lineNumber": 3312,
+                  "content": "tests/confluence/test_performance_targets.py::test_resource_sharing_memory_limit PASSED [ 58%]"
+                },
+                {
+                  "lineNumber": 3313,
+                  "content": "tests/confluence/test_performance_targets.py::test_existing_rag_features_unchanged PASSED [ 66%]"
+                },
+                {
+                  "lineNumber": 3314,
+                  "content": "tests/confluence/test_performance_targets.py::test_prd_monitor_timers_and_record PASSED [ 75%]"
+                },
+                {
+                  "lineNumber": 3315,
+                  "content": "tests/confluence/test_performance_targets.py::test_optimizer_suggestions PASSED [ 83%]"
+                },
+                {
+                  "lineNumber": 3316,
+                  "content": "tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics FAILED [ 91%]"
+                },
+                {
+                  "lineNumber": 3317,
+                  "content": "tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation PASSED [100%]"
+                },
+                {
+                  "lineNumber": 3320,
+                  "content": "__________________ test_memory_exhaustion_graceful_handling ___________________"
+                },
+                {
+                  "lineNumber": 3321,
+                  "content": "tests\\confluence\\test_performance_targets.py:71: in test_memory_exhaustion_graceful_handling"
+                },
+                {
+                  "lineNumber": 3323,
+                  "content": "..\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\unittest\\mock.py:1446: in __enter__"
+                },
+                {
+                  "lineNumber": 3326,
+                  "content": "..\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\unittest\\mock.py:1419: in get_original"
+                },
+                {
+                  "lineNumber": 3329,
+                  "content": "_______________________ test_rag_confluence_no_conflict _______________________"
+                },
+                {
+                  "lineNumber": 3330,
+                  "content": "tests\\confluence\\test_performance_targets.py:87: in test_rag_confluence_no_conflict"
+                },
+                {
+                  "lineNumber": 3334,
+                  "content": "__________________ test_intelligence_status_returns_metrics ___________________"
+                },
+                {
+                  "lineNumber": 3335,
+                  "content": "tests\\confluence\\test_performance_targets.py:158: in test_intelligence_status_returns_metrics"
+                },
+                {
+                  "lineNumber": 3340,
+                  "content": "tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation"
+                },
+                {
+                  "lineNumber": 3341,
+                  "content": "  C:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_performance_targets.py:168: RuntimeWarning: coroutine 'intelligent_analyze_handler' was never awaited"
+                },
+                {
+                  "lineNumber": 3344,
+                  "content": "  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info."
+                },
+                {
+                  "lineNumber": 3346,
+                  "content": "tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation"
+                },
+                {
+                  "lineNumber": 3347,
+                  "content": "  C:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_performance_targets.py:170: RuntimeWarning: coroutine 'intelligence_status_handler' was never awaited"
+                },
+                {
+                  "lineNumber": 3350,
+                  "content": "  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info."
+                },
+                {
+                  "lineNumber": 3352,
+                  "content": "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html"
+                },
+                {
+                  "lineNumber": 3353,
+                  "content": "=========================== short test summary info ==========================="
+                },
+                {
+                  "lineNumber": 3354,
+                  "content": "FAILED tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling"
+                },
+                {
+                  "lineNumber": 3355,
+                  "content": "FAILED tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict"
+                },
+                {
+                  "lineNumber": 3356,
+                  "content": "FAILED tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics"
+                },
+                {
+                  "lineNumber": 3359,
+                  "content": "ANEESA\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pytest\\unraisableexception.py:33: RuntimeWarning: "
+                },
+                {
+                  "lineNumber": 3362,
+                  "content": "+ ... tion).Path; python -m pytest tests/confluence/test_performance_target ..."
+                },
+                {
+                  "lineNumber": 3369,
+                  "content": "C:\\Users\\FAZLEEN ANEESA\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pytest\\unraisableexception.py:33: "
+                },
+                {
+                  "lineNumber": 3390,
+                  "content": "- The two tests that failed only on the import (&#96;test_existing_rag_features_unchanged&#96;, &#96;test_ui_remains_responsive_during_heavy_operation&#96;) now run (one passes, one has a different issue)."
+                },
+                {
+                  "lineNumber": 3392,
+                  "content": "**Still failing (3 tests)**  "
+                },
+                {
+                  "lineNumber": 3395,
+                  "content": "1. **test_memory_exhaustion_graceful_handling** – Patches &#96;check_memory_before_step&#96;, which doesn’t exist in the PRD version (that version uses validation + &#96;_prd_error_response&#96;)."
+                },
+                {
+                  "lineNumber": 3396,
+                  "content": "2. **test_rag_confluence_no_conflict** – Calls &#96;intelligent_analyze_handler(...)&#96; and expects a dict; the PRD handler is async and expects a &#96;Request&#96;, so the test gets a coroutine."
+                },
+                {
+                  "lineNumber": 3397,
+                  "content": "3. **test_intelligence_status_returns_metrics** – Calls &#96;intelligence_status_handler()&#96; and expects a dict with &#96;\"metrics\"&#96;; the PRD handler is async and returns a &#96;StatusResponse&#96; (with &#96;intelligence_metrics&#96;, etc.), and the test doesn’t await it."
+                },
+                {
+                  "lineNumber": 3399,
+                  "content": "Fixing those would mean updating the tests to the PRD API (async handlers, &#96;Request&#96;, and PRD response shapes). I can outline or apply those test changes next if you want."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\wheel.py",
+              "matches": [
+                {
+                  "lineNumber": 149,
+                  "content": "        # foobar; \"linux\" in sys_platform and extra == 'test'"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\package_index.py",
+              "matches": [
+                {
+                  "lineNumber": 620,
+                  "content": "                test = ("
+                },
+                {
+                  "lineNumber": 624,
+                  "content": "                if test:"
+                },
+                {
+                  "lineNumber": 1043,
+                  "content": "    # failing test. We would expect \"nonnumeric port\". Refs #20."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\msvc.py",
+              "matches": [
+                {
+                  "lineNumber": 93,
+                  "content": "            \"-latest\","
+                },
+                {
+                  "lineNumber": 262,
+                  "content": "            # For VC++ 14.X Redirect user to latest Visual C++ Build Tools"
+                },
+                {
+                  "lineNumber": 596,
+                  "content": "            vc_ver or self._find_latest_available_vs_ver())"
+                },
+                {
+                  "lineNumber": 598,
+                  "content": "    def _find_latest_available_vs_ver(self):"
+                },
+                {
+                  "lineNumber": 600,
+                  "content": "        Find the latest VC version"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\discovery.py",
+              "matches": [
+                {
+                  "lineNumber": 212,
+                  "content": "        \"test\","
+                },
+                {
+                  "lineNumber": 213,
+                  "content": "        \"tests\","
+                },
+                {
+                  "lineNumber": 214,
+                  "content": "        \"unit_test\","
+                },
+                {
+                  "lineNumber": 215,
+                  "content": "        \"unit_tests\","
+                },
+                {
+                  "lineNumber": 255,
+                  "content": "        \"conftest\","
+                },
+                {
+                  "lineNumber": 256,
+                  "content": "        \"test\","
+                },
+                {
+                  "lineNumber": 257,
+                  "content": "        \"tests\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\dist.py",
+              "matches": [
+                {
+                  "lineNumber": 355,
+                  "content": "def check_test_suite(dist, attr, value):"
+                },
+                {
+                  "lineNumber": 357,
+                  "content": "        raise DistutilsSetupError(\"test_suite must be a string\")"
+                },
+                {
+                  "lineNumber": 389,
+                  "content": "    \"\"\"Distribution with support for tests and package data"
+                },
+                {
+                  "lineNumber": 416,
+                  "content": "     'test_suite' -- the name of a test suite to run for the 'test' command."
+                },
+                {
+                  "lineNumber": 417,
+                  "content": "        If the user runs 'python setup.py test', the package will be installed,"
+                },
+                {
+                  "lineNumber": 418,
+                  "content": "        and the named test suite will be run.  The format is the same as"
+                },
+                {
+                  "lineNumber": 419,
+                  "content": "        would be used on a 'unittest.py' command line.  That is, it is the"
+                },
+                {
+                  "lineNumber": 420,
+                  "content": "        dotted name of an object to import and call to generate a test suite."
+                },
+                {
+                  "lineNumber": 912,
+                  "content": "            '2to3_doctests',"
+                },
+                {
+                  "lineNumber": 931,
+                  "content": "                    'by setuptools to build, test, and run plug-ins.\\n\\n'"
+                },
+                {
+                  "lineNumber": 1187,
+                  "content": "        # Stdout may be StringIO (e.g. in tests)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\depends.py",
+              "matches": [
+                {
+                  "lineNumber": 165,
+                  "content": "    XXX it'd be better to test assertions about bytecode instead."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\dep_util.py",
+              "matches": [
+                {
+                  "lineNumber": 8,
+                  "content": "    \"\"\"Walk both arguments in parallel, testing if each source group is newer"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\config\\setupcfg.py",
+              "matches": [
+                {
+                  "lineNumber": 207,
+                  "content": "                \"https://setuptools.pypa.io/en/latest/userguide/declarative_config.html#opt-2\"  # noqa: E501"
+                },
+                {
+                  "lineNumber": 660,
+                  "content": "            'tests_require': self._parse_list_semicolon,"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\config\\_validate_pyproject\\fastjsonschema_validations.py",
+              "matches": [
+                {
+                  "lineNumber": 28,
+                  "content": "    validate_https___packaging_python_org_en_latest_specifications_declaring_build_dependencies(data, custom_formats, (name_prefix or \"data\") + \"\")"
+                },
+                {
+                  "lineNumber": 31,
+                  "content": "def validate_https___packaging_python_org_en_latest_specifications_declaring_build_dependencies(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be object\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://packaging.python.org/en/latest/specifications/declaring-build-dependencies/', 'title': 'Data structure for &#96;&#96;pyproject.toml&#96;&#96; files', '$$description': ['File format containing build-time configurations for the Python ecosystem. ', ':pep:&#96;517&#96; initially defined a build-system independent format for source trees', 'which was complemented by :pep:&#96;518&#96; to provide a way of specifying dependencies ', 'for building Python projects.', 'Please notice the &#96;&#96;project&#96;&#96; table (as initially defined in  :pep:&#96;621&#96;) is not included', 'in this schema and should be considered separately.'], 'type': 'object', 'additionalProperties': False, 'properties': {'build-system': {'type': 'object', 'description': 'Table used to store build-related data', 'additionalProperties': False, 'propertie [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 83,
+                  "content": "            validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata(data__project, custom_formats, (name_prefix or \"data\") + \".project\")"
+                },
+                {
+                  "lineNumber": 88,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".tool must be object\", value=data__tool, name=\"\" + (name_prefix or \"data\") + \".tool\", definition={'type': 'object', 'properties': {'distutils': {'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://docs.python.org/3/install/', 'title': '&#96;&#96;tool.distutils&#96;&#96; table', '$$description': ['Originally, &#96;&#96;distutils&#96;&#96; allowed developers to configure arguments for', '&#96;&#96;setup.py&#96;&#96; scripts via &#96;distutils configuration files', '&lt;https://docs.python.org/3/install/#distutils-configuration-files&gt;&#96;_.', '&#96;&#96;tool.distutils&#96;&#96; subtables could be used with the same purpose', '(NOT CURRENTLY IMPLEMENTED).'], 'type': 'object', 'properties': {'global': {'type': 'object', 'description': 'Global options applied to all &#96;&#96;distutils&#96;&#96; commands'}}, 'patternProperties': {'.+': {'type': 'object'}}, '$comment': 'TODO: Is there a practical way of making this schema more specific?'}, 'setuptools': {'$schema': 'http://json-schema.o [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 99,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html(data__tool__setuptools, custom_formats, (name_prefix or \"data\") + \".tool.setuptools\")"
+                },
+                {
+                  "lineNumber": 101,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must not contain \"+str(data_keys)+\" properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://packaging.python.org/en/latest/specifications/declaring-build-dependencies/', 'title': 'Data structure for &#96;&#96;pyproject.toml&#96;&#96; files', '$$description': ['File format containing build-time configurations for the Python ecosystem. ', ':pep:&#96;517&#96; initially defined a build-system independent format for source trees', 'which was complemented by :pep:&#96;518&#96; to provide a way of specifying dependencies ', 'for building Python projects.', 'Please notice the &#96;&#96;project&#96;&#96; table (as initially defined in  :pep:&#96;621&#96;) is not included', 'in this schema and should be considered separately.'], 'type': 'object', 'additionalProperties': False, 'properties': {'build-system': {'type': 'object', 'description': 'Table used to store build-related data', 'addi [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 104,
+                  "content": "def validate_https___setuptools_pypa_io_en_latest_references_keywords_html(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 106,
+                  "content": "        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be object\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://setuptools.pypa.io/en/latest/references/keywords.html', 'title': '&#96;&#96;tool.setuptools&#96;&#96; table', '$$description': ['Please notice for the time being the &#96;&#96;setuptools&#96;&#96; project does not specify', 'a way of configuring builds via &#96;&#96;pyproject.toml&#96;&#96;.', 'Therefore this schema should be taken just as a *\"thought experiment\"* on how', 'this *might be done*, by following the principles established in', '&#96;ini2toml &lt;https://ini2toml.readthedocs.io/en/latest/setuptools_pep621.html&gt;&#96;_.', 'It considers only &#96;&#96;setuptools&#96;&#96; &#96;parameters', '&lt;https://setuptools.pypa.io/en/latest/userguide/declarative_config.html&gt;&#96;_', 'that can currently be configured via &#96;&#96;setup.cfg&#96;&#96; and are not covered by :pep:&#96;621&#96;', 'but intentionally excludes &#96;&#96;dependency_links&#96;&#96; and &#96;&#96;setup_requires&#96;&#96;.', 'NOTE: &#96;&#96;s [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 197,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_find_directive(data__packages, custom_formats, (name_prefix or \"data\") + \".packages\")"
+                },
+                {
+                  "lineNumber": 201,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".packages must be valid exactly by one definition\" + (\" (\" + str(data__packages_one_of_count1) + \" matches found)\"), value=data__packages, name=\"\" + (name_prefix or \"data\") + \".packages\", definition={'$$description': ['Packages that should be included in the distribution.', 'It can be given either as a list of package identifiers', 'or as a &#96;&#96;dict&#96;&#96;-like structure with a single key &#96;&#96;find&#96;&#96;', 'which corresponds to a dynamic call to', '&#96;&#96;setuptools.config.expand.find_packages&#96;&#96; function.', 'The &#96;&#96;find&#96;&#96; key is associated with a nested &#96;&#96;dict&#96;&#96;-like structure that can', 'contain &#96;&#96;where&#96;&#96;, &#96;&#96;include&#96;&#96;, &#96;&#96;exclude&#96;&#96; and &#96;&#96;namespaces&#96;&#96; keys,', 'mimicking the keyword arguments of the associated function.'], 'oneOf': [{'title': 'Array of Python package identifiers', 'type': 'array', 'items': {'type': 'string', 'format': 'python-module-name'}}, {'$id': '#/definitions/find-directive', 'title': \"'find:' directive\", 't [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 247,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".package-data must be object\", value=data__packagedata, name=\"\" + (name_prefix or \"data\") + \".package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns.', 'Usually this option is not needed when using &#96;&#96;include-package-data = true&#96;&#96;', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='type')"
+                },
+                {
+                  "lineNumber": 264,
+                  "content": "                    raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".package-data must not contain \"+str(data__packagedata_keys)+\" properties\", value=data__packagedata, name=\"\" + (name_prefix or \"data\") + \".package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns.', 'Usually this option is not needed when using &#96;&#96;include-package-data = true&#96;&#96;', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='additionalProperties')"
+                },
+                {
+                  "lineNumber": 289,
+                  "content": "                        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".package-data must be named by propertyName definition\", value=data__packagedata, name=\"\" + (name_prefix or \"data\") + \".package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns.', 'Usually this option is not needed when using &#96;&#96;include-package-data = true&#96;&#96;', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='propertyNames')"
+                },
+                {
+                  "lineNumber": 294,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".include-package-data must be boolean\", value=data__includepackagedata, name=\"\" + (name_prefix or \"data\") + \".include-package-data\", definition={'$$description': ['Automatically include any data files inside the package directories', 'that are specified by &#96;&#96;MANIFEST.in&#96;&#96;', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'boolean'}, rule='type')"
+                },
+                {
+                  "lineNumber": 299,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".exclude-package-data must be object\", value=data__excludepackagedata, name=\"\" + (name_prefix or \"data\") + \".exclude-package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns that should be excluded', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='type')"
+                },
+                {
+                  "lineNumber": 316,
+                  "content": "                    raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".exclude-package-data must not contain \"+str(data__excludepackagedata_keys)+\" properties\", value=data__excludepackagedata, name=\"\" + (name_prefix or \"data\") + \".exclude-package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns that should be excluded', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='additionalProperties')"
+                },
+                {
+                  "lineNumber": 341,
+                  "content": "                        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".exclude-package-data must be named by propertyName definition\", value=data__excludepackagedata, name=\"\" + (name_prefix or \"data\") + \".exclude-package-data\", definition={'$$description': ['Mapping from package names to lists of glob patterns that should be excluded', 'For more information on how to include data files, check &#96;&#96;setuptools&#96;&#96; &#96;docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_.'], 'type': 'object', 'additionalProperties': False, 'propertyNames': {'oneOf': [{'format': 'python-module-name'}, {'const': '*'}]}, 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='propertyNames')"
+                },
+                {
+                  "lineNumber": 346,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".namespace-packages must be array\", value=data__namespacepackages, name=\"\" + (name_prefix or \"data\") + \".namespace-packages\", definition={'type': 'array', 'items': {'type': 'string', 'format': 'python-module-name'}, '$comment': 'https://setuptools.pypa.io/en/latest/userguide/package_discovery.html'}, rule='type')"
+                },
+                {
+                  "lineNumber": 374,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".data-files must be object\", value=data__datafiles, name=\"\" + (name_prefix or \"data\") + \".data-files\", definition={'$$description': ['**DEPRECATED**: dict-like structure where each key represents a directory and', 'the value is a list of glob patterns that should be installed in them.', \"Please notice this don't work with wheels. See &#96;data files support\", '&lt;https://setuptools.pypa.io/en/latest/userguide/datafiles.html&gt;&#96;_'], 'type': 'object', 'patternProperties': {'^.*$': {'type': 'array', 'items': {'type': 'string'}}}}, rule='type')"
+                },
+                {
+                  "lineNumber": 433,
+                  "content": "                            validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_attr_directive(data__dynamic__version, custom_formats, (name_prefix or \"data\") + \".dynamic.version\")"
+                },
+                {
+                  "lineNumber": 438,
+                  "content": "                            validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__version, custom_formats, (name_prefix or \"data\") + \".dynamic.version\")"
+                },
+                {
+                  "lineNumber": 446,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__classifiers, custom_formats, (name_prefix or \"data\") + \".dynamic.classifiers\")"
+                },
+                {
+                  "lineNumber": 450,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__description, custom_formats, (name_prefix or \"data\") + \".dynamic.description\")"
+                },
+                {
+                  "lineNumber": 454,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__dependencies, custom_formats, (name_prefix or \"data\") + \".dynamic.dependencies\")"
+                },
+                {
+                  "lineNumber": 458,
+                  "content": "                    validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__entrypoints, custom_formats, (name_prefix or \"data\") + \".dynamic.entry-points\")"
+                },
+                {
+                  "lineNumber": 471,
+                  "content": "                                validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__optionaldependencies_val, custom_formats, (name_prefix or \"data\") + \".dynamic.optional-dependencies.{data__dynamic__optionaldependencies_key}\")"
+                },
+                {
+                  "lineNumber": 492,
+                  "content": "                            validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data__dynamic__readme, custom_formats, (name_prefix or \"data\") + \".dynamic.readme\")"
+                },
+                {
+                  "lineNumber": 517,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must not contain \"+str(data_keys)+\" properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://setuptools.pypa.io/en/latest/references/keywords.html', 'title': '&#96;&#96;tool.setuptools&#96;&#96; table', '$$description': ['Please notice for the time being the &#96;&#96;setuptools&#96;&#96; project does not specify', 'a way of configuring builds via &#96;&#96;pyproject.toml&#96;&#96;.', 'Therefore this schema should be taken just as a *\"thought experiment\"* on how', 'this *might be done*, by following the principles established in', '&#96;ini2toml &lt;https://ini2toml.readthedocs.io/en/latest/setuptools_pep621.html&gt;&#96;_.', 'It considers only &#96;&#96;setuptools&#96;&#96; &#96;parameters', '&lt;https://setuptools.pypa.io/en/latest/userguide/declarative_config.html&gt;&#96;_', 'that can currently be configured via &#96;&#96;setup.cfg&#96;&#96; and are not covered by :pep:&#96;621&#96;', 'but intentionally excludes &#96;&#96;dependency_links&#96;&#96;  [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 520,
+                  "content": "def validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_file_directive(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 557,
+                  "content": "def validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_attr_directive(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 575,
+                  "content": "def validate_https___setuptools_pypa_io_en_latest_references_keywords_html__definitions_find_directive(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 577,
+                  "content": "        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be object\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$id': '#/definitions/find-directive', 'title': \"'find:' directive\", 'type': 'object', 'additionalProperties': False, 'properties': {'find': {'type': 'object', '$$description': ['Dynamic &#96;package discovery', '&lt;https://setuptools.pypa.io/en/latest/userguide/package_discovery.html&gt;&#96;_.'], 'additionalProperties': False, 'properties': {'where': {'description': 'Directories to be searched for packages (Unix-style relative path)', 'type': 'array', 'items': {'type': 'string'}}, 'exclude': {'type': 'array', '$$description': ['Exclude packages that match the values listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'include': {'type': 'array', '$$description': ['Restrict the found packages to just the ones listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;) [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 585,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".find must be object\", value=data__find, name=\"\" + (name_prefix or \"data\") + \".find\", definition={'type': 'object', '$$description': ['Dynamic &#96;package discovery', '&lt;https://setuptools.pypa.io/en/latest/userguide/package_discovery.html&gt;&#96;_.'], 'additionalProperties': False, 'properties': {'where': {'description': 'Directories to be searched for packages (Unix-style relative path)', 'type': 'array', 'items': {'type': 'string'}}, 'exclude': {'type': 'array', '$$description': ['Exclude packages that match the values listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'include': {'type': 'array', '$$description': ['Restrict the found packages to just the ones listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'namespaces': {'type': 'boolean', '$$description': ['When &#96;&#96;True&#96;&#96;, directories with [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 628,
+                  "content": "                    raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".find must not contain \"+str(data__find_keys)+\" properties\", value=data__find, name=\"\" + (name_prefix or \"data\") + \".find\", definition={'type': 'object', '$$description': ['Dynamic &#96;package discovery', '&lt;https://setuptools.pypa.io/en/latest/userguide/package_discovery.html&gt;&#96;_.'], 'additionalProperties': False, 'properties': {'where': {'description': 'Directories to be searched for packages (Unix-style relative path)', 'type': 'array', 'items': {'type': 'string'}}, 'exclude': {'type': 'array', '$$description': ['Exclude packages that match the values listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'include': {'type': 'array', '$$description': ['Restrict the found packages to just the ones listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'namespaces': {'type': 'boolean', '$$descr [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 630,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must not contain \"+str(data_keys)+\" properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$id': '#/definitions/find-directive', 'title': \"'find:' directive\", 'type': 'object', 'additionalProperties': False, 'properties': {'find': {'type': 'object', '$$description': ['Dynamic &#96;package discovery', '&lt;https://setuptools.pypa.io/en/latest/userguide/package_discovery.html&gt;&#96;_.'], 'additionalProperties': False, 'properties': {'where': {'description': 'Directories to be searched for packages (Unix-style relative path)', 'type': 'array', 'items': {'type': 'string'}}, 'exclude': {'type': 'array', '$$description': ['Exclude packages that match the values listed in this field.', \"Can container shell-style wildcards (e.g. &#96;&#96;'pkg.*'&#96;&#96;)\"], 'items': {'type': 'string'}}, 'include': {'type': 'array', '$$description': ['Restrict the found packages to just the ones listed in this field.', \"Can container shel [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 652,
+                  "content": "def validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 654,
+                  "content": "        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be object\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://packaging.python.org/en/latest/specifications/declaring-project-metadata/', 'title': 'Package metadata stored in the &#96;&#96;project&#96;&#96; table', '$$description': ['Data structure for the **project** table inside &#96;&#96;pyproject.toml&#96;&#96;', '(as initially defined in :pep:&#96;621&#96;)'], 'type': 'object', 'properties': {'name': {'type': 'string', 'description': 'The name (primary identifier) of the project. MUST be statically defined.', 'format': 'pep508-identifier'}, 'version': {'type': 'string', 'description': 'The version of the project as supported by :pep:&#96;440&#96;.', 'format': 'pep440'}, 'description': {'type': 'string', '$$description': ['The &#96;summary description of the project', '&lt;https://packaging.python.org/specifications/core-metadata/#summary&gt;&#96;_']}, 'readme': {'$$description': ['&#96;Fu [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 659,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must contain ['name'] properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://packaging.python.org/en/latest/specifications/declaring-project-metadata/', 'title': 'Package metadata stored in the &#96;&#96;project&#96;&#96; table', '$$description': ['Data structure for the **project** table inside &#96;&#96;pyproject.toml&#96;&#96;', '(as initially defined in :pep:&#96;621&#96;)'], 'type': 'object', 'properties': {'name': {'type': 'string', 'description': 'The name (primary identifier) of the project. MUST be statically defined.', 'format': 'pep508-identifier'}, 'version': {'type': 'string', 'description': 'The version of the project as supported by :pep:&#96;440&#96;.', 'format': 'pep440'}, 'description': {'type': 'string', '$$description': ['The &#96;summary description of the project', '&lt;https://packaging.python.org/specifications/core-metadata/#summary&gt;&#96;_']}, 'readme': { [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 797,
+                  "content": "                    validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_author(data__authors_item, custom_formats, (name_prefix or \"data\") + \".authors[{data__authors_x}]\")"
+                },
+                {
+                  "lineNumber": 807,
+                  "content": "                    validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_author(data__maintainers_item, custom_formats, (name_prefix or \"data\") + \".maintainers[{data__maintainers_x}]\")"
+                },
+                {
+                  "lineNumber": 855,
+                  "content": "            validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_entry_point_group(data__scripts, custom_formats, (name_prefix or \"data\") + \".scripts\")"
+                },
+                {
+                  "lineNumber": 859,
+                  "content": "            validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_entry_point_group(data__guiscripts, custom_formats, (name_prefix or \"data\") + \".gui-scripts\")"
+                },
+                {
+                  "lineNumber": 870,
+                  "content": "                        validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_entry_point_group(data__entrypoints_val, custom_formats, (name_prefix or \"data\") + \".entry-points.{data__entrypoints_key}\")"
+                },
+                {
+                  "lineNumber": 872,
+                  "content": "                    raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".entry-points must not contain \"+str(data__entrypoints_keys)+\" properties\", value=data__entrypoints, name=\"\" + (name_prefix or \"data\") + \".entry-points\", definition={'$$description': ['Instruct the installer to expose the given modules/functions via', '&#96;&#96;entry-point&#96;&#96; discovery mechanism (useful for plugins).', 'More information available in the &#96;Python packaging guide', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_.'], 'propertyNames': {'format': 'python-entrypoint-group'}, 'additionalProperties': False, 'patternProperties': {'^.+$': {'$id': '#/definitions/entry-point-group', 'title': 'Entry-points', 'type': 'object', '$$description': ['Entry-points are grouped together to indicate what sort of capabilities they', 'provide.', 'See the &#96;packaging guides', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_', 'and &#96;setuptools docs', '&lt;https://setuptools.pypa.io/en/latest/usergu [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 884,
+                  "content": "                        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \".entry-points must be named by propertyName definition\", value=data__entrypoints, name=\"\" + (name_prefix or \"data\") + \".entry-points\", definition={'$$description': ['Instruct the installer to expose the given modules/functions via', '&#96;&#96;entry-point&#96;&#96; discovery mechanism (useful for plugins).', 'More information available in the &#96;Python packaging guide', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_.'], 'propertyNames': {'format': 'python-entrypoint-group'}, 'additionalProperties': False, 'patternProperties': {'^.+$': {'$id': '#/definitions/entry-point-group', 'title': 'Entry-points', 'type': 'object', '$$description': ['Entry-points are grouped together to indicate what sort of capabilities they', 'provide.', 'See the &#96;packaging guides', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_', 'and &#96;setuptools docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/entry_point [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 894,
+                  "content": "                    validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_dependency(data__dependencies_item, custom_formats, (name_prefix or \"data\") + \".dependencies[{data__dependencies_x}]\")"
+                },
+                {
+                  "lineNumber": 913,
+                  "content": "                                validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_dependency(data__optionaldependencies_val_item, custom_formats, (name_prefix or \"data\") + \".optional-dependencies.{data__optionaldependencies_key}[{data__optionaldependencies_val_x}]\")"
+                },
+                {
+                  "lineNumber": 940,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must not contain \"+str(data_keys)+\" properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$schema': 'http://json-schema.org/draft-07/schema', '$id': 'https://packaging.python.org/en/latest/specifications/declaring-project-metadata/', 'title': 'Package metadata stored in the &#96;&#96;project&#96;&#96; table', '$$description': ['Data structure for the **project** table inside &#96;&#96;pyproject.toml&#96;&#96;', '(as initially defined in :pep:&#96;621&#96;)'], 'type': 'object', 'properties': {'name': {'type': 'string', 'description': 'The name (primary identifier) of the project. MUST be statically defined.', 'format': 'pep508-identifier'}, 'version': {'type': 'string', 'description': 'The version of the project as supported by :pep:&#96;440&#96;.', 'format': 'pep440'}, 'description': {'type': 'string', '$$description': ['The &#96;summary description of the project', '&lt;https://packaging.python.org/specifications/core-metadata/#summary&gt;&#96;_'] [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 977,
+                  "content": "def validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_dependency(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 985,
+                  "content": "def validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_entry_point_group(data, custom_formats={}, name_prefix=None):"
+                },
+                {
+                  "lineNumber": 987,
+                  "content": "        raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be object\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$id': '#/definitions/entry-point-group', 'title': 'Entry-points', 'type': 'object', '$$description': ['Entry-points are grouped together to indicate what sort of capabilities they', 'provide.', 'See the &#96;packaging guides', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_', 'and &#96;setuptools docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/entry_point.html&gt;&#96;_', 'for more information.'], 'propertyNames': {'format': 'python-entrypoint-name'}, 'additionalProperties': False, 'patternProperties': {'^.+$': {'type': 'string', '$$description': ['Reference to a Python object. It is either in the form', '&#96;&#96;importable.module&#96;&#96;, or &#96;&#96;importable.module:object.attr&#96;&#96;.'], 'format': 'python-entrypoint-reference', '$comment': 'https://packaging.python.org/specifications/entry-points/'}}}, rule='type')"
+                },
+                {
+                  "lineNumber": 1001,
+                  "content": "            raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must not contain \"+str(data_keys)+\" properties\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$id': '#/definitions/entry-point-group', 'title': 'Entry-points', 'type': 'object', '$$description': ['Entry-points are grouped together to indicate what sort of capabilities they', 'provide.', 'See the &#96;packaging guides', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_', 'and &#96;setuptools docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/entry_point.html&gt;&#96;_', 'for more information.'], 'propertyNames': {'format': 'python-entrypoint-name'}, 'additionalProperties': False, 'patternProperties': {'^.+$': {'type': 'string', '$$description': ['Reference to a Python object. It is either in the form', '&#96;&#96;importable.module&#96;&#96;, or &#96;&#96;importable.module:object.attr&#96;&#96;.'], 'format': 'python-entrypoint-reference', '$comment': 'https://packaging.python.org/specifications/entry-points/'}}}, rule='ad [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 1013,
+                  "content": "                raise JsonSchemaValueException(\"\" + (name_prefix or \"data\") + \" must be named by propertyName definition\", value=data, name=\"\" + (name_prefix or \"data\") + \"\", definition={'$id': '#/definitions/entry-point-group', 'title': 'Entry-points', 'type': 'object', '$$description': ['Entry-points are grouped together to indicate what sort of capabilities they', 'provide.', 'See the &#96;packaging guides', '&lt;https://packaging.python.org/specifications/entry-points/&gt;&#96;_', 'and &#96;setuptools docs', '&lt;https://setuptools.pypa.io/en/latest/userguide/entry_point.html&gt;&#96;_', 'for more information.'], 'propertyNames': {'format': 'python-entrypoint-name'}, 'additionalProperties': False, 'patternProperties': {'^.+$': {'type': 'string', '$$description': ['Reference to a Python object. It is either in the form', '&#96;&#96;importable.module&#96;&#96;, or &#96;&#96;importable.module:object.attr&#96;&#96;.'], 'format': 'python-entrypoint-reference', '$comment': 'https://packaging.python.org/specifications/entry-points/'}}}, rule='prop [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 1016,
+                  "content": "def validate_https___packaging_python_org_en_latest_specifications_declaring_project_metadata___definitions_author(data, custom_formats={}, name_prefix=None):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\config\\_apply_pyprojecttoml.py",
+              "matches": [
+                {
+                  "lineNumber": 362,
+                  "content": "    https://packaging.python.org/en/latest/specifications/declaring-project-metadata/"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\command\\test.py",
+              "matches": [
+                {
+                  "lineNumber": 6,
+                  "content": "import unittest"
+                },
+                {
+                  "lineNumber": 9,
+                  "content": "from unittest import TestLoader"
+                },
+                {
+                  "lineNumber": 32,
+                  "content": "        \"\"\"Return a suite of all tests cases contained in the given module"
+                },
+                {
+                  "lineNumber": 34,
+                  "content": "        If the module is a package, load tests from all the modules in it."
+                },
+                {
+                  "lineNumber": 35,
+                  "content": "        If the module has an &#96;&#96;additional_tests&#96;&#96; function, call it and add"
+                },
+                {
+                  "lineNumber": 36,
+                  "content": "        the return value to the tests."
+                },
+                {
+                  "lineNumber": 42,
+                  "content": "        tests = []"
+                },
+                {
+                  "lineNumber": 43,
+                  "content": "        tests.append(TestLoader.loadTestsFromModule(self, module))"
+                },
+                {
+                  "lineNumber": 45,
+                  "content": "        if hasattr(module, \"additional_tests\"):"
+                },
+                {
+                  "lineNumber": 46,
+                  "content": "            tests.append(module.additional_tests())"
+                },
+                {
+                  "lineNumber": 57,
+                  "content": "                tests.append(self.loadTestsFromName(submodule))"
+                },
+                {
+                  "lineNumber": 59,
+                  "content": "        if len(tests) != 1:"
+                },
+                {
+                  "lineNumber": 60,
+                  "content": "            return self.suiteClass(tests)"
+                },
+                {
+                  "lineNumber": 62,
+                  "content": "            return tests[0]  # don't create a nested suite for only one return"
+                },
+                {
+                  "lineNumber": 76,
+                  "content": "class test(Command):"
+                },
+                {
+                  "lineNumber": 77,
+                  "content": "    \"\"\"Command to run unit tests after in-place build\"\"\""
+                },
+                {
+                  "lineNumber": 79,
+                  "content": "    description = \"run unit tests after in-place build (deprecated)\""
+                },
+                {
+                  "lineNumber": 82,
+                  "content": "        ('test-module=', 'm', \"Run 'test_suite' in specified module\"),"
+                },
+                {
+                  "lineNumber": 84,
+                  "content": "            'test-suite=',"
+                },
+                {
+                  "lineNumber": 86,
+                  "content": "            \"Run single test, case or suite (e.g. 'module.test_suite')\","
+                },
+                {
+                  "lineNumber": 88,
+                  "content": "        ('test-runner=', 'r', \"Test runner to use\"),"
+                },
+                {
+                  "lineNumber": 92,
+                  "content": "        self.test_suite = None"
+                },
+                {
+                  "lineNumber": 93,
+                  "content": "        self.test_module = None"
+                },
+                {
+                  "lineNumber": 94,
+                  "content": "        self.test_loader = None"
+                },
+                {
+                  "lineNumber": 95,
+                  "content": "        self.test_runner = None"
+                },
+                {
+                  "lineNumber": 99,
+                  "content": "        if self.test_suite and self.test_module:"
+                },
+                {
+                  "lineNumber": 103,
+                  "content": "        if self.test_suite is None:"
+                },
+                {
+                  "lineNumber": 104,
+                  "content": "            if self.test_module is None:"
+                },
+                {
+                  "lineNumber": 105,
+                  "content": "                self.test_suite = self.distribution.test_suite"
+                },
+                {
+                  "lineNumber": 107,
+                  "content": "                self.test_suite = self.test_module + \".test_suite\""
+                },
+                {
+                  "lineNumber": 109,
+                  "content": "        if self.test_loader is None:"
+                },
+                {
+                  "lineNumber": 110,
+                  "content": "            self.test_loader = getattr(self.distribution, 'test_loader', None)"
+                },
+                {
+                  "lineNumber": 111,
+                  "content": "        if self.test_loader is None:"
+                },
+                {
+                  "lineNumber": 112,
+                  "content": "            self.test_loader = \"setuptools.command.test:ScanningLoader\""
+                },
+                {
+                  "lineNumber": 113,
+                  "content": "        if self.test_runner is None:"
+                },
+                {
+                  "lineNumber": 114,
+                  "content": "            self.test_runner = getattr(self.distribution, 'test_runner', None)"
+                },
+                {
+                  "lineNumber": 117,
+                  "content": "    def test_args(self):"
+                },
+                {
+                  "lineNumber": 118,
+                  "content": "        return list(self._test_args())"
+                },
+                {
+                  "lineNumber": 120,
+                  "content": "    def _test_args(self):"
+                },
+                {
+                  "lineNumber": 121,
+                  "content": "        if not self.test_suite:"
+                },
+                {
+                  "lineNumber": 125,
+                  "content": "        if self.test_suite:"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "            yield self.test_suite"
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "        tr_d = dist.fetch_build_eggs(dist.tests_require or [])"
+                },
+                {
+                  "lineNumber": 206,
+                  "content": "            \"removed in a future version. Users looking for a generic test \""
+                },
+                {
+                  "lineNumber": 207,
+                  "content": "            \"entry point independent of test runner are encouraged to use \""
+                },
+                {
+                  "lineNumber": 224,
+                  "content": "                self.run_tests()"
+                },
+                {
+                  "lineNumber": 226,
+                  "content": "    def run_tests(self):"
+                },
+                {
+                  "lineNumber": 227,
+                  "content": "        test = unittest.main("
+                },
+                {
+                  "lineNumber": 231,
+                  "content": "            testLoader=self._resolve_as_ep(self.test_loader),"
+                },
+                {
+                  "lineNumber": 232,
+                  "content": "            testRunner=self._resolve_as_ep(self.test_runner),"
+                },
+                {
+                  "lineNumber": 235,
+                  "content": "        if not test.result.wasSuccessful():"
+                },
+                {
+                  "lineNumber": 236,
+                  "content": "            msg = 'Test failed: %s' % test.result"
+                },
+                {
+                  "lineNumber": 242,
+                  "content": "        return ['unittest'] + self.test_args"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\command\\py36compat.py",
+              "matches": [
+                {
+                  "lineNumber": 20,
+                  "content": "          - test/test*.py"
+                },
+                {
+                  "lineNumber": 77,
+                  "content": "        optional = ['test/test*.py', 'setup.cfg']"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\command\\editable_wheel.py",
+              "matches": [
+                {
+                  "lineNumber": 88,
+                  "content": "            https://setuptools.pypa.io/en/latest/userguide/development_mode.html"
+                },
+                {
+                  "lineNumber": 302,
+                  "content": "            https://setuptools.pypa.io/en/latest/userguide/extension.html"
+                },
+                {
+                  "lineNumber": 391,
+                  "content": "        wheel.writestr(f\"__editable__.{self.name}.pth\", contents)"
+                },
+                {
+                  "lineNumber": 495,
+                  "content": "        wheel.writestr(f\"{finder}.py\", content)"
+                },
+                {
+                  "lineNumber": 498,
+                  "content": "        wheel.writestr(f\"__editable__.{self.name}.pth\", content)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\command\\easy_install.py",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "__ https://setuptools.pypa.io/en/latest/deprecated/easy_install.html"
+                },
+                {
+                  "lineNumber": 107,
+                  "content": "        (\"upgrade\", \"U\", \"force upgrade (searches PyPI for latest versions)\"),"
+                },
+                {
+                  "lineNumber": 296,
+                  "content": "        # ^ Private API for testing purposes only"
+                },
+                {
+                  "lineNumber": 447,
+                  "content": "        return os.path.join(self.install_dir, \"test-easy-install-%s\" % pid)"
+                },
+                {
+                  "lineNumber": 468,
+                  "content": "            # No?  Then directly test whether it does .pth file processing"
+                },
+                {
+                  "lineNumber": 472,
+                  "content": "            testfile = self.pseudo_tempname() + '.write-test'"
+                },
+                {
+                  "lineNumber": 473,
+                  "content": "            test_exists = os.path.exists(testfile)"
+                },
+                {
+                  "lineNumber": 475,
+                  "content": "                if test_exists:"
+                },
+                {
+                  "lineNumber": 476,
+                  "content": "                    os.unlink(testfile)"
+                },
+                {
+                  "lineNumber": 477,
+                  "content": "                open(testfile, 'w').close()"
+                },
+                {
+                  "lineNumber": 478,
+                  "content": "                os.unlink(testfile)"
+                },
+                {
+                  "lineNumber": 528,
+                  "content": "          https://setuptools.pypa.io/en/latest/deprecated/easy_install.html"
+                },
+                {
+                  "lineNumber": 1101,
+                  "content": "            pkg_resources.require(\"%(name)s\")  # latest installed version"
+                },
+                {
+                  "lineNumber": 1245,
+                  "content": "        # XXX should this check for latest version?"
+                },
+                {
+                  "lineNumber": 1321,
+                  "content": "          https://setuptools.pypa.io/en/latest/deprecated/easy_install.html#custom-installation-locations"
+                },
+                {
+                  "lineNumber": 1803,
+                  "content": "        # there are no relevant unit tests that we can depend on to tell us if"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\command\\bdist_egg.py",
+              "matches": [
+                {
+                  "lineNumber": 76,
+                  "content": "         \"skip rebuilding everything (for testing/debugging)\"),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\build_meta.py",
+              "matches": [
+                {
+                  "lineNumber": 286,
+                  "content": "        &gt;&gt;&gt; list(fn({'--global-option': 'foo'}))  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\zipp.py",
+              "matches": [
+                {
+                  "lineNumber": 165,
+                  "content": "    &gt;&gt;&gt; zf.writestr('a.txt', 'content of a')"
+                },
+                {
+                  "lineNumber": 166,
+                  "content": "    &gt;&gt;&gt; zf.writestr('b/c.txt', 'content of c')"
+                },
+                {
+                  "lineNumber": 167,
+                  "content": "    &gt;&gt;&gt; zf.writestr('b/d/e.txt', 'content of e')"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\testing.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# testing.py"
+                },
+                {
+                  "lineNumber": 15,
+                  "content": "class pyparsing_test:"
+                },
+                {
+                  "lineNumber": 17,
+                  "content": "    namespace class for classes useful in writing unit tests"
+                },
+                {
+                  "lineNumber": 22,
+                  "content": "        Context manager to be used when writing unit tests that modify pyparsing config values:"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "                # test that literals used to construct a grammar are automatically suppressed"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "        A mixin class to add parse results assertion methods to normal unittest.TestCase classes."
+                },
+                {
+                  "lineNumber": 133,
+                  "content": "            Unit test assertion to compare a :class:&#96;ParseResults&#96; object with an optional &#96;&#96;expected_list&#96;&#96;,"
+                },
+                {
+                  "lineNumber": 142,
+                  "content": "            self, expr, test_string, expected_list, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 145,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 148,
+                  "content": "            result = expr.parse_string(test_string, parse_all=True)"
+                },
+                {
+                  "lineNumber": 156,
+                  "content": "            self, expr, test_string, expected_dict, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 162,
+                  "content": "            result = expr.parse_string(test_string, parseAll=True)"
+                },
+                {
+                  "lineNumber": 170,
+                  "content": "            self, run_tests_report, expected_parse_results=None, msg=None"
+                },
+                {
+                  "lineNumber": 173,
+                  "content": "            Unit test assertion to evaluate output of &#96;&#96;ParserElement.runTests()&#96;&#96;. If a list of"
+                },
+                {
+                  "lineNumber": 178,
+                  "content": "            :param run_tests_report: tuple(bool, [tuple(str, ParseResults or Exception)]) returned from runTests"
+                },
+                {
+                  "lineNumber": 181,
+                  "content": "            run_test_success, run_test_results = run_tests_report"
+                },
+                {
+                  "lineNumber": 186,
+                  "content": "                    for rpt, expected in zip(run_test_results, expected_parse_results)"
+                },
+                {
+                  "lineNumber": 188,
+                  "content": "                for test_string, result, expected in merged:"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "                            print(\"no validation for {!r}\".format(test_string))"
+                },
+                {
+                  "lineNumber": 227,
+                  "content": "            # do this last, in case some specific test results can be reported instead"
+                },
+                {
+                  "lineNumber": 229,
+                  "content": "                run_test_success, msg=msg if msg is not None else \"failed runTests\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\results.py",
+              "matches": [
+                {
+                  "lineNumber": 49,
+                  "content": "        def test(s, fn=repr):"
+                },
+                {
+                  "lineNumber": 51,
+                  "content": "        test(\"list(result)\")"
+                },
+                {
+                  "lineNumber": 52,
+                  "content": "        test(\"result[0]\")"
+                },
+                {
+                  "lineNumber": 53,
+                  "content": "        test(\"result['month']\")"
+                },
+                {
+                  "lineNumber": 54,
+                  "content": "        test(\"result.day\")"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "        test(\"'month' in result\")"
+                },
+                {
+                  "lineNumber": 56,
+                  "content": "        test(\"'minutes' in result\")"
+                },
+                {
+                  "lineNumber": 57,
+                  "content": "        test(\"result.dump()\", str)"
+                },
+                {
+                  "lineNumber": 102,
+                  "content": "            element.run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\helpers.py",
+              "matches": [
+                {
+                  "lineNumber": 210,
+                  "content": "    and makes sure to do longest-first testing when there is a conflict,"
+                },
+                {
+                  "lineNumber": 390,
+                  "content": "        src = \"this is test &lt;b&gt; bold &lt;i&gt;text&lt;/i&gt; &lt;/b&gt; normal text \""
+                },
+                {
+                  "lineNumber": 789,
+                  "content": "        arith_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 863,
+                  "content": "                # try to avoid LR with this extra test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\core.py",
+              "matches": [
+                {
+                  "lineNumber": 94,
+                  "content": "    and testing."
+                },
+                {
+                  "lineNumber": 295,
+                  "content": "                # re-raise TypeErrors if they did not come from our arity testing"
+                },
+                {
+                  "lineNumber": 625,
+                  "content": "          lookaheads and alternate testing. For parse actions that have side effects, it is"
+                },
+                {
+                  "lineNumber": 662,
+                  "content": "            date_str.run_tests('''"
+                },
+                {
+                  "lineNumber": 1928,
+                  "content": "        self, test_string: str, parse_all: bool = True, *, parseAll: bool = True"
+                },
+                {
+                  "lineNumber": 1931,
+                  "content": "        Method for quick testing of a parser against a test string. Good for simple"
+                },
+                {
+                  "lineNumber": 1932,
+                  "content": "        inline microtests of sub expressions while building up larger parser."
+                },
+                {
+                  "lineNumber": 1935,
+                  "content": "        - &#96;&#96;test_string&#96;&#96; - to test against this expression for a match"
+                },
+                {
+                  "lineNumber": 1936,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 1945,
+                  "content": "            self.parse_string(str(test_string), parse_all=parseAll)"
+                },
+                {
+                  "lineNumber": 1950,
+                  "content": "    def run_tests("
+                },
+                {
+                  "lineNumber": 1952,
+                  "content": "        tests: Union[str, List[str]],"
+                },
+                {
+                  "lineNumber": 1957,
+                  "content": "        failure_tests: bool = False,"
+                },
+                {
+                  "lineNumber": 1969,
+                  "content": "        Execute the parse expression on a series of test strings, showing each"
+                },
+                {
+                  "lineNumber": 1970,
+                  "content": "        test, the parsed results or where the parse failed. Quick and easy way to"
+                },
+                {
+                  "lineNumber": 1974,
+                  "content": "        - &#96;&#96;tests&#96;&#96; - a list of separate test strings, or a multiline string of test strings"
+                },
+                {
+                  "lineNumber": 1975,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 1976,
+                  "content": "        - &#96;&#96;comment&#96;&#96; - (default= &#96;&#96;'#'&#96;&#96;) - expression for indicating embedded comments in the test"
+                },
+                {
+                  "lineNumber": 1980,
+                  "content": "        - &#96;&#96;print_results&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) prints test output to stdout"
+                },
+                {
+                  "lineNumber": 1981,
+                  "content": "        - &#96;&#96;failure_tests&#96;&#96; - (default= &#96;&#96;False&#96;&#96;) indicates if these tests are expected to fail parsing"
+                },
+                {
+                  "lineNumber": 1983,
+                  "content": "          &#96;fn(test_string, parse_results)&#96; and returns a string to be added to the test output"
+                },
+                {
+                  "lineNumber": 1984,
+                  "content": "        - &#96;&#96;file&#96;&#96; - (default= &#96;&#96;None&#96;&#96;) optional file-like object to which test output will be written;"
+                },
+                {
+                  "lineNumber": 1986,
+                  "content": "        - &#96;&#96;with_line_numbers&#96;&#96; - default= &#96;&#96;False&#96;&#96;) show test strings with line and column numbers"
+                },
+                {
+                  "lineNumber": 1988,
+                  "content": "        Returns: a (success, results) tuple, where success indicates that all tests succeeded"
+                },
+                {
+                  "lineNumber": 1989,
+                  "content": "        (or failed if &#96;&#96;failure_tests&#96;&#96; is True), and the results contain a list of lines of each"
+                },
+                {
+                  "lineNumber": 1990,
+                  "content": "        test's output"
+                },
+                {
+                  "lineNumber": 1996,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2008,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2015,
+                  "content": "                ''', failure_tests=True)"
+                },
+                {
+                  "lineNumber": 2055,
+                  "content": "        Each test string must be on a single line. If you want to test a string that spans multiple"
+                },
+                {
+                  "lineNumber": 2056,
+                  "content": "        lines, create a test like this::"
+                },
+                {
+                  "lineNumber": 2058,
+                  "content": "            expr.run_tests(r\"this is a test\\\\n of strings that spans \\\\n 3 lines\")"
+                },
+                {
+                  "lineNumber": 2062,
+                  "content": "        from .testing import pyparsing_test"
+                },
+                {
+                  "lineNumber": 2067,
+                  "content": "        failureTests = failureTests or failure_tests"
+                },
+                {
+                  "lineNumber": 2069,
+                  "content": "        if isinstance(tests, str_type):"
+                },
+                {
+                  "lineNumber": 2070,
+                  "content": "            line_strip = type(tests).strip"
+                },
+                {
+                  "lineNumber": 2071,
+                  "content": "            tests = [line_strip(test_line) for test_line in tests.rstrip().splitlines()]"
+                },
+                {
+                  "lineNumber": 2084,
+                  "content": "        for t in tests:"
+                },
+                {
+                  "lineNumber": 2087,
+                  "content": "                    pyparsing_test.with_line_numbers(t) if with_line_numbers else t"
+                },
+                {
+                  "lineNumber": 2094,
+                  "content": "                pyparsing_test.with_line_numbers(t) if with_line_numbers else t,"
+                },
+                {
+                  "lineNumber": 2215,
+                  "content": "    runTests = run_tests"
+                },
+                {
+                  "lineNumber": 3442,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 3449,
+                  "content": "        for t in (LineStart() + 'AAA' + restOfLine).search_string(test):"
+                },
+                {
+                  "lineNumber": 3978,
+                  "content": "                # save match among all matches, to retry longest to shortest"
+                },
+                {
+                  "lineNumber": 4197,
+                  "content": "        shape_spec.run_tests('''"
+                },
+                {
+                  "lineNumber": 4528,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 4535,
+                  "content": "        for t in (AtLineStart('AAA') + restOfLine).search_string(test):"
+                },
+                {
+                  "lineNumber": 4654,
+                  "content": "            test_expr = self.expr + StringEnd()"
+                },
+                {
+                  "lineNumber": 4660,
+                  "content": "                    _, ret = test_expr._parse("
+                },
+                {
+                  "lineNumber": 4919,
+                  "content": "        zip.run_tests('''"
+                },
+                {
+                  "lineNumber": 4996,
+                  "content": "      included in the skipped test; if found before the target expression is found,"
+                },
+                {
+                  "lineNumber": 5732,
+                  "content": "        hex_ints.run_tests('''"
+                },
+                {
+                  "lineNumber": 5737,
+                  "content": "        upperword[1, ...].run_tests('''"
+                },
+                {
+                  "lineNumber": 5742,
+                  "content": "        wd[1, ...].set_parse_action(' '.join).run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 148,
+                  "content": "from .testing import pyparsing_test as testing"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "if \"pyparsing_test\" not in globals():"
+                },
+                {
+                  "lineNumber": 160,
+                  "content": "    pyparsing_test = testing"
+                },
+                {
+                  "lineNumber": 285,
+                  "content": "    \"pyparsing_test\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\common.py",
+              "matches": [
+                {
+                  "lineNumber": 388,
+                  "content": "        # can be replaced by a shortest alternative"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\pyparsing\\actions.py",
+              "matches": [
+                {
+                  "lineNumber": 99,
+                  "content": "    If just testing for &#96;&#96;class&#96;&#96; (with or without a namespace), use"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\packaging\\tags.py",
+              "matches": [
+                {
+                  "lineNumber": 267,
+                  "content": "    After the latest version, the major-only version will be yielded, and then"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py",
+              "matches": [
+                {
+                  "lineNumber": 313,
+                  "content": "                          # since we are only testing for strict identity."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\packaging\\requirements.py",
+              "matches": [
+                {
+                  "lineNumber": 95,
+                  "content": "    # TODO: Can we test whether something is contained within a requirement?"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "    #       If so how do we do that? Do we need to test against the _name_ of"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\packaging\\_manylinux.py",
+              "matches": [
+                {
+                  "lineNumber": 125,
+                  "content": "# be 50 for testing. Once this actually happens, update the dictionary"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\more_itertools\\recipes.py",
+              "matches": [
+                {
+                  "lineNumber": 249,
+                  "content": "        &gt;&gt;&gt; take(6, repeatfunc(randrange, times, *args))  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 478,
+                  "content": "        &gt;&gt;&gt; random_product('abc', range(4), 'XYZ')  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 484,
+                  "content": "        &gt;&gt;&gt; random_product('abcd', range(4), repeat=2)  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 501,
+                  "content": "        &gt;&gt;&gt; random_permutation(range(5))  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 516,
+                  "content": "        &gt;&gt;&gt; random_combination(range(5), 3)  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 533,
+                  "content": "        &gt;&gt;&gt; random_combination_with_replacement(range(3), 5) # doctest:+SKIP"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\more_itertools\\more.py",
+              "matches": [
+                {
+                  "lineNumber": 478,
+                  "content": "    # fastest of the known implementations at the time of writing."
+                },
+                {
+                  "lineNumber": 526,
+                  "content": "        &gt;&gt;&gt; one(it)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 531,
+                  "content": "        &gt;&gt;&gt; one(it, too_short=too_short)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 541,
+                  "content": "        &gt;&gt;&gt; one(it)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 547,
+                  "content": "        &gt;&gt;&gt; one(it, too_long=too_long)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 991,
+                  "content": "    until the shortest is exhausted."
+                },
+                {
+                  "lineNumber": 996,
+                  "content": "    For a version that doesn't terminate after the shortest iterable is"
+                },
+                {
+                  "lineNumber": 1511,
+                  "content": "        &gt;&gt;&gt; list(zip_equal(it_1, it_2)) # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 1556,
+                  "content": "    By default, the sequence will end when the shortest iterable is exhausted."
+                },
+                {
+                  "lineNumber": 1588,
+                  "content": "    shortest one."
+                },
+                {
+                  "lineNumber": 1832,
+                  "content": "    # Allow distance=0 mainly for testing that it reproduces results with map()"
+                },
+                {
+                  "lineNumber": 2783,
+                  "content": "        ... def boolean_test():"
+                },
+                {
+                  "lineNumber": 2786,
+                  "content": "        &gt;&gt;&gt; list(boolean_test())"
+                },
+                {
+                  "lineNumber": 3126,
+                  "content": "    &gt;&gt;&gt; only([1, 2])  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 3131,
+                  "content": "    &gt;&gt;&gt; only([1, 2], too_long=TypeError)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 3346,
+                  "content": "    &gt;&gt;&gt; sample(iterable, 5)  # doctest: +SKIP"
+                },
+                {
+                  "lineNumber": 3353,
+                  "content": "    &gt;&gt;&gt; sampled = sample(iterable, 5, weights=weights)  # doctest: +SKIP"
+                },
+                {
+                  "lineNumber": 3362,
+                  "content": "    &gt;&gt;&gt; sample(data, k=len(data), weights=weights)  # doctest: +SKIP"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\jaraco\\text\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 69,
+                  "content": "    You may test for set inclusion, but candidate and elements"
+                },
+                {
+                  "lineNumber": 271,
+                  "content": "    &gt;&gt;&gt; WordSet.parse(\"A simple test\")"
+                },
+                {
+                  "lineNumber": 272,
+                  "content": "    ('A', 'simple', 'test')"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\jaraco\\context.py",
+              "matches": [
+                {
+                  "lineNumber": 156,
+                  "content": "    def raises(self, func, *, _test=bool):"
+                },
+                {
+                  "lineNumber": 179,
+                  "content": "            return _test(trap)"
+                },
+                {
+                  "lineNumber": 202,
+                  "content": "        return self.raises(func, _test=operator.not_)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_resources\\_legacy.py",
+              "matches": [
+                {
+                  "lineNumber": 21,
+                  "content": "            \"/en/latest/using.html#migrating-from-legacy for migration advice.\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata\\_text.py",
+              "matches": [
+                {
+                  "lineNumber": 39,
+                  "content": "    You may test for set inclusion, but candidate and elements"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 677,
+                  "content": "        latter. See _test_deps_from_requires_text for an example."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\versionpredicate.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "\"\"\"Module for parsing and testing package version predicate strings."
+                },
+                {
+                  "lineNumber": 41,
+                  "content": "    \"\"\"Parse and test package version predicates."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\version.py",
+              "matches": [
+                {
+                  "lineNumber": 279,
+                  "content": "# In any case, I've coded the test suite for this module (see"
+                },
+                {
+                  "lineNumber": 280,
+                  "content": "# ../test/test_version.py) specifically to fail on things like comparing"
+                },
+                {
+                  "lineNumber": 284,
+                  "content": "# would be a snap to fix the test suite to say, \"Yep, LooseVersion does"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\util.py",
+              "matches": [
+                {
+                  "lineNumber": 70,
+                  "content": "    \"\"\"For testing only. Do not call.\"\"\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\log.py",
+              "matches": [
+                {
+                  "lineNumber": 68,
+                  "content": "    # return the old threshold for use from tests"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\dist.py",
+              "matches": [
+                {
+                  "lineNumber": 932,
+                  "content": "        whose test predicates return true."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\dep_util.py",
+              "matches": [
+                {
+                  "lineNumber": 34,
+                  "content": "    \"\"\"Walk two filename lists in parallel, testing if each source is newer"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\sdist.py",
+              "matches": [
+                {
+                  "lineNumber": 238,
+                  "content": "          - test/test*.py"
+                },
+                {
+                  "lineNumber": 296,
+                  "content": "        optional = ['test/test*.py', 'setup.cfg']"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\install.py",
+              "matches": [
+                {
+                  "lineNumber": 237,
+                  "content": "        ('skip-build', None, \"skip rebuilding everything (for testing/debugging)\"),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\config.py",
+              "matches": [
+                {
+                  "lineNumber": 105,
+                  "content": "        filename = \"_configtest\" + LANG_EXT[lang]"
+                },
+                {
+                  "lineNumber": 118,
+                  "content": "        out = \"_configtest.i\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\check.py",
+              "matches": [
+                {
+                  "lineNumber": 75,
+                  "content": "        # perform the various tests"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\bdist_rpm.py",
+              "matches": [
+                {
+                  "lineNumber": 430,
+                  "content": "        # normalizing the whitespace to simplify the test for whether the"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\bdist_dumb.py",
+              "matches": [
+                {
+                  "lineNumber": 40,
+                  "content": "        ('skip-build', None, \"skip rebuilding everything (for testing/debugging)\"),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\bdist.py",
+              "matches": [
+                {
+                  "lineNumber": 53,
+                  "content": "        ('skip-build', None, \"skip rebuilding everything (for testing/debugging)\"),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\cmd.py",
+              "matches": [
+                {
+                  "lineNumber": 249,
+                  "content": "    def _ensure_tested_string(self, option, tester, what, error_fmt, default=None):"
+                },
+                {
+                  "lineNumber": 251,
+                  "content": "        if val is not None and not tester(val):"
+                },
+                {
+                  "lineNumber": 258,
+                  "content": "        self._ensure_tested_string("
+                },
+                {
+                  "lineNumber": 263,
+                  "content": "        self._ensure_tested_string("
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\ccompiler.py",
+              "matches": [
+                {
+                  "lineNumber": 1151,
+                  "content": "    # latest mention of a particular macro winds up on the command"
+                },
+                {
+                  "lineNumber": 1153,
+                  "content": "    # Unix C compilers only pay attention to the latest -D or -U"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\setuptools\\_distutils\\_msvccompiler.py",
+              "matches": [
+                {
+                  "lineNumber": 20,
+                  "content": "import unittest.mock as mock"
+                },
+                {
+                  "lineNumber": 88,
+                  "content": "                \"-latest\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\zipp.py",
+              "matches": [
+                {
+                  "lineNumber": 165,
+                  "content": "    &gt;&gt;&gt; zf.writestr('a.txt', 'content of a')"
+                },
+                {
+                  "lineNumber": 166,
+                  "content": "    &gt;&gt;&gt; zf.writestr('b/c.txt', 'content of c')"
+                },
+                {
+                  "lineNumber": 167,
+                  "content": "    &gt;&gt;&gt; zf.writestr('b/d/e.txt', 'content of e')"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\testing.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# testing.py"
+                },
+                {
+                  "lineNumber": 15,
+                  "content": "class pyparsing_test:"
+                },
+                {
+                  "lineNumber": 17,
+                  "content": "    namespace class for classes useful in writing unit tests"
+                },
+                {
+                  "lineNumber": 22,
+                  "content": "        Context manager to be used when writing unit tests that modify pyparsing config values:"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "                # test that literals used to construct a grammar are automatically suppressed"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "        A mixin class to add parse results assertion methods to normal unittest.TestCase classes."
+                },
+                {
+                  "lineNumber": 133,
+                  "content": "            Unit test assertion to compare a :class:&#96;ParseResults&#96; object with an optional &#96;&#96;expected_list&#96;&#96;,"
+                },
+                {
+                  "lineNumber": 142,
+                  "content": "            self, expr, test_string, expected_list, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 145,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 148,
+                  "content": "            result = expr.parse_string(test_string, parse_all=True)"
+                },
+                {
+                  "lineNumber": 156,
+                  "content": "            self, expr, test_string, expected_dict, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 162,
+                  "content": "            result = expr.parse_string(test_string, parseAll=True)"
+                },
+                {
+                  "lineNumber": 170,
+                  "content": "            self, run_tests_report, expected_parse_results=None, msg=None"
+                },
+                {
+                  "lineNumber": 173,
+                  "content": "            Unit test assertion to evaluate output of &#96;&#96;ParserElement.runTests()&#96;&#96;. If a list of"
+                },
+                {
+                  "lineNumber": 178,
+                  "content": "            :param run_tests_report: tuple(bool, [tuple(str, ParseResults or Exception)]) returned from runTests"
+                },
+                {
+                  "lineNumber": 181,
+                  "content": "            run_test_success, run_test_results = run_tests_report"
+                },
+                {
+                  "lineNumber": 186,
+                  "content": "                    for rpt, expected in zip(run_test_results, expected_parse_results)"
+                },
+                {
+                  "lineNumber": 188,
+                  "content": "                for test_string, result, expected in merged:"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "                            print(\"no validation for {!r}\".format(test_string))"
+                },
+                {
+                  "lineNumber": 227,
+                  "content": "            # do this last, in case some specific test results can be reported instead"
+                },
+                {
+                  "lineNumber": 229,
+                  "content": "                run_test_success, msg=msg if msg is not None else \"failed runTests\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\results.py",
+              "matches": [
+                {
+                  "lineNumber": 49,
+                  "content": "        def test(s, fn=repr):"
+                },
+                {
+                  "lineNumber": 51,
+                  "content": "        test(\"list(result)\")"
+                },
+                {
+                  "lineNumber": 52,
+                  "content": "        test(\"result[0]\")"
+                },
+                {
+                  "lineNumber": 53,
+                  "content": "        test(\"result['month']\")"
+                },
+                {
+                  "lineNumber": 54,
+                  "content": "        test(\"result.day\")"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "        test(\"'month' in result\")"
+                },
+                {
+                  "lineNumber": 56,
+                  "content": "        test(\"'minutes' in result\")"
+                },
+                {
+                  "lineNumber": 57,
+                  "content": "        test(\"result.dump()\", str)"
+                },
+                {
+                  "lineNumber": 102,
+                  "content": "            element.run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\helpers.py",
+              "matches": [
+                {
+                  "lineNumber": 210,
+                  "content": "    and makes sure to do longest-first testing when there is a conflict,"
+                },
+                {
+                  "lineNumber": 390,
+                  "content": "        src = \"this is test &lt;b&gt; bold &lt;i&gt;text&lt;/i&gt; &lt;/b&gt; normal text \""
+                },
+                {
+                  "lineNumber": 789,
+                  "content": "        arith_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 863,
+                  "content": "                # try to avoid LR with this extra test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\core.py",
+              "matches": [
+                {
+                  "lineNumber": 94,
+                  "content": "    and testing."
+                },
+                {
+                  "lineNumber": 295,
+                  "content": "                # re-raise TypeErrors if they did not come from our arity testing"
+                },
+                {
+                  "lineNumber": 625,
+                  "content": "          lookaheads and alternate testing. For parse actions that have side effects, it is"
+                },
+                {
+                  "lineNumber": 662,
+                  "content": "            date_str.run_tests('''"
+                },
+                {
+                  "lineNumber": 1928,
+                  "content": "        self, test_string: str, parse_all: bool = True, *, parseAll: bool = True"
+                },
+                {
+                  "lineNumber": 1931,
+                  "content": "        Method for quick testing of a parser against a test string. Good for simple"
+                },
+                {
+                  "lineNumber": 1932,
+                  "content": "        inline microtests of sub expressions while building up larger parser."
+                },
+                {
+                  "lineNumber": 1935,
+                  "content": "        - &#96;&#96;test_string&#96;&#96; - to test against this expression for a match"
+                },
+                {
+                  "lineNumber": 1936,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 1945,
+                  "content": "            self.parse_string(str(test_string), parse_all=parseAll)"
+                },
+                {
+                  "lineNumber": 1950,
+                  "content": "    def run_tests("
+                },
+                {
+                  "lineNumber": 1952,
+                  "content": "        tests: Union[str, List[str]],"
+                },
+                {
+                  "lineNumber": 1957,
+                  "content": "        failure_tests: bool = False,"
+                },
+                {
+                  "lineNumber": 1969,
+                  "content": "        Execute the parse expression on a series of test strings, showing each"
+                },
+                {
+                  "lineNumber": 1970,
+                  "content": "        test, the parsed results or where the parse failed. Quick and easy way to"
+                },
+                {
+                  "lineNumber": 1974,
+                  "content": "        - &#96;&#96;tests&#96;&#96; - a list of separate test strings, or a multiline string of test strings"
+                },
+                {
+                  "lineNumber": 1975,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 1976,
+                  "content": "        - &#96;&#96;comment&#96;&#96; - (default= &#96;&#96;'#'&#96;&#96;) - expression for indicating embedded comments in the test"
+                },
+                {
+                  "lineNumber": 1980,
+                  "content": "        - &#96;&#96;print_results&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) prints test output to stdout"
+                },
+                {
+                  "lineNumber": 1981,
+                  "content": "        - &#96;&#96;failure_tests&#96;&#96; - (default= &#96;&#96;False&#96;&#96;) indicates if these tests are expected to fail parsing"
+                },
+                {
+                  "lineNumber": 1983,
+                  "content": "          &#96;fn(test_string, parse_results)&#96; and returns a string to be added to the test output"
+                },
+                {
+                  "lineNumber": 1984,
+                  "content": "        - &#96;&#96;file&#96;&#96; - (default= &#96;&#96;None&#96;&#96;) optional file-like object to which test output will be written;"
+                },
+                {
+                  "lineNumber": 1986,
+                  "content": "        - &#96;&#96;with_line_numbers&#96;&#96; - default= &#96;&#96;False&#96;&#96;) show test strings with line and column numbers"
+                },
+                {
+                  "lineNumber": 1988,
+                  "content": "        Returns: a (success, results) tuple, where success indicates that all tests succeeded"
+                },
+                {
+                  "lineNumber": 1989,
+                  "content": "        (or failed if &#96;&#96;failure_tests&#96;&#96; is True), and the results contain a list of lines of each"
+                },
+                {
+                  "lineNumber": 1990,
+                  "content": "        test's output"
+                },
+                {
+                  "lineNumber": 1996,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2008,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2015,
+                  "content": "                ''', failure_tests=True)"
+                },
+                {
+                  "lineNumber": 2055,
+                  "content": "        Each test string must be on a single line. If you want to test a string that spans multiple"
+                },
+                {
+                  "lineNumber": 2056,
+                  "content": "        lines, create a test like this::"
+                },
+                {
+                  "lineNumber": 2058,
+                  "content": "            expr.run_tests(r\"this is a test\\\\n of strings that spans \\\\n 3 lines\")"
+                },
+                {
+                  "lineNumber": 2062,
+                  "content": "        from .testing import pyparsing_test"
+                },
+                {
+                  "lineNumber": 2067,
+                  "content": "        failureTests = failureTests or failure_tests"
+                },
+                {
+                  "lineNumber": 2069,
+                  "content": "        if isinstance(tests, str_type):"
+                },
+                {
+                  "lineNumber": 2070,
+                  "content": "            line_strip = type(tests).strip"
+                },
+                {
+                  "lineNumber": 2071,
+                  "content": "            tests = [line_strip(test_line) for test_line in tests.rstrip().splitlines()]"
+                },
+                {
+                  "lineNumber": 2084,
+                  "content": "        for t in tests:"
+                },
+                {
+                  "lineNumber": 2087,
+                  "content": "                    pyparsing_test.with_line_numbers(t) if with_line_numbers else t"
+                },
+                {
+                  "lineNumber": 2094,
+                  "content": "                pyparsing_test.with_line_numbers(t) if with_line_numbers else t,"
+                },
+                {
+                  "lineNumber": 2215,
+                  "content": "    runTests = run_tests"
+                },
+                {
+                  "lineNumber": 3442,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 3449,
+                  "content": "        for t in (LineStart() + 'AAA' + restOfLine).search_string(test):"
+                },
+                {
+                  "lineNumber": 3978,
+                  "content": "                # save match among all matches, to retry longest to shortest"
+                },
+                {
+                  "lineNumber": 4197,
+                  "content": "        shape_spec.run_tests('''"
+                },
+                {
+                  "lineNumber": 4528,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 4535,
+                  "content": "        for t in (AtLineStart('AAA') + restOfLine).search_string(test):"
+                },
+                {
+                  "lineNumber": 4654,
+                  "content": "            test_expr = self.expr + StringEnd()"
+                },
+                {
+                  "lineNumber": 4660,
+                  "content": "                    _, ret = test_expr._parse("
+                },
+                {
+                  "lineNumber": 4919,
+                  "content": "        zip.run_tests('''"
+                },
+                {
+                  "lineNumber": 4996,
+                  "content": "      included in the skipped test; if found before the target expression is found,"
+                },
+                {
+                  "lineNumber": 5732,
+                  "content": "        hex_ints.run_tests('''"
+                },
+                {
+                  "lineNumber": 5737,
+                  "content": "        upperword[1, ...].run_tests('''"
+                },
+                {
+                  "lineNumber": 5742,
+                  "content": "        wd[1, ...].set_parse_action(' '.join).run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\common.py",
+              "matches": [
+                {
+                  "lineNumber": 388,
+                  "content": "        # can be replaced by a shortest alternative"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\actions.py",
+              "matches": [
+                {
+                  "lineNumber": 99,
+                  "content": "    If just testing for &#96;&#96;class&#96;&#96; (with or without a namespace), use"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\pyparsing\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 148,
+                  "content": "from .testing import pyparsing_test as testing"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "if \"pyparsing_test\" not in globals():"
+                },
+                {
+                  "lineNumber": 160,
+                  "content": "    pyparsing_test = testing"
+                },
+                {
+                  "lineNumber": 285,
+                  "content": "    \"pyparsing_test\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\packaging\\tags.py",
+              "matches": [
+                {
+                  "lineNumber": 267,
+                  "content": "    After the latest version, the major-only version will be yielded, and then"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py",
+              "matches": [
+                {
+                  "lineNumber": 313,
+                  "content": "                          # since we are only testing for strict identity."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py",
+              "matches": [
+                {
+                  "lineNumber": 95,
+                  "content": "    # TODO: Can we test whether something is contained within a requirement?"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "    #       If so how do we do that? Do we need to test against the _name_ of"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_manylinux.py",
+              "matches": [
+                {
+                  "lineNumber": 125,
+                  "content": "# be 50 for testing. Once this actually happens, update the dictionary"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\more_itertools\\recipes.py",
+              "matches": [
+                {
+                  "lineNumber": 252,
+                  "content": "        &gt;&gt;&gt; take(6, repeatfunc(randrange, times, *args))  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 491,
+                  "content": "        &gt;&gt;&gt; random_product('abc', range(4), 'XYZ')  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 497,
+                  "content": "        &gt;&gt;&gt; random_product('abcd', range(4), repeat=2)  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 514,
+                  "content": "        &gt;&gt;&gt; random_permutation(range(5))  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 529,
+                  "content": "        &gt;&gt;&gt; random_combination(range(5), 3)  # doctest:+SKIP"
+                },
+                {
+                  "lineNumber": 546,
+                  "content": "        &gt;&gt;&gt; random_combination_with_replacement(range(3), 5) # doctest:+SKIP"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\more_itertools\\more.py",
+              "matches": [
+                {
+                  "lineNumber": 492,
+                  "content": "    # fastest of the known implementations at the time of writing."
+                },
+                {
+                  "lineNumber": 540,
+                  "content": "        &gt;&gt;&gt; one(it)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 545,
+                  "content": "        &gt;&gt;&gt; one(it, too_short=too_short)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 555,
+                  "content": "        &gt;&gt;&gt; one(it)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 561,
+                  "content": "        &gt;&gt;&gt; one(it, too_long=too_long)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 612,
+                  "content": "        &gt;&gt;&gt; list(strictly_n('ab', 3))  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 617,
+                  "content": "        &gt;&gt;&gt; list(strictly_n('abc', 2))  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 629,
+                  "content": "        &gt;&gt;&gt; list(it)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 1083,
+                  "content": "    until the shortest is exhausted."
+                },
+                {
+                  "lineNumber": 1088,
+                  "content": "    For a version that doesn't terminate after the shortest iterable is"
+                },
+                {
+                  "lineNumber": 1698,
+                  "content": "        &gt;&gt;&gt; list(zip_equal(it_1, it_2)) # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 1728,
+                  "content": "    By default, the sequence will end when the shortest iterable is exhausted."
+                },
+                {
+                  "lineNumber": 1760,
+                  "content": "    shortest one."
+                },
+                {
+                  "lineNumber": 2004,
+                  "content": "    # Allow distance=0 mainly for testing that it reproduces results with map()"
+                },
+                {
+                  "lineNumber": 2955,
+                  "content": "        ... def boolean_test():"
+                },
+                {
+                  "lineNumber": 2958,
+                  "content": "        &gt;&gt;&gt; list(boolean_test())"
+                },
+                {
+                  "lineNumber": 3298,
+                  "content": "    &gt;&gt;&gt; only([1, 2])  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 3303,
+                  "content": "    &gt;&gt;&gt; only([1, 2], too_long=TypeError)  # doctest: +IGNORE_EXCEPTION_DETAIL"
+                },
+                {
+                  "lineNumber": 3540,
+                  "content": "    &gt;&gt;&gt; sample(iterable, 5)  # doctest: +SKIP"
+                },
+                {
+                  "lineNumber": 3547,
+                  "content": "    &gt;&gt;&gt; sampled = sample(iterable, 5, weights=weights)  # doctest: +SKIP"
+                },
+                {
+                  "lineNumber": 3556,
+                  "content": "    &gt;&gt;&gt; sample(data, k=len(data), weights=weights)  # doctest: +SKIP"
+                },
+                {
+                  "lineNumber": 3580,
+                  "content": "    If *strict*, tests for strict sorting, that is, returns &#96;&#96;False&#96;&#96; if equal"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\jaraco\\text\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 69,
+                  "content": "    You may test for set inclusion, but candidate and elements"
+                },
+                {
+                  "lineNumber": 271,
+                  "content": "    &gt;&gt;&gt; WordSet.parse(\"A simple test\")"
+                },
+                {
+                  "lineNumber": 272,
+                  "content": "    ('A', 'simple', 'test')"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\jaraco\\context.py",
+              "matches": [
+                {
+                  "lineNumber": 156,
+                  "content": "    def raises(self, func, *, _test=bool):"
+                },
+                {
+                  "lineNumber": 179,
+                  "content": "            return _test(trap)"
+                },
+                {
+                  "lineNumber": 202,
+                  "content": "        return self.raises(func, _test=operator.not_)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\importlib_resources\\_legacy.py",
+              "matches": [
+                {
+                  "lineNumber": 21,
+                  "content": "            \"/en/latest/using.html#migrating-from-legacy for migration advice.\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 1506,
+                  "content": "        https://setuptools.pypa.io/en/latest/pkg_resources.html#basic-resource-access"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pkg_resources\\_vendor\\appdirs.py",
+              "matches": [
+                {
+                  "lineNumber": 14,
+                  "content": "# - XDG spec for Un*x: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html"
+                },
+                {
+                  "lineNumber": 574,
+                  "content": "#---- self test code"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\webencodings\\tests.py",
+              "matches": [
+                {
+                  "lineNumber": 4,
+                  "content": "    webencodings.tests"
+                },
+                {
+                  "lineNumber": 7,
+                  "content": "    A basic test suite for Encoding."
+                },
+                {
+                  "lineNumber": 29,
+                  "content": "def test_labels():"
+                },
+                {
+                  "lineNumber": 48,
+                  "content": "def test_all_labels():"
+                },
+                {
+                  "lineNumber": 67,
+                  "content": "def test_invalid_label():"
+                },
+                {
+                  "lineNumber": 76,
+                  "content": "def test_decode():"
+                },
+                {
+                  "lineNumber": 98,
+                  "content": "def test_encode():"
+                },
+                {
+                  "lineNumber": 107,
+                  "content": "def test_iter_decode():"
+                },
+                {
+                  "lineNumber": 135,
+                  "content": "def test_iter_encode():"
+                },
+                {
+                  "lineNumber": 147,
+                  "content": "def test_x_user_defined():"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\util\\url.py",
+              "matches": [
+                {
+                  "lineNumber": 231,
+                  "content": "        # Will return a single character bytestring on both Python 2 &amp; 3"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\util\\connection.py",
+              "matches": [
+                {
+                  "lineNumber": 34,
+                  "content": "# library test suite. Added to its signature is only &#96;socket_options&#96;."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\response.py",
+              "matches": [
+                {
+                  "lineNumber": 741,
+                  "content": "        :class:&#96;http.client.HTTPResponse&#96; object. We do this by testing for"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\pyopenssl.py",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "* &#96;pyOpenSSL&#96;_ (tested with 16.0.0)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\_securetransport\\low_level.py",
+              "matches": [
+                {
+                  "lineNumber": 27,
+                  "content": "def _cf_data_from_bytes(bytestring):"
+                },
+                {
+                  "lineNumber": 29,
+                  "content": "    Given a bytestring, create a CFData object from it. This CFData object must"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "        CoreFoundation.kCFAllocatorDefault, bytestring, len(bytestring)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\connectionpool.py",
+              "matches": [
+                {
+                  "lineNumber": 216,
+                  "content": "        # These are mostly for testing and debugging purposes."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\connection.py",
+              "matches": [
+                {
+                  "lineNumber": 70,
+                  "content": "# (ie test_recent_date is failing) update it to ~6 months before the current date."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\tenacity\\nap.py",
+              "matches": [
+                {
+                  "lineNumber": 29,
+                  "content": "    This is the default strategy, and may be mocked out for unit testing."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\style.py",
+              "matches": [
+                {
+                  "lineNumber": 720,
+                  "content": "    def test(self, text: Optional[str] = None) -&gt; None:"
+                },
+                {
+                  "lineNumber": 723,
+                  "content": "        This method is for testing purposes only."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\scope.py",
+              "matches": [
+                {
+                  "lineNumber": 75,
+                  "content": "    def test(foo: float, bar: float) -&gt; None:"
+                },
+                {
+                  "lineNumber": 85,
+                  "content": "    test(20.3423, 3.1427)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\prompt.py",
+              "matches": [
+                {
+                  "lineNumber": 352,
+                  "content": "    if Confirm.ask(\"Run [i]prompt[/i] tests?\", default=True):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\pretty.py",
+              "matches": [
+                {
+                  "lineNumber": 547,
+                  "content": "        obj (Any): The object to test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\pager.py",
+              "matches": [
+                {
+                  "lineNumber": 29,
+                  "content": "    from .__main__ import make_test_card"
+                },
+                {
+                  "lineNumber": 34,
+                  "content": "        console.print(make_test_card())"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\markup.py",
+              "matches": [
+                {
+                  "lineNumber": 119,
+                  "content": "        Text: A test instance."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\highlighter.py",
+              "matches": [
+                {
+                  "lineNumber": 30,
+                  "content": "            Text: A test instance with highlighting applied."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\console.py",
+              "matches": [
+                {
+                  "lineNumber": 665,
+                  "content": "        # Copy of os.environ allows us to replace it for testing"
+                },
+                {
+                  "lineNumber": 961,
+                  "content": "            # in some situation (at the end of a pytest run for example) isatty() can raise"
+                },
+                {
+                  "lineNumber": 1118,
+                  "content": "            &gt;&gt;&gt; from rich.__main__ import make_test_card"
+                },
+                {
+                  "lineNumber": 1121,
+                  "content": "                    console.print(make_test_card())"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_emoji_codes.py",
+              "matches": [
+                {
+                  "lineNumber": 2254,
+                  "content": "    \"test_tube\": \"🧪\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\rich\\__main__.py",
+              "matches": [
+                {
+                  "lineNumber": 39,
+                  "content": "def make_test_card() -&gt; Table:"
+                },
+                {
+                  "lineNumber": 215,
+                  "content": "    test_card = make_test_card()"
+                },
+                {
+                  "lineNumber": 219,
+                  "content": "    console.print(test_card)"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "    console.print(test_card)"
+                },
+                {
+                  "lineNumber": 229,
+                  "content": "    c.print(test_card)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\resolvelib\\resolvers.py",
+              "matches": [
+                {
+                  "lineNumber": 287,
+                  "content": "        1.  Identify Z. The incompatibility is not always caused by the latest"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\requests\\utils.py",
+              "matches": [
+                {
+                  "lineNumber": 101,
+                  "content": "        for test in proxyOverride:"
+                },
+                {
+                  "lineNumber": 102,
+                  "content": "            if test == \"&lt;local&gt;\":"
+                },
+                {
+                  "lineNumber": 105,
+                  "content": "            test = test.replace(\".\", r\"\\.\")  # mask dots"
+                },
+                {
+                  "lineNumber": 106,
+                  "content": "            test = test.replace(\"*\", r\".*\")  # change glob sequence"
+                },
+                {
+                  "lineNumber": 107,
+                  "content": "            test = test.replace(\"?\", r\".\")  # change glob char"
+                },
+                {
+                  "lineNumber": 108,
+                  "content": "            if re.match(test, host, re.I):"
+                },
+                {
+                  "lineNumber": 314,
+                  "content": "    \"\"\"Take an object and test to see if it can be represented as a"
+                },
+                {
+                  "lineNumber": 341,
+                  "content": "    \"\"\"Take an object and test to see if it can be represented as a"
+                },
+                {
+                  "lineNumber": 491,
+                  "content": "    :param content: bytestring to extract encodings from."
+                },
+                {
+                  "lineNumber": 998,
+                  "content": "    # netloc and path. Due to a lack of tests on the original defect, this is"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\requests\\structures.py",
+              "matches": [
+                {
+                  "lineNumber": 24,
+                  "content": "    testing is case insensitive::"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\requests\\sessions.py",
+              "matches": [
+                {
+                  "lineNumber": 425,
+                  "content": "        #: Only set this to &#96;False&#96; for testing."
+                },
+                {
+                  "lineNumber": 557,
+                  "content": "            may be useful during local development or testing."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\requests\\models.py",
+              "matches": [
+                {
+                  "lineNumber": 160,
+                  "content": "                    # Don't call str() on bytestrings: in Py3 it all goes wrong."
+                },
+                {
+                  "lineNumber": 414,
+                  "content": "        #: as this will include the bytestring indicator (b'')"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\testing.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# testing.py"
+                },
+                {
+                  "lineNumber": 15,
+                  "content": "class pyparsing_test:"
+                },
+                {
+                  "lineNumber": 17,
+                  "content": "    namespace class for classes useful in writing unit tests"
+                },
+                {
+                  "lineNumber": 22,
+                  "content": "        Context manager to be used when writing unit tests that modify pyparsing config values:"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "                # test that literals used to construct a grammar are automatically suppressed"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "        A mixin class to add parse results assertion methods to normal unittest.TestCase classes."
+                },
+                {
+                  "lineNumber": 133,
+                  "content": "            Unit test assertion to compare a :class:&#96;ParseResults&#96; object with an optional &#96;&#96;expected_list&#96;&#96;,"
+                },
+                {
+                  "lineNumber": 142,
+                  "content": "            self, expr, test_string, expected_list, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 145,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 148,
+                  "content": "            result = expr.parse_string(test_string, parse_all=True)"
+                },
+                {
+                  "lineNumber": 156,
+                  "content": "            self, expr, test_string, expected_dict, msg=None, verbose=True"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "            Convenience wrapper assert to test a parser element and input string, and assert that"
+                },
+                {
+                  "lineNumber": 162,
+                  "content": "            result = expr.parse_string(test_string, parseAll=True)"
+                },
+                {
+                  "lineNumber": 170,
+                  "content": "            self, run_tests_report, expected_parse_results=None, msg=None"
+                },
+                {
+                  "lineNumber": 173,
+                  "content": "            Unit test assertion to evaluate output of &#96;&#96;ParserElement.runTests()&#96;&#96;. If a list of"
+                },
+                {
+                  "lineNumber": 178,
+                  "content": "            :param run_tests_report: tuple(bool, [tuple(str, ParseResults or Exception)]) returned from runTests"
+                },
+                {
+                  "lineNumber": 181,
+                  "content": "            run_test_success, run_test_results = run_tests_report"
+                },
+                {
+                  "lineNumber": 186,
+                  "content": "                    for rpt, expected in zip(run_test_results, expected_parse_results)"
+                },
+                {
+                  "lineNumber": 188,
+                  "content": "                for test_string, result, expected in merged:"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "                            print(f\"no validation for {test_string!r}\")"
+                },
+                {
+                  "lineNumber": 227,
+                  "content": "            # do this last, in case some specific test results can be reported instead"
+                },
+                {
+                  "lineNumber": 229,
+                  "content": "                run_test_success, msg=msg if msg is not None else \"failed runTests\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\results.py",
+              "matches": [
+                {
+                  "lineNumber": 56,
+                  "content": "        def test(s, fn=repr):"
+                },
+                {
+                  "lineNumber": 58,
+                  "content": "        test(\"list(result)\")"
+                },
+                {
+                  "lineNumber": 59,
+                  "content": "        test(\"result[0]\")"
+                },
+                {
+                  "lineNumber": 60,
+                  "content": "        test(\"result['month']\")"
+                },
+                {
+                  "lineNumber": 61,
+                  "content": "        test(\"result.day\")"
+                },
+                {
+                  "lineNumber": 62,
+                  "content": "        test(\"'month' in result\")"
+                },
+                {
+                  "lineNumber": 63,
+                  "content": "        test(\"'minutes' in result\")"
+                },
+                {
+                  "lineNumber": 64,
+                  "content": "        test(\"result.dump()\", str)"
+                },
+                {
+                  "lineNumber": 115,
+                  "content": "            element.run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\helpers.py",
+              "matches": [
+                {
+                  "lineNumber": 159,
+                  "content": "    and makes sure to do longest-first testing when there is a conflict,"
+                },
+                {
+                  "lineNumber": 338,
+                  "content": "        src = \"this is test &lt;b&gt; bold &lt;i&gt;text&lt;/i&gt; &lt;/b&gt; normal text \""
+                },
+                {
+                  "lineNumber": 744,
+                  "content": "        arith_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 829,
+                  "content": "                # try to avoid LR with this extra test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\core.py",
+              "matches": [
+                {
+                  "lineNumber": 98,
+                  "content": "    and testing."
+                },
+                {
+                  "lineNumber": 297,
+                  "content": "                # re-raise TypeErrors if they did not come from our arity testing"
+                },
+                {
+                  "lineNumber": 648,
+                  "content": "          lookaheads and alternate testing. For parse actions that have side effects, it is"
+                },
+                {
+                  "lineNumber": 685,
+                  "content": "            date_str.run_tests('''"
+                },
+                {
+                  "lineNumber": 1970,
+                  "content": "        self, test_string: str, parse_all: bool = True, *, parseAll: bool = True"
+                },
+                {
+                  "lineNumber": 1973,
+                  "content": "        Method for quick testing of a parser against a test string. Good for simple"
+                },
+                {
+                  "lineNumber": 1974,
+                  "content": "        inline microtests of sub expressions while building up larger parser."
+                },
+                {
+                  "lineNumber": 1978,
+                  "content": "        - &#96;&#96;test_string&#96;&#96; - to test against this expression for a match"
+                },
+                {
+                  "lineNumber": 1979,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 1988,
+                  "content": "            self.parse_string(str(test_string), parse_all=parseAll)"
+                },
+                {
+                  "lineNumber": 1993,
+                  "content": "    def run_tests("
+                },
+                {
+                  "lineNumber": 1995,
+                  "content": "        tests: Union[str, List[str]],"
+                },
+                {
+                  "lineNumber": 2000,
+                  "content": "        failure_tests: bool = False,"
+                },
+                {
+                  "lineNumber": 2012,
+                  "content": "        Execute the parse expression on a series of test strings, showing each"
+                },
+                {
+                  "lineNumber": 2013,
+                  "content": "        test, the parsed results or where the parse failed. Quick and easy way to"
+                },
+                {
+                  "lineNumber": 2018,
+                  "content": "        - &#96;&#96;tests&#96;&#96; - a list of separate test strings, or a multiline string of test strings"
+                },
+                {
+                  "lineNumber": 2019,
+                  "content": "        - &#96;&#96;parse_all&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) - flag to pass to :class:&#96;parse_string&#96; when running tests"
+                },
+                {
+                  "lineNumber": 2020,
+                  "content": "        - &#96;&#96;comment&#96;&#96; - (default= &#96;&#96;'#'&#96;&#96;) - expression for indicating embedded comments in the test"
+                },
+                {
+                  "lineNumber": 2024,
+                  "content": "        - &#96;&#96;print_results&#96;&#96; - (default= &#96;&#96;True&#96;&#96;) prints test output to stdout"
+                },
+                {
+                  "lineNumber": 2025,
+                  "content": "        - &#96;&#96;failure_tests&#96;&#96; - (default= &#96;&#96;False&#96;&#96;) indicates if these tests are expected to fail parsing"
+                },
+                {
+                  "lineNumber": 2027,
+                  "content": "          &#96;fn(test_string, parse_results)&#96; and returns a string to be added to the test output"
+                },
+                {
+                  "lineNumber": 2028,
+                  "content": "        - &#96;&#96;file&#96;&#96; - (default= &#96;&#96;None&#96;&#96;) optional file-like object to which test output will be written;"
+                },
+                {
+                  "lineNumber": 2030,
+                  "content": "        - &#96;&#96;with_line_numbers&#96;&#96; - default= &#96;&#96;False&#96;&#96;) show test strings with line and column numbers"
+                },
+                {
+                  "lineNumber": 2032,
+                  "content": "        Returns: a (success, results) tuple, where success indicates that all tests succeeded"
+                },
+                {
+                  "lineNumber": 2033,
+                  "content": "        (or failed if &#96;&#96;failure_tests&#96;&#96; is True), and the results contain a list of lines of each"
+                },
+                {
+                  "lineNumber": 2034,
+                  "content": "        test's output"
+                },
+                {
+                  "lineNumber": 2040,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2052,
+                  "content": "            result = number_expr.run_tests('''"
+                },
+                {
+                  "lineNumber": 2059,
+                  "content": "                ''', failure_tests=True)"
+                },
+                {
+                  "lineNumber": 2099,
+                  "content": "        Each test string must be on a single line. If you want to test a string that spans multiple"
+                },
+                {
+                  "lineNumber": 2100,
+                  "content": "        lines, create a test like this::"
+                },
+                {
+                  "lineNumber": 2102,
+                  "content": "            expr.run_tests(r\"this is a test\\\\n of strings that spans \\\\n 3 lines\")"
+                },
+                {
+                  "lineNumber": 2106,
+                  "content": "        from .testing import pyparsing_test"
+                },
+                {
+                  "lineNumber": 2111,
+                  "content": "        failureTests = failureTests or failure_tests"
+                },
+                {
+                  "lineNumber": 2113,
+                  "content": "        if isinstance(tests, str_type):"
+                },
+                {
+                  "lineNumber": 2114,
+                  "content": "            tests = typing.cast(str, tests)"
+                },
+                {
+                  "lineNumber": 2115,
+                  "content": "            line_strip = type(tests).strip"
+                },
+                {
+                  "lineNumber": 2116,
+                  "content": "            tests = [line_strip(test_line) for test_line in tests.rstrip().splitlines()]"
+                },
+                {
+                  "lineNumber": 2133,
+                  "content": "        for t in tests:"
+                },
+                {
+                  "lineNumber": 2136,
+                  "content": "                    pyparsing_test.with_line_numbers(t) if with_line_numbers else t"
+                },
+                {
+                  "lineNumber": 2143,
+                  "content": "                pyparsing_test.with_line_numbers(t) if with_line_numbers else t,"
+                },
+                {
+                  "lineNumber": 2322,
+                  "content": "    @replaced_by_pep8(run_tests)"
+                },
+                {
+                  "lineNumber": 3574,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 3581,
+                  "content": "        for t in (LineStart() + 'AAA' + rest_of_line).search_string(test):"
+                },
+                {
+                  "lineNumber": 4131,
+                  "content": "                # save match among all matches, to retry longest to shortest"
+                },
+                {
+                  "lineNumber": 4360,
+                  "content": "        shape_spec.run_tests('''"
+                },
+                {
+                  "lineNumber": 4715,
+                  "content": "        test = '''\\"
+                },
+                {
+                  "lineNumber": 4722,
+                  "content": "        for t in (AtLineStart('AAA') + rest_of_line).search_string(test):"
+                },
+                {
+                  "lineNumber": 4842,
+                  "content": "            test_expr = self.expr + StringEnd()"
+                },
+                {
+                  "lineNumber": 4848,
+                  "content": "                    _, ret = test_expr._parse("
+                },
+                {
+                  "lineNumber": 5174,
+                  "content": "        zip.run_tests('''"
+                },
+                {
+                  "lineNumber": 5252,
+                  "content": "      included in the skipped test; if found before the target expression is found,"
+                },
+                {
+                  "lineNumber": 6000,
+                  "content": "        hex_ints.run_tests('''"
+                },
+                {
+                  "lineNumber": 6005,
+                  "content": "        upperword[1, ...].run_tests('''"
+                },
+                {
+                  "lineNumber": 6010,
+                  "content": "        wd[1, ...].set_parse_action(' '.join).run_tests('''"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\common.py",
+              "matches": [
+                {
+                  "lineNumber": 35,
+                  "content": "        pyparsing_common.number.run_tests('''"
+                },
+                {
+                  "lineNumber": 45,
+                  "content": "        pyparsing_common.fnumber.run_tests('''"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "        pyparsing_common.hex_integer.run_tests('''"
+                },
+                {
+                  "lineNumber": 61,
+                  "content": "        pyparsing_common.fraction.run_tests('''"
+                },
+                {
+                  "lineNumber": 67,
+                  "content": "        pyparsing_common.mixed_integer.run_tests('''"
+                },
+                {
+                  "lineNumber": 77,
+                  "content": "        pyparsing_common.uuid.run_tests('''"
+                },
+                {
+                  "lineNumber": 388,
+                  "content": "        # can be replaced by a shortest alternative"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 140,
+                  "content": "from .testing import pyparsing_test as testing"
+                },
+                {
+                  "lineNumber": 151,
+                  "content": "if \"pyparsing_test\" not in globals():"
+                },
+                {
+                  "lineNumber": 152,
+                  "content": "    pyparsing_test = testing  # type: ignore[misc]"
+                },
+                {
+                  "lineNumber": 259,
+                  "content": "    \"pyparsing_test\","
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\actions.py",
+              "matches": [
+                {
+                  "lineNumber": 99,
+                  "content": "    If just testing for &#96;&#96;class&#96;&#96; (with or without a namespace), use"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\lexers\\_mapping.py",
+              "matches": [
+                {
+                  "lineNumber": 186,
+                  "content": "    'GherkinLexer': ('pip._vendor.pygments.lexers.testing', 'Gherkin', ('gherkin', 'cucumber'), ('*.feature',), ('text/x-gherkin',)),"
+                },
+                {
+                  "lineNumber": 360,
+                  "content": "    'Perl6Lexer': ('pip._vendor.pygments.lexers.perl', 'Perl6', ('perl6', 'pl6', 'raku'), ('*.pl', '*.pm', '*.nqp', '*.p6', '*.6pl', '*.p6l', '*.pl6', '*.6pm', '*.p6m', '*.pm6', '*.t', '*.raku', '*.rakumod', '*.rakutest', '*.rakudoc'), ('text/x-perl6', 'application/x-perl6')),"
+                },
+                {
+                  "lineNumber": 390,
+                  "content": "    'PythonConsoleLexer': ('pip._vendor.pygments.lexers.python', 'Python console session', ('pycon',), (), ('text/x-python-doctest',)),"
+                },
+                {
+                  "lineNumber": 480,
+                  "content": "    'TAPLexer': ('pip._vendor.pygments.lexers.testing', 'TAP', ('tap',), ('*.tap',), ()),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\lexers\\python.py",
+              "matches": [
+                {
+                  "lineNumber": 641,
+                  "content": "    mimetypes = ['text/x-python-doctest']"
+                },
+                {
+                  "lineNumber": 676,
+                  "content": "    For Python console output or doctests, such as:"
+                },
+                {
+                  "lineNumber": 700,
+                  "content": "    mimetypes = ['text/x-python-doctest']"
+                },
+                {
+                  "lineNumber": 755,
+                  "content": "             bygroups(Whitespace, Comment, Whitespace)),  # for doctests..."
+                },
+                {
+                  "lineNumber": 811,
+                  "content": "             bygroups(Text, Comment, Whitespace)),  # for doctests..."
+                },
+                {
+                  "lineNumber": 1179,
+                  "content": "        'test', 'tile', 'tofile', 'tolist', 'tostring', 'trace', 'transpose',"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\lexer.py",
+              "matches": [
+                {
+                  "lineNumber": 689,
+                  "content": "        statestack = list(stack)"
+                },
+                {
+                  "lineNumber": 690,
+                  "content": "        statetokens = tokendefs[statestack[-1]]"
+                },
+                {
+                  "lineNumber": 706,
+                  "content": "                                    if len(statestack) &gt; 1:"
+                },
+                {
+                  "lineNumber": 707,
+                  "content": "                                        statestack.pop()"
+                },
+                {
+                  "lineNumber": 709,
+                  "content": "                                    statestack.append(statestack[-1])"
+                },
+                {
+                  "lineNumber": 711,
+                  "content": "                                    statestack.append(state)"
+                },
+                {
+                  "lineNumber": 716,
+                  "content": "                            if abs(new_state) &gt;= len(statestack):"
+                },
+                {
+                  "lineNumber": 717,
+                  "content": "                                del statestack[1:]"
+                },
+                {
+                  "lineNumber": 719,
+                  "content": "                                del statestack[new_state:]"
+                },
+                {
+                  "lineNumber": 721,
+                  "content": "                            statestack.append(statestack[-1])"
+                },
+                {
+                  "lineNumber": 724,
+                  "content": "                        statetokens = tokendefs[statestack[-1]]"
+                },
+                {
+                  "lineNumber": 732,
+                  "content": "                        statestack = ['root']"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\scanner.py",
+              "matches": [
+                {
+                  "lineNumber": 66,
+                  "content": "    def test(self, pattern):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\formatters\\other.py",
+              "matches": [
+                {
+                  "lineNumber": 120,
+                  "content": "    def testNeedsName(lexer):"
+                },
+                {
+                  "lineNumber": 132,
+                  "content": "    Format tokens as appropriate for a new testcase."
+                },
+                {
+                  "lineNumber": 137,
+                  "content": "    aliases = ['testcase']"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\formatters\\_mapping.py",
+              "matches": [
+                {
+                  "lineNumber": 22,
+                  "content": "    'TestcaseFormatter': ('pygments.formatters.other', 'Testcase', ('testcase',), (), 'Format tokens as appropriate for a new testcase.'),"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\platformdirs\\unix.py",
+              "matches": [
+                {
+                  "lineNumber": 24,
+                  "content": "    &#96;XDG Basedir Spec &lt;https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html&gt;&#96;_. The spec allows"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\pkg_resources\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 120,
+                  "content": "    \"See https://setuptools.pypa.io/en/latest/pkg_resources.html\","
+                },
+                {
+                  "lineNumber": 1599,
+                  "content": "        https://setuptools.pypa.io/en/latest/pkg_resources.html#basic-resource-access"
+                },
+                {
+                  "lineNumber": 2336,
+                  "content": "        \"See https://setuptools.pypa.io/en/latest/references/\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\_manylinux.py",
+              "matches": [
+                {
+                  "lineNumber": 125,
+                  "content": "# be 50 for testing. Once this actually happens, update the dictionary"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\tags.py",
+              "matches": [
+                {
+                  "lineNumber": 267,
+                  "content": "    After the latest version, the major-only version will be yielded, and then"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\specifiers.py",
+              "matches": [
+                {
+                  "lineNumber": 313,
+                  "content": "                          # since we are only testing for strict identity."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\requirements.py",
+              "matches": [
+                {
+                  "lineNumber": 95,
+                  "content": "    # TODO: Can we test whether something is contained within a requirement?"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "    #       If so how do we do that? Do we need to test against the _name_ of"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\msgpack\\fallback.py",
+              "matches": [
+                {
+                  "lineNumber": 42,
+                  "content": "    # StringBuilder is fastest."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\util.py",
+              "matches": [
+                {
+                  "lineNumber": 190,
+                  "content": "            # there are issues with Python and URL parsing, so this test"
+                },
+                {
+                  "lineNumber": 523,
+                  "content": "        Note that this test is not very accurate: files created in the same"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distro\\distro.py",
+              "matches": [
+                {
+                  "lineNumber": 1244,
+                  "content": "    def _to_str(bytestring: bytes) -&gt; str:"
+                },
+                {
+                  "lineNumber": 1246,
+                  "content": "        return bytestring.decode(encoding)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\scripts.py",
+              "matches": [
+                {
+                  "lineNumber": 270,
+                  "content": "                    zf.writestr(zinfo, script_bytes)"
+                },
+                {
+                  "lineNumber": 272,
+                  "content": "                    zf.writestr('__main__.py', script_bytes)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\metadata.py",
+              "matches": [
+                {
+                  "lineNumber": 190,
+                  "content": "    #   - 2.2 is the latest"
+                },
+                {
+                  "lineNumber": 641,
+                  "content": "    DEPENDENCY_KEYS = ('extras run_requires test_requires build_requires '"
+                },
+                {
+                  "lineNumber": 709,
+                  "content": "        'test_requires': none_list,"
+                },
+                {
+                  "lineNumber": 868,
+                  "content": "            for key in ('build', 'dev', 'test'):"
+                },
+                {
+                  "lineNumber": 872,
+                  "content": "                    # A recursive call, but it should terminate since 'test'"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\locators.py",
+              "matches": [
+                {
+                  "lineNumber": 1201,
+                  "content": "        :param meta_extras: A list of meta extras such as :test:, :build: and"
+                },
+                {
+                  "lineNumber": 1230,
+                  "content": "            meta_extras |= set([':test:', ':build:', ':dev:'])"
+                },
+                {
+                  "lineNumber": 1260,
+                  "content": "                for key in ('test', 'build', 'dev'):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\database.py",
+              "matches": [
+                {
+                  "lineNumber": 411,
+                  "content": "    def test_requires(self):"
+                },
+                {
+                  "lineNumber": 412,
+                  "content": "        return self._get_requirements('test_requires')"
+                },
+                {
+                  "lineNumber": 478,
+                  "content": "        Compute hash in a way which matches the equality test."
+                },
+                {
+                  "lineNumber": 827,
+                  "content": "        # Check if it is an absolute path  # XXX use relpath, add tests"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\compat.py",
+              "matches": [
+                {
+                  "lineNumber": 246,
+                  "content": "            # If it does match, only test that one, otherwise we have to try"
+                },
+                {
+                  "lineNumber": 649,
+                  "content": "    # Passes Python2.7's test suite and incorporates all the latest updates."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\winterm.py",
+              "matches": [
+                {
+                  "lineNumber": 179,
+                  "content": "    if win32.windll is None or not win32.winapi_test():"
+                },
+                {
+                  "lineNumber": 193,
+                  "content": "    # Can get TypeError in testsuite where 'fd' is a Mock()"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\win32.py",
+              "matches": [
+                {
+                  "lineNumber": 17,
+                  "content": "    winapi_test = lambda *_: None"
+                },
+                {
+                  "lineNumber": 108,
+                  "content": "    def _winapi_test(handle):"
+                },
+                {
+                  "lineNumber": 114,
+                  "content": "    def winapi_test():"
+                },
+                {
+                  "lineNumber": 115,
+                  "content": "        return any(_winapi_test(h) for h in"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\winterm_test.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "from unittest import TestCase, main, skipUnless"
+                },
+                {
+                  "lineNumber": 6,
+                  "content": "    from unittest.mock import Mock, patch"
+                },
+                {
+                  "lineNumber": 16,
+                  "content": "    def testInit(self, mockWin32):"
+                },
+                {
+                  "lineNumber": 26,
+                  "content": "    def testGetAttrs(self):"
+                },
+                {
+                  "lineNumber": 48,
+                  "content": "    def testResetAll(self, mockWin32):"
+                },
+                {
+                  "lineNumber": 67,
+                  "content": "    def testFore(self):"
+                },
+                {
+                  "lineNumber": 78,
+                  "content": "    def testBack(self):"
+                },
+                {
+                  "lineNumber": 89,
+                  "content": "    def testStyle(self):"
+                },
+                {
+                  "lineNumber": 100,
+                  "content": "    def testSetConsole(self, mockWin32):"
+                },
+                {
+                  "lineNumber": 115,
+                  "content": "    def testSetConsoleOnStderr(self, mockWin32):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\isatty_test.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "from unittest import TestCase, main"
+                },
+                {
+                  "lineNumber": 14,
+                  "content": "    def test_TTY(self):"
+                },
+                {
+                  "lineNumber": 20,
+                  "content": "    def test_nonTTY(self):"
+                },
+                {
+                  "lineNumber": 26,
+                  "content": "    def test_withPycharm(self):"
+                },
+                {
+                  "lineNumber": 31,
+                  "content": "    def test_withPycharmTTYOverride(self):"
+                },
+                {
+                  "lineNumber": 36,
+                  "content": "    def test_withPycharmNonTTYOverride(self):"
+                },
+                {
+                  "lineNumber": 41,
+                  "content": "    def test_withPycharmNoneOverride(self):"
+                },
+                {
+                  "lineNumber": 48,
+                  "content": "    def test_withPycharmStreamWrapped(self):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\initialise_test.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "from unittest import TestCase, main, skipUnless"
+                },
+                {
+                  "lineNumber": 6,
+                  "content": "    from unittest.mock import patch, Mock"
+                },
+                {
+                  "lineNumber": 11,
+                  "content": "from ..initialise import init, just_fix_windows_console, _wipe_internal_state_for_tests"
+                },
+                {
+                  "lineNumber": 26,
+                  "content": "        _wipe_internal_state_for_tests()"
+                },
+                {
+                  "lineNumber": 43,
+                  "content": "    @patch('colorama.ansitowin32.winapi_test', lambda *_: True)"
+                },
+                {
+                  "lineNumber": 45,
+                  "content": "    def testInitWrapsOnWindows(self, _):"
+                },
+                {
+                  "lineNumber": 51,
+                  "content": "    @patch('colorama.ansitowin32.winapi_test', lambda *_: False)"
+                },
+                {
+                  "lineNumber": 52,
+                  "content": "    def testInitDoesntWrapOnEmulatedWindows(self, _):"
+                },
+                {
+                  "lineNumber": 57,
+                  "content": "    def testInitDoesntWrapOnNonWindows(self):"
+                },
+                {
+                  "lineNumber": 62,
+                  "content": "    def testInitDoesntWrapIfNone(self):"
+                },
+                {
+                  "lineNumber": 70,
+                  "content": "    def testInitAutoresetOnWrapsOnAllPlatforms(self):"
+                },
+                {
+                  "lineNumber": 75,
+                  "content": "    def testInitWrapOffDoesntWrapOnWindows(self):"
+                },
+                {
+                  "lineNumber": 80,
+                  "content": "    def testInitWrapOffIncompatibleWithAutoresetOn(self):"
+                },
+                {
+                  "lineNumber": 85,
+                  "content": "    def testAutoResetPassedOn(self, mockATW32, _):"
+                },
+                {
+                  "lineNumber": 93,
+                  "content": "    def testAutoResetChangeable(self, mockATW32):"
+                },
+                {
+                  "lineNumber": 111,
+                  "content": "    def testAtexitRegisteredOnlyOnce(self, mockRegister):"
+                },
+                {
+                  "lineNumber": 121,
+                  "content": "        _wipe_internal_state_for_tests()"
+                },
+                {
+                  "lineNumber": 128,
+                  "content": "    @patch(\"colorama.ansitowin32.winapi_test\", lambda: True)"
+                },
+                {
+                  "lineNumber": 129,
+                  "content": "    def testJustFixWindowsConsole(self):"
+                },
+                {
+                  "lineNumber": 159,
+                  "content": "                    # Regular single-call test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\ansi_test.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "from unittest import TestCase, main"
+                },
+                {
+                  "lineNumber": 25,
+                  "content": "    def testForeAttributes(self):"
+                },
+                {
+                  "lineNumber": 47,
+                  "content": "    def testBackAttributes(self):"
+                },
+                {
+                  "lineNumber": 69,
+                  "content": "    def testStyleAttributes(self):"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\ansitowin32_test.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "from unittest import TestCase, main"
+                },
+                {
+                  "lineNumber": 11,
+                  "content": "    from unittest.mock import MagicMock, Mock, patch"
+                },
+                {
+                  "lineNumber": 22,
+                  "content": "    def testIsAProxy(self):"
+                },
+                {
+                  "lineNumber": 27,
+                  "content": "    def testDelegatesWrite(self):"
+                },
+                {
+                  "lineNumber": 34,
+                  "content": "    def testDelegatesContext(self):"
+                },
+                {
+                  "lineNumber": 41,
+                  "content": "    def testProxyNoContextManager(self):"
+                },
+                {
+                  "lineNumber": 49,
+                  "content": "    def test_closed_shouldnt_raise_on_closed_stream(self):"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "    def test_closed_shouldnt_raise_on_detached_stream(self):"
+                },
+                {
+                  "lineNumber": 63,
+                  "content": "    def testInit(self):"
+                },
+                {
+                  "lineNumber": 71,
+                  "content": "    @patch('colorama.ansitowin32.winapi_test', lambda *_: True)"
+                },
+                {
+                  "lineNumber": 72,
+                  "content": "    def testStripIsTrueOnWindows(self):"
+                },
+                {
+                  "lineNumber": 78,
+                  "content": "    def testStripIsFalseOffWindows(self):"
+                },
+                {
+                  "lineNumber": 84,
+                  "content": "    def testWriteStripsAnsi(self):"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "    def testWriteDoesNotStripAnsi(self):"
+                },
+                {
+                  "lineNumber": 120,
+                  "content": "    def testWriteAutoresets(self):"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "    def testWriteAndConvertWritesPlainText(self):"
+                },
+                {
+                  "lineNumber": 131,
+                  "content": "    def testWriteAndConvertStripsAllValidAnsi(self):"
+                },
+                {
+                  "lineNumber": 157,
+                  "content": "    def testWriteAndConvertSkipsEmptySnippets(self):"
+                },
+                {
+                  "lineNumber": 163,
+                  "content": "    def testWriteAndConvertCallsWin32WithParamsAndCommand(self):"
+                },
+                {
+                  "lineNumber": 180,
+                  "content": "    def test_reset_all_shouldnt_raise_on_closed_orig_stdout(self):"
+                },
+                {
+                  "lineNumber": 187,
+                  "content": "    def test_wrap_shouldnt_raise_on_closed_orig_stdout(self):"
+                },
+                {
+                  "lineNumber": 192,
+                  "content": "            patch(\"colorama.ansitowin32.winapi_test\", lambda: True):"
+                },
+                {
+                  "lineNumber": 197,
+                  "content": "    def test_wrap_shouldnt_raise_on_missing_closed_attr(self):"
+                },
+                {
+                  "lineNumber": 200,
+                  "content": "            patch(\"colorama.ansitowin32.winapi_test\", lambda: True):"
+                },
+                {
+                  "lineNumber": 205,
+                  "content": "    def testExtractParams(self):"
+                },
+                {
+                  "lineNumber": 219,
+                  "content": "    def testCallWin32UsesLookup(self):"
+                },
+                {
+                  "lineNumber": 232,
+                  "content": "    def test_osc_codes(self):"
+                },
+                {
+                  "lineNumber": 239,
+                  "content": "                '\\033]0;colorama_test_title\\x07',  # should work"
+                },
+                {
+                  "lineNumber": 240,
+                  "content": "                '\\033]1;colorama_test_title\\x07',  # wrong set command"
+                },
+                {
+                  "lineNumber": 241,
+                  "content": "                '\\033]2;colorama_test_title\\x07',  # should work"
+                },
+                {
+                  "lineNumber": 248,
+                  "content": "    def test_native_windows_ansi(self):"
+                },
+                {
+                  "lineNumber": 254,
+                  "content": "            p(\"colorama.ansitowin32.winapi_test\", lambda: True)"
+                },
+                {
+                  "lineNumber": 255,
+                  "content": "            p(\"colorama.win32.winapi_test\", lambda: True)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\initialise.py",
+              "matches": [
+                {
+                  "lineNumber": 9,
+                  "content": "def _wipe_internal_state_for_tests():"
+                },
+                {
+                  "lineNumber": 121,
+                  "content": "_wipe_internal_state_for_tests()"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\ansitowin32.py",
+              "matches": [
+                {
+                  "lineNumber": 8,
+                  "content": "from .win32 import windll, winapi_test"
+                },
+                {
+                  "lineNumber": 92,
+                  "content": "        # We test if the WinAPI works, because even if we are on Windows"
+                },
+                {
+                  "lineNumber": 96,
+                  "content": "        conversion_supported = on_windows and winapi_test()"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\sbcsgroupprober.py",
+              "matches": [
+                {
+                  "lineNumber": 64,
+                  "content": "        #       and several tests failed that did not before. Some thought"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\universaldetector.py",
+              "matches": [
+                {
+                  "lineNumber": 89,
+                  "content": "    # that break tests."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\vcs\\versioncontrol.py",
+              "matches": [
+                {
+                  "lineNumber": 679,
+                  "content": "                f\"https://pip.pypa.io/en/latest/reference/pip_freeze/\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\vcs\\git.py",
+              "matches": [
+                {
+                  "lineNumber": 392,
+                  "content": "        See the corresponding test test_git_remote_url_to_pip() for examples of"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\cachecontrol\\serialize.py",
+              "matches": [
+                {
+                  "lineNumber": 40,
+                  "content": "                \"body\": body,  # Empty bytestring if body is stored separately"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_vendor\\cachecontrol\\controller.py",
+              "matches": [
+                {
+                  "lineNumber": 187,
+                  "content": "        # don't need to test our response for other headers b/c it is"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\vcs\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 3,
+                  "content": "# (The test directory may still need to import from a vcs sub-package.)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\utils\\deprecation.py",
+              "matches": [
+                {
+                  "lineNumber": 11,
+                  "content": "from pip import __version__ as current_version  # NOTE: tests patch this name."
+                },
+                {
+                  "lineNumber": 76,
+                  "content": "        Command-line flag of the form --use-feature={feature_flag} for testing"
+                },
+                {
+                  "lineNumber": 100,
+                  "content": "            \"You can use the flag --use-feature={} to test the upcoming behaviour.\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\utils\\misc.py",
+              "matches": [
+                {
+                  "lineNumber": 594,
+                  "content": "    # This is useful for testing."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\utils\\filesystem.py",
+              "matches": [
+                {
+                  "lineNumber": 74,
+                  "content": "# test_writable_dir and _test_writable_dir_win are copied from Flit,"
+                },
+                {
+                  "lineNumber": 76,
+                  "content": "def test_writable_dir(path: str) -&gt; bool:"
+                },
+                {
+                  "lineNumber": 91,
+                  "content": "    return _test_writable_dir_win(path)"
+                },
+                {
+                  "lineNumber": 94,
+                  "content": "def _test_writable_dir_win(path: str) -&gt; bool:"
+                },
+                {
+                  "lineNumber": 97,
+                  "content": "    basename = \"accesstest_deleteme_fishfingers_custard_\""
+                },
+                {
+                  "lineNumber": 119,
+                  "content": "    raise OSError(\"Unexpected condition testing for writable directory\")"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\self_outdated_check.py",
+              "matches": [
+                {
+                  "lineNumber": 165,
+                  "content": "    # Lets use PackageFinder to see what the latest pip version is"
+                },
+                {
+                  "lineNumber": 247,
+                  "content": "        logger.warning(\"There was an error checking the latest version of pip.\")"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\resolution\\resolvelib\\resolver.py",
+              "matches": [
+                {
+                  "lineNumber": 314,
+                  "content": "    breaker to ensure the result is predictable, which is useful in tests."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\resolution\\resolvelib\\factory.py",
+              "matches": [
+                {
+                  "lineNumber": 810,
+                  "content": "            \"https://pip.pypa.io/en/latest/topics/dependency-resolution/\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\utils\\appdirs.py",
+              "matches": [
+                {
+                  "lineNumber": 5,
+                  "content": "The intention is to rewrite current usages gradually, keeping the tests pass,"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\req\\req_uninstall.py",
+              "matches": [
+                {
+                  "lineNumber": 490,
+                  "content": "            # FIXME: need a test for this elif block"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\req\\req_install.py",
+              "matches": [
+                {
+                  "lineNumber": 230,
+                  "content": "        \"\"\"An un-tested helper for getting state, for debugging.\"\"\""
+                },
+                {
+                  "lineNumber": 799,
+                  "content": "                    zip_output.writestr(zipdir, \"\")"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\req\\constructors.py",
+              "matches": [
+                {
+                  "lineNumber": 290,
+                  "content": "        # TODO: The is_installable_dir test here might not be necessary"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\operations\\install\\wheel.py",
+              "matches": [
+                {
+                  "lineNumber": 207,
+                  "content": "    the value more predictable for tests."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\network\\auth.py",
+              "matches": [
+                {
+                  "lineNumber": 451,
+                  "content": "    # Factored out to allow for easy patching in tests"
+                },
+                {
+                  "lineNumber": 465,
+                  "content": "    # Factored out to allow for easy patching in tests"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\models\\search_scope.py",
+              "matches": [
+                {
+                  "lineNumber": 88,
+                  "content": "                # there are issues with Python and URL parsing, so this test"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\models\\link.py",
+              "matches": [
+                {
+                  "lineNumber": 540,
+                  "content": "       project (and extras), which is wrong in the strictest sense, but too many"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\models\\index.py",
+              "matches": [
+                {
+                  "lineNumber": 27,
+                  "content": "    \"https://test.pypi.org/\", file_storage_domain=\"test-files.pythonhosted.org\""
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\index\\package_finder.py",
+              "matches": [
+                {
+                  "lineNumber": 608,
+                  "content": "        method and from tests."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\locations\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 54,
+                  "content": "    This is a function for testability, but should be constant during any one"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\configuration.py",
+              "matches": [
+                {
+                  "lineNumber": 326,
+                  "content": "    # XXX: This is patched in the tests."
+                },
+                {
+                  "lineNumber": 376,
+                  "content": "    # XXX: This is patched in the tests."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\wheel.py",
+              "matches": [
+                {
+                  "lineNumber": 30,
+                  "content": "    wheel docs: https://wheel.readthedocs.io/en/latest/"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\search.py",
+              "matches": [
+                {
+                  "lineNumber": 116,
+                  "content": "def print_dist_installation_info(name: str, latest: str) -&gt; None:"
+                },
+                {
+                  "lineNumber": 121,
+                  "content": "            if dist.version == latest:"
+                },
+                {
+                  "lineNumber": 122,
+                  "content": "                write_output(\"INSTALLED: %s (latest)\", dist.version)"
+                },
+                {
+                  "lineNumber": 125,
+                  "content": "                if parse_version(latest).pre:"
+                },
+                {
+                  "lineNumber": 129,
+                  "content": "                        latest,"
+                },
+                {
+                  "lineNumber": 132,
+                  "content": "                    write_output(\"LATEST:    %s\", latest)"
+                },
+                {
+                  "lineNumber": 156,
+                  "content": "        latest = highest_version(hit.get(\"versions\", [\"-\"]))"
+                },
+                {
+                  "lineNumber": 164,
+                  "content": "        name_latest = f\"{name} ({latest})\""
+                },
+                {
+                  "lineNumber": 165,
+                  "content": "        line = f\"{name_latest:{name_column_width}} - {summary}\""
+                },
+                {
+                  "lineNumber": 168,
+                  "content": "            print_dist_installation_info(name, latest)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\list.py",
+              "matches": [
+                {
+                  "lineNumber": 23,
+                  "content": "    class _DistWithLatestInfo(BaseDistribution):"
+                },
+                {
+                  "lineNumber": 30,
+                  "content": "        latest_version: DistributionVersion"
+                },
+                {
+                  "lineNumber": 31,
+                  "content": "        latest_filetype: str"
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "    _ProcessedDists = Sequence[_DistWithLatestInfo]"
+                },
+                {
+                  "lineNumber": 173,
+                  "content": "            cast(\"_DistWithLatestInfo\", d)"
+                },
+                {
+                  "lineNumber": 203,
+                  "content": "            for dist in self.iter_packages_latest_infos(packages, options)"
+                },
+                {
+                  "lineNumber": 204,
+                  "content": "            if dist.latest_version &gt; dist.version"
+                },
+                {
+                  "lineNumber": 212,
+                  "content": "            for dist in self.iter_packages_latest_infos(packages, options)"
+                },
+                {
+                  "lineNumber": 213,
+                  "content": "            if dist.latest_version == dist.version"
+                },
+                {
+                  "lineNumber": 230,
+                  "content": "    def iter_packages_latest_infos("
+                },
+                {
+                  "lineNumber": 232,
+                  "content": "    ) -&gt; Generator[\"_DistWithLatestInfo\", None, None]:"
+                },
+                {
+                  "lineNumber": 236,
+                  "content": "            def latest_info("
+                },
+                {
+                  "lineNumber": 237,
+                  "content": "                dist: \"_DistWithLatestInfo\","
+                },
+                {
+                  "lineNumber": 238,
+                  "content": "            ) -&gt; Optional[\"_DistWithLatestInfo\"]:"
+                },
+                {
+                  "lineNumber": 260,
+                  "content": "                dist.latest_version = remote_version"
+                },
+                {
+                  "lineNumber": 261,
+                  "content": "                dist.latest_filetype = typ"
+                },
+                {
+                  "lineNumber": 264,
+                  "content": "            for dist in map(latest_info, packages):"
+                },
+                {
+                  "lineNumber": 317,
+                  "content": "        header.extend([\"Latest\", \"Type\"])"
+                },
+                {
+                  "lineNumber": 331,
+                  "content": "        # latest_version and type"
+                },
+                {
+                  "lineNumber": 335,
+                  "content": "            row.append(str(proj.latest_version))"
+                },
+                {
+                  "lineNumber": 336,
+                  "content": "            row.append(proj.latest_filetype)"
+                },
+                {
+                  "lineNumber": 362,
+                  "content": "            info[\"latest_version\"] = str(dist.latest_version)"
+                },
+                {
+                  "lineNumber": 363,
+                  "content": "            info[\"latest_filetype\"] = dist.latest_filetype"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\install.py",
+              "matches": [
+                {
+                  "lineNumber": 33,
+                  "content": "from pip._internal.utils.filesystem import test_writable_dir"
+                },
+                {
+                  "lineNumber": 654,
+                  "content": "        test_writable_dir(d)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\index.py",
+              "matches": [
+                {
+                  "lineNumber": 135,
+                  "content": "            latest = formatted_versions[0]"
+                },
+                {
+                  "lineNumber": 137,
+                  "content": "        write_output(f\"{query} ({latest})\")"
+                },
+                {
+                  "lineNumber": 139,
+                  "content": "        print_dist_installation_info(query, latest)"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\commands\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 18,
+                  "content": "# prefix, the full path makes testing easier (specifically when modifying"
+                },
+                {
+                  "lineNumber": 19,
+                  "content": "# &#96;commands_dict&#96; in test setup / teardown)."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\cli\\req_command.py",
+              "matches": [
+                {
+                  "lineNumber": 176,
+                  "content": "        # Otherwise, check if we're using the latest version of pip available."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\cli\\cmdoptions.py",
+              "matches": [
+                {
+                  "lineNumber": 547,
+                  "content": "# This was made a separate function for unit-testing purposes."
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\pip\\_internal\\cli\\base_command.py",
+              "matches": [
+                {
+                  "lineNumber": 95,
+                  "content": "        # factored out for testability"
+                }
+              ]
+            },
+            {
+              "file": ".\\venv\\Lib\\site-packages\\_distutils_hack\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 91,
+                  "content": "        # found in the CPython test suite."
+                },
+                {
+                  "lineNumber": 92,
+                  "content": "        if path is not None and not fullname.startswith('test.'):"
+                },
+                {
+                  "lineNumber": 135,
+                  "content": "        Suppress supplying distutils for CPython (build and tests)."
+                },
+                {
+                  "lineNumber": 169,
+                  "content": "    def spec_for_sensitive_tests(self):"
+                },
+                {
+                  "lineNumber": 171,
+                  "content": "        Ensure stdlib distutils when running select tests under CPython."
+                },
+                {
+                  "lineNumber": 178,
+                  "content": "    sensitive_tests = ("
+                },
+                {
+                  "lineNumber": 180,
+                  "content": "            'test.test_distutils',"
+                },
+                {
+                  "lineNumber": 181,
+                  "content": "            'test.test_peg_generator',"
+                },
+                {
+                  "lineNumber": 182,
+                  "content": "            'test.test_importlib',"
+                },
+                {
+                  "lineNumber": 186,
+                  "content": "            'test.test_distutils',"
+                },
+                {
+                  "lineNumber": 191,
+                  "content": "for name in DistutilsMetaFinder.sensitive_tests:"
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "        DistutilsMetaFinder.spec_for_sensitive_tests,"
+                }
+              ]
+            },
+            {
+              "file": ".\\.specstory\\history\\2026-02-03_10-37Z-venv-folder-update.md",
+              "matches": [
+                {
+                  "lineNumber": 84,
+                  "content": "3. **Optional: upgrade everything to latest versions**"
+                }
+              ]
+            },
+            {
+              "file": ".\\docker-compose.test.yml",
+              "matches": [
+                {
+                  "lineNumber": 11,
+                  "content": "      test: [\"CMD-SHELL\", \"pg_isready -U zeroui_ide_user\"]"
+                },
+                {
+                  "lineNumber": 20,
+                  "content": "      test: [\"CMD\", \"redis-cli\", \"ping\"]"
+                }
+              ]
+            },
+            {
+              "file": ".\\.specstory\\history\\2026-02-03_09-35Z-new-project-repository-structure.md",
+              "matches": [
+                {
+                  "lineNumber": 35,
+                  "content": "tests/…"
+                },
+                {
+                  "lineNumber": 37,
+                  "content": "requirements.txt, pytest.ini, and (optional) root package.json for workspace tooling"
+                },
+                {
+                  "lineNumber": 76,
+                  "content": "│       ├── testing_template.json"
+                },
+                {
+                  "lineNumber": 81,
+                  "content": "├── pytest.ini"
+                },
+                {
+                  "lineNumber": 188,
+                  "content": "│   ├── unittests/"
+                },
+                {
+                  "lineNumber": 189,
+                  "content": "│   │   ├── functionaltestcases/"
+                },
+                {
+                  "lineNumber": 191,
+                  "content": "│   │   └── unittest_cases/"
+                },
+                {
+                  "lineNumber": 192,
+                  "content": "│   │       ├── confluence_unittests/"
+                },
+                {
+                  "lineNumber": 193,
+                  "content": "│   │       │   └── test_confluence_formatter.py"
+                },
+                {
+                  "lineNumber": 218,
+                  "content": "│       └── tests/"
+                },
+                {
+                  "lineNumber": 220,
+                  "content": "│               └── test_confluence_import.ts"
+                },
+                {
+                  "lineNumber": 222,
+                  "content": "└── tests/"
+                },
+                {
+                  "lineNumber": 225,
+                  "content": "    │   ├── test_api_router.py"
+                },
+                {
+                  "lineNumber": 226,
+                  "content": "    │   ├── test_client_auth.py"
+                },
+                {
+                  "lineNumber": 227,
+                  "content": "    │   ├── test_imports.py"
+                },
+                {
+                  "lineNumber": 228,
+                  "content": "    │   ├── test_page_tracker.py"
+                },
+                {
+                  "lineNumber": 229,
+                  "content": "    │   ├── test_state_machine.py"
+                },
+                {
+                  "lineNumber": 230,
+                  "content": "    │   ├── test_templates.py"
+                },
+                {
+                  "lineNumber": 231,
+                  "content": "    │   ├── test_prd_compliance.py"
+                },
+                {
+                  "lineNumber": 232,
+                  "content": "    │   ├── test_api_prd_format.py"
+                },
+                {
+                  "lineNumber": 233,
+                  "content": "    │   ├── test_performance_targets.py"
+                },
+                {
+                  "lineNumber": 234,
+                  "content": "    │   ├── test_intelligence_learning.py"
+                },
+                {
+                  "lineNumber": 235,
+                  "content": "    │   ├── test_e2e_workflows.py"
+                },
+                {
+                  "lineNumber": 236,
+                  "content": "    │   ├── test_reliability.py"
+                },
+                {
+                  "lineNumber": 237,
+                  "content": "    │   └── test_security_compliance.py"
+                },
+                {
+                  "lineNumber": 287,
+                  "content": "- Create: root &#96;pytest.ini&#96; placeholder"
+                },
+                {
+                  "lineNumber": 288,
+                  "content": "- Create: &#96;tests/&#96; tree (see section D)"
+                },
+                {
+                  "lineNumber": 367,
+                  "content": "- tests/confluence/test_confluence_import.ts (placeholder)"
+                },
+                {
+                  "lineNumber": 369,
+                  "content": "D) tests scaffolding"
+                },
+                {
+                  "lineNumber": 371,
+                  "content": "- &#96;tests/confluence/__init__.py&#96;"
+                },
+                {
+                  "lineNumber": 372,
+                  "content": "- &#96;tests/confluence/&#96; placeholder tests:"
+                },
+                {
+                  "lineNumber": 373,
+                  "content": "  - test_api_router.py"
+                },
+                {
+                  "lineNumber": 374,
+                  "content": "  - test_client_auth.py"
+                },
+                {
+                  "lineNumber": 375,
+                  "content": "  - test_imports.py"
+                },
+                {
+                  "lineNumber": 376,
+                  "content": "  - test_page_tracker.py"
+                },
+                {
+                  "lineNumber": 377,
+                  "content": "  - test_state_machine.py"
+                },
+                {
+                  "lineNumber": 378,
+                  "content": "  - test_templates.py"
+                },
+                {
+                  "lineNumber": 379,
+                  "content": "  - test_prd_compliance.py"
+                },
+                {
+                  "lineNumber": 380,
+                  "content": "  - test_api_prd_format.py"
+                },
+                {
+                  "lineNumber": 381,
+                  "content": "  - test_performance_targets.py"
+                },
+                {
+                  "lineNumber": 382,
+                  "content": "  - test_intelligence_learning.py"
+                },
+                {
+                  "lineNumber": 383,
+                  "content": "  - test_e2e_workflows.py"
+                },
+                {
+                  "lineNumber": 384,
+                  "content": "  - test_reliability.py"
+                },
+                {
+                  "lineNumber": 385,
+                  "content": "  - test_security_compliance.py"
+                },
+                {
+                  "lineNumber": 386,
+                  "content": "Each test file: minimal “test_placeholder()” that passes and a comment for future work."
+                },
+                {
+                  "lineNumber": 387,
+                  "content": "- &#96;tests/edge_agent/integration/README.md&#96;"
+                },
+                {
+                  "lineNumber": 388,
+                  "content": "- &#96;tests/edge_agent/unit/README.md&#96;"
+                },
+                {
+                  "lineNumber": 394,
+                  "content": "   - python -m compileall tests"
+                },
+                {
+                  "lineNumber": 472,
+                  "content": "                    \"name\": \"2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md\""
+                },
+                {
+                  "lineNumber": 551,
+                  "content": "- [ ] Root: docker, docs, migrations, alembic, requirements, pytest.ini"
+                },
+                {
+                  "lineNumber": 554,
+                  "content": "- [ ] offline-folder-rag scripts, unittests"
+                },
+                {
+                  "lineNumber": 555,
+                  "content": "- [ ] tests/ scaffolding"
+                },
+                {
+                  "lineNumber": 730,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\confluence_data\\templates\\testing_template.json&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 758,
+                  "content": "- [-] Root: docker, docs, migrations, alembic, requirements, pytest.ini"
+                },
+                {
+                  "lineNumber": 761,
+                  "content": "- [ ] offline-folder-rag scripts, unittests"
+                },
+                {
+                  "lineNumber": 762,
+                  "content": "- [ ] tests/ scaffolding"
+                },
+                {
+                  "lineNumber": 911,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\pytest.ini&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 929,
+                  "content": "- [x] Root: docker, docs, migrations, alembic, requirements, pytest.ini"
+                },
+                {
+                  "lineNumber": 932,
+                  "content": "- [ ] offline-folder-rag scripts, unittests"
+                },
+                {
+                  "lineNumber": 933,
+                  "content": "- [ ] tests/ scaffolding"
+                },
+                {
+                  "lineNumber": 1570,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\functionaltestcases\\README.md&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1580,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\README.md&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1590,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\confluence_unittests\\test_confluence_formatter.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1602,
+                  "content": "- [x] Root: docker, docs, migrations, alembic, requirements, pytest.ini"
+                },
+                {
+                  "lineNumber": 1605,
+                  "content": "- [x] offline-folder-rag scripts, unittests"
+                },
+                {
+                  "lineNumber": 1606,
+                  "content": "- [ ] tests/ scaffolding"
+                },
+                {
+                  "lineNumber": 1811,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\vscode-extension\\tests\\confluence\\test_confluence_import.ts&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1837,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\__init__.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1847,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_api_router.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1857,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_client_auth.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1867,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_imports.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1877,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_page_tracker.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1887,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_state_machine.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1897,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_templates.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1907,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_prd_compliance.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1917,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_api_prd_format.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1927,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_performance_targets.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1937,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_intelligence_learning.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1947,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_e2e_workflows.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1957,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_reliability.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1967,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence\\test_security_compliance.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1977,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\edge_agent\\integration\\README.md&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1987,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\edge_agent\\unit\\README.md&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 1999,
+                  "content": "- [x] Root: docker, docs, migrations, alembic, requirements, pytest.ini"
+                },
+                {
+                  "lineNumber": 2002,
+                  "content": "- [x] offline-folder-rag scripts, unittests"
+                },
+                {
+                  "lineNumber": 2003,
+                  "content": "- [x] tests/ scaffolding"
+                },
+                {
+                  "lineNumber": 2029,
+                  "content": "- &#96;confluence_data/templates/testing_template.json&#96;"
+                },
+                {
+                  "lineNumber": 2045,
+                  "content": "- &#96;pytest.ini&#96;"
+                },
+                {
+                  "lineNumber": 2107,
+                  "content": "- &#96;offline-folder-rag/unittests/functionaltestcases/README.md&#96;"
+                },
+                {
+                  "lineNumber": 2108,
+                  "content": "- &#96;offline-folder-rag/unittests/unittest_cases/README.md&#96;"
+                },
+                {
+                  "lineNumber": 2109,
+                  "content": "- &#96;offline-folder-rag/unittests/unittest_cases/confluence_unittests/test_confluence_formatter.py&#96;"
+                },
+                {
+                  "lineNumber": 2129,
+                  "content": "- &#96;offline-folder-rag/vscode-extension/tests/confluence/test_confluence_import.ts&#96;"
+                },
+                {
+                  "lineNumber": 2130,
+                  "content": "- &#96;tests/confluence/__init__.py&#96;"
+                },
+                {
+                  "lineNumber": 2131,
+                  "content": "- &#96;tests/confluence/test_api_router.py&#96;"
+                },
+                {
+                  "lineNumber": 2132,
+                  "content": "- &#96;tests/confluence/test_client_auth.py&#96;"
+                },
+                {
+                  "lineNumber": 2133,
+                  "content": "- &#96;tests/confluence/test_imports.py&#96;"
+                },
+                {
+                  "lineNumber": 2134,
+                  "content": "- &#96;tests/confluence/test_page_tracker.py&#96;"
+                },
+                {
+                  "lineNumber": 2135,
+                  "content": "- &#96;tests/confluence/test_state_machine.py&#96;"
+                },
+                {
+                  "lineNumber": 2136,
+                  "content": "- &#96;tests/confluence/test_templates.py&#96;"
+                },
+                {
+                  "lineNumber": 2137,
+                  "content": "- &#96;tests/confluence/test_prd_compliance.py&#96;"
+                },
+                {
+                  "lineNumber": 2138,
+                  "content": "- &#96;tests/confluence/test_api_prd_format.py&#96;"
+                },
+                {
+                  "lineNumber": 2139,
+                  "content": "- &#96;tests/confluence/test_performance_targets.py&#96;"
+                },
+                {
+                  "lineNumber": 2140,
+                  "content": "- &#96;tests/confluence/test_intelligence_learning.py&#96;"
+                },
+                {
+                  "lineNumber": 2141,
+                  "content": "- &#96;tests/confluence/test_e2e_workflows.py&#96;"
+                },
+                {
+                  "lineNumber": 2142,
+                  "content": "- &#96;tests/confluence/test_reliability.py&#96;"
+                },
+                {
+                  "lineNumber": 2143,
+                  "content": "- &#96;tests/confluence/test_security_compliance.py&#96;"
+                },
+                {
+                  "lineNumber": 2144,
+                  "content": "- &#96;tests/edge_agent/integration/README.md&#96;"
+                },
+                {
+                  "lineNumber": 2145,
+                  "content": "- &#96;tests/edge_agent/unit/README.md&#96;"
+                },
+                {
+                  "lineNumber": 2150,
+                  "content": "- &#96;python -m compileall tests&#96;"
+                },
+                {
+                  "lineNumber": 2185,
+                  "content": "$testFilterSpecified = $Python -or $TypeScript -or $Unit -or $Functional -or $Integration -or $E2E"
+                },
+                {
+                  "lineNumber": 2186,
+                  "content": "if ($testFilterSpecified -and $Stage -eq 'all') {"
+                },
+                {
+                  "lineNumber": 2187,
+                  "content": "    $Stage = 'test'"
+                },
+                {
+                  "lineNumber": 2331,
+                  "content": "        $blackProcess = Start-Process -FilePath \"black\" -ArgumentList \"--check\", \"--diff\", \"src/\", \"tests/\" -NoNewWindow -Wait -PassThru"
+                },
+                {
+                  "lineNumber": 2347,
+                  "content": "        $ruffProcess = Start-Process -FilePath \"ruff\" -ArgumentList \"check\", \"src/\", \"tests/\" -NoNewWindow -Wait -PassThru"
+                },
+                {
+                  "lineNumber": 2437,
+                  "content": "    Write-Info \"Installing test dependencies...\""
+                },
+                {
+                  "lineNumber": 2438,
+                  "content": "    python -m pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist -q"
+                },
+                {
+                  "lineNumber": 2454,
+                  "content": "        # Create test docker compose file"
+                },
+                {
+                  "lineNumber": 2466,
+                  "content": "      test: [\"CMD-SHELL\", \"pg_isready -U zeroui_ide_user\"]"
+                },
+                {
+                  "lineNumber": 2475,
+                  "content": "      test: [\"CMD\", \"redis-cli\", \"ping\"]"
+                },
+                {
+                  "lineNumber": 2481,
+                  "content": "        if (!(Test-Path \"docker-compose.test.yml\")) {"
+                },
+                {
+                  "lineNumber": 2482,
+                  "content": "            $dockerCompose | Out-File \"docker-compose.test.yml\" -Encoding UTF8"
+                },
+                {
+                  "lineNumber": 2486,
+                  "content": "            $upProcess = Start-Process -FilePath \"docker\" -ArgumentList \"compose\", \"-f\", \"docker-compose.test.yml\", \"up\", \"-d\" -NoNewWindow -Wait -PassThru"
+                },
+                {
+                  "lineNumber": 2510,
+                  "content": "            Write-Info \"Running Python unit tests...\""
+                },
+                {
+                  "lineNumber": 2511,
+                  "content": "            pytest tests/shared_libs/ &#96;"
+                },
+                {
+                  "lineNumber": 2515,
+                  "content": "                --junitxml=test-results-unit.xml &#96;"
+                },
+                {
+                  "lineNumber": 2518,
+                  "content": "                Write-Success \"Python unit tests completed\""
+                },
+                {
+                  "lineNumber": 2520,
+                  "content": "                Write-Warning-Message \"Python unit tests failed or skipped\""
+                },
+                {
+                  "lineNumber": 2525,
+                  "content": "            Write-Info \"Running Python functional tests...\""
+                },
+                {
+                  "lineNumber": 2526,
+                  "content": "            pytest tests/system/ &#96;"
+                },
+                {
+                  "lineNumber": 2527,
+                  "content": "                --junitxml=test-results-functional.xml &#96;"
+                },
+                {
+                  "lineNumber": 2530,
+                  "content": "                Write-Success \"Python functional tests completed\""
+                },
+                {
+                  "lineNumber": 2532,
+                  "content": "                Write-Warning-Message \"Python functional tests failed or skipped\""
+                },
+                {
+                  "lineNumber": 2537,
+                  "content": "            Write-Info \"Running Python integration tests...\""
+                },
+                {
+                  "lineNumber": 2538,
+                  "content": "            pytest tests/infrastructure/ &#96;"
+                },
+                {
+                  "lineNumber": 2539,
+                  "content": "                --junitxml=test-results-integration.xml &#96;"
+                },
+                {
+                  "lineNumber": 2542,
+                  "content": "                Write-Success \"Python integration tests completed\""
+                },
+                {
+                  "lineNumber": 2544,
+                  "content": "                Write-Warning-Message \"Python integration tests failed or skipped\""
+                },
+                {
+                  "lineNumber": 2549,
+                  "content": "            Write-Info \"Running Python e2e tests...\""
+                },
+                {
+                  "lineNumber": 2550,
+                  "content": "            pytest tests/cloud_services/ &#96;"
+                },
+                {
+                  "lineNumber": 2551,
+                  "content": "                --junitxml=test-results-e2e.xml &#96;"
+                },
+                {
+                  "lineNumber": 2554,
+                  "content": "                Write-Success \"Python e2e tests completed\""
+                },
+                {
+                  "lineNumber": 2556,
+                  "content": "                Write-Warning-Message \"Python e2e tests failed or skipped\""
+                },
+                {
+                  "lineNumber": 2562,
+                  "content": "        Write-Info \"Checking Node.js installation for TypeScript tests...\""
+                },
+                {
+                  "lineNumber": 2572,
+                  "content": "                Write-Warning-Message \"npm install failed; TypeScript tests may be unreliable\""
+                },
+                {
+                  "lineNumber": 2580,
+                  "content": "                Write-Warning-Message \"TypeScript build failed; tests may be unreliable\""
+                },
+                {
+                  "lineNumber": 2584,
+                  "content": "                Write-Info \"Running TypeScript unit tests...\""
+                },
+                {
+                  "lineNumber": 2585,
+                  "content": "                npx jest --config jest.config.js --testPathPattern=\"__tests__\" --no-cache"
+                },
+                {
+                  "lineNumber": 2587,
+                  "content": "                    Write-Success \"TypeScript unit tests completed\""
+                },
+                {
+                  "lineNumber": 2589,
+                  "content": "                    Write-Warning-Message \"TypeScript unit tests failed or were skipped\""
+                },
+                {
+                  "lineNumber": 2594,
+                  "content": "                Write-Info \"Running TypeScript functional tests...\""
+                },
+                {
+                  "lineNumber": 2595,
+                  "content": "                npx jest --config jest.config.js --testPathPattern=\"tests/\" --no-cache"
+                },
+                {
+                  "lineNumber": 2597,
+                  "content": "                    Write-Success \"TypeScript functional tests completed\""
+                },
+                {
+                  "lineNumber": 2599,
+                  "content": "                    Write-Warning-Message \"TypeScript functional tests failed or were skipped\""
+                },
+                {
+                  "lineNumber": 2604,
+                  "content": "                Write-Info \"Running TypeScript integration tests...\""
+                },
+                {
+                  "lineNumber": 2605,
+                  "content": "                npx jest --config jest.config.js --testPathPattern=\"__tests__\\\\integration|integration\\\\.test\\\\.ts|integration\\\\.spec\\\\.ts\" --no-cache"
+                },
+                {
+                  "lineNumber": 2607,
+                  "content": "                    Write-Success \"TypeScript integration tests completed\""
+                },
+                {
+                  "lineNumber": 2609,
+                  "content": "                    Write-Warning-Message \"TypeScript integration tests failed or were skipped\""
+                },
+                {
+                  "lineNumber": 2614,
+                  "content": "                Write-Info \"Running TypeScript e2e tests...\""
+                },
+                {
+                  "lineNumber": 2615,
+                  "content": "                npx jest --config jest.config.js --testPathPattern=\"e2e\" --no-cache"
+                },
+                {
+                  "lineNumber": 2617,
+                  "content": "                    Write-Success \"TypeScript e2e tests completed\""
+                },
+                {
+                  "lineNumber": 2619,
+                  "content": "                    Write-Warning-Message \"TypeScript e2e tests failed or were skipped\""
+                },
+                {
+                  "lineNumber": 2623,
+                  "content": "            Write-Warning-Message \"Node.js not found; skipping TypeScript/Jest tests\""
+                },
+                {
+                  "lineNumber": 2627,
+                  "content": "    Write-Info \"Stopping test services...\""
+                },
+                {
+                  "lineNumber": 2628,
+                  "content": "    if (Test-Path \"docker-compose.test.yml\") {"
+                },
+                {
+                  "lineNumber": 2630,
+                  "content": "            $downProcess = Start-Process -FilePath \"docker\" -ArgumentList \"compose\", \"-f\", \"docker-compose.test.yml\", \"down\" -NoNewWindow -Wait -PassThru"
+                },
+                {
+                  "lineNumber": 2760,
+                  "content": "if ($Stage -eq 'all' -or $Stage -eq 'test') {"
+                },
+                {
+                  "lineNumber": 2790,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\pytest.ini&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2806,
+                  "content": "  \"targetDirectory\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\""
+                },
+                {
+                  "lineNumber": 2814,
+                  "content": "    \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 2817,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\confluence\","
+                },
+                {
+                  "lineNumber": 2823,
+                  "content": "            \"name\": \"test_api_prd_format.py\""
+                },
+                {
+                  "lineNumber": 2826,
+                  "content": "            \"name\": \"test_api_router.py\""
+                },
+                {
+                  "lineNumber": 2829,
+                  "content": "            \"name\": \"test_client_auth.py\""
+                },
+                {
+                  "lineNumber": 2832,
+                  "content": "            \"name\": \"test_e2e_workflows.py\""
+                },
+                {
+                  "lineNumber": 2835,
+                  "content": "            \"name\": \"test_imports.py\""
+                },
+                {
+                  "lineNumber": 2838,
+                  "content": "            \"name\": \"test_intelligence_learning.py\""
+                },
+                {
+                  "lineNumber": 2841,
+                  "content": "            \"name\": \"test_page_tracker.py\""
+                },
+                {
+                  "lineNumber": 2844,
+                  "content": "            \"name\": \"test_performance_targets.py\""
+                },
+                {
+                  "lineNumber": 2847,
+                  "content": "            \"name\": \"test_prd_compliance.py\""
+                },
+                {
+                  "lineNumber": 2850,
+                  "content": "            \"name\": \"test_reliability.py\""
+                },
+                {
+                  "lineNumber": 2853,
+                  "content": "            \"name\": \"test_security_compliance.py\""
+                },
+                {
+                  "lineNumber": 2856,
+                  "content": "            \"name\": \"test_state_machine.py\""
+                },
+                {
+                  "lineNumber": 2859,
+                  "content": "            \"name\": \"test_templates.py\""
+                },
+                {
+                  "lineNumber": 2865,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 2868,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 2877,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 2986,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\","
+                },
+                {
+                  "lineNumber": 2989,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\FAZLEEN ANEESA\\\\Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\\\\confluence\","
+                },
+                {
+                  "lineNumber": 2992,
+                  "content": "                \"name\": \"test_confluence_import.ts\""
+                },
+                {
+                  "lineNumber": 3036,
+                  "content": "- Lint: &#96;repo_analysis_rag/&#96;, &#96;offline-folder-rag/edge_agent/&#96;, &#96;tests/&#96;"
+                },
+                {
+                  "lineNumber": 3039,
+                  "content": "So wherever the script uses &#96;\"src/\", \"tests/\"&#96; (Black, Ruff, MyPy, Pylint, Flake8, Bandit), use something like:"
+                },
+                {
+                  "lineNumber": 3042,
+                  "content": "\"repo_analysis_rag/\", \"offline-folder-rag/edge_agent/\", \"tests/\""
+                },
+                {
+                  "lineNumber": 3049,
+                  "content": "## 2. **Python test layout**"
+                },
+                {
+                  "lineNumber": 3053,
+                  "content": "- &#96;tests/shared_libs/&#96; → unit  "
+                },
+                {
+                  "lineNumber": 3054,
+                  "content": "- &#96;tests/system/&#96; → functional  "
+                },
+                {
+                  "lineNumber": 3055,
+                  "content": "- &#96;tests/infrastructure/&#96; → integration  "
+                },
+                {
+                  "lineNumber": 3056,
+                  "content": "- &#96;tests/cloud_services/&#96; → e2e  "
+                },
+                {
+                  "lineNumber": 3060,
+                  "content": "- &#96;tests/confluence/&#96; — Confluence tests  "
+                },
+                {
+                  "lineNumber": 3061,
+                  "content": "- &#96;tests/edge_agent/unit/&#96;, &#96;tests/edge_agent/integration/&#96; — edge agent (unit/integration)"
+                },
+                {
+                  "lineNumber": 3066,
+                  "content": "- **Unit:** &#96;tests/confluence/&#96;, &#96;tests/edge_agent/unit/&#96; (and optionally &#96;offline-folder-rag/unittests/&#96; if you add real tests there)"
+                },
+                {
+                  "lineNumber": 3067,
+                  "content": "- **Functional:** e.g. a dedicated &#96;tests/functional/&#96; if you add it, or a subset of &#96;tests/confluence/&#96;"
+                },
+                {
+                  "lineNumber": 3068,
+                  "content": "- **Integration:** &#96;tests/edge_agent/integration/&#96;"
+                },
+                {
+                  "lineNumber": 3069,
+                  "content": "- **E2E:** e.g. &#96;tests/e2e/&#96; if you add it, or a subset of &#96;tests/confluence/&#96;"
+                },
+                {
+                  "lineNumber": 3071,
+                  "content": "So replace the ZeroUI &#96;pytest&#96; paths with these. Example for “unit”:"
+                },
+                {
+                  "lineNumber": 3074,
+                  "content": "pytest tests/confluence/ tests/edge_agent/unit/ ..."
+                },
+                {
+                  "lineNumber": 3077,
+                  "content": "Use the same idea for functional/integration/e2e based on how you classify tests. &#96;pytest.ini&#96; already has &#96;testpaths = tests&#96;, so &#96;pytest tests/&#96; is valid; the script only needs to pass the right subdirs per stage."
+                },
+                {
+                  "lineNumber": 3098,
+                  "content": "Adjust to match how you run tests (e.g. from repo root with &#96;PYTHONPATH&#96; including &#96;offline-folder-rag&#96; if needed)."
+                },
+                {
+                  "lineNumber": 3199,
+                  "content": "So: no root &#96;npm install&#96;; use &#96;offline-folder-rag\\vscode-extension&#96; as the working directory for all TS/Node steps. If there’s no Jest yet, you can skip Jest or add a minimal config and a placeholder test later."
+                },
+                {
+                  "lineNumber": 3205,
+                  "content": "ZeroUI generates &#96;docker-compose.test.yml&#96; with PostgreSQL + Redis for tests. Your tests are currently placeholders and don’t require DB/Redis."
+                },
+                {
+                  "lineNumber": 3210,
+                  "content": "- Keep the same &#96;docker-compose.test.yml&#96; and start it only when you add integration tests that need Postgres/Redis, or  "
+                },
+                {
+                  "lineNumber": 3211,
+                  "content": "- Omit creating/starting test compose until you need it (no Postgres/Redis for current tests)."
+                },
+                {
+                  "lineNumber": 3229,
+                  "content": "| Lint/security   | &#96;src/&#96;, &#96;tests/&#96;               | &#96;repo_analysis_rag/&#96;, &#96;offline-folder-rag/edge_agent/&#96;, &#96;tests/&#96; (no &#96;src/&#96;) |"
+                },
+                {
+                  "lineNumber": 3230,
+                  "content": "| Pytest paths    | shared_libs, system, infra, cloud_services | &#96;tests/confluence/&#96;, &#96;tests/edge_agent/unit/&#96;, &#96;tests/edge_agent/integration/&#96; (and optional e2e/functional dirs) |"
+                },
+                {
+                  "lineNumber": 3311,
+                  "content": "- **Paths:** Lint/security use &#96;repo_analysis_rag/&#96;, &#96;offline-folder-rag/edge_agent/&#96;, &#96;tests/&#96; (no &#96;src/&#96;)."
+                },
+                {
+                  "lineNumber": 3313,
+                  "content": "- **Python tests:**  "
+                },
+                {
+                  "lineNumber": 3314,
+                  "content": "  - Unit: &#96;tests/confluence/&#96;, &#96;tests/edge_agent/unit/&#96; with &#96;--cov=repo_analysis_rag --cov=edge_agent&#96; and &#96;PYTHONPATH&#96; set so &#96;edge_agent&#96; resolves via &#96;offline-folder-rag&#96;.  "
+                },
+                {
+                  "lineNumber": 3315,
+                  "content": "  - Functional: runs only if &#96;tests/functional&#96; exists.  "
+                },
+                {
+                  "lineNumber": 3316,
+                  "content": "  - Integration: &#96;tests/edge_agent/integration/&#96;.  "
+                },
+                {
+                  "lineNumber": 3317,
+                  "content": "  - E2E: runs only if &#96;tests/e2e&#96; exists."
+                },
+                {
+                  "lineNumber": 3321,
+                  "content": "- **Naming:** Script title and image tags use “Repo_Analysis_Rag_Agent” and “repo-analysis-rag”. Test compose still uses the same Postgres/Redis service names so existing test wiring is unchanged."
+                },
+                {
+                  "lineNumber": 3323,
+                  "content": "**Also updated:** &#96;.gitignore&#96; with &#96;bandit-report.json&#96;, &#96;test-results-*.xml&#96;, &#96;htmlcov/&#96;, &#96;.coverage&#96; so CI artifacts stay local."
+                },
+                {
+                  "lineNumber": 3326,
+                  "content": "&#96;.\\run-local-cicd.ps1&#96; or with options, e.g. &#96;-Stage setup&#96;, &#96;-Stage test&#96;, &#96;-SkipTests&#96;, &#96;-SkipDocker&#96;, &#96;-Python&#96;, &#96;-Unit&#96;, etc."
+                },
+                {
+                  "lineNumber": 3389,
+                  "content": "                  \"content\": \"$PythonPaths = @(\\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\")\""
+                },
+                {
+                  "lineNumber": 3393,
+                  "content": "                  \"content\": \"        $blackProcess = Start-Process -FilePath \\\"black\\\" -ArgumentList \\\"--check\\\", \\\"--diff\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 3397,
+                  "content": "                  \"content\": \"        $ruffProcess = Start-Process -FilePath \\\"ruff\\\" -ArgumentList \\\"check\\\", \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 3409,
+                  "content": "                  \"content\": \"        $flake8Process = Start-Process -FilePath \\\"flake8\\\" -ArgumentList \\\"repo_analysis_rag/\\\", \\\"offline-folder-rag/edge_agent/\\\", \\\"tests/\\\", \\\"--max-line-length=88\\\", \\\"--extend-ignore=E203,W503\\\" -NoNewWindow -Wait -PassThru\""
+                },
+                {
+                  "lineNumber": 3574,
+                  "content": "- **run-local-cicd.ps1** – Dropped &#96;--cov=edge_agent&#96; from the pytest call so coverage no longer reports “module was never imported”."
+                },
+                {
+                  "lineNumber": 3613,
+                  "content": "Done. Unused &#96;Path&#96; import was removed from &#96;repo_analysis_rag/temp.py&#96;, and the unit-test step no longer uses &#96;--cov&#96; so the “No data was collected” coverage warning is gone."
+                },
+                {
+                  "lineNumber": 3724,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 3758,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 3776,
+                  "content": "        run: black --check --diff src/ tests/"
+                },
+                {
+                  "lineNumber": 3780,
+                  "content": "        run: ruff check src/ tests/"
+                },
+                {
+                  "lineNumber": 3797,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 3827,
+                  "content": "  unit-tests:"
+                },
+                {
+                  "lineNumber": 3829,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 3921,
+                  "content": "          pip install pytest-xdist pytest-timeout"
+                },
+                {
+                  "lineNumber": 3942,
+                  "content": "      - name: Run Python unit tests"
+                },
+                {
+                  "lineNumber": 3944,
+                  "content": "          pytest tests/shared_libs/ \\"
+                },
+                {
+                  "lineNumber": 3949,
+                  "content": "            --junitxml=test-results-unit.xml \\"
+                },
+                {
+                  "lineNumber": 3952,
+                  "content": "      - name: Run Python functional tests"
+                },
+                {
+                  "lineNumber": 3954,
+                  "content": "          pytest tests/system/ \\"
+                },
+                {
+                  "lineNumber": 3955,
+                  "content": "            --junitxml=test-results-functional.xml \\"
+                },
+                {
+                  "lineNumber": 3958,
+                  "content": "      - name: Run Python integration tests"
+                },
+                {
+                  "lineNumber": 3960,
+                  "content": "          pytest tests/infrastructure/ \\"
+                },
+                {
+                  "lineNumber": 3961,
+                  "content": "            --junitxml=test-results-integration.xml \\"
+                },
+                {
+                  "lineNumber": 3964,
+                  "content": "      - name: Run Python e2e tests"
+                },
+                {
+                  "lineNumber": 3966,
+                  "content": "          pytest tests/cloud_services/ \\"
+                },
+                {
+                  "lineNumber": 3967,
+                  "content": "            --junitxml=test-results-e2e.xml \\"
+                },
+                {
+                  "lineNumber": 3982,
+                  "content": "      - name: Run TypeScript unit tests"
+                },
+                {
+                  "lineNumber": 3983,
+                  "content": "        run: npx jest --config jest.config.js --testPathPattern=\"__tests__\" --no-cache"
+                },
+                {
+                  "lineNumber": 3985,
+                  "content": "      - name: Run TypeScript functional tests"
+                },
+                {
+                  "lineNumber": 3986,
+                  "content": "        run: npx jest --config jest.config.js --testPathPattern=\"tests/\" --no-cache"
+                },
+                {
+                  "lineNumber": 3988,
+                  "content": "      - name: Run TypeScript integration tests"
+                },
+                {
+                  "lineNumber": 3989,
+                  "content": "        run: npx jest --config jest.config.js --testPathPattern=\"__tests__/integration|integration\\\\.test\\\\.ts|integration\\\\.spec\\\\.ts\" --no-cache"
+                },
+                {
+                  "lineNumber": 3991,
+                  "content": "      - name: Run TypeScript e2e tests"
+                },
+                {
+                  "lineNumber": 3992,
+                  "content": "        run: npx jest --config jest.config.js --testPathPattern=\"e2e\" --no-cache"
+                },
+                {
+                  "lineNumber": 4001,
+                  "content": "      - name: Upload test results"
+                },
+                {
+                  "lineNumber": 4005,
+                  "content": "          name: test-results"
+                },
+                {
+                  "lineNumber": 4007,
+                  "content": "            test-results-unit.xml"
+                },
+                {
+                  "lineNumber": 4008,
+                  "content": "            test-results-functional.xml"
+                },
+                {
+                  "lineNumber": 4009,
+                  "content": "            test-results-integration.xml"
+                },
+                {
+                  "lineNumber": 4010,
+                  "content": "            test-results-e2e.xml"
+                },
+                {
+                  "lineNumber": 4017,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4018,
+                  "content": "    needs: [lint, security, unit-tests]"
+                },
+                {
+                  "lineNumber": 4049,
+                  "content": "            type=raw,value=staging-latest"
+                },
+                {
+                  "lineNumber": 4075,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4158,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4160,
+                  "content": "    needs: [lint, security, unit-tests, build-docker, verify-staging-deployment]"
+                },
+                {
+                  "lineNumber": 4175,
+                  "content": "          echo \"Unit Tests: ${{ needs.unit-tests.result }}\""
+                },
+                {
+                  "lineNumber": 4182,
+                  "content": "             [ \"${{ needs.unit-tests.result }}\" = \"failure\" ] || \\"
+                },
+                {
+                  "lineNumber": 4225,
+                  "content": "            - **Unit Tests:** ${{ needs.unit-tests.result }}"
+                },
+                {
+                  "lineNumber": 4338,
+                  "content": "          export UNIT_TESTS_STATUS=\"${{ needs.unit-tests.result }}\""
+                },
+                {
+                  "lineNumber": 4388,
+                  "content": "                  \"text\": \"*Pipeline Status:*\\n• Lint: ${{ needs.lint.result }}\\n• Security: ${{ needs.security.result }}\\n• Unit Tests: ${{ needs.unit-tests.result }}\\n• Build Docker: ${{ needs.build-docker.result }}\\n• Verify Staging Deployment: ${{ needs.verify-staging-deployment.result }}\""
+                },
+                {
+                  "lineNumber": 4461,
+                  "content": "| &#96;src/&#96;, &#96;tests/&#96; | &#96;repo_analysis_rag/&#96;, &#96;offline-folder-rag/edge_agent/&#96;, &#96;tests/&#96; |"
+                },
+                {
+                  "lineNumber": 4463,
+                  "content": "| &#96;tests/shared_libs&#96;, &#96;system&#96;, &#96;infrastructure&#96;, &#96;cloud_services&#96; | &#96;tests/confluence/&#96;, &#96;tests/edge_agent/unit/&#96;, &#96;tests/edge_agent/integration/&#96;; optional &#96;tests/functional/&#96;, &#96;tests/e2e/&#96; |"
+                },
+                {
+                  "lineNumber": 4515,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4542,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4555,
+                  "content": "      - run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 4557,
+                  "content": "      - run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 4563,
+                  "content": "      - run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503"
+                },
+                {
+                  "lineNumber": 4568,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4586,
+                  "content": "  unit-tests:"
+                },
+                {
+                  "lineNumber": 4588,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4627,
+                  "content": "          pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist"
+                },
+                {
+                  "lineNumber": 4644,
+                  "content": "          pytest tests/confluence/ tests/edge_agent/unit/ \\"
+                },
+                {
+                  "lineNumber": 4645,
+                  "content": "            --junitxml=test-results-unit.xml -v --tb=short"
+                },
+                {
+                  "lineNumber": 4647,
+                  "content": "          pytest tests/edge_agent/integration/ \\"
+                },
+                {
+                  "lineNumber": 4648,
+                  "content": "            --junitxml=test-results-integration.xml -v --tb=short"
+                },
+                {
+                  "lineNumber": 4651,
+                  "content": "          if [ -d tests/functional ]; then pytest tests/functional/ --junitxml=test-results-functional.xml -v --tb=short; fi"
+                },
+                {
+                  "lineNumber": 4654,
+                  "content": "          if [ -d tests/e2e ]; then pytest tests/e2e/ --junitxml=test-results-e2e.xml -v --tb=short; fi"
+                },
+                {
+                  "lineNumber": 4665,
+                  "content": "      - name: Run TypeScript unit tests"
+                },
+                {
+                  "lineNumber": 4668,
+                  "content": "          if [ -f jest.config.js ] || [ -f jest.config.ts ]; then npx jest --testPathPattern=\"__tests__|tests\" --no-cache; else echo \"No Jest config\"; fi"
+                },
+                {
+                  "lineNumber": 4673,
+                  "content": "          name: test-results"
+                },
+                {
+                  "lineNumber": 4675,
+                  "content": "            test-results-unit.xml"
+                },
+                {
+                  "lineNumber": 4676,
+                  "content": "            test-results-integration.xml"
+                },
+                {
+                  "lineNumber": 4677,
+                  "content": "            test-results-functional.xml"
+                },
+                {
+                  "lineNumber": 4678,
+                  "content": "            test-results-e2e.xml"
+                },
+                {
+                  "lineNumber": 4682,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4683,
+                  "content": "    needs: [lint, security, unit-tests]"
+                },
+                {
+                  "lineNumber": 4706,
+                  "content": "            type=raw,value=staging-latest"
+                },
+                {
+                  "lineNumber": 4725,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4744,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 4746,
+                  "content": "    needs: [lint, security, unit-tests, build-docker, verify-staging-deployment]"
+                },
+                {
+                  "lineNumber": 4759,
+                  "content": "          [ \"${{ needs.unit-tests.result }}\" = \"failure\" ] &amp;&amp; echo \"OVERALL_STATUS=failure\" &gt;&gt; $GITHUB_OUTPUT &amp;&amp; echo \"STATUS_EMOJI=❌\" &gt;&gt; $GITHUB_OUTPUT &amp;&amp; echo \"STATUS_MESSAGE=FAILED\" &gt;&gt; $GITHUB_OUTPUT"
+                },
+                {
+                  "lineNumber": 4830,
+                  "content": "- **Jobs:** &#96;setup&#96; → &#96;lint&#96;, &#96;security&#96;, &#96;unit-tests&#96; → &#96;build-docker&#96; (on push) → &#96;verify-staging-deployment&#96; → &#96;notify&#96; (always)."
+                },
+                {
+                  "lineNumber": 4831,
+                  "content": "- **Paths:** Lint/security use &#96;repo_analysis_rag/&#96;, &#96;offline-folder-rag/edge_agent/&#96;, &#96;tests/&#96;; no &#96;src/&#96;."
+                },
+                {
+                  "lineNumber": 4833,
+                  "content": "- **Tests:** Pytest on &#96;tests/confluence/&#96;, &#96;tests/edge_agent/unit/&#96;, then integration/functional/e2e with &#96;continue-on-error&#96; where needed; TypeScript in &#96;offline-folder-rag/vscode-extension&#96; (build + Jest if config exists)."
+                },
+                {
+                  "lineNumber": 4834,
+                  "content": "- **Services:** One Postgres (pgvector) and Redis for unit-tests; &#96;PYTHONPATH&#96; set for &#96;edge_agent&#96;."
+                }
+              ]
+            },
+            {
+              "file": ".\\.github\\workflows\\ci.yml",
+              "matches": [
+                {
+                  "lineNumber": 24,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 58,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 78,
+                  "content": "        run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 82,
+                  "content": "        run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 94,
+                  "content": "        run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503"
+                },
+                {
+                  "lineNumber": 99,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "  unit-tests:"
+                },
+                {
+                  "lineNumber": 128,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 175,
+                  "content": "          pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist"
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "      - name: Run Python unit tests"
+                },
+                {
+                  "lineNumber": 197,
+                  "content": "          pytest tests/confluence/ tests/edge_agent/unit/ \\"
+                },
+                {
+                  "lineNumber": 198,
+                  "content": "            --junitxml=test-results-unit.xml \\"
+                },
+                {
+                  "lineNumber": 201,
+                  "content": "      - name: Run Python integration tests"
+                },
+                {
+                  "lineNumber": 203,
+                  "content": "          pytest tests/edge_agent/integration/ \\"
+                },
+                {
+                  "lineNumber": 204,
+                  "content": "            --junitxml=test-results-integration.xml \\"
+                },
+                {
+                  "lineNumber": 208,
+                  "content": "      - name: Run Python functional tests"
+                },
+                {
+                  "lineNumber": 209,
+                  "content": "        if: hashFiles('tests/functional/**') != ''"
+                },
+                {
+                  "lineNumber": 211,
+                  "content": "          pytest tests/functional/ \\"
+                },
+                {
+                  "lineNumber": 212,
+                  "content": "            --junitxml=test-results-functional.xml \\"
+                },
+                {
+                  "lineNumber": 216,
+                  "content": "      - name: Run Python e2e tests"
+                },
+                {
+                  "lineNumber": 217,
+                  "content": "        if: hashFiles('tests/e2e/**') != ''"
+                },
+                {
+                  "lineNumber": 219,
+                  "content": "          pytest tests/e2e/ \\"
+                },
+                {
+                  "lineNumber": 220,
+                  "content": "            --junitxml=test-results-e2e.xml \\"
+                },
+                {
+                  "lineNumber": 237,
+                  "content": "      - name: Run TypeScript unit tests"
+                },
+                {
+                  "lineNumber": 241,
+                  "content": "            npx jest --testPathPattern=\"__tests__|tests\" --no-cache"
+                },
+                {
+                  "lineNumber": 243,
+                  "content": "            echo \"No Jest config; skipping TypeScript tests\""
+                },
+                {
+                  "lineNumber": 247,
+                  "content": "      - name: Upload test results"
+                },
+                {
+                  "lineNumber": 251,
+                  "content": "          name: test-results"
+                },
+                {
+                  "lineNumber": 253,
+                  "content": "            test-results-unit.xml"
+                },
+                {
+                  "lineNumber": 254,
+                  "content": "            test-results-integration.xml"
+                },
+                {
+                  "lineNumber": 255,
+                  "content": "            test-results-functional.xml"
+                },
+                {
+                  "lineNumber": 256,
+                  "content": "            test-results-e2e.xml"
+                },
+                {
+                  "lineNumber": 260,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 261,
+                  "content": "    needs: [lint, security, unit-tests]"
+                },
+                {
+                  "lineNumber": 291,
+                  "content": "            type=raw,value=staging-latest"
+                },
+                {
+                  "lineNumber": 314,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 356,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 358,
+                  "content": "    needs: [lint, security, unit-tests, build-docker, verify-staging-deployment]"
+                },
+                {
+                  "lineNumber": 371,
+                  "content": "          echo \"Unit Tests: ${{ needs.unit-tests.result }}\""
+                },
+                {
+                  "lineNumber": 378,
+                  "content": "          [ \"${{ needs.unit-tests.result }}\" = \"failure\" ] &amp;&amp; FAILED=1"
+                },
+                {
+                  "lineNumber": 411,
+                  "content": "            - Unit Tests: ${{ needs.unit-tests.result }}"
+                }
+              ]
+            },
+            {
+              "file": ".\\.pytest_cache\\README.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# pytest cache directory #"
+                },
+                {
+                  "lineNumber": 3,
+                  "content": "This directory contains data from the pytest's cache plugin,"
+                },
+                {
+                  "lineNumber": 8,
+                  "content": "See [the docs](https://docs.pytest.org/en/stable/how-to/cache.html) for more information."
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\unittests\\functionaltestcases\\README.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Functional test cases placeholder"
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\unittests\\unittest_cases\\README.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Unit test cases placeholder"
+                }
+              ]
+            },
+            {
+              "file": ".\\offline-folder-rag\\unittests\\unittest_cases\\confluence_unittests\\test_confluence_formatter.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Confluence formatter unit tests placeholder"
+                },
+                {
+                  "lineNumber": 2,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\__init__.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Confluence tests package"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\edge_agent\\integration\\README.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Edge agent integration tests placeholder"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_templates.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_state_machine.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_security_compliance.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_reliability.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_prd_compliance.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_e2e_workflows.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_client_auth.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_api_router.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_intelligence_learning.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_imports.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_api_prd_format.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\confluence\\test_page_tracker.py",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "def test_placeholder() -&gt; None:"
+                }
+              ]
+            },
+            {
+              "file": ".\\tests\\edge_agent\\unit\\README.md",
+              "matches": [
+                {
+                  "lineNumber": 1,
+                  "content": "# Edge agent unit tests placeholder"
+                }
+              ]
+            },
+            {
+              "file": ".\\REPO_SNAPSHOT.md",
+              "matches": [
+                {
+                  "lineNumber": 25,
+                  "content": "            ├── 2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md"
+                },
+                {
+                  "lineNumber": 55,
+                  "content": "- &#96;repo_analysis_rag&#96;: project scaffolding, pytest/Chroma tests, offline RAG, ripgrep, terminals/cursor folder behaviour, backend analyse-the-folder, backend indexing logic and unification."
+                }
+              ]
+            },
+            {
+              "file": ".\\.specstory\\history\\2026-02-03_08-02Z-repository-snapshot-and-markdown-file.md",
+              "matches": [
+                {
+                  "lineNumber": 74,
+                  "content": "                    \"name\": \"2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md\""
+                },
+                {
+                  "lineNumber": 158,
+                  "content": "| &#96;../.\\repo_analysis_rag\\.specstory\\history\\2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md&#96; |"
+                },
+                {
+                  "lineNumber": 373,
+                  "content": "            ├── 2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md"
+                },
+                {
+                  "lineNumber": 403,
+                  "content": "- &#96;repo_analysis_rag&#96;: project scaffolding, pytest/Chroma tests, offline RAG, ripgrep, terminals/cursor folder behaviour, backend analyse-the-folder, backend indexing logic and unification."
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-31_07-45Z-terminals-file-error-root-cause.md",
+              "matches": [
+                {
+                  "lineNumber": 240,
+                  "content": "Getting latest version of the Chocolatey package for download."
+                },
+                {
+                  "lineNumber": 279,
+                  "content": "Getting latest version of the Chocolatey package for download."
+                },
+                {
+                  "lineNumber": 511,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\","
+                },
+                {
+                  "lineNumber": 745,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\\\\test_health_polling.ts\","
+                },
+                {
+                  "lineNumber": 763,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\functionaltestcases\\\\test_agent_auth.py\","
+                },
+                {
+                  "lineNumber": 809,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\\\\test_health_timestamp.py\","
+                },
+                {
+                  "lineNumber": 817,
+                  "content": "                  \"content\": \"    mock_chroma, mock_ripgrep, mock_ollama, client, auth_header, test_repo\""
+                },
+                {
+                  "lineNumber": 822,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_health_endpoint.py\","
+                },
+                {
+                  "lineNumber": 834,
+                  "content": "                  \"content\": \"def test_health_component_check_values(mock_chroma, mock_ripgrep, mock_ollama, client, auth_header):\""
+                },
+                {
+                  "lineNumber": 855,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_component_checks.py\","
+                },
+                {
+                  "lineNumber": 859,
+                  "content": "                  \"content\": \"def test_ollama_ok_returns_boolean():\""
+                },
+                {
+                  "lineNumber": 884,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_health_token.py\","
+                },
+                {
+                  "lineNumber": 924,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\.specstory\\\\history\\\\2026-01-29_07-08Z-token-enforcement-and-path-normalization-unit-tests.md\","
+                },
+                {
+                  "lineNumber": 1329,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\.specstory\\\\history\\\\2026-01-29_07-48Z-file-size-cap-and-encoding-fallback-unit-tests.md\","
+                },
+                {
+                  "lineNumber": 1333,
+                  "content": "                  \"content\": \"Enforce citation rules in LLM responses, protect sensitive data in logs, and document the functional test mapping.\""
+                },
+                {
+                  "lineNumber": 1528,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\\\\token_reader.test.ts\","
+                },
+                {
+                  "lineNumber": 1584,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\functionaltestcases\\\\test_agent_auth.py\","
+                },
+                {
+                  "lineNumber": 1597,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_utf8_fallback.py\","
+                },
+                {
+                  "lineNumber": 1614,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_symlink_skip_rules.py\","
+                },
+                {
+                  "lineNumber": 1631,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_path_normalize_repo_id.py\","
+                },
+                {
+                  "lineNumber": 1648,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_indexer_traversal.py\","
+                },
+                {
+                  "lineNumber": 1665,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_encoding_fallback.py\","
+                },
+                {
+                  "lineNumber": 1682,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_binary_detection.py\","
+                },
+                {
+                  "lineNumber": 1699,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\\\\test_symlink_skip_incremental_e2e_test.py\","
+                },
+                {
+                  "lineNumber": 1716,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\\\\test_symlink_skip_full_index_e2e_test.py\","
+                },
+                {
+                  "lineNumber": 1733,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\unittest_cases\\\\test_token_enforcement.py\","
+                },
+                {
+                  "lineNumber": 1755,
+                  "content": "              \"file\": \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\.specstory\\\\history\\\\2026-01-29_07-08Z-token-enforcement-and-path-normalization-unit-tests.md\","
+                },
+                {
+                  "lineNumber": 1997,
+                  "content": "ok give me how end user test the application"
+                },
+                {
+                  "lineNumber": 2004,
+                  "content": "**Preparing testing instructions**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2010,
+                  "content": "- **Launch VS Code extension**: Open &#96;vscode-extension&#96;, install/node modules (&#96;npm install&#96;), and run &#96;npm run test&#96;? (if available) or start the extension via VS Code “Run Extension” to open the chat panel."
+                },
+                {
+                  "lineNumber": 2018,
+                  "content": "- **Regression checks**: Run existing unit/contract tests (e.g., &#96;python -m pytest tests/edge_agent/unit&#96; and &#96;npm test&#96; under &#96;vscode-extension/tests&#96;) to catch breakages."
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-31_06-53Z-ripgrep-installation.md",
+              "matches": [
+                {
+                  "lineNumber": 130,
+                  "content": "      \"path\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\","
+                },
+                {
+                  "lineNumber": 135,
+                  "content": "      \"path\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 140,
+                  "content": "      \"path\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\","
+                },
+                {
+                  "lineNumber": 1427,
+                  "content": "**Summarizing code changes with test status**"
+                },
+                {
+                  "lineNumber": 1429,
+                  "content": "I'll provide a concise summary listing modified files—&#96;agentClient.ts&#96; with the new constant and URL changes, and &#96;ChatPanelViewProvider.ts&#96; using that constant—and note that tests were not run as per the user's instructions.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1473,
+                  "content": "**Providing general Git and testing guidance**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1480,
+                  "content": "4. Run any relevant tests (e.g., &#96;npm test&#96; or unit tests in &#96;vscode-extension/tests&#96;) if you want automated verification."
+                },
+                {
+                  "lineNumber": 2059,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\unittest_cases\\\\test_config_load.py\","
+                },
+                {
+                  "lineNumber": 2060,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_utf8_fallback.py\","
+                },
+                {
+                  "lineNumber": 2061,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_symlink_skip_rules.py\","
+                },
+                {
+                  "lineNumber": 2062,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_encoding_fallback.py\","
+                },
+                {
+                  "lineNumber": 2063,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_indexer_traversal.py\","
+                },
+                {
+                  "lineNumber": 2064,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_binary_detection.py\","
+                },
+                {
+                  "lineNumber": 2065,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\\\\test_symlink_skip_incremental_e2e_test.py\","
+                },
+                {
+                  "lineNumber": 2066,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\\\\test_symlink_skip_full_index_e2e_test.py\","
+                },
+                {
+                  "lineNumber": 3624,
+                  "content": "A  ../module/tests/effective_gsmd_policy_m1_schema.test.js"
+                },
+                {
+                  "lineNumber": 3625,
+                  "content": "A  ../module/tests/effective_policy_resolver.test.js"
+                },
+                {
+                  "lineNumber": 3626,
+                  "content": "A  ../module/tests/evidence_diagnostics_formatter.test.js"
+                },
+                {
+                  "lineNumber": 3627,
+                  "content": "A  ../module/tests/evidence_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3628,
+                  "content": "A  ../module/tests/invariant_no_literals.test.js"
+                },
+                {
+                  "lineNumber": 3629,
+                  "content": "A  ../module/tests/m1_receipt_schema.test.js"
+                },
+                {
+                  "lineNumber": 3630,
+                  "content": "A  ../module/tests/policy_changelog_model.test.js"
+                },
+                {
+                  "lineNumber": 3631,
+                  "content": "A  ../module/tests/policy_reload.test.js"
+                },
+                {
+                  "lineNumber": 3632,
+                  "content": "A  ../module/tests/receipt_reader.test.js"
+                },
+                {
+                  "lineNumber": 3633,
+                  "content": "A  ../module/tests/receipt_writer.test.js"
+                },
+                {
+                  "lineNumber": 3634,
+                  "content": "A  ../module/tests/release_stages_formatter.test.js"
+                },
+                {
+                  "lineNumber": 3635,
+                  "content": "A  ../module/tests/risk_card_model.test.js"
+                },
+                {
+                  "lineNumber": 3636,
+                  "content": "AM ../module/tests/risk_diagnostics_formatter.test.js"
+                },
+                {
+                  "lineNumber": 3637,
+                  "content": "A  ../module/tests/risk_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3638,
+                  "content": "A  ../module/tests/risk_inputs_collector.test.js"
+                },
+                {
+                  "lineNumber": 3639,
+                  "content": "A  ../module/tests/risk_quickfix_actions.test.js"
+                },
+                {
+                  "lineNumber": 3640,
+                  "content": "A  ../module/tests/risk_receipt_writer.test.js"
+                },
+                {
+                  "lineNumber": 3641,
+                  "content": "A  ../module/tests/risk_status_pill.test.js"
+                },
+                {
+                  "lineNumber": 3642,
+                  "content": "AM ../module/tests/rollback_gate_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3643,
+                  "content": "A  ../module/tests/rollback_gate_receipt.test.js"
+                },
+                {
+                  "lineNumber": 3644,
+                  "content": "A  ../module/tests/snapshot_hash.test.js"
+                },
+                {
+                  "lineNumber": 3769,
+                  "content": "?? \"../do triple validation_prompt doc_for test cases.docx\""
+                },
+                {
+                  "lineNumber": 3777,
+                  "content": "?? ../module/.vscode-test/"
+                },
+                {
+                  "lineNumber": 3787,
+                  "content": "?? ../module/extension-tests/"
+                },
+                {
+                  "lineNumber": 3804,
+                  "content": "?? ../module/shared_libs/receipts/write_impacted_tests_receipt.js"
+                },
+                {
+                  "lineNumber": 3812,
+                  "content": "?? ../module/shared_libs/risk_evaluator/evaluate_impacted_tests.js"
+                },
+                {
+                  "lineNumber": 3814,
+                  "content": "?? ../module/test4/"
+                },
+                {
+                  "lineNumber": 3815,
+                  "content": "?? ../module/testcase2/"
+                },
+                {
+                  "lineNumber": 3816,
+                  "content": "?? ../module/testing/"
+                },
+                {
+                  "lineNumber": 3817,
+                  "content": "?? ../module/tests/README.md"
+                },
+                {
+                  "lineNumber": 3818,
+                  "content": "?? ../module/tests/approval_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3819,
+                  "content": "?? ../module/tests/break_glass_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3820,
+                  "content": "?? ../module/tests/delta_coverage_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3821,
+                  "content": "?? ../module/tests/feature_flag_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3822,
+                  "content": "?? ../module/tests/flaky_handling_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3823,
+                  "content": "?? ../module/tests/impacted_tests_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3824,
+                  "content": "?? ../module/tests/preview_evaluator.test.js"
+                },
+                {
+                  "lineNumber": 3825,
+                  "content": "?? ../module/tests/privacy_view.test.js"
+                },
+                {
+                  "lineNumber": 3826,
+                  "content": "?? ../module/tests/safe_log.test.js"
+                },
+                {
+                  "lineNumber": 3827,
+                  "content": "?? ../module_8_merge_conflicts_testcases.xlsx"
+                },
+                {
+                  "lineNumber": 3832,
+                  "content": "?? .specstory/history/2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md"
+                },
+                {
+                  "lineNumber": 3838,
+                  "content": "?? \"../rough test cases.xlsx\""
+                },
+                {
+                  "lineNumber": 3839,
+                  "content": "?? ../testcases_final_manual_selenium.xlsx"
+                },
+                {
+                  "lineNumber": 3840,
+                  "content": "?? ../testcases_generated_final.xlsx"
+                },
+                {
+                  "lineNumber": 3858,
+                  "content": "?? ../../test/"
+                },
+                {
+                  "lineNumber": 3964,
+                  "content": " .../tests/risk_diagnostics_formatter.test.js       |   100 +"
+                },
+                {
+                  "lineNumber": 3965,
+                  "content": " .../module/tests/rollback_gate_evaluator.test.js   |    78 +-"
+                },
+                {
+                  "lineNumber": 3980,
+                  "content": "warning: in the working copy of 'OneDrive/Desktop/office/module/tests/risk_diagnostics_formatter.test.js', LF will be replaced by CRLF the next time Git touches it"
+                },
+                {
+                  "lineNumber": 4074,
+                  "content": "I'll wrap up by explaining that the root cause was a missing root path in query requests causing searches against default collections, and now with root path propagation through &#96;agentClient.ts&#96;, &#96;ChatPanelViewProvider&#96;, and the &#96;ask&#96; route, the backend correctly targets repo-specific data ensuring citations appear. I'll note the &#96;AskRequest&#96; update, mention running &#96;npm run compile&#96;, and include instructions to restart the extension and backend server to test the fix by triggering a new ask command.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 4090,
+                  "content": "give me differnet prompts to test it"
+                },
+                {
+                  "lineNumber": 5457,
+                  "content": "ok now it is correct what is the next step i do to test the development host now when i am giving prompt it give answer right"
+                },
+                {
+                  "lineNumber": 5464,
+                  "content": "**Providing next steps for testing**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 5629,
+                  "content": "## STEP 6 — Add a regression test (MANDATORY)"
+                },
+                {
+                  "lineNumber": 5631,
+                  "content": "Create a test that simulates:"
+                },
+                {
+                  "lineNumber": 5647,
+                  "content": "If this test fails → fix is incomplete."
+                },
+                {
+                  "lineNumber": 5705,
+                  "content": "The backend now sends “NOT FOUND IN INDEXED FILES” whenever retrieval returns zero chunks, so &#96;/ask&#96; no longer echoes the question or claims &#96;confidence: found&#96; without citations. This makes your existing flow compliant with Step 2 and Step 3, and further verification steps (log chunk counts, remove fallback text, add regression tests, and rerun indexing/question cycle) are already covered by the code we added earlier (RAG response building in &#96;edge_agent/app/api/routes.py&#96;, &#96;retrieve_vector_results&#96; merging, and the citations gating). If you still need a written report documenting each prescribed step (1–7) with file references, let me know and I can provide that summary."
+                },
+                {
+                  "lineNumber": 5720,
+                  "content": "I’m planning backend edits to have the ask route check retrieved citation counts after fetching vector results, logging the count, and gating responses to return “not found” if no citations appear. I also want to add a minimal test that mocks retrieval to return empty, verifying the route properly responds with “not found.” I’m sorting best test location and details like token requirements while keeping the implementation steps clear and manageable.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 5733,
+                  "content": "**Preparing API token and test setup**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 5854,
+                  "content": "**Adding test for empty citation gating**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 5860,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: D:\\c\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\tests\\edge_agent\\unit\\test_ask_not_found.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 5875,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: /c/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/tests/edge_agent/unit/test_ask_not_found.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 5884,
+                  "content": "**Verifying package import and test paths**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 5890,
+                  "content": "- Added &#96;tests/edge_agent/unit/test_ask_not_found.py&#96;, which mocks &#96;retrieve_vector_results&#96; to return zero chunks and asserts the &#96;/ask&#96; response matches the required &#96;{\"mode\":\"rag\",\"confidence\":\"not_found\",\"answer\":\"NOT FOUND IN INDEXED FILES\",\"citations\":[],\"truncated\":false}&#96; payload."
+                },
+                {
+                  "lineNumber": 5892,
+                  "content": "No additional tests were run (not requested)."
+                },
+                {
+                  "lineNumber": 5958,
+                  "content": "  \"plan\": \"## 1. Document current QA flow\\n- Trace input handling from &amp;#96;vscode-extension/src/webview/ChatPanelViewProvider.ts&amp;#96; (msg dispatch → &amp;#96;askWithOverride&amp;#96;) and the payload builder in &amp;#96;vscode-extension/src/services/agentClient.ts&amp;#96; (buildQueryPayload + getIndexReport/triggerIndex).\\n- Highlight how &amp;#96;/ask&amp;#96; now includes &amp;#96;root_path&amp;#96; and how the backend validates the request (refer to [edge_agent/app/api/routes.py](edge_agent/app/api/routes.py)).\\n- Note the indexing pipeline (&amp;#96;triggerFullIndex&amp;#96; in [vscode-extension/src/services/indexGate.ts](vscode-extension/src/services/indexGate.ts) + scan/indexer helpers in &amp;#96;edge_agent/app/indexing/&amp;#96;).\\n\\n## 2. Strengthen empty-retrieval gating\\n- In the backend &amp;#96;ask&amp;#96; route, log &amp;#96;retrieved_chunk_count&amp;#96;, gate responses when zero chunks, and ensure confidence/citation invariants (already present, cite [edge_agent/app/api/routes.py](edge_agent/app/api/routes.py)). If further adjus [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 6121,
+                  "content": "**Summarizing QA flow and test setup**"
+                },
+                {
+                  "lineNumber": 6123,
+                  "content": "The QA flow is documented with code gating and a test for the ask route already added, ensuring citation and truncation logic is covered. The test imports use the edge_agent package path consistent with the repo structure; this should work if PYTHONPATH is set properly. I'll include a summary noting gating, index report call, and the new test, plus mention that tests weren't run and TODO statuses can't be marked due to missing IDs.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 6130,
+                  "content": "- Added regression test &#96;tests/edge_agent/unit/test_ask_not_found.py&#96; to assert the not-found response when retrieval returns zero chunks."
+                },
+                {
+                  "lineNumber": 6172,
+                  "content": "5) Validate with tests"
+                },
+                {
+                  "lineNumber": 6173,
+                  "content": "- Unit test: mock retrieval to return zero chunks and assert the exact not-found payload (&#96;tests/edge_agent/unit/test_ask_not_found.py&#96;)."
+                },
+                {
+                  "lineNumber": 6174,
+                  "content": "- Optional: add a test with one fake citation to confirm &#96;found&#96; + citation is returned."
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-31_13-27Z-cursor-folder-reading-mechanism-and-requirements.md",
+              "matches": [
+                {
+                  "lineNumber": 154,
+                  "content": "                \"name\": \"2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md\""
+                },
+                {
+                  "lineNumber": 317,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\","
+                },
+                {
+                  "lineNumber": 320,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\\\\functionaltestcases\","
+                },
+                {
+                  "lineNumber": 327,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\\\\unittest_cases\","
+                },
+                {
+                  "lineNumber": 340,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 343,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 346,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 353,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 366,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\","
+                },
+                {
+                  "lineNumber": 369,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\","
+                },
+                {
+                  "lineNumber": 386,
+                  "content": "                    \"name\": \"indexGate.test.ts\""
+                },
+                {
+                  "lineNumber": 398,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\","
+                },
+                {
+                  "lineNumber": 401,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\functionaltestcases\","
+                },
+                {
+                  "lineNumber": 404,
+                  "content": "                        \"name\": \"agent_core_functional_tests.csv\""
+                },
+                {
+                  "lineNumber": 407,
+                  "content": "                        \"name\": \"ask_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 410,
+                  "content": "                        \"name\": \"doctor_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 413,
+                  "content": "                        \"name\": \"index_report_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 416,
+                  "content": "                        \"name\": \"overview_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 419,
+                  "content": "                        \"name\": \"search_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 422,
+                  "content": "                        \"name\": \"test_agent_auth.py\""
+                },
+                {
+                  "lineNumber": 425,
+                  "content": "                        \"name\": \"test_ask_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 428,
+                  "content": "                        \"name\": \"test_chunk_metadata_integrity_flow.py\""
+                },
+                {
+                  "lineNumber": 431,
+                  "content": "                        \"name\": \"test_code_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 434,
+                  "content": "                        \"name\": \"test_code_file_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 437,
+                  "content": "                        \"name\": \"test_csv_matrix.py\""
+                },
+                {
+                  "lineNumber": 440,
+                  "content": "                        \"name\": \"test_doctor_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 443,
+                  "content": "                        \"name\": \"test_exclusion_rules.py\""
+                },
+                {
+                  "lineNumber": 446,
+                  "content": "                        \"name\": \"test_fallback_file_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 449,
+                  "content": "                        \"name\": \"test_index_persistence_restart.py\""
+                },
+                {
+                  "lineNumber": 452,
+                  "content": "                        \"name\": \"test_index_report_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 455,
+                  "content": "                        \"name\": \"test_local_dropdown_selection_and_cancel.py\""
+                },
+                {
+                  "lineNumber": 458,
+                  "content": "                        \"name\": \"test_local_dropdown_selection_and_cancel.ts\""
+                },
+                {
+                  "lineNumber": 461,
+                  "content": "                        \"name\": \"test_manifest_tracking_flow.py\""
+                },
+                {
+                  "lineNumber": 464,
+                  "content": "                        \"name\": \"test_markdown_file_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 467,
+                  "content": "                        \"name\": \"test_microphone_icon_disabled_state.py\""
+                },
+                {
+                  "lineNumber": 470,
+                  "content": "                        \"name\": \"test_microphone_icon_disabled_state.ts\""
+                },
+                {
+                  "lineNumber": 473,
+                  "content": "                        \"name\": \"test_overview_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 476,
+                  "content": "                        \"name\": \"test_root_path_boundary.py\""
+                },
+                {
+                  "lineNumber": 479,
+                  "content": "                        \"name\": \"test_search_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 482,
+                  "content": "                        \"name\": \"test_single_strategy_per_file_flow.py\""
+                },
+                {
+                  "lineNumber": 488,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\unittest_cases\","
+                },
+                {
+                  "lineNumber": 491,
+                  "content": "                        \"name\": \"test_auto_index_scheduler.py\""
+                },
+                {
+                  "lineNumber": 494,
+                  "content": "                        \"name\": \"test_chunker_code_routing.py\""
+                },
+                {
+                  "lineNumber": 497,
+                  "content": "                        \"name\": \"test_chunker_fallback_routing.py\""
+                },
+                {
+                  "lineNumber": 500,
+                  "content": "                        \"name\": \"test_chunker_limit.py\""
+                },
+                {
+                  "lineNumber": 503,
+                  "content": "                        \"name\": \"test_chunker_markdown_routing.py\""
+                },
+                {
+                  "lineNumber": 506,
+                  "content": "                        \"name\": \"test_chunker_metadata_propagation.py\""
+                },
+                {
+                  "lineNumber": 509,
+                  "content": "                        \"name\": \"test_chunker_strategy_exclusivity.py\""
+                },
+                {
+                  "lineNumber": 512,
+                  "content": "                        \"name\": \"test_chunking_rules.py\""
+                },
+                {
+                  "lineNumber": 515,
+                  "content": "                        \"name\": \"test_citation_logging.py\""
+                },
+                {
+                  "lineNumber": 518,
+                  "content": "                        \"name\": \"test_classification.py\""
+                },
+                {
+                  "lineNumber": 521,
+                  "content": "                        \"name\": \"test_code_block_chunk_splitting.py\""
+                },
+                {
+                  "lineNumber": 524,
+                  "content": "                        \"name\": \"test_code_boundary_detection.py\""
+                },
+                {
+                  "lineNumber": 527,
+                  "content": "                        \"name\": \"test_code_brace_bounding.py\""
+                },
+                {
+                  "lineNumber": 530,
+                  "content": "                        \"name\": \"test_code_fallback_line_chunking.py\""
+                },
+                {
+                  "lineNumber": 533,
+                  "content": "                        \"name\": \"test_code_python_indentation_bounding.py\""
+                },
+                {
+                  "lineNumber": 536,
+                  "content": "                        \"name\": \"test_config_load.py\""
+                },
+                {
+                  "lineNumber": 539,
+                  "content": "                        \"name\": \"test_index_dir_resolution.py\""
+                },
+                {
+                  "lineNumber": 542,
+                  "content": "                        \"name\": \"test_index_success_response.py\""
+                },
+                {
+                  "lineNumber": 545,
+                  "content": "                        \"name\": \"test_index_token_enforcement.py\""
+                },
+                {
+                  "lineNumber": 548,
+                  "content": "                        \"name\": \"test_indexer_state.py\""
+                },
+                {
+                  "lineNumber": 551,
+                  "content": "                        \"name\": \"test_logger_extra.py\""
+                },
+                {
+                  "lineNumber": 554,
+                  "content": "                        \"name\": \"test_main_extra.py\""
+                },
+                {
+                  "lineNumber": 557,
+                  "content": "                        \"name\": \"test_manifest_entry_schema.py\""
+                },
+                {
+                  "lineNumber": 560,
+                  "content": "                        \"name\": \"test_manifest_indexed_entry.py\""
+                },
+                {
+                  "lineNumber": 563,
+                  "content": "                        \"name\": \"test_manifest_persistence.py\""
+                },
+                {
+                  "lineNumber": 566,
+                  "content": "                        \"name\": \"test_manifest_size_cap_serialization.py\""
+                },
+                {
+                  "lineNumber": 569,
+                  "content": "                        \"name\": \"test_manifest_size_cap.py\""
+                },
+                {
+                  "lineNumber": 650,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\","
+                },
+                {
+                  "lineNumber": 699,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\","
+                },
+                {
+                  "lineNumber": 702,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\","
+                },
+                {
+                  "lineNumber": 705,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-3\","
+                },
+                {
+                  "lineNumber": 708,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-3\\\\test_chunk_limit_truncates_and0\","
+                },
+                {
+                  "lineNumber": 721,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-4\","
+                },
+                {
+                  "lineNumber": 724,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-4\\\\test_chunk_limit_truncates_and0\","
+                },
+                {
+                  "lineNumber": 737,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-5\","
+                },
+                {
+                  "lineNumber": 740,
+                  "content": "                        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-5\\\\test_chunk_limit_records_manif0\","
+                },
+                {
+                  "lineNumber": 766,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 769,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 772,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 775,
+                  "content": "                        \"name\": \"test_incremental_cap_e2e.py\""
+                },
+                {
+                  "lineNumber": 778,
+                  "content": "                        \"name\": \"test_index_response_cap.py\""
+                },
+                {
+                  "lineNumber": 784,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 787,
+                  "content": "                        \"name\": \"test_config_store_validation.py\""
+                },
+                {
+                  "lineNumber": 790,
+                  "content": "                        \"name\": \"test_incremental_cap.py\""
+                },
+                {
+                  "lineNumber": 793,
+                  "content": "                        \"name\": \"test_manifest_skip_reason.py\""
+                },
+                {
+                  "lineNumber": 816,
+                  "content": "            \"name\": \"pytest.ini\""
+                },
+                {
+                  "lineNumber": 906,
+                  "content": "Add a new entry at the top of &#96;functionality_break.log&#96; whenever a runtime or regression failure occurs; each entry follows the provided checklist (date, reporter, scope, description, reproduction steps, expected vs observed behavior, logs, impact, notified) so developers immediately see the latest break with all required context."
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-31_14-49Z-backend-analyse-the-folder-error.md",
+              "matches": [
+                {
+                  "lineNumber": 59,
+                  "content": "                \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 62,
+                  "content": "                    \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 65,
+                  "content": "                        \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 68,
+                  "content": "                            \"name\": \"test_ask_not_found.py\""
+                },
+                {
+                  "lineNumber": 130,
+                  "content": "**Determining error origin and test relevance**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 135,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: /c/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/tests/edge_agent/unit/test_ask_not_found.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 183,
+                  "content": "        \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 186,
+                  "content": "            \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 189,
+                  "content": "                \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 192,
+                  "content": "                    \"name\": \"test_ask_not_found.py\""
+                },
+                {
+                  "lineNumber": 260,
+                  "content": "| &#96;../../../../../../../app/backend/server/c:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag/D:\\c\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\tests\\edge_agent\\unit\\test_ask_not_found.py&#96; |"
+                },
+                {
+                  "lineNumber": 307,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: D:/c/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/tests/edge_agent/unit/test_ask_not_found.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 363,
+                  "content": "            \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_ask_not_found.py\""
+                },
+                {
+                  "lineNumber": 385,
+                  "content": "Root cause: the &#96;/ask&#96; handler falls back to the “not found” response whenever &#96;retrieve_vector_results&#96; returns empty chunks, which happens when nothing from the folder has been indexed for that query—exactly what &#96;tests/edge_agent/unit/test_ask_not_found.py&#96; asserts for the &#96;confidence: \"not_found\"&#96; payload. Index the folder (so &#96;retrieve_vector_results&#96; can return non-empty &#96;docs&#96;/&#96;merged&#96; entries) before asking and you’ll start receiving citations instead of the “Not found in indexed files” message."
+                },
+                {
+                  "lineNumber": 444,
+                  "content": "                \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 447,
+                  "content": "                    \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 450,
+                  "content": "                        \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 453,
+                  "content": "                            \"name\": \"test_ask_not_found.py\""
+                },
+                {
+                  "lineNumber": 594,
+                  "content": "I'll explain that the root cause is an empty vector index because the folder hasn't been analyzed yet, and provide clear, concise steps: run the analysis process (via CLI or API) to build the index, confirm the index contains data, then retry queries to get citations. I'll reference the test behavior showing the backend returns \"not found\" when no index exists and suggest verifying backend logs for &#96;retrieve_vector_results&#96;.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 598,
+                  "content": "Run the folder-indexing job before asking anything. The backend only returns citations when &#96;retrieve_vector_results&#96; finds indexed chunks, but the &#96;/ask&#96; handler falls back to &#96;confidence: \"not_found\"&#96; whenever that helper returns empty arrays (see &#96;tests/edge_agent/unit/test_ask_not_found.py&#96;). So:"
+                },
+                {
+                  "lineNumber": 1002,
+                  "content": "            \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 1005,
+                  "content": "                \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 1008,
+                  "content": "                    \"absPath\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 1011,
+                  "content": "                        \"name\": \"test_ask_not_found.py\""
+                },
+                {
+                  "lineNumber": 1102,
+                  "content": "I’m understanding that the error happens because the repository lacks an indexed folder, so &#96;retrieve_vector_results&#96; returns empty arrays, triggering a “not found” fallback as shown in &#96;tests/edge_agent/unit/test_ask_not_found.py&#96; (lines 7-30). The missing &#96;ZeroUI: Analyze Folder&#96; command is likely due to the extension not being built or its source missing, preventing the analyze command from appearing. Running the indexing command after building the extension should fix this.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1106,
+                  "content": "Root cause: the &#96;/ask&#96; handler returns the &#96;\"confidence\": \"not_found\"&#96; payload whenever &#96;retrieve_vector_results&#96; returns empty &#96;code/docs/merged&#96; lists, as shown in &#96;tests/edge_agent/unit/test_ask_not_found.py&#96;. That happens because the workspace folder hasn’t been indexed yet, so the vector store contains no chunks and the backend can’t produce citations. Run the folder-analysis job (&#96;ZeroUI: Analyze Folder&#96; in the command palette or the equivalent backend &#96;analyze&#96; API) before sending &#96;/ask&#96; queries so &#96;retrieve_vector_results&#96; can return real documents and avoid the “No citations found” response. "
+                },
+                {
+                  "lineNumber": 1108,
+                  "content": "&#96;&#96;&#96;7:30:D:/c/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/tests/edge_agent/unit/test_ask_not_found.py"
+                },
+                {
+                  "lineNumber": 1125,
+                  "content": "Root cause: the /ask handler returns the \"confidence\": \"not_found\" payload whenever retrieve_vector_results returns empty code/docs/merged lists, as shown in tests/edge_agent/unit/test_ask_not_found.py. That happens because the workspace folder hasn’t been indexed yet, so the vector store contains no chunks and the backend can’t produce citations. Run the folder-analysis job (ZeroUI: Analyze Folder in the command palette. do this step"
+                },
+                {
+                  "lineNumber": 1400,
+                  "content": "      \"path\": \"D:\\\\c\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 1957,
+                  "content": "US-43 — Privacy-safe Logging (Gap fixed: log file location is deterministic for menu + tests)"
+                },
+                {
+                  "lineNumber": 1969,
+                  "content": "US-44 — Automated Edge Agent Unit Tests (Gaps fixed: explicit tests for privacy + /health token + timeout determinism)"
+                },
+                {
+                  "lineNumber": 1971,
+                  "content": "•\ttests/edge_agent/unit/test_token_enforcement.py"
+                },
+                {
+                  "lineNumber": 1972,
+                  "content": "•\ttests/edge_agent/unit/test_path_normalize_repo_id.py"
+                },
+                {
+                  "lineNumber": 1973,
+                  "content": "•\ttests/edge_agent/unit/test_scan_skip_rules.py"
+                },
+                {
+                  "lineNumber": 1974,
+                  "content": "•\ttests/edge_agent/unit/test_chunking_rules.py"
+                },
+                {
+                  "lineNumber": 1975,
+                  "content": "•\ttests/edge_agent/unit/test_search_ranking.py"
+                },
+                {
+                  "lineNumber": 1976,
+                  "content": "•\ttests/edge_agent/unit/test_citation_enforcement.py"
+                },
+                {
+                  "lineNumber": 1977,
+                  "content": "•\ttests/edge_agent/unit/test_logging_privacy.py"
+                },
+                {
+                  "lineNumber": 1978,
+                  "content": "•\ttests/edge_agent/unit/test_search_timeout_failure.py"
+                },
+                {
+                  "lineNumber": 1990,
+                  "content": "o\tprivacy log test: assert logs do not contain chunk text/snippets"
+                },
+                {
+                  "lineNumber": 1991,
+                  "content": "o\tsearch timeout test: deterministically force timeout and assert SEARCH_FAILURE"
+                },
+                {
+                  "lineNumber": 1994,
+                  "content": "•\ttests/edge_agent/integration/test_full_index_then_ask.py"
+                },
+                {
+                  "lineNumber": 1995,
+                  "content": "•\ttests/edge_agent/integration/test_index_report_matches_manifest.py"
+                },
+                {
+                  "lineNumber": 1996,
+                  "content": "•\ttests/vscode_extension/contract/test_placeholder_exact.ts"
+                },
+                {
+                  "lineNumber": 1997,
+                  "content": "•\ttests/vscode_extension/contract/test_slash_commands.ts"
+                },
+                {
+                  "lineNumber": 1998,
+                  "content": "•\ttests/vscode_extension/contract/test_preindex_gating_manifest_check.ts"
+                },
+                {
+                  "lineNumber": 1999,
+                  "content": "•\ttests/vscode_extension/contract/test_post_index_coverage_summary.ts"
+                },
+                {
+                  "lineNumber": 2000,
+                  "content": "•\ttests/vscode_extension/contract/test_autoindex_scheduler.ts"
+                },
+                {
+                  "lineNumber": 2001,
+                  "content": "•\ttests/vscode_extension/contract/test_health_polling_progress.ts"
+                },
+                {
+                  "lineNumber": 2002,
+                  "content": "•\ttests/vscode_extension/contract/test_citation_navigation.ts"
+                },
+                {
+                  "lineNumber": 2004,
+                  "content": "•\tIntegration tests:"
+                },
+                {
+                  "lineNumber": 2010,
+                  "content": "•\tExtension contract tests:"
+                },
+                {
+                  "lineNumber": 2025,
+                  "content": "•\tLog file location is deterministic for “Open Edge Agent Logs” and for tests (US-13, US-43)."
+                },
+                {
+                  "lineNumber": 2180,
+                  "content": "•\tSkip excluded directories: .git, node_modules, .venv, venv, dist, build, .pytest_cache, .mypy_cache, .idea, .vscode"
+                },
+                {
+                  "lineNumber": 2243,
+                  "content": "When the system processes Markdown files for indexing, it needs to split content deterministically by Markdown headings so that document structure is preserved and large sections are chunked in a predictable, testable way."
+                },
+                {
+                  "lineNumber": 2420,
+                  "content": "As a maintainer I want deterministic unit tests for rules to prevent regressions."
+                },
+                {
+                  "lineNumber": 2437,
+                  "content": "**Providing integration test instructions**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2445,
+                  "content": "  cd tests/edge_agent/integration"
+                },
+                {
+                  "lineNumber": 2446,
+                  "content": "  pytest test_full_index_then_ask.py test_index_report_matches_manifest.py"
+                },
+                {
+                  "lineNumber": 2448,
+                  "content": "- For the extension contract verification, launch your extension test runner:  "
+                },
+                {
+                  "lineNumber": 2450,
+                  "content": "  cd ../../tests/vscode_extension/contract"
+                },
+                {
+                  "lineNumber": 2452,
+                  "content": "  npm test"
+                },
+                {
+                  "lineNumber": 2476,
+                  "content": "No integration evidence provided; please supply test reports or run results for verification."
+                },
+                {
+                  "lineNumber": 2494,
+                  "content": "- Add/verify integration tests that span the extension + edge-agent contracts (e.g., &#96;tests/edge_agent/integration/*&#96; plus &#96;tests/vscode_extension/contract/*&#96; as listed)."
+                },
+                {
+                  "lineNumber": 2497,
+                  "content": "- Launch the extension test harness (&#96;npm test&#96; in &#96;tests/vscode_extension/contract&#96;) to cover slash commands, gating prompts, coverage summary, auto-index scheduler, health polling, citation navigation, token discovery, etc."
+                },
+                {
+                  "lineNumber": 2960,
+                  "content": "US-43 — Privacy-safe Logging (Gap fixed: log file location is deterministic for menu + tests)"
+                },
+                {
+                  "lineNumber": 2972,
+                  "content": "US-44 — Automated Edge Agent Unit Tests (Gaps fixed: explicit tests for privacy + /health token + timeout determinism)"
+                },
+                {
+                  "lineNumber": 2974,
+                  "content": "•\ttests/edge_agent/unit/test_token_enforcement.py"
+                },
+                {
+                  "lineNumber": 2975,
+                  "content": "•\ttests/edge_agent/unit/test_path_normalize_repo_id.py"
+                },
+                {
+                  "lineNumber": 2976,
+                  "content": "•\ttests/edge_agent/unit/test_scan_skip_rules.py"
+                },
+                {
+                  "lineNumber": 2977,
+                  "content": "•\ttests/edge_agent/unit/test_chunking_rules.py"
+                },
+                {
+                  "lineNumber": 2978,
+                  "content": "•\ttests/edge_agent/unit/test_search_ranking.py"
+                },
+                {
+                  "lineNumber": 2979,
+                  "content": "•\ttests/edge_agent/unit/test_citation_enforcement.py"
+                },
+                {
+                  "lineNumber": 2980,
+                  "content": "•\ttests/edge_agent/unit/test_logging_privacy.py"
+                },
+                {
+                  "lineNumber": 2981,
+                  "content": "•\ttests/edge_agent/unit/test_search_timeout_failure.py"
+                },
+                {
+                  "lineNumber": 2993,
+                  "content": "o\tprivacy log test: assert logs do not contain chunk text/snippets"
+                },
+                {
+                  "lineNumber": 2994,
+                  "content": "o\tsearch timeout test: deterministically force timeout and assert SEARCH_FAILURE"
+                },
+                {
+                  "lineNumber": 2997,
+                  "content": "•\ttests/edge_agent/integration/test_full_index_then_ask.py"
+                },
+                {
+                  "lineNumber": 2998,
+                  "content": "•\ttests/edge_agent/integration/test_index_report_matches_manifest.py"
+                },
+                {
+                  "lineNumber": 2999,
+                  "content": "•\ttests/vscode_extension/contract/test_placeholder_exact.ts"
+                },
+                {
+                  "lineNumber": 3000,
+                  "content": "•\ttests/vscode_extension/contract/test_slash_commands.ts"
+                },
+                {
+                  "lineNumber": 3001,
+                  "content": "•\ttests/vscode_extension/contract/test_preindex_gating_manifest_check.ts"
+                },
+                {
+                  "lineNumber": 3002,
+                  "content": "•\ttests/vscode_extension/contract/test_post_index_coverage_summary.ts"
+                },
+                {
+                  "lineNumber": 3003,
+                  "content": "•\ttests/vscode_extension/contract/test_autoindex_scheduler.ts"
+                },
+                {
+                  "lineNumber": 3004,
+                  "content": "•\ttests/vscode_extension/contract/test_health_polling_progress.ts"
+                },
+                {
+                  "lineNumber": 3005,
+                  "content": "•\ttests/vscode_extension/contract/test_citation_navigation.ts"
+                },
+                {
+                  "lineNumber": 3007,
+                  "content": "•\tIntegration tests:"
+                },
+                {
+                  "lineNumber": 3013,
+                  "content": "•\tExtension contract tests:"
+                },
+                {
+                  "lineNumber": 3028,
+                  "content": "•\tLog file location is deterministic for “Open Edge Agent Logs” and for tests (US-13, US-43)."
+                },
+                {
+                  "lineNumber": 3183,
+                  "content": "•\tSkip excluded directories: .git, node_modules, .venv, venv, dist, build, .pytest_cache, .mypy_cache, .idea, .vscode"
+                },
+                {
+                  "lineNumber": 3246,
+                  "content": "When the system processes Markdown files for indexing, it needs to split content deterministically by Markdown headings so that document structure is preserved and large sections are chunked in a predictable, testable way."
+                },
+                {
+                  "lineNumber": 3423,
+                  "content": "As a maintainer I want deterministic unit tests for rules to prevent regressions."
+                },
+                {
+                  "lineNumber": 3511,
+                  "content": "  \"composerData\": \"{\\\"_v\\\":13,\\\"composerId\\\":\\\"task-0_tool_3d2869d0-aaba-4647-a697-dd1d3eebf\\\",\\\"richText\\\":\\\"\\\",\\\"hasLoaded\\\":true,\\\"text\\\":\\\"\\\",\\\"fullConversationHeadersOnly\\\":[{\\\"bubbleId\\\":\\\"3df80b7d-68bb-4c88-9c66-5cccf359f080\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"a23ecdf9-1b42-4932-aaf2-a5a6b78f29ab\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"94777f83-cb2d-4aec-92f2-1c2cd9e8d55d\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"fe7972c2-2ef4-4cde-94dc-5a0321ea9964\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"bc5e9890-973e-4483-930a-a3dc698b275a\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"36d33788-0414-4488-8df3-62f0950e95b3\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"638a0b16-05c5-47d5-968a-37783801ac68\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"737a66e5-ffb9-4ac0-be41-2b804112ea0d\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"babdde08-c0a9-49c9-873a-2b7fd5c433f8\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"8c2edd97-7bc8-40ec-b207-eec6bc3f6661\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"9498026b-8e4a-484e-a1c5-c6a148f0dcde\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"c45308aa-d9c0-449a-a491-1d51357e7f51\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"f [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 3564,
+                  "content": "  \"composerData\": \"{\\\"_v\\\":13,\\\"composerId\\\":\\\"task-0_tool_387f1f98-38d1-4978-b077-f72edc090\\\",\\\"richText\\\":\\\"\\\",\\\"hasLoaded\\\":true,\\\"text\\\":\\\"\\\",\\\"fullConversationHeadersOnly\\\":[{\\\"bubbleId\\\":\\\"c0b6431e-5b9e-460d-9321-730f39defcbb\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"a2aa2643-bedc-4bc5-babb-2739f817248d\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"ee3e86fb-72d5-4cfb-b326-85b87ea8067f\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"6986a5be-aefc-4f33-876a-c3dc2ef63070\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"2c79c923-4e2b-42c8-991a-c995eb293a4e\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"b8f57ca1-f06f-41af-94ee-4c5dd05d921b\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"4ff670df-892d-445a-8578-9d5fabbad086\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"32386bc2-4abf-4abc-bd64-6d8caf2eecaa\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"922b02e2-7cf0-4601-92cb-538673f5b222\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"7afda490-bd51-448d-a49e-6a536869a1c2\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"7e9ddcf2-b4b7-4e56-a0dd-c75d6675dec5\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"5d54bc85-ee87-47da-8ecb-596896f3309b\\\",\\\"type\\\":2},{\\\"bubbleId\\\":\\\"b [... omitted end of long line]"
+                },
+                {
+                  "lineNumber": 3829,
+                  "content": "                \"name\": \"2026-01-29_07-08Z-token-enforcement-and-path-normalization-unit-tests.md\""
+                },
+                {
+                  "lineNumber": 3838,
+                  "content": "                \"name\": \"2026-01-29_07-34Z-token-enforcement-and-path-normalization-unit-tests.md\""
+                },
+                {
+                  "lineNumber": 3844,
+                  "content": "                \"name\": \"2026-01-29_07-48Z-file-size-cap-and-encoding-fallback-unit-tests.md\""
+                },
+                {
+                  "lineNumber": 3990,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\","
+                },
+                {
+                  "lineNumber": 3993,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\\\\functionaltestcases\","
+                },
+                {
+                  "lineNumber": 4000,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\testcases\\\\unittest_cases\","
+                },
+                {
+                  "lineNumber": 4013,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 4016,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 4019,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 4026,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 4039,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\","
+                },
+                {
+                  "lineNumber": 4042,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\","
+                },
+                {
+                  "lineNumber": 4065,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\","
+                },
+                {
+                  "lineNumber": 4068,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\functionaltestcases\","
+                },
+                {
+                  "lineNumber": 4071,
+                  "content": "                    \"name\": \"agent_core_functional_tests.csv\""
+                },
+                {
+                  "lineNumber": 4074,
+                  "content": "                    \"name\": \"ask_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 4077,
+                  "content": "                    \"name\": \"doctor_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 4080,
+                  "content": "                    \"name\": \"index_report_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 4083,
+                  "content": "                    \"name\": \"overview_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 4086,
+                  "content": "                    \"name\": \"search_endpoint_json.e2e.test.ts\""
+                },
+                {
+                  "lineNumber": 4089,
+                  "content": "                    \"name\": \"test_agent_auth.py\""
+                },
+                {
+                  "lineNumber": 4092,
+                  "content": "                    \"name\": \"test_ask_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 4095,
+                  "content": "                    \"name\": \"test_chunk_metadata_integrity_flow.py\""
+                },
+                {
+                  "lineNumber": 4098,
+                  "content": "                    \"name\": \"test_code_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 4101,
+                  "content": "                    \"name\": \"test_code_file_chunking_flow.py\""
+                },
+                {
+                  "lineNumber": 4104,
+                  "content": "                    \"name\": \"test_search_endpoint_json.py\""
+                },
+                {
+                  "lineNumber": 4107,
+                  "content": "                    \"name\": \"test_single_strategy_per_file_flow.py\""
+                },
+                {
+                  "lineNumber": 4118,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\unittests\\\\unittest_cases\","
+                },
+                {
+                  "lineNumber": 4121,
+                  "content": "                    \"name\": \"test_auto_index_scheduler.py\""
+                },
+                {
+                  "lineNumber": 4124,
+                  "content": "                    \"name\": \"test_chunker_code_routing.py\""
+                },
+                {
+                  "lineNumber": 4127,
+                  "content": "                    \"name\": \"test_chunker_fallback_routing.py\""
+                },
+                {
+                  "lineNumber": 4130,
+                  "content": "                    \"name\": \"test_chunker_limit.py\""
+                },
+                {
+                  "lineNumber": 4133,
+                  "content": "                    \"name\": \"test_chunker_markdown_routing.py\""
+                },
+                {
+                  "lineNumber": 4136,
+                  "content": "                    \"name\": \"test_chunker_metadata_propagation.py\""
+                },
+                {
+                  "lineNumber": 4139,
+                  "content": "                    \"name\": \"test_path_normalize_repo_id_legacy.py\""
+                },
+                {
+                  "lineNumber": 4142,
+                  "content": "                    \"name\": \"test_scan_skip_rules_standalone.py\""
+                },
+                {
+                  "lineNumber": 4145,
+                  "content": "                    \"name\": \"test_scan_skip_rules_unittest.py\""
+                },
+                {
+                  "lineNumber": 4148,
+                  "content": "                    \"name\": \"test_search_execution.py\""
+                },
+                {
+                  "lineNumber": 4151,
+                  "content": "                    \"name\": \"test_search_query_builder.py\""
+                },
+                {
+                  "lineNumber": 4154,
+                  "content": "                    \"name\": \"test_search_ranking_timeout.py\""
+                },
+                {
+                  "lineNumber": 4157,
+                  "content": "                    \"name\": \"test_search_ranking.py\""
+                },
+                {
+                  "lineNumber": 4160,
+                  "content": "                    \"name\": \"test_size_and_encoding.py\""
+                },
+                {
+                  "lineNumber": 4163,
+                  "content": "                    \"name\": \"test_token_enforcement.py\""
+                },
+                {
+                  "lineNumber": 4166,
+                  "content": "                    \"name\": \"test_token_logging.py\""
+                },
+                {
+                  "lineNumber": 4169,
+                  "content": "                    \"name\": \"test_token_store_extra.py\""
+                },
+                {
+                  "lineNumber": 4284,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\","
+                },
+                {
+                  "lineNumber": 4341,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\","
+                },
+                {
+                  "lineNumber": 4344,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\","
+                },
+                {
+                  "lineNumber": 4347,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-3\","
+                },
+                {
+                  "lineNumber": 4350,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-3\\\\test_chunk_limit_truncates_and0\","
+                },
+                {
+                  "lineNumber": 4362,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-4\","
+                },
+                {
+                  "lineNumber": 4365,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-4\\\\test_chunk_limit_truncates_and0\","
+                },
+                {
+                  "lineNumber": 4377,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-5\","
+                },
+                {
+                  "lineNumber": 4380,
+                  "content": "                    \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\pytest_tmp\\\\pytest-of-FAZLEEN ANEESA\\\\pytest-5\\\\test_chunk_limit_records_manif0\","
+                },
+                {
+                  "lineNumber": 4398,
+                  "content": "        \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\","
+                },
+                {
+                  "lineNumber": 4401,
+                  "content": "            \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 4404,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\integration\","
+                },
+                {
+                  "lineNumber": 4411,
+                  "content": "                \"absPath\": \"c:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 4441,
+                  "content": "        \"name\": \"pytest.ini\""
+                },
+                {
+                  "lineNumber": 4747,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: c:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\pytest.ini&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 5174,
+                  "content": "$body = '{\"query\":\"test\",\"root_path\":\"C:\\\\some\\\\folder\"}' "
+                },
+                {
+                  "lineNumber": 5186,
+                  "content": "### 5. Run tests (optional)"
+                },
+                {
+                  "lineNumber": 5191,
+                  "content": "pytest"
+                },
+                {
+                  "lineNumber": 5194,
+                  "content": "&#96;pytest.ini&#96; sets &#96;pythonpath = offline-folder-rag&#96;, so the edge-agent package is found.  "
+                },
+                {
+                  "lineNumber": 5195,
+                  "content": "Extension contract tests (from the vscode-extension folder): &#96;npm test&#96; (runs the Mocha tests referenced in &#96;package.json&#96;)."
+                },
+                {
+                  "lineNumber": 5384,
+                  "content": "      \"uri\": \"Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\\\\mockVscode.js\","
+                },
+                {
+                  "lineNumber": 5396,
+                  "content": "      \"uri\": \"Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\\\\setup-vscode.js\","
+                },
+                {
+                  "lineNumber": 5400,
+                  "content": "      \"uri\": \"Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\vscode-extension\\\\tests\\\\setup.ts\","
+                },
+                {
+                  "lineNumber": 5858,
+                  "content": "**Step 6 – Rebuild and test**"
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-30_14-45Z-offline-rag-command-plate-issue.md",
+              "matches": [
+                {
+                  "lineNumber": 1858,
+                  "content": "The key change is correcting the main entry in package.json to ensure the command registers properly. I compiled successfully and ran tests. To activate the command, the user should reload VS Code after these updates.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2247,
+                  "content": "d-----        30-01-2026     19:40                tests                                                                "
+                },
+                {
+                  "lineNumber": 2248,
+                  "content": "d-----        30-01-2026     19:40                unittests                                                            "
+                },
+                {
+                  "lineNumber": 4492,
+                  "content": "            \".\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\.specstory\\\\history\\\\2026-01-29_07-08Z-token-enforcement-and-path-normalization-unit-tests.md\""
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-30_11-47Z-python-m-pytest-unittests-unittest-cases-test-chroma-collection-naming-py-go-this-run-these-command.md",
+              "matches": [
+                {
+                  "lineNumber": 5,
+                  "content": "# python -m pytest unittests/unittest_cases/test_chroma_collection_naming.py go this run these command (2026-01-30 11:47Z)"
+                },
+                {
+                  "lineNumber": 11,
+                  "content": "python -m pytest unittests/unittest_cases/test_chroma_collection_naming.py go this run these command"
+                }
+              ]
+            },
+            {
+              "file": ".\\repo_analysis_rag\\.specstory\\history\\2026-01-28_12-19Z-project-scaffolding-and-audit.md",
+              "matches": [
+                {
+                  "lineNumber": 11,
+                  "content": "ROLE: Senior Maintainer (Conservative). You MUST modify, not replace. Minimal diffs. Do NOT invent new top-level folders outside the given tree. If a file is missing, create it only inside the nearest correct existing folder in the tree below. Everything must be offline, deterministic, and testable. No network calls except localhost HTTP to the Edge Agent. No telemetry upload. No cloud."
+                },
+                {
+                  "lineNumber": 33,
+                  "content": "│  │  └─ test/"
+                },
+                {
+                  "lineNumber": 70,
+                  "content": "└─ tests/"
+                },
+                {
+                  "lineNumber": 83,
+                  "content": "3) Tests: deterministic unit + integration + extension contract tests."
+                },
+                {
+                  "lineNumber": 163,
+                  "content": "3) Implement Edge Agent first (token + API + indexing + tools + retrieval), then Extension (UI + routing + storage), then tests."
+                },
+                {
+                  "lineNumber": 168,
+                  "content": "7) Provide a verification plan after each change: commands to run, expected outputs, and tests to run."
+                },
+                {
+                  "lineNumber": 177,
+                  "content": "  - running extension tests and edge-agent tests"
+                },
+                {
+                  "lineNumber": 193,
+                  "content": "- Include at least one unit test each:"
+                },
+                {
+                  "lineNumber": 194,
+                  "content": "  - edge-agent token enforcement test for /health"
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "  - extension contract test verifying placeholder text exact match"
+                },
+                {
+                  "lineNumber": 310,
+                  "content": "I'm outlining a minimal FastAPI edge agent app with token-protected /health endpoint plus tests, and a minimal VS Code extension scaffold including activation and placeholder chat panel with contract test. I'm confirming dependency pinning, file placements per tree, token file logic, test approaches, and the constraint to avoid shell file ops for directory creation, considering if ApplyPatch can create needed directories automatically.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 356,
+                  "content": "**Adding tests for health token**"
+                },
+                {
+                  "lineNumber": 358,
+                  "content": "I'm creating a new test file for the health token functionality using importlib to verify its behavior.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 364,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\offline-folder-rag\\tests\\edge_agent\\unit\\test_health_token.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 435,
+                  "content": "**Adding basic placeholder text test**"
+                },
+                {
+                  "lineNumber": 437,
+                  "content": "I'm creating a Node assert test to verify the placeholder text in the extension without adding extra dependencies, placed under tests/vscode_extension/contract.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 443,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\offline-folder-rag\\tests\\vscode_extension\\contract\\placeholder_text.test.js&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 464,
+                  "content": "3. Add edge-agent unit test for &#96;/health&#96; token enforcement."
+                },
+                {
+                  "lineNumber": 466,
+                  "content": "5. Add extension contract test for exact placeholder text."
+                },
+                {
+                  "lineNumber": 471,
+                  "content": "- &#96;offline-folder-rag/tests/edge_agent/unit/test_health_token.py&#96;"
+                },
+                {
+                  "lineNumber": 476,
+                  "content": "- &#96;offline-folder-rag/tests/vscode_extension/contract/placeholder_text.test.js&#96;"
+                },
+                {
+                  "lineNumber": 484,
+                  "content": "+pytest==8.3.4"
+                },
+                {
+                  "lineNumber": 581,
+                  "content": "+++ C:/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/offline-folder-rag/tests/edge_agent/unit/test_health_token.py"
+                },
+                {
+                  "lineNumber": 587,
+                  "content": "+from fastapi.testclient import TestClient"
+                },
+                {
+                  "lineNumber": 599,
+                  "content": "+def test_health_requires_token(tmp_path, monkeypatch):"
+                },
+                {
+                  "lineNumber": 734,
+                  "content": "+++ C:/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/offline-folder-rag/tests/vscode_extension/contract/placeholder_text.test.js"
+                },
+                {
+                  "lineNumber": 763,
+                  "content": "- &#96;python -m pytest .\\offline-folder-rag\\tests\\edge_agent\\unit\\test_health_token.py&#96;"
+                },
+                {
+                  "lineNumber": 764,
+                  "content": "- &#96;node .\\offline-folder-rag\\tests\\vscode_extension\\contract\\placeholder_text.test.js&#96;"
+                },
+                {
+                  "lineNumber": 770,
+                  "content": "- Placeholder test passes with exact text &#96;Plan, @ for context, / for commands&#96;."
+                },
+                {
+                  "lineNumber": 853,
+                  "content": "            \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 856,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 859,
+                  "content": "                    \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 862,
+                  "content": "                        \"name\": \"test_health_token.py\""
+                },
+                {
+                  "lineNumber": 871,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\offline-folder-rag\\\\tests\\\\vscode_extension\","
+                },
+                {
+                  "lineNumber": 874,
+                  "content": "                    \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\","
+                },
+                {
+                  "lineNumber": 877,
+                  "content": "                        \"name\": \"placeholder_text.test.js\""
+                },
+                {
+                  "lineNumber": 1025,
+                  "content": "ROLE: Senior Maintainer (Conservative). You MUST modify, not replace. Minimal diffs. Do NOT invent new top-level folders outside the given tree. If a file is missing, create it only inside the nearest correct existing folder in the tree below. Everything must be offline, deterministic, and testable. No network calls except localhost HTTP to the Edge Agent. No telemetry upload. No cloud."
+                },
+                {
+                  "lineNumber": 1047,
+                  "content": "│  │  └─ test/"
+                },
+                {
+                  "lineNumber": 1084,
+                  "content": "└─ tests/"
+                },
+                {
+                  "lineNumber": 1097,
+                  "content": "3) Tests: deterministic unit + integration + extension contract tests."
+                },
+                {
+                  "lineNumber": 1177,
+                  "content": "3) Implement Edge Agent first (token + API + indexing + tools + retrieval), then Extension (UI + routing + storage), then tests."
+                },
+                {
+                  "lineNumber": 1182,
+                  "content": "7) Provide a verification plan after each change: commands to run, expected outputs, and tests to run."
+                },
+                {
+                  "lineNumber": 1191,
+                  "content": "  - running extension tests and edge-agent tests"
+                },
+                {
+                  "lineNumber": 1207,
+                  "content": "- Include at least one unit test each:"
+                },
+                {
+                  "lineNumber": 1208,
+                  "content": "  - edge-agent token enforcement test for /health"
+                },
+                {
+                  "lineNumber": 1209,
+                  "content": "  - extension contract test verifying placeholder text exact match"
+                },
+                {
+                  "lineNumber": 1270,
+                  "content": "            \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 1273,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 1276,
+                  "content": "                    \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 1279,
+                  "content": "                        \"name\": \"test_health_token.py\""
+                },
+                {
+                  "lineNumber": 1288,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\","
+                },
+                {
+                  "lineNumber": 1291,
+                  "content": "                    \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\","
+                },
+                {
+                  "lineNumber": 1294,
+                  "content": "                        \"name\": \"placeholder_text.test.js\""
+                },
+                {
+                  "lineNumber": 1411,
+                  "content": "        \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\","
+                },
+                {
+                  "lineNumber": 1414,
+                  "content": "            \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\","
+                },
+                {
+                  "lineNumber": 1417,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\","
+                },
+                {
+                  "lineNumber": 1420,
+                  "content": "                    \"name\": \"test_health_token.py\""
+                },
+                {
+                  "lineNumber": 1429,
+                  "content": "            \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\","
+                },
+                {
+                  "lineNumber": 1432,
+                  "content": "                \"absPath\": \"C:\\\\Users\\\\chait\\\\OneDrive\\\\Desktop\\\\office\\\\repo_analysis_rag\\\\Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\vscode_extension\\\\contract\","
+                },
+                {
+                  "lineNumber": 1435,
+                  "content": "                    \"name\": \"placeholder_text.test.js\""
+                },
+                {
+                  "lineNumber": 1527,
+                  "content": "I'm deciding to strictly include only Python dependencies from the repo (fastapi, uvicorn, pytest) in requirements.txt, since node and VSCode extensions belong elsewhere and aren't typical for this file.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1547,
+                  "content": "+pytest==8.3.4"
+                },
+                {
+                  "lineNumber": 1561,
+                  "content": "**Removing pytest from root requirements**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1646,
+                  "content": "**Removing pytest from dependencies**"
+                },
+                {
+                  "lineNumber": 1648,
+                  "content": "I'm removing pytest from the dependencies since it's not in the allowed list, not required by the PRD, and the user specified tech stacks only; I'll keep existing pinned deps first and append others alphabetically for deterministic ordering.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1828,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\pkgs\\anaconda-anon-usage-0.4.2-py311hfc23b7f_0\\info\\test\\tests\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1829,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\pkgs\\conda-23.7.4-py311haa95532_0\\Lib\\site-packages\\tests\\conda_env\\support\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1830,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\Lib\\site-packages\\tests\\conda_env\\support\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1833,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\pkgs\\y-py-0.5.9-py311hb6bf4ef_0\\info\\test\\examples\\drawing\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1834,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\pkgs\\y-py-0.5.9-py311hb6bf4ef_0\\info\\test\\docs\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1835,
+                  "content": "| &#96;../..\\..\\..\\..\\anaconda3\\pkgs\\parsel-1.6.0-py311haa95532_0\\info\\test\\tests\\requirements.txt&#96; |"
+                },
+                {
+                  "lineNumber": 1870,
+                  "content": "* Unit test: add a new test case under"
+                },
+                {
+                  "lineNumber": 1871,
+                  "content": "  &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/&#96;"
+                },
+                {
+                  "lineNumber": 1877,
+                  "content": "* Run unit tests using the repo’s standard Python unit test command."
+                },
+                {
+                  "lineNumber": 1885,
+                  "content": "* Has unit test coverage validating all three branches"
+                },
+                {
+                  "lineNumber": 1946,
+                  "content": "**Planning chunker implementation and tests**"
+                },
+                {
+                  "lineNumber": 1948,
+                  "content": "I'm figuring out how to create a new chunker module with a classify_file_type function that prioritizes &#96;.md&#96; extensions as markdown, returns \"code\" if explicitly given, or else \"other.\" I need to create the proper directories and a test file with pytest to verify these cases, all while following the constraint to only include explicitly provided code snippets.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1963,
+                  "content": "**Preparing test setup**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 1969,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\test_classification.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2001,
+                  "content": "*** Add File: C:/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/test_classification.py"
+                },
+                {
+                  "lineNumber": 2005,
+                  "content": "+def test_markdown_extension_precedence():"
+                },
+                {
+                  "lineNumber": 2010,
+                  "content": "+def test_code_type_when_not_markdown():"
+                },
+                {
+                  "lineNumber": 2015,
+                  "content": "+def test_other_when_not_code_and_not_markdown():"
+                },
+                {
+                  "lineNumber": 2045,
+                  "content": "* Unit test: add a test case under"
+                },
+                {
+                  "lineNumber": 2046,
+                  "content": "  &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/&#96;"
+                },
+                {
+                  "lineNumber": 2052,
+                  "content": "* Run unit tests using the repository’s standard Python unit test command."
+                },
+                {
+                  "lineNumber": 2056,
+                  "content": "When a file is classified as &#96;markdown&#96;, &#96;chunker.py&#96; invokes &#96;markdown_chunker.chunk(...)&#96; and no code or fallback chunking logic is executed, with unit test coverage confirming this behavior."
+                },
+                {
+                  "lineNumber": 2071,
+                  "content": "- Introduced &#96;unittests/unittest_cases/test_classification.py&#96; covering markdown precedence, code classification, and other classification paths."
+                },
+                {
+                  "lineNumber": 2088,
+                  "content": "No, MT-25.2 isn’t implemented yet—&#96;chunker.py&#96; currently contains only the new &#96;classify_file_type&#96; helper, and there’s no routing logic that calls &#96;markdown_chunker.chunk&#96; exclusively for markdown files nor any test asserting that behavior."
+                },
+                {
+                  "lineNumber": 2122,
+                  "content": "**Implementing chunker routing and tests**"
+                },
+                {
+                  "lineNumber": 2124,
+                  "content": "I’m planning to create stub modules for markdown, code, and line chunkers with simple chunk functions, then update the chunker module to route calls based on classification. To verify the routing, I’ll add a test that monkeypatches these chunk functions to confirm only the markdown chunker is invoked for markdown files, raising errors if others are called. I’ll also add an &#96;__init__.py&#96; to make the chunking directory a package and ensure imports use relative paths accordingly.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2227,
+                  "content": "**Resolving import path issues for tests**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2258,
+                  "content": "              \"file\": \"Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_health_token.py\","
+                },
+                {
+                  "lineNumber": 2284,
+                  "content": "**Renaming directory and updating test path**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2331,
+                  "content": "              \"file\": \"Zeroui_Repo_Analysis_Rag_Agent\\\\offline-folder-rag\\\\tests\\\\edge_agent\\\\unit\\\\test_health_token.py\","
+                },
+                {
+                  "lineNumber": 2357,
+                  "content": "**Updating test file path**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2362,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\tests\\edge_agent\\unit\\test_health_token.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2376,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\tests\\edge_agent\\unit\\test_health_token.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2473,
+                  "content": "**Adding tests for markdown routing**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2479,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\test_markdown_spawns_markdown_chunker.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2488,
+                  "content": "**Checking test integration and imports**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2529,
+                  "content": " M tests/edge_agent/unit/test_health_token.py"
+                },
+                {
+                  "lineNumber": 2531,
+                  "content": "?? unittests/"
+                },
+                {
+                  "lineNumber": 2622,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\test_classification.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2630,
+                  "content": "**Adding test file path check**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2635,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **read_file_v2** • Read file: C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\\unittests\\unittest_cases\\test_markdown_spawns_markdown_chunker.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2643,
+                  "content": "**Preparing to run targeted tests**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2648,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_command_v2** • Run command: cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/unittest_cases&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2651,
+                  "content": "cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/unittest_cases"
+                },
+                {
+                  "lineNumber": 2655,
+                  "content": "============================= test session starts ============================="
+                },
+                {
+                  "lineNumber": 2656,
+                  "content": "platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0"
+                },
+                {
+                  "lineNumber": 2659,
+                  "content": "asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function"
+                },
+                {
+                  "lineNumber": 2662,
+                  "content": "unittests\\unittest_cases\\test_classification.py ...                      [ 75%]"
+                },
+                {
+                  "lineNumber": 2663,
+                  "content": "unittests\\unittest_cases\\test_markdown_spawns_markdown_chunker.py .      [100%]"
+                },
+                {
+                  "lineNumber": 2688,
+                  "content": " M tests/edge_agent/unit/test_health_token.py"
+                },
+                {
+                  "lineNumber": 2690,
+                  "content": "?? unittests/"
+                },
+                {
+                  "lineNumber": 2699,
+                  "content": "**Preparing final summary and tests**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2706,
+                  "content": "- Added a markdown-routing unit test alongside the existing classification tests to verify markdown files only invoke the markdown chunker."
+                },
+                {
+                  "lineNumber": 2709,
+                  "content": "- &#96;python -m pytest unittests/unittest_cases&#96;"
+                },
+                {
+                  "lineNumber": 2715,
+                  "content": "implement only functional testcases \"CONSTRAINT A: Only include code/text explicitly provided below."
+                },
+                {
+                  "lineNumber": 2733,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/test_chunker_markdown_routing.py&#96;"
+                },
+                {
+                  "lineNumber": 2734,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/test_markdown_file_chunking_flow.py&#96;"
+                },
+                {
+                  "lineNumber": 2738,
+                  "content": "* Unit test:"
+                },
+                {
+                  "lineNumber": 2740,
+                  "content": "  * Run all tests under"
+                },
+                {
+                  "lineNumber": 2741,
+                  "content": "    &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/&#96;"
+                },
+                {
+                  "lineNumber": 2742,
+                  "content": "  * Confirm the test asserts:"
+                },
+                {
+                  "lineNumber": 2746,
+                  "content": "* Functional test:"
+                },
+                {
+                  "lineNumber": 2748,
+                  "content": "  * Run all tests under"
+                },
+                {
+                  "lineNumber": 2749,
+                  "content": "    &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/&#96;"
+                },
+                {
+                  "lineNumber": 2756,
+                  "content": "A markdown-classified file is routed exclusively to &#96;markdown_chunker.chunk(...)&#96;, with both unit and functional test coverage verifying that no code or fallback chunking logic is executed.\" Strict, careful processing demanded: no hallucination, no assumptions, no sycophancy, no fiction. Deliver 10/10 Gold Standard Quality with elimination of all false positives. Do what is asked.100% Accurate response, no inferences, no artificial."
+                },
+                {
+                  "lineNumber": 2765,
+                  "content": "**Preparing functional test for markdown chunking**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2771,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/test_markdown_file_chunking_flow.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2784,
+                  "content": "&#96;unittests/functionaltestcases/test_markdown_file_chunking_flow.py&#96;"
+                },
+                {
+                  "lineNumber": 2808,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/test_chunker_markdown_routing.py&#96;"
+                },
+                {
+                  "lineNumber": 2809,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/test_markdown_file_chunking_flow.py&#96;"
+                },
+                {
+                  "lineNumber": 2813,
+                  "content": "* Unit test:"
+                },
+                {
+                  "lineNumber": 2815,
+                  "content": "  * Run all tests under"
+                },
+                {
+                  "lineNumber": 2816,
+                  "content": "    &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/&#96;"
+                },
+                {
+                  "lineNumber": 2817,
+                  "content": "  * Confirm the test asserts:"
+                },
+                {
+                  "lineNumber": 2821,
+                  "content": "* Functional test:"
+                },
+                {
+                  "lineNumber": 2823,
+                  "content": "  * Run all tests under"
+                },
+                {
+                  "lineNumber": 2824,
+                  "content": "    &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/&#96;"
+                },
+                {
+                  "lineNumber": 2831,
+                  "content": "A markdown-classified file is routed exclusively to &#96;markdown_chunker.chunk(...)&#96;, with both unit and functional test coverage verifying that no code or fallback chunking logic is executed."
+                },
+                {
+                  "lineNumber": 2873,
+                  "content": "**Adding unit test for markdown routing**"
+                },
+                {
+                  "lineNumber": 2875,
+                  "content": "I'm proceeding to create the new unit test file verifying that only the markdown chunker is called when processing markdown files, complementing existing similar tests while keeping minimal changes in chunker and maintaining current functional tests.&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2881,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **edit_file_v2** • Edit file: C:/Users/chait/OneDrive/Desktop/office/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/test_chunker_markdown_routing.py&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2890,
+                  "content": "**Preparing to run unit and functional tests**&lt;/details&gt;&lt;/think&gt;"
+                },
+                {
+                  "lineNumber": 2895,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_command_v2** • Run command: cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/unittest_cases&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2898,
+                  "content": "cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/unittest_cases"
+                },
+                {
+                  "lineNumber": 2902,
+                  "content": "============================= test session starts ============================="
+                },
+                {
+                  "lineNumber": 2903,
+                  "content": "platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0"
+                },
+                {
+                  "lineNumber": 2906,
+                  "content": "asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function"
+                },
+                {
+                  "lineNumber": 2909,
+                  "content": "unittests\\unittest_cases\\test_chunker_markdown_routing.py .              [ 20%]"
+                },
+                {
+                  "lineNumber": 2910,
+                  "content": "unittests\\unittest_cases\\test_classification.py ...                      [ 80%]"
+                },
+                {
+                  "lineNumber": 2911,
+                  "content": "unittests\\unittest_cases\\test_markdown_spawns_markdown_chunker.py .      [100%]"
+                },
+                {
+                  "lineNumber": 2922,
+                  "content": "&lt;details&gt;&lt;summary&gt;Tool use: **run_terminal_command_v2** • Run command: cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/functionaltestcases&lt;/summary&gt;"
+                },
+                {
+                  "lineNumber": 2925,
+                  "content": "cd \"C:\\Users\\chait\\OneDrive\\Desktop\\office\\repo_analysis_rag\\Zeroui_Repo_Analysis_Rag_Agent\\offline-folder-rag\"; python -m pytest unittests/functionaltestcases"
+                },
+                {
+                  "lineNumber": 2929,
+                  "content": "============================= test session starts ============================="
+                },
+                {
+                  "lineNumber": 2930,
+                  "content": "platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0"
+                },
+                {
+                  "lineNumber": 2933,
+                  "content": "asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function"
+                },
+                {
+                  "lineNumber": 2936,
+                  "content": "unittests\\functionaltestcases\\test_markdown_file_chunking_flow.py .      [100%]"
+                },
+                {
+                  "lineNumber": 2956,
+                  "content": " M tests/edge_agent/unit/test_health_token.py"
+                },
+                {
+                  "lineNumber": 2958,
+                  "content": "?? unittests/"
+                },
+                {
+                  "lineNumber": 2968,
+                  "content": "- &#96;unittests/unittest_cases/test_chunker_markdown_routing.py&#96;"
+                },
+                {
+                  "lineNumber": 2969,
+                  "content": "- &#96;unittests/functionaltestcases/test_markdown_file_chunking_flow.py&#96;"
+                },
+                {
+                  "lineNumber": 2972,
+                  "content": "- &#96;python -m pytest unittests/unittest_cases&#96;"
+                },
+                {
+                  "lineNumber": 2973,
+                  "content": "- &#96;python -m pytest unittests/functionaltestcases&#96;"
+                },
+                {
+                  "lineNumber": 2997,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/test_chunker_code_routing.py&#96;"
+                },
+                {
+                  "lineNumber": 2998,
+                  "content": "* Create: &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/functionaltestcases/test_code_file_chunking_flow.py&#96;"
+                },
+                {
+                  "lineNumber": 3002,
+                  "content": "* Unit test:"
+                },
+                {
+                  "lineNumber": 3004,
+                  "content": "  * Run all tests under"
+                },
+                {
+                  "lineNumber": 3005,
+                  "content": "    &#96;Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/unittests/unittest_cases/&#96;"
+                }
+              ]
+            }
+          ],
+          "totalLines": 2000,
+          "totalMatchedLines": 2000,
+          "clientTruncated": true
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Cancelled
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\pytest.ini</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\.github\workflows\ci.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "pytest|test",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\.github\\workflows\\ci.yml",
+  "contextBefore": 0,
+  "contextAfter": 2,
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "pytest|test",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\.github\\workflows\\ci.yml",
+    "outputMode": "content",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "content": {
+          "matches": [
+            {
+              "file": ".github\\workflows\\ci.yml",
+              "matches": [
+                {
+                  "lineNumber": 24,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 25,
+                  "content": "    outputs:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 26,
+                  "content": "      python-cache-hit: ${{ steps.cache.outputs.cache-hit }}",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 58,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 59,
+                  "content": "    needs: setup",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 60,
+                  "content": "    steps:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 78,
+                  "content": "        run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 79,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 80,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 82,
+                  "content": "        run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/"
+                },
+                {
+                  "lineNumber": 83,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 84,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 94,
+                  "content": "        run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503"
+                },
+                {
+                  "lineNumber": 95,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 96,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 99,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 100,
+                  "content": "    needs: setup",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 101,
+                  "content": "    steps:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 126,
+                  "content": "  unit-tests:"
+                },
+                {
+                  "lineNumber": 127,
+                  "content": "    name: Unit Tests",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 128,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 129,
+                  "content": "    needs: [setup, lint, security]",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 130,
+                  "content": "    services:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 175,
+                  "content": "          pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist"
+                },
+                {
+                  "lineNumber": 176,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 177,
+                  "content": "      - name: Wait for services",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 195,
+                  "content": "      - name: Run Python unit tests"
+                },
+                {
+                  "lineNumber": 196,
+                  "content": "        run: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 197,
+                  "content": "          pytest tests/confluence/ tests/edge_agent/unit/ \\"
+                },
+                {
+                  "lineNumber": 198,
+                  "content": "            --junitxml=test-results-unit.xml \\"
+                },
+                {
+                  "lineNumber": 199,
+                  "content": "            -v --tb=short",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 200,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 201,
+                  "content": "      - name: Run Python integration tests"
+                },
+                {
+                  "lineNumber": 202,
+                  "content": "        run: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 203,
+                  "content": "          pytest tests/edge_agent/integration/ \\"
+                },
+                {
+                  "lineNumber": 204,
+                  "content": "            --junitxml=test-results-integration.xml \\"
+                },
+                {
+                  "lineNumber": 205,
+                  "content": "            -v --tb=short",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 206,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 208,
+                  "content": "      - name: Run Python functional tests"
+                },
+                {
+                  "lineNumber": 209,
+                  "content": "        if: hashFiles('tests/functional/**') != ''"
+                },
+                {
+                  "lineNumber": 210,
+                  "content": "        run: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 211,
+                  "content": "          pytest tests/functional/ \\"
+                },
+                {
+                  "lineNumber": 212,
+                  "content": "            --junitxml=test-results-functional.xml \\"
+                },
+                {
+                  "lineNumber": 213,
+                  "content": "            -v --tb=short",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 214,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 216,
+                  "content": "      - name: Run Python e2e tests"
+                },
+                {
+                  "lineNumber": 217,
+                  "content": "        if: hashFiles('tests/e2e/**') != ''"
+                },
+                {
+                  "lineNumber": 218,
+                  "content": "        run: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 219,
+                  "content": "          pytest tests/e2e/ \\"
+                },
+                {
+                  "lineNumber": 220,
+                  "content": "            --junitxml=test-results-e2e.xml \\"
+                },
+                {
+                  "lineNumber": 221,
+                  "content": "            -v --tb=short",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 222,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 237,
+                  "content": "      - name: Run TypeScript unit tests"
+                },
+                {
+                  "lineNumber": 238,
+                  "content": "        working-directory: offline-folder-rag/vscode-extension",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 239,
+                  "content": "        run: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 241,
+                  "content": "            npx jest --testPathPattern=\"__tests__|tests\" --no-cache"
+                },
+                {
+                  "lineNumber": 242,
+                  "content": "          else",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 243,
+                  "content": "            echo \"No Jest config; skipping TypeScript tests\""
+                },
+                {
+                  "lineNumber": 244,
+                  "content": "          fi",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 245,
+                  "content": "        continue-on-error: true",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 247,
+                  "content": "      - name: Upload test results"
+                },
+                {
+                  "lineNumber": 248,
+                  "content": "        uses: actions/upload-artifact@v4",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 249,
+                  "content": "        if: always()",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 251,
+                  "content": "          name: test-results"
+                },
+                {
+                  "lineNumber": 252,
+                  "content": "          path: |",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 253,
+                  "content": "            test-results-unit.xml"
+                },
+                {
+                  "lineNumber": 254,
+                  "content": "            test-results-integration.xml"
+                },
+                {
+                  "lineNumber": 255,
+                  "content": "            test-results-functional.xml"
+                },
+                {
+                  "lineNumber": 256,
+                  "content": "            test-results-e2e.xml"
+                },
+                {
+                  "lineNumber": 257,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 258,
+                  "content": "  build-docker:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 260,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 261,
+                  "content": "    needs: [lint, security, unit-tests]"
+                },
+                {
+                  "lineNumber": 262,
+                  "content": "    if: github.event_name == 'push' || github.event.inputs.deploy_docker == 'true'",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 263,
+                  "content": "    permissions:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 291,
+                  "content": "            type=raw,value=staging-latest"
+                },
+                {
+                  "lineNumber": 292,
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 293,
+                  "content": "      - name: Set image output",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 314,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 315,
+                  "content": "    needs: build-docker",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 316,
+                  "content": "    if: success()",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 356,
+                  "content": "    runs-on: ubuntu-latest"
+                },
+                {
+                  "lineNumber": 357,
+                  "content": "    if: always()",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 358,
+                  "content": "    needs: [lint, security, unit-tests, build-docker, verify-staging-deployment]"
+                },
+                {
+                  "lineNumber": 359,
+                  "content": "    permissions:",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 360,
+                  "content": "      contents: read",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 371,
+                  "content": "          echo \"Unit Tests: ${{ needs.unit-tests.result }}\""
+                },
+                {
+                  "lineNumber": 372,
+                  "content": "          echo \"Build Docker: ${{ needs.build-docker.result }}\"",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 373,
+                  "content": "          echo \"Verify Staging: ${{ needs.verify-staging-deployment.result }}\"",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 378,
+                  "content": "          [ \"${{ needs.unit-tests.result }}\" = \"failure\" ] &amp;&amp; FAILED=1"
+                },
+                {
+                  "lineNumber": 379,
+                  "content": "          [ \"${{ needs.build-docker.result }}\" = \"failure\" ] &amp;&amp; FAILED=1",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 380,
+                  "content": "          [ \"${{ needs.verify-staging-deployment.result }}\" = \"failure\" ] &amp;&amp; FAILED=1",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 411,
+                  "content": "            - Unit Tests: ${{ needs.unit-tests.result }}"
+                },
+                {
+                  "lineNumber": 412,
+                  "content": "            - Build Docker: ${{ needs.build-docker.result }}",
+                  "isContextLine": true
+                },
+                {
+                  "lineNumber": 413,
+                  "content": "            - Verify Staging: ${{ needs.verify-staging-deployment.result }}",
+                  "isContextLine": true
+                }
+              ]
+            }
+          ],
+          "totalLines": 95,
+          "totalMatchedLines": 41
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+Use these to run tests locally:
+
+**Unit tests (Confluence + edge_agent):**
+```bash
+pytest tests/confluence/ tests/edge_agent/unit/ -v --tb=short
+```
+
+**With Python module:**
+```bash
+python -m pytest tests/confluence/ tests/edge_agent/unit/ -v --tb=short
+```
+
+**Single Confluence test file:**
+```bash
+python -m pytest tests/confluence/test_api_prd_format.py tests/confluence/test_api_router.py -v
+```
+
+**Integration tests:**
+```bash
+pytest tests/edge_agent/integration/ -v --tb=short
+```
+
+From the repo root, install deps first if needed: `pip install -r confluence_requirements.txt` (and `requirements.txt` / `offline-folder-rag/requirements.txt` as needed).
+
+---
+
+_**User**_
+
+i need to run my prd complimet endpoint one give me the command accordliy
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "pattern": "prd|PRD|endpoint",
+  "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence",
+  "glob": "*.py",
+  "outputMode": "files_with_matches",
+  "caseInsensitive": false
+}
+```
+Result:
+
+```json
+{
+  "success": {
+    "pattern": "prd|PRD|endpoint",
+    "path": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence",
+    "outputMode": "files_with_matches",
+    "workspaceResults": {
+      "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent": {
+        "files": {
+          "files": [
+            "tests\\confluence\\test_performance_targets.py"
+          ],
+          "totalFiles": 1
+        }
+      }
+    }
+  }
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_prd_compliance.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_api_prd_format.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_api_router.py</summary>
 
 </details>
 </tool-use>
@@ -51,14 +9703,347 @@ Parameters:
 
 ```json
 {
-  "targetDirectory": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent"
+  "targetDirectory": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence"
 }
 ```
-Status: **loading**
+Result:
+
+```json
+{
+  "directoryTreeRoot": {
+    "absPath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\tests\\confluence",
+    "childrenFiles": [
+      {
+        "name": "__init__.py"
+      },
+      {
+        "name": "test_api_prd_format.py"
+      },
+      {
+        "name": "test_api_router.py"
+      },
+      {
+        "name": "test_client_auth.py"
+      },
+      {
+        "name": "test_e2e_workflows.py"
+      },
+      {
+        "name": "test_imports.py"
+      },
+      {
+        "name": "test_intelligence_learning.py"
+      },
+      {
+        "name": "test_page_tracker.py"
+      },
+      {
+        "name": "test_performance_targets.py"
+      },
+      {
+        "name": "test_prd_compliance.py"
+      },
+      {
+        "name": "test_reliability.py"
+      },
+      {
+        "name": "test_security_compliance.py"
+      },
+      {
+        "name": "test_state_machine.py"
+      },
+      {
+        "name": "test_templates.py"
+      }
+    ],
+    "childrenWereProcessed": true
+  }
+}
+```
+Status: **completed**
 
 
 </details>
 </tool-use>
+
+---
+
+
+Use this to run the PRD-compliant endpoint tests:
+
+```bash
+python -m pytest tests/confluence/test_api_prd_format.py tests/confluence/test_api_router.py tests/confluence/test_prd_compliance.py -v
+```
+
+From the repo root, with deps installed (e.g. `pip install -r confluence_requirements.txt`).
+
+---
+
+_**User**_
+
+Run pytest tests/confluence/ tests/edge_agent/unit/ \
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.14/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent
+configfile: pytest.ini
+plugins: cov-7.0.0, xdist-3.8.0, asyncio-1.3.0, mock-3.15.1, anyio-4.12.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 24 items
+
+tests/confluence/test_api_prd_format.py::test_placeholder PASSED         [  4%]
+tests/confluence/test_api_router.py::test_placeholder PASSED             [  8%]
+tests/confluence/test_client_auth.py::test_placeholder PASSED            [ 12%]
+tests/confluence/test_e2e_workflows.py::test_placeholder PASSED          [ 16%]
+tests/confluence/test_imports.py::test_placeholder PASSED                [ 20%]
+tests/confluence/test_intelligence_learning.py::test_placeholder PASSED  [ 25%]
+tests/confluence/test_page_tracker.py::test_placeholder PASSED           [ 29%]
+tests/confluence/test_performance_targets.py::test_analysis_time_under_3_seconds_per_file PASSED [ 33%]
+tests/confluence/test_performance_targets.py::test_template_selection_under_2_seconds PASSED [ 37%]
+tests/confluence/test_performance_targets.py::test_creation_time_under_15_seconds_including_api PASSED [ 41%]
+tests/confluence/test_performance_targets.py::test_memory_under_300mb_during_operation PASSED [ 45%]
+tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling FAILED [ 50%]
+tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict FAILED [ 54%]
+tests/confluence/test_performance_targets.py::test_resource_sharing_memory_limit PASSED [ 58%]
+tests/confluence/test_performance_targets.py::test_existing_rag_features_unchanged PASSED [ 62%]
+tests/confluence/test_performance_targets.py::test_prd_monitor_timers_and_record PASSED [ 66%]
+tests/confluence/test_performance_targets.py::test_optimizer_suggestions PASSED [ 70%]
+tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics FAILED [ 75%]
+tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation FAILED [ 79%]
+tests/confluence/test_prd_compliance.py::test_placeholder PASSED         [ 83%]
+tests/confluence/test_reliability.py::test_placeholder PASSED            [ 87%]
+tests/confluence/test_security_compliance.py::test_placeholder PASSED    [ 91%]
+tests/confluence/test_state_machine.py::test_placeholder PASSED          [ 95%]
+tests/confluence/test_templates.py::test_placeholder PASSED              [100%]
+
+=================================== FAILURES ===================================
+___________________ test_memory_exhaustion_graceful_handling ___________________
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:38: in <module>
+    import httpx
+E   ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+tests/confluence/test_performance_targets.py:78: in test_memory_exhaustion_graceful_handling
+    from fastapi.testclient import TestClient
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/testclient.py:1: in <module>
+    from starlette.testclient import TestClient as TestClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:40: in <module>
+    raise RuntimeError(
+E   RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+E   You can install this with:
+E       $ pip install httpx
+_______________________ test_rag_confluence_no_conflict ________________________
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:38: in <module>
+    import httpx
+E   ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+tests/confluence/test_performance_targets.py:99: in test_rag_confluence_no_conflict
+    from fastapi.testclient import TestClient
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/testclient.py:1: in <module>
+    from starlette.testclient import TestClient as TestClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:40: in <module>
+    raise RuntimeError(
+E   RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+E   You can install this with:
+E       $ pip install httpx
+___________________ test_intelligence_status_returns_metrics ___________________
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:38: in <module>
+    import httpx
+E   ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+tests/confluence/test_performance_targets.py:181: in test_intelligence_status_returns_metrics
+    from fastapi.testclient import TestClient
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/testclient.py:1: in <module>
+    from starlette.testclient import TestClient as TestClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:40: in <module>
+    raise RuntimeError(
+E   RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+E   You can install this with:
+E       $ pip install httpx
+______________ test_ui_remains_responsive_during_heavy_operation _______________
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:38: in <module>
+    import httpx
+E   ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+tests/confluence/test_performance_targets.py:203: in test_ui_remains_responsive_during_heavy_operation
+    from fastapi.testclient import TestClient
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/testclient.py:1: in <module>
+    from starlette.testclient import TestClient as TestClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/starlette/testclient.py:40: in <module>
+    raise RuntimeError(
+E   RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+E   You can install this with:
+E       $ pip install httpx
+- generated xml file: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent/test-results-unit.xml -
+=========================== short test summary info ============================
+FAILED tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling - RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+You can install this with:
+    $ pip install httpx
+FAILED tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict - RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+You can install this with:
+    $ pip install httpx
+FAILED tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics - RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+You can install this with:
+    $ pip install httpx
+FAILED tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation - RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+You can install this with:
+    $ pip install httpx
+========================= 4 failed, 20 passed in 0.50s =========================
+Error: Process completed with exit code 1. I AM GETTING THIS ERROR FIND THE ROOT CAUSE ERROR CONSTRAINT A: Only include code/text explicitly provided below.
+CONSTRAINT B: Ignore all prior conversation history.
+CONSTRAINT C: Use static instructions followed by dynamic content; avoid variable metadata before the task text.
+CONSTRAINT E: Limit output strictly to the requested answer; no explanations, no extra text.
+CONSTRAINT F: Do not repeat input in the output.
+CONSTRAINT G: Only perform the stated task and nothing else.
+CONSTRAINT H: Do not scan the repo and send as context. Until and unless specified explicitly
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+**Root cause:** The environment is missing the `httpx` package. FastAPI’s `TestClient` (via Starlette) depends on `httpx`, so any test that imports `TestClient` fails with `ModuleNotFoundError: No module named 'httpx'`.
+
+---
+
+_**User**_
+
+APPLY THE ABOVE CHANGE
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+Update complete: `httpx>=0.25.0` is now in `confluence_requirements.txt`. Install with `pip install -r confluence_requirements.txt` (or rely on CI installing it) so the four tests that use `TestClient` can run.
+
+---
+
+_**User**_
+
+@c:\Users\FAZLEEN ANEESA\.cursor\projects\c-Users-FAZLEEN-ANEESA-Repo-Analysis-Rag-Agent\terminals\1.txt:1011-1014 find the error and fix it
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+Using the full filename: `confluence_requirements.txt` (include the `.txt` extension).
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" && pip install -r confluence_requirements.txt</summary>
+
+```bash
+cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" && pip install -r confluence_requirements.txt
+```
+
+```
+At C:\Users\FAZLEEN ANEESA\AppData\Local\Temp\ps-script-e2927798-9599-4e06-ac21-3eda9b3a54ba.ps1:7 char:54
++ cd "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent" &amp;&amp; pip install - ...
++                                                      ~~
+The token '&amp;&amp;' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidEndOfLine
+ 
+
+```
+</details>
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: pip install -r "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt"</summary>
+
+```bash
+pip install -r "c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt"
+```
+
+```
+Requirement already satisfied: fastapi&gt;=0.104.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from -r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (0.115.6)
+Requirement already satisfied: uvicorn&gt;=0.24.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (0.30.6)
+Requirement already satisfied: pydantic&gt;=2.0.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from -r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 4)) (2.12.3)
+Requirement already satisfied: httpx&gt;=0.25.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from -r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 5)) (0.27.0)
+Requirement already satisfied: starlette&lt;0.42.0,&gt;=0.40.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from fastapi&gt;=0.104.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (0.41.3)
+Requirement already satisfied: typing-extensions&gt;=4.8.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from fastapi&gt;=0.104.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (4.15.0)
+Requirement already satisfied: annotated-types&gt;=0.6.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from pydantic&gt;=2.0.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 4)) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.4 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from pydantic&gt;=2.0.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 4)) (2.41.4)
+Requirement already satisfied: typing-inspection&gt;=0.4.2 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from pydantic&gt;=2.0.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 4)) (0.4.2)
+Requirement already satisfied: anyio&lt;5,&gt;=3.4.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from starlette&lt;0.42.0,&gt;=0.40.0-&gt;fastapi&gt;=0.104.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (3.7.1)
+Requirement already satisfied: idna&gt;=2.8 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from anyio&lt;5,&gt;=3.4.0-&gt;starlette&lt;0.42.0,&gt;=0.40.0-&gt;fastapi&gt;=0.104.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (3.11)
+Requirement already satisfied: sniffio&gt;=1.1 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from anyio&lt;5,&gt;=3.4.0-&gt;starlette&lt;0.42.0,&gt;=0.40.0-&gt;fastapi&gt;=0.104.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 2)) (1.3.1)
+Requirement already satisfied: click&gt;=7.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn&gt;=0.24.0-&gt;uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (8.3.1)
+Requirement already satisfied: h11&gt;=0.8 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn&gt;=0.24.0-&gt;uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (0.16.0)
+Requirement already satisfied: certifi in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from httpx&gt;=0.25.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 5)) (2025.11.12)
+Requirement already satisfied: httpcore==1.* in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from httpx&gt;=0.25.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 5)) (1.0.9)
+Requirement already satisfied: colorama in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from click&gt;=7.0-&gt;uvicorn&gt;=0.24.0-&gt;uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (0.4.6)
+Requirement already satisfied: httptools&gt;=0.5.0 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (0.7.1)
+Requirement already satisfied: python-dotenv&gt;=0.13 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (1.2.1)
+Requirement already satisfied: pyyaml&gt;=5.1 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (6.0.3)
+Requirement already satisfied: watchfiles&gt;=0.13 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (1.1.1)
+Requirement already satisfied: websockets&gt;=10.4 in c:\users\fazleen aneesa\appdata\local\programs\python\python311\lib\site-packages (from uvicorn[standard]&gt;=0.24.0-&gt;-r c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt (line 3)) (15.0.1)
+
+```
+</details>
+</tool-use>
+
+---
+
+
+**Cause:** The requirements file was referenced without the `.txt` extension. Pip needs the full filename.
+
+**Correct command (from the repo root):**
+```powershell
+pip install -r confluence_requirements.txt
+```
+
+Install has been run with that command and completed successfully.
 
 ---
 
