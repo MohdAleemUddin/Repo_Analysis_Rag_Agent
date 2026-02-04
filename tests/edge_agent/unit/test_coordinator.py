@@ -84,11 +84,14 @@ def test_run_analyze_success(mock_match, mock_analyze, mock_start, mock_mem):
         template_name="T1",
         intelligence_score=0.9,
         ai_reasoning="",
+        intelligence_reason="Matches 1 similar successful examples",
         confidence_breakdown={"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9},
     )
     out = run_analyze(["def foo(): pass"])
-    assert "analyses" in out
-    assert "template" in out
+    assert "intelligence_analysis" in out
+    assert "intelligent_recommendation" in out
+    assert out["intelligence_analysis"]["intelligence_confidence"] == 0.9
+    assert out["intelligent_recommendation"]["template_name"] == "T1"
 
 
 @patch("app.agents.coordinator.check_memory_before_step", return_value=True)
