@@ -4,11 +4,16 @@ import re
 
 MASK = "***MASKED***"
 _token_pattern = re.compile(r"(api[_-]?token|password|secret|auth)\s*[=:]\s*[\w\-]+", re.I)
+_bearer_pattern = re.compile(r"Bearer\s+[\w\-\.]+", re.I)
+_token_param_pattern = re.compile(r"token=[\w\-\.]+", re.I)
 
 
 def mask_tokens(msg: str) -> str:
     """Mask API tokens and secrets in log messages (NFR3)."""
-    return _token_pattern.sub(r"\1=***MASKED***", msg)
+    s = _token_pattern.sub(r"\1=***MASKED***", msg)
+    s = _bearer_pattern.sub("Bearer ***MASKED***", s)
+    s = _token_param_pattern.sub("token=***MASKED***", s)
+    return s
 
 
 class TokenMaskingFilter(logging.Filter):
