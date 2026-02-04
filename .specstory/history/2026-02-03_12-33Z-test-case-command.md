@@ -10521,3 +10521,127 @@ Running the requests isinstance check first so requests ConnectionError is alway
 
 ---
 
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\edge_agent\\app\\confluence\\error_handler.py"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\edge_agent\\app\\confluence\\error_handler.py"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+Update is in place. In `_classify`, the `isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout))` check now runs first, so `requests.exceptions.ConnectionError` is always classified as `"network"` before any type-name or message checks. That should resolve the failing test.
+
+---
+
+_**User**_
+
+Run pytest tests/confluence/ tests/edge_agent/unit/ \
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.14/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent
+configfile: pytest.ini
+plugins: cov-7.0.0, xdist-3.8.0, asyncio-1.3.0, mock-3.15.1, anyio-4.12.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 42 items
+
+tests/confluence/test_api_prd_format.py::test_placeholder PASSED         [  2%]
+tests/confluence/test_api_router.py::test_placeholder PASSED             [  4%]
+tests/confluence/test_client_auth.py::test_placeholder PASSED            [  7%]
+tests/confluence/test_e2e_workflows.py::test_placeholder PASSED          [  9%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry FAILED [ 11%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_007_rate_limit_handling PASSED [ 14%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_003_invalid_credentials_fail_cleanly PASSED [ 16%]
+tests/confluence/test_error_recovery.py::test_TC_ST_006_retry_state_transitions_correct PASSED [ 19%]
+tests/confluence/test_error_recovery.py::test_TC_DT_007_integration_agent_error_recovery_logic PASSED [ 21%]
+tests/confluence/test_error_recovery.py::test_TC_EH_008_encoding_issue_prd_format_response PASSED [ 23%]
+tests/confluence/test_error_recovery.py::test_TC_EH_007_invalid_template_format_graceful_handling PASSED [ 26%]
+tests/confluence/test_error_recovery.py::test_TC_EH_006_confluence_api_404_graceful_handling PASSED [ 28%]
+tests/confluence/test_error_recovery.py::test_TC_EH_005_permission_denied_clear_guidance PASSED [ 30%]
+tests/confluence/test_error_recovery.py::test_TC_EH_009_db_connection_lost_graceful_recovery_option PASSED [ 33%]
+tests/confluence/test_error_recovery.py::test_TC_EH_010_intelligence_error_graceful_failure PASSED [ 35%]
+tests/confluence/test_error_recovery.py::test_TC_EH_011_template_matching_error_graceful_fallback PASSED [ 38%]
+tests/confluence/test_error_recovery.py::test_TC_EH_012_agent_coordination_error_recover_gracefully PASSED [ 40%]
+tests/confluence/test_error_recovery.py::test_TC_EH_001_confluence_down_no_corruption_clear_messaging PASSED [ 42%]
+tests/confluence/test_error_recovery.py::test_TC_EH_002_invalid_credentials_no_corruption_clear_messaging PASSED [ 45%]
+tests/confluence/test_error_recovery.py::test_TC_EH_003_disk_full_no_corruption_clear_messaging PASSED [ 47%]
+tests/confluence/test_error_recovery.py::test_TC_SC_004_handling_network_issues_graceful_recovery PASSED [ 50%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_014_mcp_task_failure_graceful_recovery_option PASSED [ 52%]
+tests/confluence/test_imports.py::test_placeholder PASSED                [ 54%]
+tests/confluence/test_intelligence_learning.py::test_placeholder PASSED  [ 57%]
+tests/confluence/test_page_tracker.py::test_placeholder PASSED           [ 59%]
+tests/confluence/test_performance_targets.py::test_analysis_time_under_3_seconds_per_file PASSED [ 61%]
+tests/confluence/test_performance_targets.py::test_template_selection_under_2_seconds PASSED [ 64%]
+tests/confluence/test_performance_targets.py::test_creation_time_under_15_seconds_including_api PASSED [ 66%]
+tests/confluence/test_performance_targets.py::test_memory_under_300mb_during_operation PASSED [ 69%]
+tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling PASSED [ 71%]
+tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict PASSED [ 73%]
+tests/confluence/test_performance_targets.py::test_resource_sharing_memory_limit PASSED [ 76%]
+tests/confluence/test_performance_targets.py::test_existing_rag_features_unchanged PASSED [ 78%]
+tests/confluence/test_performance_targets.py::test_prd_monitor_timers_and_record PASSED [ 80%]
+tests/confluence/test_performance_targets.py::test_optimizer_suggestions PASSED [ 83%]
+tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics PASSED [ 85%]
+tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation PASSED [ 88%]
+tests/confluence/test_prd_compliance.py::test_placeholder PASSED         [ 90%]
+tests/confluence/test_reliability.py::test_placeholder PASSED            [ 92%]
+tests/confluence/test_security_compliance.py::test_placeholder PASSED    [ 95%]
+tests/confluence/test_state_machine.py::test_placeholder PASSED          [ 97%]
+tests/confluence/test_templates.py::test_placeholder PASSED              [100%]
+
+=================================== FAILURES ===================================
+__________________ test_TC_NEG_004_network_failure_auto_retry __________________
+tests/confluence/test_error_recovery.py:28: in test_TC_NEG_004_network_failure_auto_retry
+    assert out.get("category") == "network"
+E   AssertionError: assert 'other' == 'network'
+E     
+E     - network
+E     + other
+- generated xml file: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent/test-results-unit.xml -
+=========================== short test summary info ============================
+FAILED tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry - AssertionError: assert 'other' == 'network'
+  
+  - network
+  + other
+========================= 1 failed, 41 passed in 7.52s =========================
+Error: Process completed with exit code 1.still its failing in fix the errorCONSTRAINT A: Only include code/text explicitly provided below.
+CONSTRAINT B: Ignore all prior conversation history.
+CONSTRAINT C: Use static instructions followed by dynamic content; avoid variable metadata before the task text.
+CONSTRAINT E: Limit output strictly to the requested answer; no explanations, no extra text.
+CONSTRAINT F: Do not repeat input in the output.
+CONSTRAINT G: Only perform the stated task and nothing else.
+CONSTRAINT H: Do not scan the repo and send as context. Until and unless specified explicitly
+
+---
+

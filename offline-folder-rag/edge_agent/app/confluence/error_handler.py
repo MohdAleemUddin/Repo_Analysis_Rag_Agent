@@ -105,14 +105,18 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
-    # Network: requests exceptions first (so CI always classifies ConnectionError as network)
+    # Network: by class module+name (works without importing requests in this process)
+    exc_type = type(exc)
+    mod = getattr(exc_type, "__module__", "") or ""
+    t = exc_type.__name__
+    if "requests" in mod and ("Connection" in t or "Timeout" in t):
+        return "network"
     try:
         import requests.exceptions as req_exc
         if isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout)):
             return "network"
     except ImportError:
         pass
-    t = type(exc).__name__
     msg = str(exc).lower()
     if "ConnectionError" in t or "Timeout" in t or "ConnectTimeout" in t or "ReadTimeout" in t:
         return "network"
