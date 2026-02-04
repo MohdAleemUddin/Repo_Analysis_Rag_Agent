@@ -217,28 +217,51 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-# POST /confluence/intelligent-create
+# POST /confluence/intelligent-create (PRD §9.1: files, intelligent_mode, auto_title, space, intelligence_context)
 def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
-    """Create: check memory, run coordinator.run_create (e2e timed), then learning."""
+    """Create: check memory, resolve title from auto_title/title_override, run coordinator.run_create."""
     if not check_memory_before_step():
         return _memory_limit_response()
 
     start_operation()
     base_url = body.get("base_url", "")
-    space_key = body.get("space_key", "DOC")
-    title = body.get("title", "Untitled")
-    content = body.get("content", "") or body.get("body_content", "")
+    space_key = body.get("space") or body.get("space_key", "DOC")
     auth = body.get("auth")  # (email, api_token) or None
     feedback = body.get("feedback_for_learning", "")
+    intelligence_context = body.get("intelligence_context") or {}
+    auto_title = body.get("auto_title", True)
+    if auto_title:
+        title = (
+            intelligence_context.get("suggested_title")
+            or body.get("suggested_title")
+            or body.get("title", "Untitled")
+        )
+    else:
+        title = (
+            intelligence_context.get("title_override")
+            or body.get("title", "Untitled")
+        )
+    title = (title or "Untitled").strip() or "Untitled"
+
+    files = body.get("files") or []
+    if isinstance(files, list) and files and not isinstance(files[0], str):
+        file_contents = [
+            c.get("content", "") if isinstance(c, dict) else str(c)
+            for c in files
+        ]
+    else:
+        file_contents = [c for c in files if isinstance(c, str)] if files else []
+    content = body.get("content", "") or body.get("body_content", "")
 
     try:
         result = run_create(
             base_url=base_url,
             space_key=space_key,
             title=title,
-            body_content=content,
+            body_content=content if not file_contents else "",
             auth=auth,
             feedback_for_learning=feedback,
+            file_contents=file_contents if file_contents else None,
         )
     except Exception as e:
         logger.exception("intelligent-create failed: %s", e)
@@ -267,13 +290,19 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def _error_response(message: str, intelligence_suggestion: str = "", fallback_available: bool = False) -> tuple:
+def _error_response(
+    message: str,
+    intelligence_suggestion: str = "",
+    fallback_available: bool = False,
+    intelligence_confidence: float = 0.0,
+) -> tuple:
     """PRD §9.2 exact error format."""
     return {
         "error": "intelligence_error",
         "message": message,
         "intelligence_suggestion": intelligence_suggestion or "Check request format and try again.",
         "fallback_available": fallback_available,
+        "intelligence_confidence": intelligence_confidence,
     }, 400
 
 

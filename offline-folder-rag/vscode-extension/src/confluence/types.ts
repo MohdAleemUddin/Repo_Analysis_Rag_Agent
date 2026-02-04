@@ -1,3 +1,12 @@
+export type ConfluencePlaceholder = unknown;
+
+/** PRD §9.1 analyze response */
+export interface ConfidenceBreakdown {
+  content_match: number;
+  structure_match: number;
+  context_match: number;
+}
+
 export interface IntelligenceAnalysis {
   content_types: string[];
   detected_patterns: string[];
@@ -20,6 +29,25 @@ export interface IntelligentRecommendation {
 export interface AnalyzeResponse {
   intelligence_analysis: IntelligenceAnalysis;
   intelligent_recommendation: IntelligentRecommendation;
+  performance?: Record<string, unknown>;
+  optimization_suggestions?: unknown[];
+}
+
+/** PRD §9.1 create request */
+export interface IntelligenceContext {
+  title_override?: string;
+  suggested_title?: string;
+}
+
+export interface CreateRequest {
+  files: string[] | Array<{ content: string }>;
+  intelligent_mode: boolean;
+  auto_title: boolean;
+  space: string;
+  intelligence_context?: IntelligenceContext;
+  base_url?: string;
+  auth?: [string, string];
+  suggested_title?: string;
 }
 
 export interface IntelligenceSummary {
@@ -46,6 +74,15 @@ export interface CreateResponse {
   success: boolean;
   intelligence_summary: IntelligenceSummary;
   intelligent_page: IntelligentPage;
+}
+
+/** PRD §9.2 error contract */
+export interface IntelligenceErrorResponse {
+  error: 'intelligence_error';
+  message: string;
+  intelligence_suggestion: string;
+  fallback_available: boolean;
+  intelligence_confidence?: number;
 }
 
 export interface ErrorResponse {

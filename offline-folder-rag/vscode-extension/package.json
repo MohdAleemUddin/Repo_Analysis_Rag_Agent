@@ -48,6 +48,16 @@
           "group": "confluence@1"
         }
       ]
+    },
+    "configuration": {
+      "title": "Confluence",
+      "properties": {
+        "confluence.apiBaseUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "Base URL for Confluence API (e.g. http://localhost:8000)"
+        }
+      }
     }
   },
   "devDependencies": {

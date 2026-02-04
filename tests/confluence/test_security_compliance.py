@@ -127,3 +127,61 @@ def test_verify_confluence_security_all_passing() -> None:
     assert results["https_enforcement"] is True
     assert results["token_masking"] is True
     assert results["uses_credential_store"] is True
+
+
+def test_verify_confluence_security_value_error_wrong_message() -> None:
+    """Cover except ValueError when message does not contain 'must use HTTPS' (line 26 False branch)."""
+    from unittest.mock import patch
+
+    import app.confluence.client as client_mod
+    from app.confluence.verification import verify_confluence_security
+
+    with patch.object(client_mod, "create_page", side_effect=ValueError("other error")):
+        results = verify_confluence_security()
+    assert results["https_enforcement"] is False
+
+
+def test_verify_confluence_security_https_enforcement_true_via_value_error() -> None:
+    """Cover line 27: except ValueError with 'must use HTTPS' in message sets https_enforcement True."""
+    from unittest.mock import patch
+
+    import app.confluence.client as client_mod
+    from app.confluence.verification import verify_confluence_security
+
+    with patch.object(client_mod, "create_page", side_effect=ValueError("must use HTTPS")):
+        results = verify_confluence_security()
+    assert results["https_enforcement"] is True
+
+
+def test_verify_confluence_security_https_block_raises_non_value_error() -> None:
+    """Cover line 28: except Exception in first try block (e.g. import or create_page raises)."""
+    from unittest.mock import patch
+
+    import app.confluence.client as client_mod
+    from app.confluence.verification import verify_confluence_security
+
+    with patch.object(client_mod, "create_page", side_effect=RuntimeError("mock")):
+        results = verify_confluence_security()
+    assert results["https_enforcement"] is False
+
+
+def test_verify_confluence_security_token_masking_raises() -> None:
+    """Cover except Exception in token_masking block."""
+    from unittest.mock import patch
+
+    from app.confluence.verification import verify_confluence_security
+
+    with patch("app.logging.logger.mask_tokens", side_effect=RuntimeError("mock")):
+        results = verify_confluence_security()
+    assert results["token_masking"] is False
+
+
+def test_verify_confluence_security_credential_store_raises() -> None:
+    """Cover except Exception in credential store block."""
+    from unittest.mock import patch
+
+    from app.confluence.verification import verify_confluence_security
+
+    with patch("app.config.config.get_confluence_config", side_effect=RuntimeError("mock")):
+        results = verify_confluence_security()
+    assert results["uses_credential_store"] is False

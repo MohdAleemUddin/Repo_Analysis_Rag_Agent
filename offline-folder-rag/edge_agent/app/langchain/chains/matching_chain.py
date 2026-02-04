@@ -22,6 +22,7 @@ def run_matching(
         "template_name": "",
         "intelligence_score": 0.0,
         "ai_reasoning": "",
+        "intelligence_reason": "",
         "confidence_breakdown": {
             "content_match": 0.0,
             "structure_match": 0.0,
@@ -46,12 +47,15 @@ def run_matching(
         content_match + structure_match + context_match
     ) / 3.0
     result["ai_reasoning"] = "Rule-based match from content and structure signals."
+    result["intelligence_reason"] = "Rule-based match from content and structure signals."
 
     # Vector similarity when store available (placeholder: no store = use default)
     if vector_store is not None and hasattr(vector_store, "similarity_search"):
         try:
-            docs = vector_store.similarity_search(content, k=1)
+            docs = vector_store.similarity_search(content, k=8)
             if docs:
+                n = len(docs)
+                result["intelligence_reason"] = f"Matches {n} similar successful examples."
                 first = docs[0]
                 tid = getattr(first, "metadata", {}) or {}
                 if isinstance(first, dict):
@@ -67,4 +71,6 @@ def run_matching(
     if not result["template_id"]:
         result["template_id"] = "default"
         result["template_name"] = "Default"
+        if not result["intelligence_reason"]:
+            result["intelligence_reason"] = "No template match; using default template."
     return result

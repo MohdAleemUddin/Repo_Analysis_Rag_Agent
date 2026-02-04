@@ -11,9 +11,9 @@ interface ConfluenceResultsProps {
   onCancel?: () => void;
 }
 
-export const ConfluenceResults: React.FC<ConfluenceResultsProps> = ({ 
-  data, 
-  onEditTitle, 
+export const ConfluenceResults: React.FC<ConfluenceResultsProps> = ({
+  data,
+  onEditTitle,
   onCreatePage,
   onOpenInBrowser,
   onCopyLink,
@@ -63,7 +63,7 @@ export const ConfluenceResults: React.FC<ConfluenceResultsProps> = ({
         <div style={{ fontSize: '12px', marginBottom: '4px' }}><strong>Space:</strong> {data.intelligent_page.space}</div>
         <div style={{ fontSize: '12px', marginBottom: '4px' }}><strong>Intelligent Format:</strong> {data.intelligence_summary.ai_decisions_made[1]}</div>
         <div style={{ fontSize: '12px', marginBottom: '12px' }}><strong>Confidence:</strong> {Math.round(data.intelligence_summary.intelligence_confidence.overall_intelligence * 100)}%</div>
-        
+
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🔗 Page Link:</div>
           <div style={{ fontSize: '11px', color: 'var(--vscode-textLink-foreground)', wordBreak: 'break-all' }}>{data.intelligent_page.url}</div>
@@ -99,7 +99,7 @@ export const ConfluenceResults: React.FC<ConfluenceResultsProps> = ({
       <div style={{ fontSize: '12px', marginBottom: '8px' }}>
         <strong>Files:</strong> {data.intelligence_analysis.content_types.join(', ')}
       </div>
-      
+
       <div style={{ fontSize: '12px', marginBottom: '12px' }}>
         <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>🧠 AI Detected:</div>
         <ul style={{ margin: '0', paddingLeft: '16px' }}>
@@ -131,17 +131,17 @@ export const ConfluenceResults: React.FC<ConfluenceResultsProps> = ({
       </div>
 
       <div style={{ display: 'flex', gap: '8px' }}>
-        <button 
+        <button
           onClick={() => {
             const newTitle = prompt('Edit Title', data.intelligence_analysis.intelligent_title);
             if (newTitle) onEditTitle?.(newTitle);
-          }} 
+          }}
           style={{ flex: 1, padding: '4px', cursor: 'pointer' }}
         >
           Edit Title
         </button>
-        <button 
-          onClick={onCreatePage} 
+        <button
+          onClick={onCreatePage}
           style={{ flex: 1, padding: '4px', cursor: 'pointer', backgroundColor: 'var(--vscode-button-background)', color: 'var(--vscode-button-foreground)', border: 'none' }}
         >
           Create Perfect Page
