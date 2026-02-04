@@ -23286,3 +23286,51 @@ CI will now install `requests`, so the test’s `import requests.exceptions` wil
 
 ---
 
+_**User**_
+
+@docs/CONFLUENCE_PRD.md @docs/CONFLUENCE_USERSTORY.md 
+
+according to this prd and user stories write all the requirements in the requirements.txt file@requirements.txt  in the root requirements.txt file 
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\docs\CONFLUENCE_PRD.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\docs\CONFLUENCE_USERSTORY.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\confluence_requirements.txt</summary>
+
+</details>
+</tool-use>
+
+---
+
