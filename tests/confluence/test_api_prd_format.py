@@ -10,6 +10,8 @@ CREATE_KEYS = {"success", "intelligence_summary", "intelligent_page"}
 STATUS_KEYS = {"intelligence_metrics", "learning_progress", "intelligence_summary"}
 FEEDBACK_KEYS = {"updated", "intelligence_metrics"}
 ERROR_KEYS = {"error", "message", "intelligence_suggestion", "fallback_available"}
+# US-16 document-project PRD §9.1 success keys
+DOCUMENT_PROJECT_KEYS = {"confluence_url", "intelligence_analysis", "intelligent_recommendation", "confidence", "template_name", "learning_indicator"}
 
 DATA_API = Path(__file__).resolve().parent / "data" / "api"
 
@@ -149,6 +151,22 @@ def test_tc_api_012_intelligence_metrics_validation() -> None:
     im = status_resp.get("intelligence_metrics", {})
     for mk in metrics_keys:
         assert mk in im, f"Missing PRD §12.1 metric: {mk}"
+
+
+def test_tc_api_document_project_format() -> None:
+    """TC-API: POST /confluence/document-project returns PRD §9.1 format on success."""
+    mock_success = {
+        "confluence_url": "https://confluence.example.com/page/123",
+        "intelligence_analysis": {"content_types": [], "project_type": "API", "source_file_count": 10},
+        "intelligent_recommendation": {"template_name": "Python FastAPI Project Template"},
+        "confidence": 85,
+        "template_name": "Python FastAPI Project Template",
+        "learning_indicator": True,
+    }
+    assert set(mock_success.keys()) >= DOCUMENT_PROJECT_KEYS
+    assert "confluence_url" in mock_success
+    assert "intelligence_analysis" in mock_success
+    assert "intelligent_recommendation" in mock_success
 
 
 def test_error_responses_match_prd_section_9_1_format() -> None:

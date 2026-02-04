@@ -1,0 +1,6 @@
+{
+  "name": "React Web Application Template",
+  "content_type": "web_app",
+  "sections": ["Overview", "Architecture", "Setup", "API Endpoints", "Configuration", "Testing"],
+  "description": "Template for React frontend web application projects"
+}

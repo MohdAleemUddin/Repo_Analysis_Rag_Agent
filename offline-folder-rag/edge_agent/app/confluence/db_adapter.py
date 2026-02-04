@@ -214,3 +214,71 @@ def db_get_creation_template_id(creation_id: str) -> Optional[str]:
             return str(row[0]) if row and row[0] else None
     except Exception:
         return None
+
+
+def db_record_creation(
+    creation_id: str,
+    confluence_page_id: str,
+    confluence_url: str,
+    project_path: Optional[str] = None,
+    content_intelligence: Optional[dict[str, Any]] = None,
+    selected_template: Optional[str] = None,
+    intelligence_confidence: Optional[float] = None,
+    intelligence_reasoning: Optional[str] = None,
+    project_type: Optional[str] = None,
+    files_included: Optional[list[str]] = None,
+) -> bool:
+    """
+    Record a Confluence page creation in intelligent_creations (US-16 project documentation).
+    project_type is stored when recording project documentation.
+    Returns True if inserted/updated successfully.
+    """
+    conn = get_connection()
+    if not conn:
+        return False
+    try:
+        import json as _json
+        import uuid as _uuid
+        template_uuid = None
+        if selected_template:
+            try:
+                _uuid.UUID(selected_template)
+                template_uuid = selected_template
+            except (ValueError, TypeError):
+                pass
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO intelligent_creations
+                (id, confluence_page_id, confluence_url, project_path, content_intelligence,
+                 selected_template, intelligence_confidence, intelligence_reasoning, project_type, files_included)
+                VALUES (%s::uuid, %s, %s, %s, %s::jsonb, %s::uuid, %s, %s, %s, %s)
+                ON CONFLICT (id) DO UPDATE SET
+                    confluence_page_id = EXCLUDED.confluence_page_id,
+                    confluence_url = EXCLUDED.confluence_url,
+                    project_path = COALESCE(EXCLUDED.project_path, intelligent_creations.project_path),
+                    content_intelligence = COALESCE(EXCLUDED.content_intelligence, intelligent_creations.content_intelligence),
+                    selected_template = COALESCE(EXCLUDED.selected_template, intelligent_creations.selected_template),
+                    intelligence_confidence = COALESCE(EXCLUDED.intelligence_confidence, intelligent_creations.intelligence_confidence),
+                    intelligence_reasoning = COALESCE(EXCLUDED.intelligence_reasoning, intelligent_creations.intelligence_reasoning),
+                    project_type = COALESCE(EXCLUDED.project_type, intelligent_creations.project_type),
+                    files_included = COALESCE(EXCLUDED.files_included, intelligent_creations.files_included)
+                """,
+                (
+                    creation_id,
+                    confluence_page_id,
+                    confluence_url,
+                    project_path,
+                    _json.dumps(content_intelligence or {}),
+                    template_uuid,
+                    round(intelligence_confidence, 2) if intelligence_confidence is not None else None,
+                    intelligence_reasoning,
+                    project_type,
+                    files_included,
+                ),
+            )
+        conn.commit()
+        return True
+    except Exception:
+        conn.rollback()
+        return False

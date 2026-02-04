@@ -1,4 +1,5 @@
 """Tests for MCP server: task_queue, orchestrator, confluence_tasks. Raise coverage for edge_agent/app/mcp_server."""
+# pyright: reportMissingImports=false
 
 import sys
 from pathlib import Path
@@ -31,7 +32,7 @@ def test_task_queue_constants():
     assert RAG_QUERY == "rag_query"
     assert CONFLUENCE_INTELLIGENT_ANALYZE == "confluence_intelligent_analyze"
     assert len(RAG_TASK_TYPES) == 4
-    assert len(CONFLUENCE_TASK_TYPES) == 4
+    assert len(CONFLUENCE_TASK_TYPES) == 5
     assert RAG_TASK_TYPES | CONFLUENCE_TASK_TYPES == ALL_TASK_TYPES
 
 

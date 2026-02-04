@@ -117,7 +117,7 @@ from app.confluence.prd_monitor import (
     start_operation,
 )
 
-from app.agents.coordinator import get_operation_record, run_analyze, run_create
+from app.agents.coordinator import get_operation_record, run_analyze, run_create, run_document_project
 
 logger = logging.getLogger(__name__)
 
@@ -352,6 +352,66 @@ def intelligence_status_handler(request: Any = None) -> Tuple[Any, int] | dict[s
     return {"metrics": metrics, "intelligence_metrics": metrics, "learning_progress": {}, "improvement_rates": {}, "recent_records": [r.to_dict() for r in records[-5:]]}
 
 
+# POST /confluence/document-project (US-16)
+def document_project_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """Document project: scan, analyze, template match, format, create. PRD §9.1/§9.2."""
+    if not check_memory_before_step():
+        return _memory_limit_response()
+
+    workspace_path = body.get("workspace_path") or body.get("workspacePath") or ""
+    space_key = body.get("space") or body.get("space_key", "DOC")
+    base_url = body.get("base_url", "")
+    auth = body.get("auth")
+    if isinstance(auth, list) and len(auth) >= 2:
+        auth = (auth[0], auth[1])
+    elif not isinstance(auth, tuple):
+        auth = None
+
+    if not workspace_path or not workspace_path.strip():
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="Please open a project folder first.",
+            intelligence_suggestion="Open a workspace folder in VS Code and try again.",
+            fallback_available=False,
+            intelligence_confidence=0.0,
+        )
+        if HTTPException is not None:
+            raise HTTPException(status_code=400, detail=err)
+        return err
+
+    start_operation()
+    try:
+        result = run_document_project(
+            workspace_path=workspace_path.strip(),
+            space_key=space_key,
+            base_url=base_url,
+            auth=auth,
+        )
+    except Exception as e:
+        logger.exception("document-project failed: %s", e)
+        return handle_error(e, error_code="document_project_failed")
+
+    record = get_operation_record()
+    peak_mb = get_peak_memory_mb()
+    if record:
+        from app.confluence.prd_monitor import append_record, record_confluence_operation
+        perf = record_confluence_operation(
+            operation_id=record.operation_id,
+            per_file_analysis_ms=record.per_file_analysis_ms,
+            template_selection_ms=record.template_selection_ms,
+            create_e2e_ms=record.create_e2e_ms,
+            peak_memory_mb=peak_mb,
+        )
+        append_record(perf)
+        result["performance"] = {
+            "operation_id": perf.operation_id,
+            "create_e2e_ms": perf.create_e2e_ms,
+            "peak_memory_mb": perf.peak_memory_mb,
+            "targets_met": perf.targets_met,
+        }
+    return result
+
+
 # POST /confluence/intelligence-feedback
 def intelligence_feedback_handler(body: dict[str, Any], request: Any = None) -> dict[str, Any] | Tuple[Any, int]:
     """Accept feedback; when creation_id and intelligence_score 1-5, call learn_from_feedback."""
@@ -399,12 +459,16 @@ def register_confluence_routes(router: Any) -> None:
                 out = intelligence_feedback_handler(body or {})
                 return out[0] if isinstance(out, tuple) else out
 
+            def document_project_route(body: dict = Body(default=None)):
+                return document_project_handler(body or {})
+
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)
                 return out[0] if isinstance(out, tuple) else out
 
             router.post("/confluence/intelligent-analyze")(analyze_route)
             router.post("/confluence/intelligent-create")(create_route)
+            router.post("/confluence/document-project")(document_project_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
             if FastAPIRequest is not None:
@@ -428,6 +492,10 @@ def register_confluence_routes(router: Any) -> None:
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
                 return intelligent_create_handler(body)
 
+            def document_project_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return document_project_handler(body)
+
             def feedback_route(request: Any = None):
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
                 out = intelligence_feedback_handler(body, request)
@@ -439,6 +507,7 @@ def register_confluence_routes(router: Any) -> None:
 
             router.post("/confluence/intelligent-analyze")(analyze_route)
             router.post("/confluence/intelligent-create")(create_route)
+            router.post("/confluence/document-project")(document_project_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
             router.route("/confluence/examples/export", methods=["GET"])(examples_export_handler)
@@ -447,6 +516,7 @@ def register_confluence_routes(router: Any) -> None:
         router.confluence_handlers = {
             "intelligent_analyze": lambda body: intelligent_analyze_handler(body),
             "intelligent_create": lambda body: intelligent_create_handler(body),
+            "document_project": lambda body: document_project_handler(body),
             "intelligence_status": lambda: intelligence_status_handler(),
             "intelligence_feedback": lambda body: intelligence_feedback_handler(body),
             "examples_export": examples_export_handler,

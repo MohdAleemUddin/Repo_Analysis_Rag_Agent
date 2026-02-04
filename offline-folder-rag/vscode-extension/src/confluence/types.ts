@@ -8,21 +8,21 @@ export interface ConfidenceBreakdown {
 }
 
 export interface IntelligenceAnalysis {
-  content_types: string[];
-  detected_patterns: string[];
-  intelligent_title: string;
-  intelligence_confidence: number;
-  ai_reasoning: string;
+  content_types?: string[];
+  detected_patterns?: string[];
+  intelligent_title?: string;
+  intelligence_confidence?: number;
+  ai_reasoning?: string;
 }
 
 export interface IntelligentRecommendation {
-  template_id: string;
-  template_name: string;
-  intelligence_reason: string;
-  confidence_breakdown: {
-    content_match: number;
-    structure_match: number;
-    context_match: number;
+  template_id?: string;
+  template_name?: string;
+  intelligence_reason?: string;
+  confidence_breakdown?: {
+    content_match?: number;
+    structure_match?: number;
+    context_match?: number;
   };
 }
 

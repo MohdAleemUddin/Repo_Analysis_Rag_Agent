@@ -27,10 +27,10 @@ def _has_db() -> bool:
 
 
 # --- No-DB path: tests always run (PRD: no skip when no DB URL) ---
-def test_tc_it_002_no_db_returns_none_and_zero() -> None:
+def test_tc_it_002_no_db_returns_none_and_zero(monkeypatch: pytest.MonkeyPatch) -> None:
     """When no DB URL, get_connection is None and count is 0 (no skip)."""
-    if _has_db():
-        pytest.skip("DB URL set; run real test instead")
+    monkeypatch.delenv("CONFLUENCE_DATABASE_URL", raising=False)
+    monkeypatch.delenv("DATABASE_URL", raising=False)
     conn = get_connection()
     assert conn is None
     assert db_fetch_examples_count() == 0

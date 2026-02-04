@@ -1,0 +1,6 @@
+{
+  "name": "Database Project Template",
+  "content_type": "database",
+  "sections": ["Overview", "Architecture", "Setup", "API Endpoints", "Configuration", "Testing"],
+  "description": "Template for database schema and migration projects"
+}

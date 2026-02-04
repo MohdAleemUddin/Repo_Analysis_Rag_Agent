@@ -24,6 +24,9 @@ ANALYSIS_TARGET_SEC = 3.0
 TEMPLATE_SELECT_TARGET_SEC = 2.0
 CREATION_TARGET_SEC = 15.0
 MEMORY_TARGET_MB = 300
+# US-16 project documentation targets
+PROJECT_SCAN_TARGET_SEC = 10.0
+PROJECT_FULL_TARGET_SEC = 30.0
 
 
 def record_analysis_duration_sec(sec: float) -> dict[str, Any]:
@@ -54,6 +57,8 @@ def check_prd() -> dict[str, Any]:
         "template_select_target_sec": TEMPLATE_SELECT_TARGET_SEC,
         "creation_target_sec": CREATION_TARGET_SEC,
         "memory_target_mb": MEMORY_TARGET_MB,
+        "project_scan_target_sec": PROJECT_SCAN_TARGET_SEC,
+        "project_full_target_sec": PROJECT_FULL_TARGET_SEC,
     }
 
 try:

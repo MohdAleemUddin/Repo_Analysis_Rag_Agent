@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "description": "Project-type examples for template matcher and learning (US-16)",
+  "examples": [
+    {
+      "content_profile": {
+        "project_type": "web app",
+        "content_types": ["web_app"],
+        "detected_patterns": ["react", "frontend", "package.json"],
+        "key_file_types": [".tsx", ".jsx", ".json"]
+      },
+      "template_name": "React Web Application Template",
+      "confidence_score": 0.91
+    },
+    {
+      "content_profile": {
+        "project_type": "API",
+        "content_types": ["python_api"],
+        "detected_patterns": ["fastapi", "uvicorn", "rest"],
+        "key_file_types": [".py", "requirements.txt"]
+      },
+      "template_name": "Python FastAPI Project Template",
+      "confidence_score": 0.94
+    },
+    {
+      "content_profile": {
+        "project_type": "library",
+        "content_types": ["library"],
+        "detected_patterns": ["setup.py", "pyproject.toml", "package", "exports"],
+        "key_file_types": [".py", "pyproject.toml"]
+      },
+      "template_name": "Library Project Template",
+      "confidence_score": 0.87
+    },
+    {
+      "content_profile": {
+        "project_type": "mixed",
+        "content_types": ["mixed"],
+        "detected_patterns": ["readme", "api", "config", "tests"],
+        "key_file_types": [".py", ".md", ".json", ".yaml"]
+      },
+      "template_name": "Mixed Project Intelligence Template",
+      "confidence_score": 0.90
+    }
+  ]
+}
