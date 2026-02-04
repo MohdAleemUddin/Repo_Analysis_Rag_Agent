@@ -3,11 +3,73 @@ Intelligent error recovery: PRD §9.2 error format, single classification map, r
 Handler only returns response dicts; no writes. Clean-failure enforced in integration_agent and client.
 """
 
+from __future__ import annotations
+
 import logging
+import socket
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 
 logger = logging.getLogger(__name__)
+
+
+def _iter_leaf_exceptions(exc: BaseException) -> Iterable[BaseException]:
+    """
+    Yield leaf exceptions, unwrapping ExceptionGroup, __cause__, and __context__.
+    This matters in Python 3.11+ where async stacks can raise ExceptionGroup.
+    """
+    if hasattr(exc, "exceptions") and isinstance(getattr(exc, "exceptions"), tuple):
+        for sub in exc.exceptions:  # pyright: ignore[attr-defined]
+            yield from _iter_leaf_exceptions(sub)
+        return
+    yield exc
+    cause = getattr(exc, "__cause__", None)
+    if cause is not None:
+        yield from _iter_leaf_exceptions(cause)
+    ctx = getattr(exc, "__context__", None)
+    if ctx is not None:
+        yield from _iter_leaf_exceptions(ctx)
+
+
+def _is_network_error(leaf: BaseException) -> bool:
+    if isinstance(leaf, socket.gaierror):
+        return True
+    if isinstance(leaf, (ConnectionError, ConnectionResetError, BrokenPipeError, TimeoutError)):
+        return True
+    if isinstance(leaf, OSError):
+        network_errnos = {101, 110, 111, 113, 104}
+        if getattr(leaf, "errno", None) in network_errnos:
+            return True
+    try:
+        import requests.exceptions  # type: ignore[import-untyped]
+        if isinstance(leaf, requests.exceptions.RequestException):
+            return True
+    except Exception:
+        pass
+    try:
+        import httpx  # type: ignore[import-untyped]
+        if isinstance(leaf, httpx.RequestError):
+            return True
+    except Exception:
+        pass
+    try:
+        import urllib3.exceptions  # type: ignore[import-untyped]
+        if isinstance(leaf, urllib3.exceptions.HTTPError):
+            return True
+    except Exception:
+        pass
+    msg = str(leaf).lower()
+    network_phrases = (
+        "network is unreachable",
+        "no route to host",
+        "connection refused",
+        "connection reset",
+        "timed out",
+        "temporary failure in name resolution",
+        "name or service not known",
+    )
+    return any(p in msg for p in network_phrases)
+
 
 # Category -> (message, intelligence_suggestion, fallback_available, actions)
 CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
@@ -105,27 +167,11 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
-    # Network: by class module+name (works without importing requests in this process)
-    exc_type = type(exc)
-    mod = getattr(exc_type, "__module__", "") or ""
-    t = exc_type.__name__
-    if "requests" in mod and ("Connection" in t or "Timeout" in t):
-        return "network"
-    try:
-        import requests.exceptions as req_exc
-        if isinstance(exc, (req_exc.ConnectionError, req_exc.Timeout)):
+    # Network: robust detection (Linux errnos, ExceptionGroup, requests/httpx/urllib3, socket)
+    for leaf in _iter_leaf_exceptions(exc):
+        if _is_network_error(leaf):
             return "network"
-    except ImportError:
-        pass
     msg = str(exc).lower()
-    if "ConnectionError" in t or "Timeout" in t or "ConnectTimeout" in t or "ReadTimeout" in t:
-        return "network"
-    if "connection" in msg or "timeout" in msg or "network" in msg or "refused" in msg or "reach" in msg:
-        return "network"
-    if isinstance(exc, OSError) and (
-        "connection" in msg or "timeout" in msg or "refused" in msg or "reach" in msg
-    ):
-        return "network"
     resp = getattr(exc, "response", None)
     if resp is not None and getattr(resp, "status_code", None) is not None:
         sc = resp.status_code

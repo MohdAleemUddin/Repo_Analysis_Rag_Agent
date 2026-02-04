@@ -10645,3 +10645,473 @@ CONSTRAINT H: Do not scan the repo and send as context. Until and unless specifi
 
 ---
 
+_**Agent (model default, mode Agent)**_
+
+
+Checking the test and error_handler to fix the failure:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\tests\confluence\test_error_recovery.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Classifying by the exception's __module__ and __name__ so we don't rely on importing requests (CI may use a different env):
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\edge_agent\\app\\confluence\\error_handler.py"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "c:\\Users\\FAZLEEN ANEESA\\Repo_Analysis_Rag_Agent\\offline-folder-rag\\edge_agent\\app\\confluence\\error_handler.py"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+Update applied: `_classify` now treats an exception as network when `type(exc).__module__` contains `"requests"` and `type(exc).__name__` contains `"Connection"` or `"Timeout"`, so `requests.exceptions.ConnectionError` is classified as `"network"` without importing `requests` in the handler.
+
+---
+
+_**User**_
+
+The test expects your error-recovery output to classify this failure as a network error:
+assert out.get("category") == "network"
+
+But your code produced:
+out["category"] == "other"
+
+So the failure is not “pytest/GitHub is broken” — it’s simply that your error classification logic is returning the wrong category in GitHub Actions.
+
+Why it passes locally but fails on GitHub Actions
+On GitHub’s Linux runner, the exception type (or wrapping) can differ from your local machine.
+Common CI differences:
+
+
+Linux raises different low-level exceptions for network problems (often OSError with Linux errno codes like 101, 113, 110, etc.).
+
+
+Some async stacks wrap errors into ExceptionGroup (Python 3.11), especially with anyio/asyncio involved.
+
+
+If CI uses a different HTTP client path (requests/httpx/urllib3), the thrown exception class can be different even for the same “network down” condition.
+
+
+Result: your classifier likely handles only a subset (example: requests.exceptions.ConnectionError) so on CI it falls through to "other".
+
+Fix (code change): make “network” classification robust on Linux + ExceptionGroup
+Step 1 — Find where you set "category"
+Run this in repo root (locally and/or in CI logs):
+rg -n "\"category\"" offline-folder-rag/edge_agent/app/confluence
+
+Look for something like:
+
+
+category = "other" fallback
+
+
+or return {"category": ...}
+
+
+That file is what you need to patch.
+
+Step 2 — Drop-in robust classifier (copy/paste)
+Add (or replace) your classifier with this logic.
+It is designed to:
+
+
+correctly detect network errors from requests/httpx/urllib3/socket/OSError
+
+
+correctly detect network errors inside ExceptionGroup (Python 3.11)
+
+
+# Put this near your error recovery / error formatting code
+# (wherever you decide out["category"]).
+
+from __future__ import annotations
+
+import socket
+from typing import Iterable
+
+def _iter_leaf_exceptions(exc: BaseException) -> Iterable[BaseException]:
+    """
+    Yield leaf exceptions, unwrapping ExceptionGroup, __cause__, and __context__.
+    This matters in Python 3.11+ where async stacks can raise ExceptionGroup.
+    """
+    # ExceptionGroup / BaseExceptionGroup exist in 3.11+
+    if hasattr(exc, "exceptions") and isinstance(getattr(exc, "exceptions"), tuple):
+        # type: ignore[attr-defined]
+        for sub in exc.exceptions:  # pyright: ignore
+            yield from _iter_leaf_exceptions(sub)
+        return
+
+    yield exc
+
+    cause = getattr(exc, "__cause__", None)
+    if cause is not None:
+        yield from _iter_leaf_exceptions(cause)
+
+    ctx = getattr(exc, "__context__", None)
+    if ctx is not None:
+        yield from _iter_leaf_exceptions(ctx)
+
+
+def _is_network_error(leaf: BaseException) -> bool:
+    # 1) socket-level DNS / connection errors
+    if isinstance(leaf, socket.gaierror):
+        return True
+    if isinstance(leaf, (ConnectionError, ConnectionResetError, BrokenPipeError, TimeoutError)):
+        return True
+
+    # 2) OSError errno patterns (Linux + common)
+    if isinstance(leaf, OSError):
+        # Linux common errnos:
+        # 101 Network is unreachable
+        # 110 Connection timed out
+        # 111 Connection refused
+        # 113 No route to host
+        # 104 Connection reset by peer
+        network_errnos = {101, 110, 111, 113, 104}
+        if getattr(leaf, "errno", None) in network_errnos:
+            return True
+
+    # 3) requests
+    try:
+        import requests  # type: ignore
+        if isinstance(leaf, requests.exceptions.RequestException):
+            # includes ConnectionError, Timeout, etc.
+            return True
+    except Exception:
+        pass
+
+    # 4) httpx / httpcore
+    try:
+        import httpx  # type: ignore
+        if isinstance(leaf, httpx.RequestError):
+            return True
+    except Exception:
+        pass
+
+    # 5) urllib3
+    try:
+        import urllib3  # type: ignore
+        if isinstance(leaf, urllib3.exceptions.HTTPError):
+            return True
+    except Exception:
+        pass
+
+    # 6) last-resort message match (kept conservative)
+    msg = str(leaf).lower()
+    network_phrases = (
+        "network is unreachable",
+        "no route to host",
+        "connection refused",
+        "connection reset",
+        "timed out",
+        "temporary failure in name resolution",
+        "name or service not known",
+    )
+    return any(p in msg for p in network_phrases)
+
+
+def classify_error_category(exc: BaseException) -> str:
+    """
+    Returns one of: network / rate_limit / auth / permission / not_found / other
+    Expand as needed, but keep network robust across platforms.
+    """
+    for leaf in _iter_leaf_exceptions(exc):
+        if _is_network_error(leaf):
+            return "network"
+    return "other"
+
+Step 3 — Use it where you build out
+Wherever you currently do something like:
+out = {"category": "other", ...}
+
+Change to:
+out = {"category": classify_error_category(exc), ...}
+
+(Use your actual exception variable name.)
+
+Verification (make sure it’s fixed)
+Run only the failing test:
+pytest -k "TC_NEG_004_network_failure_auto_retry" -vv
+
+Then run the full suite:
+pytest tests/confluence/ tests/edge_agent/unit/ -q
+
+
+Why this fix should solve GitHub runner specifically
+This patch handles the exact classes CI commonly produces:
+
+
+OSError: [Errno 101] Network is unreachable (Linux)
+
+
+DNS failures via socket.gaierror
+
+
+async-wrapped failures via ExceptionGroup
+
+
+request stacks via requests/httpx/urllib3
+
+
+So your output won’t fall back to "other" anymore when CI throws a different network exception than your local machine.
+
+If you paste 2 things, I can tell you the exact line to change
+
+
+tests/confluence/test_error_recovery.py around the failing test
+
+
+The function that returns out (the dict containing "category")
+
+
+Then I’ll give you a minimal diff patch (only the lines that must change). this the what is the error Run pytest tests/confluence/ tests/edge_agent/unit/ \
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.14/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent
+configfile: pytest.ini
+plugins: cov-7.0.0, xdist-3.8.0, asyncio-1.3.0, mock-3.15.1, anyio-4.12.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 42 items
+
+tests/confluence/test_api_prd_format.py::test_placeholder PASSED         [  2%]
+tests/confluence/test_api_router.py::test_placeholder PASSED             [  4%]
+tests/confluence/test_client_auth.py::test_placeholder PASSED            [  7%]
+tests/confluence/test_e2e_workflows.py::test_placeholder PASSED          [  9%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry FAILED [ 11%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_007_rate_limit_handling PASSED [ 14%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_003_invalid_credentials_fail_cleanly PASSED [ 16%]
+tests/confluence/test_error_recovery.py::test_TC_ST_006_retry_state_transitions_correct PASSED [ 19%]
+tests/confluence/test_error_recovery.py::test_TC_DT_007_integration_agent_error_recovery_logic PASSED [ 21%]
+tests/confluence/test_error_recovery.py::test_TC_EH_008_encoding_issue_prd_format_response PASSED [ 23%]
+tests/confluence/test_error_recovery.py::test_TC_EH_007_invalid_template_format_graceful_handling PASSED [ 26%]
+tests/confluence/test_error_recovery.py::test_TC_EH_006_confluence_api_404_graceful_handling PASSED [ 28%]
+tests/confluence/test_error_recovery.py::test_TC_EH_005_permission_denied_clear_guidance PASSED [ 30%]
+tests/confluence/test_error_recovery.py::test_TC_EH_009_db_connection_lost_graceful_recovery_option PASSED [ 33%]
+tests/confluence/test_error_recovery.py::test_TC_EH_010_intelligence_error_graceful_failure PASSED [ 35%]
+tests/confluence/test_error_recovery.py::test_TC_EH_011_template_matching_error_graceful_fallback PASSED [ 38%]
+tests/confluence/test_error_recovery.py::test_TC_EH_012_agent_coordination_error_recover_gracefully PASSED [ 40%]
+tests/confluence/test_error_recovery.py::test_TC_EH_001_confluence_down_no_corruption_clear_messaging PASSED [ 42%]
+tests/confluence/test_error_recovery.py::test_TC_EH_002_invalid_credentials_no_corruption_clear_messaging PASSED [ 45%]
+tests/confluence/test_error_recovery.py::test_TC_EH_003_disk_full_no_corruption_clear_messaging PASSED [ 47%]
+tests/confluence/test_error_recovery.py::test_TC_SC_004_handling_network_issues_graceful_recovery PASSED [ 50%]
+tests/confluence/test_error_recovery.py::test_TC_NEG_014_mcp_task_failure_graceful_recovery_option PASSED [ 52%]
+tests/confluence/test_imports.py::test_placeholder PASSED                [ 54%]
+tests/confluence/test_intelligence_learning.py::test_placeholder PASSED  [ 57%]
+tests/confluence/test_page_tracker.py::test_placeholder PASSED           [ 59%]
+tests/confluence/test_performance_targets.py::test_analysis_time_under_3_seconds_per_file PASSED [ 61%]
+tests/confluence/test_performance_targets.py::test_template_selection_under_2_seconds PASSED [ 64%]
+tests/confluence/test_performance_targets.py::test_creation_time_under_15_seconds_including_api PASSED [ 66%]
+tests/confluence/test_performance_targets.py::test_memory_under_300mb_during_operation PASSED [ 69%]
+tests/confluence/test_performance_targets.py::test_memory_exhaustion_graceful_handling PASSED [ 71%]
+tests/confluence/test_performance_targets.py::test_rag_confluence_no_conflict PASSED [ 73%]
+tests/confluence/test_performance_targets.py::test_resource_sharing_memory_limit PASSED [ 76%]
+tests/confluence/test_performance_targets.py::test_existing_rag_features_unchanged PASSED [ 78%]
+tests/confluence/test_performance_targets.py::test_prd_monitor_timers_and_record PASSED [ 80%]
+tests/confluence/test_performance_targets.py::test_optimizer_suggestions PASSED [ 83%]
+tests/confluence/test_performance_targets.py::test_intelligence_status_returns_metrics PASSED [ 85%]
+tests/confluence/test_performance_targets.py::test_ui_remains_responsive_during_heavy_operation PASSED [ 88%]
+tests/confluence/test_prd_compliance.py::test_placeholder PASSED         [ 90%]
+tests/confluence/test_reliability.py::test_placeholder PASSED            [ 92%]
+tests/confluence/test_security_compliance.py::test_placeholder PASSED    [ 95%]
+tests/confluence/test_state_machine.py::test_placeholder PASSED          [ 97%]
+tests/confluence/test_templates.py::test_placeholder PASSED              [100%]
+
+=================================== FAILURES ===================================
+__________________ test_TC_NEG_004_network_failure_auto_retry __________________
+tests/confluence/test_error_recovery.py:28: in test_TC_NEG_004_network_failure_auto_retry
+    assert out.get("category") == "network"
+E   AssertionError: assert 'other' == 'network'
+E     
+E     - network
+E     + other
+- generated xml file: /home/runner/work/Repo_Analysis_Rag_Agent/Repo_Analysis_Rag_Agent/test-results-unit.xml -
+=========================== short test summary info ============================
+FAILED tests/confluence/test_error_recovery.py::test_TC_NEG_004_network_failure_auto_retry - AssertionError: assert 'other' == 'network'
+  
+  - network
+  + other
+========================= 1 failed, 41 passed in 7.53s =========================
+Error: Process completed with exit code 1. is what is the failig when i have asked the chagpt it have give that CONSTRAINT A: Only include code/text explicitly provided below.
+CONSTRAINT B: Ignore all prior conversation history.
+CONSTRAINT C: Use static instructions followed by dynamic content; avoid variable metadata before the task text.
+CONSTRAINT E: Limit output strictly to the requested answer; no explanations, no extra text.
+CONSTRAINT F: Do not repeat input in the output.
+CONSTRAINT G: Only perform the stated task and nothing else.
+CONSTRAINT H: Do not scan the repo and send as context. Until and unless specified explicitly
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+**What’s failing**
+
+- **Test:** `test_TC_NEG_004_network_failure_auto_retry` in `tests/confluence/test_error_recovery.py` (around line 28).
+- **Assertion:** `assert out.get("category") == "network"`  
+  The test expects the error to be classified as a network error (`"network"`), but the code is returning `"other"`.
+
+**Where the category is set**
+
+- Category is chosen in **`offline-folder-rag/edge_agent/app/confluence/error_handler.py`**:
+  - `_classify(exc)` decides the category.
+  - `handle_error(exc, ...)` calls `_classify(exc)` and passes that into `prd_error_response(..., category=...)`, which puts it in the `out` dict.
+
+**Why it fails only on GitHub Actions**
+
+- On the Linux runner, the exception for “network down” can be different from your local run:
+  - e.g. **OSError** with errno 101/110/111/113/104, or **socket.gaierror**, or something wrapped in **ExceptionGroup** (Python 3.11).
+- Your current logic only treats certain types (e.g. `requests.exceptions.ConnectionError` and a few name/module checks) as network. On CI the real exception type doesn’t match those, so `_classify` never returns `"network"` and falls back to `"other"`.
+
+**What needs to change**
+
+- In **`error_handler.py`**, the logic that turns an exception into a category (your `_classify` and how it’s used) must be updated so that **all** of these are classified as `"network"` on both your machine and CI:
+  - `requests.exceptions.ConnectionError` / `RequestException` (and similar)
+  - Built-in **ConnectionError**, **TimeoutError**, **OSError** with network-related errnos (e.g. 101, 110, 111, 113, 104)
+  - **socket.gaierror**
+  - Errors wrapped in **ExceptionGroup** / **__cause__** / **__context__**
+  - Optionally **httpx.RequestError** / **urllib3** HTTP errors and message phrases like `"connection refused"`, `"connection reset"`, etc.
+
+So the failure is: **the classifier in `error_handler.py` is too narrow; on GitHub Actions it doesn’t recognize the actual exception as a network error and returns `"other"` instead of `"network"`.** Applying the robust classifier (with `_iter_leaf_exceptions` and `_is_network_error` / `classify_error_category`) in that file and using its result as `out["category"]` is what fixes it.
+
+---
+
+_**User**_
+
+apply the above changes
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Adding robust network detection: implementing _iter_leaf_exceptions and _is_network_error, and using them at the start of _classify.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+Removing duplicate logger and using the robust network check at the start of _classify.
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: c:\Users\FAZLEEN ANEESA\Repo_Analysis_Rag_Agent\offline-folder-rag\edge_agent\app\confluence\error_handler.py</summary>
+
+</details>
+
+</tool-use>
+
+---
+
