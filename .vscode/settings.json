@@ -1,0 +1,4 @@
+{
+  "python.analysis.extraPaths": ["${workspaceFolder}/offline-folder-rag/edge_agent"],
+  "basedpyright.analysis.extraPaths": ["${workspaceFolder}/offline-folder-rag/edge_agent"]
+}

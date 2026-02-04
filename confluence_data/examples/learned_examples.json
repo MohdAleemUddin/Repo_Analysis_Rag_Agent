@@ -1,0 +1,1254 @@
+{
+  "version": 1,
+  "updated_at": "2026-02-03T12:53:47.577945+00:00",
+  "examples": [
+    {
+      "id": "4525e255-16c2-476f-811c-7d1a7522c2de",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "python",
+        "structure_summary": "Example structure 1"
+      },
+      "template_ref": {
+        "template_id": "2b41ad7b-45f4-4704-9fd2-729a501413bb",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.85,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.550597+00:00",
+      "content_profile_hash": "2d434541c569990978eabab17d21dd7f74abb93fa7b45e4b2882430d924233a7",
+      "confidence_score": 0.85,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "ec8ab3c5-4f3b-402e-9caf-77be15861656",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": "javascript",
+        "structure_summary": "Example structure 2"
+      },
+      "template_ref": {
+        "template_id": "5da507c7-10f5-4569-acea-a7ca8780b544",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.86,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "00714dae1a1c7ac49ca5b292088365d0e8f9fb0bfb0686d9119df5c2e5960d0b",
+      "confidence_score": 0.86,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "2ffff1ec-7a26-4b54-b701-94e3f3a465e7",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": null,
+        "structure_summary": "Example structure 3"
+      },
+      "template_ref": {
+        "template_id": "623ffed9-8240-4da7-975f-b6f277bccbfb",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.87,
+        "success_rate": 0.92,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "b6acaa7f2946d0edfc47e9762a4a925cd8d7aee64157d8013868daa27e946bc7",
+      "confidence_score": 0.87,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "6001f055-fbc6-4bbb-beca-9722eb6e2d63",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": "python",
+        "structure_summary": "Example structure 4"
+      },
+      "template_ref": {
+        "template_id": "befea031-e715-4f0e-94ab-8b8b04fe7128",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.88,
+        "success_rate": 0.93,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "6512755ca682afe7c8258c7ac42e303bf980a138320bd5eecd49fdf31596550d",
+      "confidence_score": 0.88,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "09f83038-c01c-4c94-a404-8867ea890312",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": "javascript",
+        "structure_summary": "Example structure 5"
+      },
+      "template_ref": {
+        "template_id": "3dd1b8bf-c86c-435c-9730-2dbbca195eda",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.89,
+        "success_rate": 0.9400000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "a3f308ef39825613ed38bfb6021256bac85dcdd2a1585ab6c752576505a9c1dd",
+      "confidence_score": 0.89,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "1d65bff7-834c-4577-a2e6-7b75fd8a7681",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": null,
+        "structure_summary": "Example structure 6"
+      },
+      "template_ref": {
+        "template_id": "939ded2b-7d92-47eb-86a5-1b173b01fe9d",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9,
+        "success_rate": 0.9500000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "2898f94c7b1f283b4157869541eddb693ddad4b8bf91c57efc59dbbc2178a70f",
+      "confidence_score": 0.9,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "b4bb4c17-34fe-45e2-af0b-9c883c87cf1b",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": "python",
+        "structure_summary": "Example structure 7"
+      },
+      "template_ref": {
+        "template_id": "ae98d21d-8358-41b6-96bf-e2345c359060",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9099999999999999,
+        "success_rate": 0.96,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "8147b4777a475b4aca80a395c2766400fde9a5840384fc3626b46ccd3f37f960",
+      "confidence_score": 0.91,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "e49efcd7-3317-4e57-8869-773ecc9fb6c2",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "javascript",
+        "structure_summary": "Example structure 8"
+      },
+      "template_ref": {
+        "template_id": "7e401310-6dc3-444b-8742-56a13e79bf34",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9199999999999999,
+        "success_rate": 0.97,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "a02b0a04dceb50c29a171e201998244a771e63fa059679ce7aabcad36aba2e84",
+      "confidence_score": 0.92,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "de2da606-8f42-43f2-9dd0-883280c8346b",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": null,
+        "structure_summary": "Example structure 9"
+      },
+      "template_ref": {
+        "template_id": "60ed67dd-cca8-49dc-be60-d7de5ac784d5",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9299999999999999,
+        "success_rate": 0.98,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "842a0c4fa93f93081310f05ffdeb27e6352068def26ca506cab5a5ee4a93d899",
+      "confidence_score": 0.93,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "4cd4d517-c10c-4c87-8ff0-e4d5c7b9bcd6",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": "python",
+        "structure_summary": "Example structure 10"
+      },
+      "template_ref": {
+        "template_id": "3718e5c9-938e-45bd-a4be-171ead013c32",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.94,
+        "success_rate": 0.99,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "1f8b5491c46f7a53ec9a177c8b5f953c6023e9281e8c5613d68d2d3224b4cc37",
+      "confidence_score": 0.94,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "621aa6cd-b9f1-4cef-979f-9bfa83be90e1",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": "javascript",
+        "structure_summary": "Example structure 11"
+      },
+      "template_ref": {
+        "template_id": "667ba0f9-a185-43c0-b540-b986ebf67f61",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.95,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "98f8f621a0f8c57da36cbe8a5e9f756031f785df1cb9cb95b8e0cca0ba2f5014",
+      "confidence_score": 0.95,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "5b0000b5-18ad-4e55-981a-799b275583a3",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": null,
+        "structure_summary": "Example structure 12"
+      },
+      "template_ref": {
+        "template_id": "444b4149-c89c-4115-9fe1-df8005d36c53",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.96,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "b7799bd4be8f2d5d27b1c13e4e151b2bdf16a24ac1a16afb580c563fd80075fd",
+      "confidence_score": 0.96,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "2a516ba9-3dc4-4d36-852f-42d70a8ad994",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": "python",
+        "structure_summary": "Example structure 13"
+      },
+      "template_ref": {
+        "template_id": "0763e5eb-a3aa-428e-80a4-dc9d921f486b",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.97,
+        "success_rate": 0.92,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "116aac5fd9c51679c4bad4493afef6338402fce28e3b82bf820097dd124707e3",
+      "confidence_score": 0.97,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "c15dde9b-38c7-4238-a723-361f69599946",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": "javascript",
+        "structure_summary": "Example structure 14"
+      },
+      "template_ref": {
+        "template_id": "cc76b4c1-1559-4110-b62b-6a9d678a91f0",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.98,
+        "success_rate": 0.93,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "cc11d23d2f2a42a73e505427f147403cdc7e1a3a3ef7e7de744a5db2a5e166bf",
+      "confidence_score": 0.98,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "b95ef69d-e390-4d3b-9595-aa5d5bc79306",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": null,
+        "structure_summary": "Example structure 15"
+      },
+      "template_ref": {
+        "template_id": "602c5527-4561-4edf-9486-e92570b36fbd",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.99,
+        "success_rate": 0.9400000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "186124323bdd9eb4ba3871fdcd1eb831f1468c023291322231f2902722572518",
+      "confidence_score": 0.99,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "69faad80-baa9-4bef-977e-6d3928e1126d",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": "python",
+        "structure_summary": "Example structure 16"
+      },
+      "template_ref": {
+        "template_id": "1f3748e3-434e-478f-808c-452c838b602c",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.85,
+        "success_rate": 0.9500000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "66d3fc01868dcb54b1469bc0f8a162596892af74e99d7418c80fb706830e60e9",
+      "confidence_score": 0.85,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "b7f4b5bc-429c-46d6-b06a-da413615e887",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": "javascript",
+        "structure_summary": "Example structure 17"
+      },
+      "template_ref": {
+        "template_id": "a6470b3c-46cc-4af3-80a8-a854d953788e",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.86,
+        "success_rate": 0.96,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "b7f026fc133b5b869ba4efc5faaae5170a17a6ab84869aebb4894ed40b5e2e0d",
+      "confidence_score": 0.86,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "5e051ebb-d8c3-43da-9245-281d88a49216",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": null,
+        "structure_summary": "Example structure 18"
+      },
+      "template_ref": {
+        "template_id": "847df5f1-359a-4e2a-ac92-1a7f4a39d8a3",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.87,
+        "success_rate": 0.97,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "69220db5c9e976d5fc64743cd0769385eeff4495434517c902b596c0a8bad294",
+      "confidence_score": 0.87,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "2e4e2621-49d5-4ab4-b76f-4ee327b58805",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": "python",
+        "structure_summary": "Example structure 19"
+      },
+      "template_ref": {
+        "template_id": "7abe2a7f-9c01-4789-89e5-0eab804fdc2a",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.88,
+        "success_rate": 0.98,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "3a3a7198eeec0d574bb3b64c264bab45c99a76ca92406c353672db68c0635a17",
+      "confidence_score": 0.88,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "88a6fec2-eee2-4e7e-8567-f56aa80c99eb",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": "javascript",
+        "structure_summary": "Example structure 20"
+      },
+      "template_ref": {
+        "template_id": "dd77f9ee-14d9-4bd4-b681-f1a7f4ce4f74",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.89,
+        "success_rate": 0.99,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "595c9ea4e92b01472ad28255148c848051aa49513f659aea507fb61282425368",
+      "confidence_score": 0.89,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "669f0455-94f2-450e-a8ee-2f388674e322",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": null,
+        "structure_summary": "Example structure 21"
+      },
+      "template_ref": {
+        "template_id": "bc6100cd-c0c1-4fcc-b9ca-8be1e002d9b6",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "2012757c49328a73284a6f6b5aa5b53f95fad211d84f859f6cf5c99d02981121",
+      "confidence_score": 0.9,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "2804b696-47d3-4c6c-aa82-659108557c49",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "python",
+        "structure_summary": "Example structure 22"
+      },
+      "template_ref": {
+        "template_id": "91dc88e2-2ce6-458c-8f82-ac71bb62433b",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9099999999999999,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "0a7e356aef52588894701cc466c00737142f713a6f4aa749db6fdf094fe1d24f",
+      "confidence_score": 0.91,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "63d15d4c-5db0-41ed-8575-2dfd686dd15f",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": "javascript",
+        "structure_summary": "Example structure 23"
+      },
+      "template_ref": {
+        "template_id": "012d1107-9f39-4200-93be-0e8c0a39ac40",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9199999999999999,
+        "success_rate": 0.92,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "8a03045bfd92120c82245393c8526467ef4c493bed59e099b129fa022fbf12f5",
+      "confidence_score": 0.92,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "76a85454-8057-4bbd-ae9e-ba821ea00bce",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": null,
+        "structure_summary": "Example structure 24"
+      },
+      "template_ref": {
+        "template_id": "4afc4734-a424-481f-9e07-f39355689b76",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9299999999999999,
+        "success_rate": 0.93,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "31db52741ba49d14abc282bc3a5d2cc501cf33a18b36c2f123c081e82b589156",
+      "confidence_score": 0.93,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "d4da4d85-f113-4b4e-abd5-17dfd9399833",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": "python",
+        "structure_summary": "Example structure 25"
+      },
+      "template_ref": {
+        "template_id": "8aef9a17-b8ea-4109-b778-91e8b1a3b1a3",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.94,
+        "success_rate": 0.9400000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "0b1214d0eabd566259fb364cee87b84b2d32ad8ae9432bb49cf9ed4a12f437ef",
+      "confidence_score": 0.94,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "28730a0c-2169-4b41-8107-95e3a0b33eaf",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": "javascript",
+        "structure_summary": "Example structure 26"
+      },
+      "template_ref": {
+        "template_id": "cdfd8e57-a805-497d-8cd0-d61ef1578512",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.95,
+        "success_rate": 0.9500000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "e537d04cea52e39ee78f346b6798dd8a514ca7027772d929ad8ea6546b75a1df",
+      "confidence_score": 0.95,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "c2c6f537-eeb9-4dd5-bc57-9e537f09514f",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": null,
+        "structure_summary": "Example structure 27"
+      },
+      "template_ref": {
+        "template_id": "423ca4c8-e7c2-4d26-99ae-34d15ba5cfdf",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.96,
+        "success_rate": 0.96,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "7478055dfbf1bb16ee77040dade104af28920c8103e5b6b18c991bfd39f63445",
+      "confidence_score": 0.96,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "b3e0de34-93b5-4045-b1f6-963af9c9a850",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": "python",
+        "structure_summary": "Example structure 28"
+      },
+      "template_ref": {
+        "template_id": "614092e9-52d3-4522-a06f-167270646186",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.97,
+        "success_rate": 0.97,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "b1b33246e2ea5147f6c8884505f37015c4d5ea8acedc53246ec0257882e4240d",
+      "confidence_score": 0.97,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "479d34d4-a04a-42e1-a48a-e0fef4e1db48",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "javascript",
+        "structure_summary": "Example structure 29"
+      },
+      "template_ref": {
+        "template_id": "b4aeeca9-f7e3-4d2b-8453-c4cb0011c9cc",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.98,
+        "success_rate": 0.98,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "bfdc39a80799c96e531555427faf00207f8b677bb690130e52ebd6250aa60548",
+      "confidence_score": 0.98,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "a759fa0c-83d2-41e4-a9d4-30509d8d1c85",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": null,
+        "structure_summary": "Example structure 30"
+      },
+      "template_ref": {
+        "template_id": "4c4e1e4b-cfc2-477d-a640-957c0d0d78dc",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.99,
+        "success_rate": 0.99,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "a7f4c695d610f7fbb51e8beda085153a0c64c3076fd556e90b48fa5a56436ec7",
+      "confidence_score": 0.99,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "5c2b3053-5d38-4162-ac87-d84143ec0f0a",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": "python",
+        "structure_summary": "Example structure 31"
+      },
+      "template_ref": {
+        "template_id": "59ec30f5-58e7-423f-aac5-d6c45e1b0f52",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.85,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "51d20f4ed741dac9839764ee7f37d217758bbc9509e71aa1d0e761068559eefe",
+      "confidence_score": 0.85,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "bc33b899-1fb4-4b3f-83a9-93c8d72c1a79",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": "javascript",
+        "structure_summary": "Example structure 32"
+      },
+      "template_ref": {
+        "template_id": "e75f16f9-af6c-4b05-8b2d-907c560c4c43",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.86,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "4777b70f2f33174a9f74a83e7df8d7cdefa6a7958861a43cd03094a2b4c746c9",
+      "confidence_score": 0.86,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "8d10e7f7-1f53-45f2-92aa-a92560956b8a",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": null,
+        "structure_summary": "Example structure 33"
+      },
+      "template_ref": {
+        "template_id": "ec3fd7c5-c0a2-474a-a165-754bdbf058f2",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.87,
+        "success_rate": 0.92,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "2ed8d20e7fc88ed169f6c39752de2315706e216586b2fe4073d11e27e639cb6c",
+      "confidence_score": 0.87,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "30830f9b-5fcf-4b05-abfa-55cd63c62b14",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": "python",
+        "structure_summary": "Example structure 34"
+      },
+      "template_ref": {
+        "template_id": "a754764b-70a3-4f98-90bc-7983cfd4802a",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.88,
+        "success_rate": 0.93,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "8c2295e7511311d44280fccdd1581a93731590e9d633e0c2848285f969e57c02",
+      "confidence_score": 0.88,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "dfe70f59-ad3f-4db8-bd6e-c17708847cc0",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": "javascript",
+        "structure_summary": "Example structure 35"
+      },
+      "template_ref": {
+        "template_id": "cf477d41-0e27-405c-8861-77c30d475e04",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.89,
+        "success_rate": 0.9400000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "1ef62298217eda9f0d919043d334ffd083e69050e0a2279370e4544ff6e6cebc",
+      "confidence_score": 0.89,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "0c037d33-8bed-41ec-b203-66e0515cb363",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": null,
+        "structure_summary": "Example structure 36"
+      },
+      "template_ref": {
+        "template_id": "df9a6628-c2b5-47c6-9fbf-8ffecde96127",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9,
+        "success_rate": 0.9500000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "f3102b7d3d43d9be7603450c74f48b138c4539bf44674da5ea26eb4129f96080",
+      "confidence_score": 0.9,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "412fe9b8-3ef4-4285-9f7d-c233a6dc1a0a",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": "python",
+        "structure_summary": "Example structure 37"
+      },
+      "template_ref": {
+        "template_id": "993d7145-09ad-43cb-9e05-bbed2f9b28fd",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9099999999999999,
+        "success_rate": 0.96,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "908d9cb0eebb64a783a319ad2af6b0c990da4df758f8691a5b70a91a2cfd9aec",
+      "confidence_score": 0.91,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "dd46133c-90aa-4bbf-8dbf-8910a936e0a6",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": "javascript",
+        "structure_summary": "Example structure 38"
+      },
+      "template_ref": {
+        "template_id": "75a05b9f-2893-42eb-b1b1-95b7b786fc43",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9199999999999999,
+        "success_rate": 0.97,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "0a5c61bf9cb84f7e3afecc8ce3cc0ae6764f0c96efcf89592accbc73951915df",
+      "confidence_score": 0.92,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "0a824ac6-e728-4894-bef2-7307a2cc21ca",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": null,
+        "structure_summary": "Example structure 39"
+      },
+      "template_ref": {
+        "template_id": "db228123-3d4b-4ee5-be2e-ad77eae9301f",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9299999999999999,
+        "success_rate": 0.98,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "2c4c4076f50ed5954e6374042b1a7c9a3e407076bcff654bca26a9e5a424bbc5",
+      "confidence_score": 0.93,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "9a132be5-3e74-4595-b466-59c0a91cd47e",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": "python",
+        "structure_summary": "Example structure 40"
+      },
+      "template_ref": {
+        "template_id": "e67d2064-0ece-4a45-89e1-df5ca04fa573",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.94,
+        "success_rate": 0.99,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "838fc5220a44916280b6e09574db7a66af6641b4e334941ff482859b436c6f43",
+      "confidence_score": 0.94,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "f11d6218-40e9-4c02-baa5-da5fddd68168",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": "javascript",
+        "structure_summary": "Example structure 41"
+      },
+      "template_ref": {
+        "template_id": "c05612a5-a5c1-4b72-9385-c09e4c5a2211",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.95,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "5493d4708f694dce01aedc78a9c2583257746492b4303dd04d68ae48e3937a81",
+      "confidence_score": 0.95,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "484f5f66-3b39-444f-a765-b3cc23b0ead8",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": null,
+        "structure_summary": "Example structure 42"
+      },
+      "template_ref": {
+        "template_id": "263ea9f6-99a1-49b7-aee1-eacfc4ad6052",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.96,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "9d55f7f70527711e4a92729119229bc955251896d3403087a0682ec03a72ea51",
+      "confidence_score": 0.96,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "7e5a8a12-3ea0-4d24-99be-4e2eed51149b",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "python",
+        "structure_summary": "Example structure 43"
+      },
+      "template_ref": {
+        "template_id": "121112c3-39f9-489e-9755-2a6a39cdd0e7",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.97,
+        "success_rate": 0.92,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "780472b3b51883af11d1e1265b13b14143ae8f21dea1995c25e1b357b42bbf8e",
+      "confidence_score": 0.97,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "45e21714-3169-4be8-917d-8a2b05ac860a",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": "javascript",
+        "structure_summary": "Example structure 44"
+      },
+      "template_ref": {
+        "template_id": "9c074132-98aa-4482-9d2f-35c9a0009c13",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.98,
+        "success_rate": 0.93,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "7b9bb1be860b601f187f2306508a0d49c0a991081c14f20e0b0f4f40bb2bfd9a",
+      "confidence_score": 0.98,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "e8649718-b788-4b3e-82b7-a9b731d6183a",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": null,
+        "structure_summary": "Example structure 45"
+      },
+      "template_ref": {
+        "template_id": "5aba2875-7767-4ed9-bd4f-19dea62d6b8d",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.99,
+        "success_rate": 0.9400000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "e7885f9833552f142f13bb03067f4e4555c29ddd6748b8b206fd06254d806c68",
+      "confidence_score": 0.99,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "8596ef14-cef8-483f-87a9-be10e92d3867",
+      "content_profile": {
+        "content_types": "mixed",
+        "detected_patterns": "schema",
+        "language": "python",
+        "structure_summary": "Example structure 46"
+      },
+      "template_ref": {
+        "template_id": "04bd8c00-a147-4cd2-908a-b38f739dc86f",
+        "template_name": "Database Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.85,
+        "success_rate": 0.9500000000000001,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "f3e19cd8b9de0fd3d775f06202a5c52815799b2bfdd62097fc749597d39b3fb1",
+      "confidence_score": 0.85,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "c7d4a595-7cb2-4dce-a635-65ae17ddc6bd",
+      "content_profile": {
+        "content_types": "library",
+        "detected_patterns": "project",
+        "language": "javascript",
+        "structure_summary": "Example structure 47"
+      },
+      "template_ref": {
+        "template_id": "87b298e5-bbae-4ed4-9d97-9a3c58037f59",
+        "template_name": "Mixed Project Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.86,
+        "success_rate": 0.96,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "298306b3e497b8a6dfe7f8fc98969faebdb7378223996c4c89c3482302694ecb",
+      "confidence_score": 0.86,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "919b69d6-ae65-4c96-854e-fdb6d5c914a6",
+      "content_profile": {
+        "content_types": "testing",
+        "detected_patterns": "package",
+        "language": null,
+        "structure_summary": "Example structure 48"
+      },
+      "template_ref": {
+        "template_id": "dd6aa71d-de36-4d35-9e4b-1266823c9c30",
+        "template_name": "Library Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.87,
+        "success_rate": 0.97,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "c7e715138f7969b4e3ad04443d0ba93f80b1b71d15e3364b8d7959a54314cd74",
+      "confidence_score": 0.87,
+      "project_path": null,
+      "user_feedback": 3,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "eb642fc6-824d-4113-bee3-2efb9035cfa3",
+      "content_profile": {
+        "content_types": "web_app",
+        "detected_patterns": "pytest",
+        "language": "python",
+        "structure_summary": "Example structure 49"
+      },
+      "template_ref": {
+        "template_id": "4bec6224-16d4-43fc-9be4-5ba0243ce19c",
+        "template_name": "Testing Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.88,
+        "success_rate": 0.98,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "05dd12abfe27ebbd83608ffe2253aa22af155bced7693745a9699b69f554b970",
+      "confidence_score": 0.88,
+      "project_path": null,
+      "user_feedback": 4,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "e0a3113f-5eab-43d4-bf30-60e2a3472881",
+      "content_profile": {
+        "content_types": "python_api",
+        "detected_patterns": "fastapi",
+        "language": "javascript",
+        "structure_summary": "Example structure 50"
+      },
+      "template_ref": {
+        "template_id": "8d4fdf98-47f5-40b9-b740-044c8aac7ac2",
+        "template_name": "Python API Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.89,
+        "success_rate": 0.99,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "c1ee61536a4cde7be5092f3077826da54548a1cd4112ca024b9d5c746fd91b9c",
+      "confidence_score": 0.89,
+      "project_path": null,
+      "user_feedback": 5,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "584e1901-db2e-4b6a-bc20-5255f1c36ecb",
+      "content_profile": {
+        "content_types": "configuration",
+        "detected_patterns": "react",
+        "language": null,
+        "structure_summary": "Example structure 51"
+      },
+      "template_ref": {
+        "template_id": "e1d320a6-1bbd-467a-9f83-e6d5474e3b1b",
+        "template_name": "Web Application Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9,
+        "success_rate": 0.9,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "3baa60078a01528f2fb739e3d7b6eed28cb8772f6d86001fa22628c6a183218a",
+      "confidence_score": 0.9,
+      "project_path": null,
+      "user_feedback": 1,
+      "intelligence_embedding": null
+    },
+    {
+      "id": "f1236ce3-b3b4-4b9d-a7fe-1d63f0545e05",
+      "content_profile": {
+        "content_types": "database",
+        "detected_patterns": "config",
+        "language": "python",
+        "structure_summary": "Example structure 52"
+      },
+      "template_ref": {
+        "template_id": "074241c5-1e21-49f5-bdc6-19f345bc9152",
+        "template_name": "Configuration Intelligence Template"
+      },
+      "intelligence_metrics": {
+        "confidence_score": 0.9099999999999999,
+        "success_rate": 0.91,
+        "intelligence_score": 0.88
+      },
+      "learned_at": "2026-02-03T12:53:47.577945+00:00",
+      "content_profile_hash": "9806a5ee15ca3fef87746a6af18bc22d999dfda94264b9d1f49bf1eadefd6777",
+      "confidence_score": 0.91,
+      "project_path": null,
+      "user_feedback": 2,
+      "intelligence_embedding": null
+    }
+  ]
+}

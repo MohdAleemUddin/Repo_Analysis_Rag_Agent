@@ -87,6 +87,8 @@ jobs:
         continue-on-error: true
 
       - name: Run Pylint
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag/edge_agent
         run: pylint repo_analysis_rag/ offline-folder-rag/edge_agent/ --disable=all --enable=E,F
         continue-on-error: true
 
@@ -254,6 +256,13 @@ jobs:
             test-results-integration.xml
             test-results-functional.xml
             test-results-e2e.xml
+
+      - name: Upload errors log
+        uses: actions/upload-artifact@v4
+        if: always() && hashFiles('errors.log') != ''
+        with:
+          name: errors-log
+          path: errors.log
 
   build-docker:
     name: Build Docker Image

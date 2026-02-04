@@ -64,7 +64,7 @@ function getConfluenceFileSelectorWebviewHtml(webview: vscode.Webview): string {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  // Register comm
+  // Register commands
   context.subscriptions.push(
     vscode.commands.registerCommand('confluence.saveToIntelligent', () => {
       const panel = vscode.window.createWebviewPanel('confluenceSave', 'Save to Confluence - Intelligent Mode', vscode.ViewColumn.One, { enableScripts: true });
