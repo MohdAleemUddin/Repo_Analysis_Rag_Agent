@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Central config: database + Confluence (PRD §5.2 FR6, User Story 10)
 # Same PostgreSQL connection; connection overhead <5% over RAG baseline.
 import os
@@ -15,8 +14,9 @@ _config_loaded = False
 
 def load_config() -> None:
     """Load central config (env). Called at startup."""
-    global _config_loaded
+    global _config_loaded, _app_config
     _config_loaded = True
+    _app_config = {}
 
 
 def get_database_config() -> dict[str, Any]:
@@ -46,11 +46,6 @@ def get_confluence_config() -> dict[str, Any]:
         "team_sharing_opt_in": team_sharing_opt_in,
         "database_url": db.get("database_url"),
     }
-=======
-# Configuration for edge agent and Confluence integration.
-# Reuse existing DB pattern; reference connection/session from app context.
-
-from typing import Any
 
 # --- NFR1 Performance constants (PRD) ---
 ANALYSIS_MAX_SECONDS_PER_FILE = 3
@@ -60,24 +55,16 @@ CONFLUENCE_MEMORY_LIMIT_MB = 300
 
 # --- Confluence tuning knobs ---
 CONFLUENCE_ANALYSIS_CACHE_ENABLED = True
-CONFLUENCE_MAX_PARALLEL_FILES = 4  # Stay within 300MB
-CONFLUENCE_LARGE_FILE_THRESHOLD_BYTES = 512 * 1024  # 512KB
-CONFLUENCE_CHUNK_SIZE_BYTES = 64 * 1024  # 64KB
+CONFLUENCE_MAX_PARALLEL_FILES = 4
+CONFLUENCE_LARGE_FILE_THRESHOLD_BYTES = 512 * 1024
+CONFLUENCE_CHUNK_SIZE_BYTES = 64 * 1024
 CONFLUENCE_CPU_THROTTLE_ENABLED = True
 CONFLUENCE_ANALYSIS_CACHE_MAX_ENTRIES = 500
-CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS = 3600  # 1 hour
+CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS = 3600
 
-# --- App config (placeholder for existing load_config) ---
 _app_config: dict[str, Any] = {}
-
-
-def load_config() -> None:
-    """Load application config. Reuse existing DB connection from app context."""
-    global _app_config
-    _app_config = {}
 
 
 def get_app_config() -> dict[str, Any]:
     """Return current app config (e.g. for DB session reference)."""
     return _app_config
->>>>>>> 5fa35e2b268e4b9240b01b3b6ca998d64d057f27

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # TC-BVA-011 through TC-BVA-015: PRD NFR1 performance targets
 try:
     from offline_folder_rag.edge_agent.app.confluence.prd_monitor import (
@@ -58,9 +57,9 @@ def test_tc_bva_015_learning_curve_2min() -> None:
     targets = check_prd()
     assert "creation_target_sec" in targets
     assert CREATION_TARGET_SEC == 15.0
-=======
-"""Performance and business rule tests for User Story 8 (TC-BVA-011 etc.)."""
 
+
+# --- Additional performance tests (app agents, status, etc.) ---
 # pyright: reportMissingImports=false
 
 import time
@@ -290,4 +289,4 @@ def test_ui_remains_responsive_during_heavy_operation():
     client.get("/confluence/intelligence-status?detail_level=full")
     elapsed = time.perf_counter() - start
     assert elapsed < 2.0, "Status should return in < 2s (UI responsive)"
->>>>>>> 5fa35e2b268e4b9240b01b3b6ca998d64d057f27
+

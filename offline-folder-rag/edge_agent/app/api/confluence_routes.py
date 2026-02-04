@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PRD endpoints and export/import for Confluence intelligence
 from typing import Any, Tuple
 
@@ -89,18 +88,17 @@ def examples_import_handler(request: Any) -> Tuple[Any, int]:
     if imported_count == 0 and not message.startswith("Intelligence"):
         return {"error": "Validation error", "message": message}, 400
     return {"message": message, "imported_count": imported_count}, 200
-=======
 # PRD Confluence: analyze, create, status, feedback; PRD §9.2 error format.
 
 import logging
 from typing import Any
->>>>>>> 5fa35e2b268e4b9240b01b3b6ca998d64d057f27
 
 try:
-    from fastapi import Body, HTTPException
+    from fastapi import Body, HTTPException, Request as FastAPIRequest
 except ImportError:
     Body = None
     HTTPException = None
+    FastAPIRequest = None
 
 from app.config.config import CONFLUENCE_MEMORY_LIMIT_MB
 from app.confluence.error_handler import (
@@ -280,117 +278,26 @@ def _error_response(message: str, intelligence_suggestion: str = "", fallback_av
 
 
 # GET /confluence/intelligence-status
-<<<<<<< HEAD
-def intelligence_status_handler(request: Any) -> Tuple[Any, int]:
-    detail_level = _get_query_param(request, "detail_level") or "full"
-    data = get_intelligence_status(
-        detail_level=detail_level,
-        db_fetch_metrics=db_fetch_intelligence_metrics,
-    )
-    resp = {
-        "intelligence_metrics": data.get("intelligence_metrics", {}),
-        "learning_progress": data.get("learning_progress", {}),
-        "intelligence_summary": data.get("intelligence_summary", {}),
-    }
-    if "improvement_rates" in data:
-        resp["improvement_rates"] = data["improvement_rates"]
-    return resp, 200
-
-
-# POST /confluence/intelligence-feedback
-def intelligence_feedback_handler(request: Any) -> Tuple[Any, int]:
-    body = _get_json_body(request)
-    if body is None:
-        if hasattr(request, "get_data") and callable(getattr(request, "get_data")):
-            try:
-                import json as _json
-                payload = request.get_data(as_text=True)
-                if payload:
-                    body = _json.loads(payload)
-            except Exception:
-                pass
-        if body is None and hasattr(request, "body"):
-            try:
-                import json as _json
-                raw = request.body
-                payload = raw.decode("utf-8") if hasattr(raw, "decode") else raw
-                body = _json.loads(payload) if isinstance(payload, str) else payload
-            except Exception:
-                pass
-    if not body or not isinstance(body, dict):
-        return _error_response(
-            "Request body must be valid JSON.",
-            "Ensure JSON includes creation_id, intelligence_score (1-5), and optional feedback.",
-            True,
+def intelligence_status_handler(request: Any = None) -> Tuple[Any, int] | dict[str, Any]:
+    """Status: use get_intelligence_status when request provided (DB metrics), else last records."""
+    if request is not None:
+        detail_level = _get_query_param(request, "detail_level") or "full"
+        data = get_intelligence_status(
+            detail_level=detail_level,
+            db_fetch_metrics=db_fetch_intelligence_metrics,
         )
-    creation_id = body.get("creation_id")
-    intelligence_score = body.get("intelligence_score")
-    feedback = body.get("feedback") or body.get("feedback_text")
-    if not creation_id:
-        return _error_response(
-            "creation_id required.",
-            "Provide the UUID of the creation you are rating.",
-            False,
-        )
-    try:
-        score = int(intelligence_score) if intelligence_score is not None else None
-    except (TypeError, ValueError):
-        score = None
-    if score is None or not (1 <= score <= 5):
-        return _error_response(
-            "intelligence_score must be 1-5.",
-            "Rate the AI formatting decision from 1 (poor) to 5 (excellent).",
-            True,
-        )
-    learn_from_feedback(
-        creation_id=str(creation_id),
-        intelligence_score=score,
-        feedback_text=str(feedback) if feedback else None,
-        db_execute=_db_execute,
-        db_ensure_creation=db_ensure_creation_for_feedback,
-        db_get_template_id=db_get_creation_template_id,
-        db_update_template=db_update_template_confidence,
-    )
-    data = get_intelligence_status(
-        detail_level="full",
-        db_fetch_metrics=db_fetch_intelligence_metrics,
-    )
-    return {
-        "updated": True,
-        "intelligence_metrics": data.get("intelligence_metrics", {}),
-    }, 200
-
-
-def register_confluence_routes(router: Any) -> None:
-    """Register Confluence API routes including export/import (US6), status, feedback (US17)."""
-    if hasattr(router, "get"):
-        router.get("/confluence/examples/export")(examples_export_handler)
-        router.get("/confluence/intelligence-status")(intelligence_status_handler)
-    if hasattr(router, "post"):
-        router.post("/confluence/examples/import")(examples_import_handler)
-        router.post("/confluence/intelligence-feedback")(intelligence_feedback_handler)
-    if hasattr(router, "route"):
-        router.route("/confluence/examples/export", methods=["GET"])(examples_export_handler)
-        router.route("/confluence/examples/import", methods=["POST"])(examples_import_handler)
-        router.route("/confluence/intelligence-status", methods=["GET"])(intelligence_status_handler)
-        router.route("/confluence/intelligence-feedback", methods=["POST"])(intelligence_feedback_handler)
-=======
-def intelligence_status_handler() -> dict[str, Any]:
-    """Expose last N performance records / aggregates for monitoring."""
+        resp = {
+            "intelligence_metrics": data.get("intelligence_metrics", {}),
+            "learning_progress": data.get("learning_progress", {}),
+            "intelligence_summary": data.get("intelligence_summary", {}),
+        }
+        if "improvement_rates" in data:
+            resp["improvement_rates"] = data["improvement_rates"]
+        return resp, 200
     records = get_last_records(20)
     if not records:
-        empty_metrics = {
-            "template_selection_accuracy": 0.0,
-            **get_reliability_metrics(),
-        }
-        return {
-            "metrics": empty_metrics,
-            "intelligence_metrics": empty_metrics,
-            "learning_progress": {},
-            "improvement_rates": {},
-            "recent_records": [],
-        }
-
+        empty_metrics = {"template_selection_accuracy": 0.0, **get_reliability_metrics()}
+        return {"metrics": empty_metrics, "intelligence_metrics": empty_metrics, "learning_progress": {}, "improvement_rates": {}, "recent_records": []}
     analysis_times = []
     create_times = []
     memory_peaks = []
@@ -405,43 +312,51 @@ def intelligence_status_handler() -> dict[str, Any]:
         s = sorted(vals)
         i = int(len(s) * 0.95) or 0
         return s[min(i, len(s) - 1)]
-
     reliability = get_reliability_metrics()
     metrics = {
         "p95_analysis_ms": p95(analysis_times),
         "p95_create_ms": p95(create_times),
         "max_memory_mb": max(memory_peaks) if memory_peaks else 0,
-        "template_selection_accuracy": reliability.get(
-            "template_selection_accuracy", 0.0
-        ),
+        "template_selection_accuracy": reliability.get("template_selection_accuracy", 0.0),
         **reliability,
     }
-    recent = [r.to_dict() for r in records[-5:]]
-    return {
-        "metrics": metrics,
-        "intelligence_metrics": metrics,
-        "learning_progress": {},
-        "improvement_rates": {},
-        "recent_records": recent,
-    }
+    return {"metrics": metrics, "intelligence_metrics": metrics, "learning_progress": {}, "improvement_rates": {}, "recent_records": [r.to_dict() for r in records[-5:]]}
 
 
 # POST /confluence/intelligence-feedback
-def intelligence_feedback_handler(body: dict[str, Any]) -> dict[str, Any]:
-    """Accept feedback; process quickly or async so request does not block."""
-    feedback = body.get("feedback", "") or body.get("message", "")
-    return {
-        "status": "accepted",
-        "message": "Feedback received.",
-        "feedback_received": feedback,
-    }
+def intelligence_feedback_handler(body: dict[str, Any], request: Any = None) -> dict[str, Any] | Tuple[Any, int]:
+    """Accept feedback; when creation_id and intelligence_score 1-5, call learn_from_feedback."""
+    if body is None and request is not None:
+        body = _get_json_body(request) or {}
+    body = body or {}
+    creation_id = body.get("creation_id")
+    intelligence_score = body.get("intelligence_score")
+    feedback = body.get("feedback") or body.get("feedback_text")
+    if creation_id is not None and intelligence_score is not None:
+        try:
+            score = int(intelligence_score)
+        except (TypeError, ValueError):
+            score = None
+        if score is not None and 1 <= score <= 5:
+            learn_from_feedback(
+                creation_id=str(creation_id),
+                intelligence_score=score,
+                feedback_text=str(feedback) if feedback else None,
+                db_execute=_db_execute,
+                db_ensure_creation=db_ensure_creation_for_feedback,
+                db_get_template_id=db_get_creation_template_id,
+                db_update_template=db_update_template_confidence,
+            )
+            data = get_intelligence_status(detail_level="full", db_fetch_metrics=db_fetch_intelligence_metrics)
+            return {"updated": True, "intelligence_metrics": data.get("intelligence_metrics", {})}
+    feedback_text = body.get("feedback", "") or body.get("message", "")
+    return {"status": "accepted", "message": "Feedback received.", "feedback_received": feedback_text}
 
 
 def register_confluence_routes(router: Any) -> None:
-    """Register the four PRD endpoints on the given router (FastAPI/Flask-style)."""
+    """Register PRD endpoints and US6 export/import on the given router (FastAPI/Flask-style)."""
     if hasattr(router, "post") and hasattr(router, "get"):
         if Body is not None:
-
             def analyze_route(body: dict = Body(default=None)):
                 return intelligent_analyze_handler(body or {})
 
@@ -451,44 +366,55 @@ def register_confluence_routes(router: Any) -> None:
             def feedback_route(body: dict = Body(default=None)):
                 return intelligence_feedback_handler(body or {})
 
-        else:
+            def status_route(request: Any = None):
+                out = intelligence_status_handler(request)
+                return out[0] if isinstance(out, tuple) else out
 
+            router.post("/confluence/intelligent-analyze")(analyze_route)
+            router.post("/confluence/intelligent-create")(create_route)
+            router.get("/confluence/intelligence-status")(status_route)
+            router.post("/confluence/intelligence-feedback")(feedback_route)
+            if FastAPIRequest is not None:
+                def export_route(request: FastAPIRequest):
+                    out = examples_export_handler(request)
+                    from fastapi.responses import Response
+                    return Response(content=out[0], media_type="application/json", status_code=out[1])
+                def import_route(request: FastAPIRequest):
+                    out = examples_import_handler(request)
+                    from fastapi.responses import JSONResponse
+                    body, status = out if isinstance(out, tuple) else (out, 200)
+                    return JSONResponse(content=body if isinstance(body, dict) else {}, status_code=status)
+                router.get("/confluence/examples/export")(export_route)
+                router.post("/confluence/examples/import")(import_route)
+        else:
             def analyze_route(request: Any = None):
-                body = (
-                    getattr(request, "json", lambda: {})()
-                    if request is not None
-                    else {}
-                )
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
                 return intelligent_analyze_handler(body)
 
             def create_route(request: Any = None):
-                body = (
-                    getattr(request, "json", lambda: {})()
-                    if request is not None
-                    else {}
-                )
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
                 return intelligent_create_handler(body)
 
             def feedback_route(request: Any = None):
-                body = (
-                    getattr(request, "json", lambda: {})()
-                    if request is not None
-                    else {}
-                )
-                return intelligence_feedback_handler(body)
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return intelligence_feedback_handler(body, request)
 
-        def status_route():
-            return intelligence_status_handler()
+            def status_route(request: Any = None):
+                out = intelligence_status_handler(request)
+                return out[0] if isinstance(out, tuple) else out
 
-        router.post("/confluence/intelligent-analyze")(analyze_route)
-        router.post("/confluence/intelligent-create")(create_route)
-        router.get("/confluence/intelligence-status")(status_route)
-        router.post("/confluence/intelligence-feedback")(feedback_route)
+            router.post("/confluence/intelligent-analyze")(analyze_route)
+            router.post("/confluence/intelligent-create")(create_route)
+            router.get("/confluence/intelligence-status")(status_route)
+            router.post("/confluence/intelligence-feedback")(feedback_route)
+            router.route("/confluence/examples/export", methods=["GET"])(examples_export_handler)
+            router.route("/confluence/examples/import", methods=["POST"])(examples_import_handler)
     else:
         router.confluence_handlers = {
             "intelligent_analyze": lambda body: intelligent_analyze_handler(body),
             "intelligent_create": lambda body: intelligent_create_handler(body),
             "intelligence_status": lambda: intelligence_status_handler(),
             "intelligence_feedback": lambda body: intelligence_feedback_handler(body),
+            "examples_export": examples_export_handler,
+            "examples_import": examples_import_handler,
         }
->>>>>>> 5fa35e2b268e4b9240b01b3b6ca998d64d057f27
