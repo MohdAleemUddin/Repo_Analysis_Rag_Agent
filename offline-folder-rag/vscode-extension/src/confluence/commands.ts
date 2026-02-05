@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { intelligentAnalyze, intelligentCreate } from './confluence-api';
+import { getConfluenceConfigAsync } from './confluence-settings';
 import type { AnalyzeResponse, IntelligenceErrorResponse, CreateRequest } from './types';
 
 let lastAnalyze: {
@@ -24,7 +25,7 @@ export function registerCommands(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('confluence.saveToConfluence', async () => {
-      const config = getConfluenceConfig();
+      const config = await getConfluenceConfigAsync(context);
       const { fileContents, fileCount } = await getContentForAnalyze();
       if (!fileContents.length) {
         vscode.window.showErrorMessage('No content to analyze. Open a file or select text.');
@@ -68,11 +69,6 @@ export function registerCommands(context: vscode.ExtensionContext): void {
       }
     })
   );
-}
-
-function getConfluenceConfig(): { baseUrl: string; auth?: [string, string] | null } {
-  const baseUrl = vscode.workspace.getConfiguration('confluence').get<string>('apiBaseUrl') ?? 'http://localhost:8000';
-  return { baseUrl };
 }
 
 async function getContentForAnalyze(): Promise< { fileContents: string[]; fileCount: number }> {

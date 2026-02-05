@@ -3,6 +3,106 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 exports.deactivate = deactivate;
 const vscode = require("vscode");
+const confluence_settings_1 = require("./confluence/confluence-settings");
+function getConfluenceConfigPanelHtml(webview, baseUrl) {
+    return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline';"></head>
+<body style="font-family: var(--vscode-font-family); font-size: 13px; padding: 16px; max-width: 480px;">
+  <h3 style="margin-top:0">Confluence configuration</h3>
+  <p style="color: var(--vscode-descriptionForeground);">Set URL and email in Settings, then store your API token. Click Test connection to verify.</p>
+  <div id="validation-errors" style="display:none; margin-bottom: 12px; padding: 8px; background: var(--vscode-inputValidation-errorBackground); border-radius: 4px;"></div>
+  <button id="test-btn" type="button" style="padding: 6px 12px; background: var(--vscode-button-background); color: var(--vscode-button-foreground); border: none; border-radius: 2px; cursor: pointer;">Test connection</button>
+  <div id="result" style="margin-top: 12px; padding: 8px; border-radius: 4px; display: none;"></div>
+  <p style="margin-top: 12px; font-size: 11px; color: var(--vscode-descriptionForeground);">Edge agent: ${escapeHtml(baseUrl)}</p>
+  <script>
+    const vscode = acquireVsCodeApi();
+    const testBtn = document.getElementById('test-btn');
+    const resultEl = document.getElementById('result');
+    const errEl = document.getElementById('validation-errors');
+    testBtn.onclick = function() {
+      testBtn.disabled = true;
+      testBtn.textContent = 'Testing…';
+      resultEl.style.display = 'none';
+      errEl.style.display = 'none';
+      vscode.postMessage({ type: 'confluenceTestConnection' });
+    };
+    window.addEventListener('message', function(e) {
+      const msg = e.data;
+      if (msg.type === 'confluenceTestConnectionResult') {
+        testBtn.disabled = false;
+        testBtn.textContent = 'Test connection';
+        resultEl.style.display = 'block';
+        if (msg.error) {
+          resultEl.style.background = 'var(--vscode-inputValidation-errorBackground)';
+          resultEl.style.border = '1px solid var(--vscode-inputValidation-errorBorder)';
+          resultEl.textContent = msg.error;
+        } else {
+          resultEl.style.background = 'var(--vscode-editor-inactiveSelectionBackground)';
+          resultEl.style.border = '1px solid var(--vscode-widget-border)';
+          resultEl.innerHTML = 'Connection successful.' + (msg.latency_ms != null ? '<br><small>Latency: ' + msg.latency_ms + ' ms</small>' : '') + (msg.spaces && msg.spaces.length ? '<br><small>Spaces: ' + msg.spaces.map(function(s){ return s.key || s.name; }).join(', ') + '</small>' : '');
+        }
+      }
+      if (msg.type === 'confluenceValidationErrors' && msg.errors && msg.errors.length) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = '<ul style="margin:0;padding-left:20px">' + msg.errors.map(function(e){ return '<li>' + e.replace(/</g,'&lt;') + '</li>'; }).join('') + '</ul>';
+      }
+    });
+  </script>
+</body>
+</html>`;
+}
+function escapeHtml(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+function openConfluenceConfigPanel(context) {
+    const cfg = vscode.workspace.getConfiguration('confluence');
+    const baseUrl = (cfg.get('apiBaseUrl') ?? 'http://localhost:8000').replace(/\/$/, '');
+    const panel = vscode.window.createWebviewPanel('confluenceConfig', 'Confluence configuration', vscode.ViewColumn.One, { enableScripts: true });
+    panel.webview.html = getConfluenceConfigPanelHtml(panel.webview, baseUrl);
+    panel.webview.onDidReceiveMessage(async (msg) => {
+        if (msg.type === 'confluenceTestConnection') {
+            const { url, email } = (0, confluence_settings_1.getConfluenceCredentialsFromSettings)();
+            const token = await (0, confluence_settings_1.getStoredToken)(context);
+            const validationErrors = [];
+            if (!url || !url.trim())
+                validationErrors.push('Confluence URL is required.');
+            if (!email || !email.trim())
+                validationErrors.push('Email is required.');
+            if (!token || !token.trim())
+                validationErrors.push('API token is required. Store it in Confluence settings.');
+            if (validationErrors.length > 0) {
+                panel.webview.postMessage({ type: 'confluenceValidationErrors', errors: validationErrors });
+                panel.webview.postMessage({ type: 'confluenceTestConnectionResult', error: validationErrors.join(' ') });
+                return;
+            }
+            try {
+                const res = await fetch(`${baseUrl}/confluence/config/test-connection`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url.trim(), email: email.trim(), api_token: token.trim() }),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    panel.webview.postMessage({ type: 'confluenceTestConnectionResult', error: data.error || res.statusText });
+                    return;
+                }
+                panel.webview.postMessage({
+                    type: 'confluenceTestConnectionResult',
+                    ...data,
+                    error: data.ok ? undefined : (data.error || 'Connection failed'),
+                });
+            }
+            catch (e) {
+                panel.webview.postMessage({ type: 'confluenceTestConnectionResult', error: String(e) });
+            }
+        }
+    });
+}
 function getConfluenceFileSelectorWebviewHtml(webview) {
     return `<!DOCTYPE html>
 <html>
@@ -62,6 +162,21 @@ function getConfluenceFileSelectorWebviewHtml(webview) {
 </html>`;
 }
 function activate(context) {
+    // Invalidate any config cache when Confluence settings change
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration((e) => {
+        if (e.affectsConfiguration('confluence')) {
+            // Config is read fresh in getConfluenceConfigAsync; cache invalidation can be added there if needed
+        }
+    }));
+    // Optional: warn once if credentials are missing (e.g. URL set but no token)
+    const { url, email } = (0, confluence_settings_1.getConfluenceCredentialsFromSettings)();
+    if (url && email) {
+        (0, confluence_settings_1.getConfluenceConfigAsync)(context).then((config) => {
+            if (!config.auth && url) {
+                vscode.window.showInformationMessage('Confluence: Add and store your API token in Confluence settings to enable publishing.');
+            }
+        });
+    }
     // Register commands
     context.subscriptions.push(vscode.commands.registerCommand('confluence.saveToIntelligent', () => {
         const panel = vscode.window.createWebviewPanel('confluenceSave', 'Save to Confluence - Intelligent Mode', vscode.ViewColumn.One, { enableScripts: true });
@@ -99,9 +214,9 @@ function activate(context) {
         vscode.window.showInformationMessage('Opening Intelligent Creations dashboard...');
     }), vscode.commands.registerCommand('confluence.configureSettings', () => {
         vscode.commands.executeCommand('workbench.action.openSettings', 'confluence');
+    }), vscode.commands.registerCommand('confluence.configureProjectSettings', () => {
+        openConfluenceConfigPanel(context);
     }));
-    // Placeholder for chat-only UI integration
-    // In the real RAG extension, this would be where we hook into the chat input area
     console.log('Confluence Chat-Only Integration activated');
 }
 function deactivate() { }

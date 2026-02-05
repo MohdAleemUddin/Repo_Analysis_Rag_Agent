@@ -37,6 +37,42 @@ def get_database_config() -> dict[str, Any]:
     }
 
 
+def _merge_confluence_settings_from_env(out: dict[str, Any]) -> None:
+    """Merge Confluence settings from env into out (rate limits, timeouts, learning, etc.)."""
+    rate = os.environ.get("CONFLUENCE_RATE_LIMIT")
+    if rate is not None:
+        try:
+            out["rate_limit"] = max(1, min(int(rate), 200))
+        except ValueError:
+            pass
+    burst = os.environ.get("CONFLUENCE_BURST_LIMIT")
+    if burst is not None:
+        try:
+            out["burst_limit"] = max(1, min(int(burst), 50))
+        except ValueError:
+            pass
+    retry = os.environ.get("CONFLUENCE_RETRY_ATTEMPTS")
+    if retry is not None:
+        try:
+            out["retry_attempts"] = max(0, min(int(retry), 10))
+        except ValueError:
+            pass
+    if os.environ.get("CONFLUENCE_LEARNING_ENABLED", "").strip().lower() in ("0", "false", "no"):
+        out["learning_enabled"] = False
+    if os.environ.get("CONFLUENCE_LEARNING_ENABLED", "").strip().lower() in ("1", "true", "yes"):
+        out["learning_enabled"] = True
+
+
+def _validate_confluence_url(url: str | None) -> bool:
+    """Optional URL format check; does not fail if Confluence unused."""
+    if not url or not isinstance(url, str):
+        return True
+    s = url.strip().lower()
+    if ".atlassian.net" in s and not s.startswith("https://"):
+        return False
+    return s.startswith(("http://", "https://"))
+
+
 def get_confluence_config(workspace_id: str | None = None) -> dict[str, Any]:
     """
     Confluence config (single source: this module). database_url same as RAG when unset.
@@ -45,6 +81,7 @@ def get_confluence_config(workspace_id: str | None = None) -> dict[str, Any]:
     invoked with workspace-scoped credentials so that project isolation is preserved.
     When workspace_id is provided, credentials (base_url, auth) are obtained from the
     encrypted credential store only; raises if missing or not from the store.
+    Merges in Confluence settings from env (rate limits, learning, etc.).
     """
     from app.auth.credential_store import get_workspace_credentials
 
@@ -60,6 +97,9 @@ def get_confluence_config(workspace_id: str | None = None) -> dict[str, Any]:
         out["base_url"] = creds["base_url"]
         out["auth"] = (creds["email"], creds["api_token"])
         out["is_encrypted"] = creds.get("is_encrypted", True)
+        if not _validate_confluence_url(out.get("base_url")):
+            out["_url_validation_warning"] = "Confluence Cloud URLs should use HTTPS"
+    _merge_confluence_settings_from_env(out)
     return out
 
 # --- NFR1 Performance constants (PRD) ---

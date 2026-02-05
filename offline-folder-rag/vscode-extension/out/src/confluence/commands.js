@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerCommands = registerCommands;
 const vscode = require("vscode");
 const confluence_api_1 = require("./confluence-api");
+const confluence_settings_1 = require("./confluence-settings");
 let lastAnalyze = null;
 function registerCommands(context) {
     context.subscriptions.push(vscode.commands.registerCommand('confluence.viewIntelligentCreations', () => {
@@ -10,7 +11,7 @@ function registerCommands(context) {
         panel.webview.html = getDashboardHtml();
     }));
     context.subscriptions.push(vscode.commands.registerCommand('confluence.saveToConfluence', async () => {
-        const config = getConfluenceConfig();
+        const config = await (0, confluence_settings_1.getConfluenceConfigAsync)(context);
         const { fileContents, fileCount } = await getContentForAnalyze();
         if (!fileContents.length) {
             vscode.window.showErrorMessage('No content to analyze. Open a file or select text.');
@@ -47,10 +48,6 @@ function registerCommands(context) {
             vscode.window.showErrorMessage(String(e));
         }
     }));
-}
-function getConfluenceConfig() {
-    const baseUrl = vscode.workspace.getConfiguration('confluence').get('apiBaseUrl') ?? 'http://localhost:8000';
-    return { baseUrl };
 }
 async function getContentForAnalyze() {
     const editor = vscode.window.activeTextEditor;

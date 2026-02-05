@@ -522,3 +522,8 @@ def register_confluence_routes(router: Any) -> None:
             "examples_export": examples_export_handler,
             "examples_import": examples_import_handler,
         }
+
+    # Register Confluence config endpoints (test-connection, spaces, validate, defaults)
+    from app.api.config_routes import register_config_routes
+
+    register_config_routes(router)
