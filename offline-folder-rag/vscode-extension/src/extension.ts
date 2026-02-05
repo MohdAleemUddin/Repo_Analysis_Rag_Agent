@@ -1,99 +1,260 @@
 import * as vscode from 'vscode';
-import { ConfluenceButton } from './confluence/ConfluenceButton';
-import { ConfluenceFileSelector } from './confluence/ConfluenceFileSelector';
-import { ConfluenceResults } from './confluence/ConfluenceResults';
-import { ConfluenceProgress } from './confluence/ConfluenceProgress';
+import * as fs from 'fs';
+import { ConfluenceChatViewProvider, asDisposable, getAnalysisMessageHtml, getProgressMessageHtml, getSuccessMessageHtml, getErrorMessageHtml } from './confluence/ConfluenceChatViewProvider';
+import { intelligentAnalyze, intelligentCreate } from './confluence/confluence-api';
+import type { AnalyzeResponse, IntelligenceErrorResponse } from './confluence/types';
 
-function getConfluenceFileSelectorWebviewHtml(webview: vscode.Webview): string {
-  return `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' var(--vscode-font-family);"></head>
-<body>
-<div class="confluence-card" style="border:1px solid var(--vscode-widget-border);border-radius:4px;padding:12px;background:var(--vscode-editor-background);max-width:400px;">
-  <h3 style="margin:0 0 12px 0;font-size:14px;">Select files for intelligent formatting</h3>
-  <div style="margin-bottom:12px;">
-    <button id="browse-files" type="button" style="padding:4px 8px;background:var(--vscode-button-background);color:var(--vscode-button-foreground);border:none;border-radius:2px;cursor:pointer;font-size:12px;">📁 Browse Files...</button>
-  </div>
-  <div id="file-list" style="max-height:150px;overflow-y:auto;margin-bottom:12px;border:1px solid var(--vscode-input-border);padding:4px;"></div>
-  <div style="font-size:12px;margin-bottom:12px;color:var(--vscode-descriptionForeground);">Selected: <span id="selected-count">0</span> files</div>
-  <div style="display:flex;justify-content:flex-end;gap:8px;">
-    <button id="cancel" style="padding:4px 12px;background:transparent;color:var(--vscode-button-foreground);border:1px solid var(--vscode-button-border);border-radius:2px;cursor:pointer;">Cancel</button>
-    <button id="next" disabled style="padding:4px 12px;background:var(--vscode-button-secondaryBackground);color:var(--vscode-button-foreground);border:none;border-radius:2px;cursor:pointer;opacity:0.5;">Next: Let AI Decide</button>
-  </div>
-</div>
-<script>
-(function() {
-  const vscode = acquireVsCodeApi();
-  let availableFiles = [];
-  let selectedFiles = [];
-  function render() {
-    const list = document.getElementById('file-list');
-    const countEl = document.getElementById('selected-count');
-    const nextBtn = document.getElementById('next');
-    list.innerHTML = availableFiles.map(f => '<div style="display:flex;align-items:center;padding:2px 0;"><input type="checkbox" id="chk-' + f.replace(/[^a-zA-Z0-9.-]/g, '_') + '" ' + (selectedFiles.includes(f) ? 'checked' : '') + ' style="margin-right:8px;"><label style="font-size:12px;">' + (f.replace(/</g, '&lt;')) + '</label></div>').join('');
-    list.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
-      cb.addEventListener('change', () => {
-        const path = availableFiles[i];
-        selectedFiles = selectedFiles.includes(path) ? selectedFiles.filter(x => x !== path) : selectedFiles.concat(path);
-        countEl.textContent = selectedFiles.length;
-        nextBtn.disabled = selectedFiles.length === 0;
-        nextBtn.style.opacity = selectedFiles.length === 0 ? '0.5' : '1';
-        nextBtn.style.backgroundColor = selectedFiles.length === 0 ? 'var(--vscode-button-secondaryBackground)' : 'var(--vscode-button-background)';
-      });
-    });
-    countEl.textContent = selectedFiles.length;
-    nextBtn.disabled = selectedFiles.length === 0;
-    nextBtn.style.opacity = selectedFiles.length === 0 ? '0.5' : '1';
-    nextBtn.style.backgroundColor = selectedFiles.length === 0 ? 'var(--vscode-button-secondaryBackground)' : 'var(--vscode-button-background)';
-  }
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'browseFilesResult' && Array.isArray(e.data.paths)) {
-      availableFiles = [...new Set(availableFiles.concat(e.data.paths))];
-      selectedFiles = [...new Set(selectedFiles.concat(e.data.paths))];
-      render();
-    }
-  });
-  document.getElementById('browse-files').onclick = function() { vscode.postMessage({ type: 'browseFiles' }); };
-  document.getElementById('cancel').onclick = function() { vscode.postMessage({ type: 'cancel' }); };
-  document.getElementById('next').onclick = function() { vscode.postMessage({ type: 'next', paths: selectedFiles }); };
-  render();
-})();
-</script>
-</body>
-</html>`;
+const PROGRESS_STEPS = [
+  { label: 'Analyzing content structure...', status: 'pending' as const },
+  { label: 'Selecting optimal template...', status: 'pending' as const },
+  { label: 'Applying intelligent formatting...', status: 'pending' as const },
+  { label: 'Uploading to Confluence...', status: 'pending' as const },
+];
+
+function getApiConfig(): { baseUrl: string } {
+  const config = vscode.workspace.getConfiguration('confluence');
+  const baseUrl = config.get<string>('apiBaseUrl') || 'http://localhost:8000';
+  return { baseUrl };
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  // Register commands
+  const provider = new ConfluenceChatViewProvider(context.extensionUri);
+
+  let selectedFilePaths: string[] = [];
+  let analyzeResult: AnalyzeResponse | null = null;
+  let fileContents: string[] = [];
+
+  provider.setMessageHandler(async (msg: unknown) => {
+    const m = msg as { type: string; paths?: string[]; title?: string; space?: string; url?: string };
+    if (!m || !m.type) return;
+
+    if (m.type === 'confluenceSaveClicked') {
+      provider.startFlow();
+      return;
+    }
+
+    if (m.type === 'browseFiles') {
+      const panel = provider.getOrCreatePanel();
+      panel.reveal();
+      const defaultUri = vscode.workspace.workspaceFolders?.[0]?.uri;
+      const uris = await vscode.window.showOpenDialog({
+        canSelectMany: true,
+        openLabel: 'Select files',
+        defaultUri,
+        title: 'Select files for Confluence',
+      });
+      if (uris && uris.length) {
+        const paths = uris.map((u) => u.fsPath);
+        provider.postMessage({ type: 'browseFilesResult', paths });
+      }
+      return;
+    }
+
+    if (m.type === 'cancel') {
+      provider.postMessage({ type: 'reset' });
+      selectedFilePaths = [];
+      analyzeResult = null;
+      fileContents = [];
+      return;
+    }
+
+    if (m.type === 'next' && Array.isArray(m.paths) && m.paths.length) {
+      selectedFilePaths = m.paths;
+      const config = getApiConfig();
+      const progressId = 'msg-progress';
+
+      try {
+        fileContents = selectedFilePaths
+          .filter((p) => fs.existsSync(p))
+          .map((p) => fs.readFileSync(p, 'utf-8'));
+
+        if (fileContents.length === 0) {
+          provider.postMessage({
+            type: 'append',
+            id: 'msg-error',
+            html: getErrorMessageHtml({
+              message: 'No readable file content found.',
+              suggestion: 'Ensure the selected files exist and are text files.',
+            }),
+          });
+          return;
+        }
+
+        provider.postMessage({
+          type: 'append',
+          id: progressId,
+          html: getProgressMessageHtml(
+            PROGRESS_STEPS.map((s) => ({ ...s, status: s.label.includes('Analyzing') ? 'active' : 'pending' })),
+            25,
+            12
+          ),
+        });
+
+        const result = await intelligentAnalyze(config, { file_contents: fileContents });
+        const isError = result && 'error' in result;
+        if (isError) {
+          const err = result as IntelligenceErrorResponse;
+          provider.postMessage({
+            type: 'append',
+            id: 'msg-error',
+            html: getErrorMessageHtml({
+              message: err.message || 'Analysis failed',
+              suggestion: err.intelligence_suggestion || 'Try different files.',
+            }),
+          });
+          return;
+        }
+
+        analyzeResult = result as AnalyzeResponse;
+        const analysis = analyzeResult.intelligence_analysis;
+        const rec = analyzeResult.intelligent_recommendation;
+
+        provider.postMessage({ type: 'update', id: progressId, html: getProgressMessageHtml(PROGRESS_STEPS.map((s) => ({ ...s, status: 'completed' })), 100, 0) });
+        provider.postMessage({
+          type: 'append',
+          id: 'msg-analysis',
+          html: getAnalysisMessageHtml({
+            content_types: analysis.content_types || [],
+            detected_patterns: analysis.detected_patterns || [],
+            intelligent_title: analysis.intelligent_title || 'Documentation',
+            template_name: rec.template_name || '',
+            intelligence_reason: rec.intelligence_reason || '',
+          }),
+        });
+      } catch (e) {
+        provider.postMessage({
+          type: 'append',
+          id: 'msg-error',
+          html: getErrorMessageHtml({
+            message: e instanceof Error ? e.message : 'Analysis failed',
+            suggestion: 'Check the edge agent is running and try again.',
+          }),
+        });
+      }
+      return;
+    }
+
+    if (m.type === 'createPage' && m.title && analyzeResult && fileContents.length) {
+      const createProgressId = 'msg-create-progress';
+      provider.postMessage({
+        type: 'append',
+        id: createProgressId,
+        html: getProgressMessageHtml(
+          PROGRESS_STEPS.map((s, i) => ({
+            label: s.label,
+            status: i < 2 ? 'completed' : i === 2 ? 'active' : 'pending',
+          })),
+          75,
+          5
+        ),
+      });
+
+      const config = getApiConfig();
+      const mergedContent = fileContents.join('\n\n---\n\n');
+      try {
+        const createResult = await intelligentCreate(config, {
+          content: mergedContent,
+          intelligent_mode: true,
+          auto_title: false,
+          space: m.space || 'DEV',
+          intelligence_context: { suggested_title: m.title, title_override: m.title },
+        });
+
+        provider.postMessage({
+          type: 'update',
+          id: createProgressId,
+          html: getProgressMessageHtml(
+            PROGRESS_STEPS.map((s) => ({ ...s, status: 'completed' })),
+            100,
+            0
+          ),
+        });
+        const rec = analyzeResult.intelligent_recommendation;
+        const analysis = analyzeResult.intelligence_analysis;
+        const decisions = [
+          rec?.intelligence_reason,
+          analysis?.ai_reasoning,
+          `Template: ${rec?.template_name || ''}`,
+        ].filter(Boolean) as string[];
+
+        provider.postMessage({
+          type: 'append',
+          id: 'msg-success',
+          html: getSuccessMessageHtml({
+            title: (createResult as { title?: string }).title || m.title,
+            space: (createResult as { space?: string }).space || m.space || 'DEV',
+            url: (createResult as { url?: string }).url || config.baseUrl,
+            decisions,
+          }),
+        });
+      } catch (e) {
+        provider.postMessage({
+          type: 'append',
+          id: 'msg-error',
+          html: getErrorMessageHtml({
+            message: e instanceof Error ? e.message : 'Create failed',
+            suggestion: 'Check Confluence URL and credentials.',
+          }),
+        });
+      }
+      return;
+    }
+
+    if (m.type === 'editTitle' && analyzeResult) {
+      const current = analyzeResult.intelligence_analysis?.intelligent_title || 'Documentation';
+      const newTitle = await vscode.window.showInputBox({
+        prompt: 'Edit title',
+        value: current,
+      });
+      if (newTitle) {
+        analyzeResult.intelligence_analysis.intelligent_title = newTitle;
+        const analysis = analyzeResult.intelligence_analysis;
+        const rec = analyzeResult.intelligent_recommendation;
+        provider.postMessage({
+          type: 'update',
+          id: 'msg-analysis',
+          html: getAnalysisMessageHtml({
+            content_types: analysis.content_types || [],
+            detected_patterns: analysis.detected_patterns || [],
+            intelligent_title: newTitle,
+            template_name: rec.template_name || '',
+            intelligence_reason: rec.intelligence_reason || '',
+          }),
+        });
+      }
+      return;
+    }
+
+    if (m.type === 'openInBrowser' && m.url) {
+      vscode.env.openExternal(vscode.Uri.parse(m.url));
+      return;
+    }
+
+    if (m.type === 'copyLink' && m.url) {
+      vscode.env.clipboard.writeText(m.url);
+      vscode.window.showInformationMessage('Link copied to clipboard.');
+      return;
+    }
+
+    if (m.type === 'retry') {
+      provider.postMessage({ type: 'reset' });
+      provider.startFlow();
+      selectedFilePaths = [];
+      analyzeResult = null;
+      fileContents = [];
+      return;
+    }
+  });
+
   context.subscriptions.push(
     vscode.commands.registerCommand('confluence.saveToIntelligent', () => {
-      const panel = vscode.window.createWebviewPanel('confluenceSave', 'Save to Confluence - Intelligent Mode', vscode.ViewColumn.One, { enableScripts: true });
-      panel.webview.html = getConfluenceFileSelectorWebviewHtml(panel.webview);
-      panel.webview.onDidReceiveMessage(async (msg) => {
-        if (msg.type === 'browseFiles') {
-          panel.reveal();
-          const defaultUri = vscode.workspace.workspaceFolders?.[0]?.uri;
-          const uris = await vscode.window.showOpenDialog({
-            canSelectMany: true,
-            openLabel: 'Select files',
-            defaultUri,
-            title: 'Open'
-          });
-          if (uris && uris.length) {
-            panel.webview.postMessage({ type: 'browseFilesResult', paths: uris.map(u => u.fsPath) });
-          }
-        } else if (msg.type === 'cancel') {
-          panel.dispose();
-        } else if (msg.type === 'next' && Array.isArray(msg.paths)) {
-          panel.dispose();
-          vscode.window.showInformationMessage('Selected ' + msg.paths.length + ' file(s).');
-        }
-      });
+      provider.startFlow();
     }),
     vscode.commands.registerCommand('confluence.saveSelection', () => {
       const selection = vscode.window.activeTextEditor?.selection;
       if (selection && !selection.isEmpty) {
-        vscode.window.showInformationMessage('Saving selection to Confluence...');
+        provider.startFlow();
+        vscode.window.showInformationMessage('Use file selector to add selection.');
       }
     }),
     vscode.commands.registerCommand('confluence.documentProject', () => {
@@ -104,12 +265,9 @@ export function activate(context: vscode.ExtensionContext): void {
     }),
     vscode.commands.registerCommand('confluence.configureSettings', () => {
       vscode.commands.executeCommand('workbench.action.openSettings', 'confluence');
-    })
+    }),
+    asDisposable(provider)
   );
-
-  // Placeholder for chat-only UI integration
-  // In the real RAG extension, this would be where we hook into the chat input area
-  console.log('Confluence Chat-Only Integration activated');
 }
 
 export function deactivate(): void {}

@@ -2,9 +2,34 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfluenceFileSelector = void 0;
 const React = require("react");
-const ConfluenceFileSelector = ({ onCancel, onNext }) => {
+const ConfluenceFileSelector = ({ onCancel, onNext, onBrowseFiles }) => {
     const [selectedFiles, setSelectedFiles] = React.useState([]);
     const [availableFiles, setAvailableFiles] = React.useState(['api.py', 'config.yaml', 'README.md', 'utils.py']);
+    const handleBrowseFiles = React.useCallback(async () => {
+        if (onBrowseFiles) {
+            const paths = await onBrowseFiles();
+            if (paths?.length) {
+                setAvailableFiles(prev => [...new Set([...prev, ...paths])]);
+                setSelectedFiles(prev => [...new Set([...prev, ...paths])]);
+            }
+            return;
+        }
+        if (typeof window.acquireVsCodeApi === 'function') {
+            window.acquireVsCodeApi().postMessage({ type: 'browseFiles' });
+        }
+    }, [onBrowseFiles]);
+    React.useEffect(() => {
+        if (typeof window.acquireVsCodeApi !== 'function' || onBrowseFiles)
+            return;
+        const handler = (e) => {
+            if (e.data?.type === 'browseFilesResult' && Array.isArray(e.data.paths)) {
+                setAvailableFiles(prev => [...new Set([...prev, ...e.data.paths])]);
+                setSelectedFiles(prev => [...new Set([...prev, ...e.data.paths])]);
+            }
+        };
+        window.addEventListener('message', handler);
+        return () => window.removeEventListener('message', handler);
+    }, [onBrowseFiles]);
     const toggleFile = (file) => {
         setSelectedFiles(prev => prev.includes(file) ? prev.filter(f => f !== file) : [...prev, file]);
     };
@@ -17,7 +42,7 @@ const ConfluenceFileSelector = ({ onCancel, onNext }) => {
         } },
         React.createElement("h3", { style: { margin: '0 0 12px 0', fontSize: '14px' } }, "Select files for intelligent formatting"),
         React.createElement("div", { style: { marginBottom: '12px' } },
-            React.createElement("button", { onClick: () => { }, style: {
+            React.createElement("button", { onClick: handleBrowseFiles, style: {
                     padding: '4px 8px',
                     backgroundColor: 'var(--vscode-button-background)',
                     color: 'var(--vscode-button-foreground)',

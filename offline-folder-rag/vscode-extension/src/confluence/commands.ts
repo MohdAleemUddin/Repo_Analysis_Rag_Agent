@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { intelligentAnalyze, intelligentCreate } from './confluence-api';
-import type { AnalyzeResponse, IntelligenceErrorResponse, CreateRequest } from './types';
+import type { AnalyzeResponse, IntelligenceErrorResponse, CreateRequest, IntelligenceAnalysis, IntelligentRecommendation } from './types';
 
 let lastAnalyze: {
   response: AnalyzeResponse | IntelligenceErrorResponse;
@@ -103,9 +103,9 @@ function getConfluenceDecisionsHtml(response: AnalyzeResponse | IntelligenceErro
 </body></html>`;
   }
   const res = response as AnalyzeResponse;
-  const analysis = res.intelligence_analysis ?? {};
-  const rec = res.intelligent_recommendation ?? {};
-  const cb = rec.confidence_breakdown ?? {};
+  const analysis = (res.intelligence_analysis ?? {}) as Partial<IntelligenceAnalysis>;
+  const rec = (res.intelligent_recommendation ?? {}) as Partial<IntelligentRecommendation>;
+  const cb = (rec.confidence_breakdown ?? {}) as { content_match?: number; structure_match?: number; context_match?: number };
   const confidencePct = Math.round((analysis.intelligence_confidence ?? 0) * 100);
   const title = analysis.intelligent_title ?? 'Documentation';
   const lowConf = (analysis.intelligence_confidence ?? 0) < 0.7;

@@ -121,6 +121,35 @@ from app.agents.coordinator import get_operation_record, run_analyze, run_create
 
 logger = logging.getLogger(__name__)
 
+# US11: In-memory usage tracking per user/workspace for progressive disclosure
+_confluence_usage_store: dict[tuple[str, str], list[dict[str, Any]]] = {}
+
+
+def _usage_key(user_id: str, workspace: str) -> tuple[str, str]:
+    return (user_id or "default", workspace or "default")
+
+
+# POST /confluence/track-usage
+def track_usage_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """Track user interaction; return usageCount and showAdvanced for progressive disclosure."""
+    if not body or not isinstance(body, dict):
+        body = {}
+    user_id = body.get("userId") or body.get("user_id") or "default"
+    feature = body.get("feature") or "unknown"
+    workspace = body.get("workspace") or body.get("workspace_path") or "default"
+    key = _usage_key(user_id, workspace)
+    if key not in _confluence_usage_store:
+        _confluence_usage_store[key] = []
+    _confluence_usage_store[key].append({"feature": feature, "timestamp": __import__("time").time()})
+    usage_count = len(_confluence_usage_store[key])
+    show_advanced = usage_count >= 2
+    return {
+        "usageCount": usage_count,
+        "showAdvanced": show_advanced,
+        "learning": False,
+        "messages": {},
+    }
+
 
 def _memory_limit_response() -> dict[str, Any]:
     r = prd_error_response(
@@ -287,6 +316,12 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
         if not all(perf.targets_met.values()):
             result["optimization_suggestions"] = get_optimization_suggestions(perf)
 
+    # US11: Learning indicator when intelligence learned from this creation
+    if result.get("success") and isinstance(result.get("intelligence_summary"), dict):
+        if result["intelligence_summary"].get("ai_learning_applied"):
+            result["learning"] = True
+            result["message"] = "Intelligence learning from your successful creation"
+
     return result
 
 
@@ -399,6 +434,9 @@ def register_confluence_routes(router: Any) -> None:
                 out = intelligence_feedback_handler(body or {})
                 return out[0] if isinstance(out, tuple) else out
 
+            def track_usage_route(body: dict = Body(default=None)):
+                return track_usage_handler(body or {})
+
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)
                 return out[0] if isinstance(out, tuple) else out
@@ -407,6 +445,7 @@ def register_confluence_routes(router: Any) -> None:
             router.post("/confluence/intelligent-create")(create_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
+            router.post("/confluence/track-usage")(track_usage_route)
             if FastAPIRequest is not None:
                 def export_route(request: FastAPIRequest):
                     out = examples_export_handler(request)
@@ -433,6 +472,10 @@ def register_confluence_routes(router: Any) -> None:
                 out = intelligence_feedback_handler(body, request)
                 return out[0] if isinstance(out, tuple) else out
 
+            def track_usage_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return track_usage_handler(body)
+
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)
                 return out[0] if isinstance(out, tuple) else out
@@ -441,6 +484,7 @@ def register_confluence_routes(router: Any) -> None:
             router.post("/confluence/intelligent-create")(create_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
+            router.post("/confluence/track-usage")(track_usage_route)
             router.route("/confluence/examples/export", methods=["GET"])(examples_export_handler)
             router.route("/confluence/examples/import", methods=["POST"])(examples_import_handler)
     else:
@@ -449,6 +493,7 @@ def register_confluence_routes(router: Any) -> None:
             "intelligent_create": lambda body: intelligent_create_handler(body),
             "intelligence_status": lambda: intelligence_status_handler(),
             "intelligence_feedback": lambda body: intelligence_feedback_handler(body),
+            "track_usage": track_usage_handler,
             "examples_export": examples_export_handler,
             "examples_import": examples_import_handler,
         }
