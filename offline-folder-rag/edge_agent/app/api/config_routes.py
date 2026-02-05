@@ -7,6 +7,7 @@ from typing import Any
 from app.config.confluence_config import (
     get_available_spaces,
     get_intelligent_defaults,
+    get_preferred_space,
     test_connection,
 )
 from app.config.confluence_schema import ConfluenceCredentials, ConfluenceConfigValidate
@@ -89,6 +90,13 @@ def defaults_handler(url: str | None = None) -> dict[str, Any]:
     return get_intelligent_defaults(url)
 
 
+# GET /confluence/config/preferred-space?project_path=... (US-2)
+def preferred_space_handler(project_path: str | None = None) -> dict[str, Any]:
+    """Return preferred Confluence space for project folder (from intelligent_creations or default by type)."""
+    space = get_preferred_space(project_path)
+    return {"preferred_space": space}
+
+
 def register_config_routes(router: Any) -> None:
     """Register Confluence config endpoints on the given router (FastAPI/Flask-style)."""
     try:
@@ -111,10 +119,14 @@ def register_config_routes(router: Any) -> None:
             def defaults_route(url: str | None = Query(default=None)):
                 return defaults_handler(url)
 
+            def preferred_space_route(project_path: str | None = Query(default=None)):
+                return preferred_space_handler(project_path)
+
             router.post("/confluence/config/test-connection")(test_route)
             router.post("/confluence/config/spaces")(spaces_route)
             router.post("/confluence/config/validate")(validate_route)
             router.get("/confluence/config/defaults")(defaults_route)
+            router.get("/confluence/config/preferred-space")(preferred_space_route)
         else:
             def test_route(request: Any = None):
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
@@ -134,14 +146,22 @@ def register_config_routes(router: Any) -> None:
                     url = request.query_params.get("url")
                 return defaults_handler(url)
 
+            def preferred_space_route(request: Any = None):
+                project_path = None
+                if request is not None and getattr(request, "query_params", None):
+                    project_path = request.query_params.get("project_path")
+                return preferred_space_handler(project_path)
+
             router.post("/confluence/config/test-connection")(test_route)
             router.post("/confluence/config/spaces")(spaces_route)
             router.post("/confluence/config/validate")(validate_route)
             router.get("/confluence/config/defaults")(defaults_route)
+            router.get("/confluence/config/preferred-space")(preferred_space_route)
     else:
         router.config_handlers = {
             "test_connection": lambda body: test_connection_handler(body or {}),
             "spaces": lambda body: spaces_handler(body or {}),
             "validate": lambda body: validate_handler(body or {}),
             "defaults": lambda url=None: defaults_handler(url),
+            "preferred_space": lambda project_path=None: preferred_space_handler(project_path),
         }

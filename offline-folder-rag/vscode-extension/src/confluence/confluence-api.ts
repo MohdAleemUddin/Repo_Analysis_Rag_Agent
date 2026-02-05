@@ -31,9 +31,22 @@ async function postJson<T>(url: string, body: unknown, auth?: [string, string] |
   return data as T;
 }
 
+export interface ChatContextPayload {
+  messages?: Array<{ content?: string; text?: string; message?: string }>;
+  selected_text?: string;
+  selection?: string;
+  workspace_path?: string;
+  workspacePath?: string;
+}
+
 export async function intelligentAnalyze(
   config: ConfluenceApiConfig,
-  payload: { files?: string[]; file_contents?: string[]; content?: string }
+  payload: {
+    files?: string[];
+    file_contents?: string[];
+    content?: string;
+    chat_context?: ChatContextPayload;
+  }
 ): Promise<AnalyzeResponse | IntelligenceErrorResponse> {
   const url = `${config.baseUrl.replace(/\/$/, '')}/confluence/intelligent-analyze`;
   return postJson<AnalyzeResponse | IntelligenceErrorResponse>(url, payload, config.auth);

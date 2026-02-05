@@ -7,6 +7,7 @@ from ..confluence.db_adapter import (
     db_fetch_intelligence_metrics,
     db_ensure_creation_for_feedback,
     db_get_creation_template_id,
+    db_record_creation as _db_record_creation,
     db_update_template_confidence,
 )
 from ..confluence.export_import import export_examples, import_examples
@@ -118,6 +119,7 @@ from app.confluence.prd_monitor import (
 )
 
 from app.agents.coordinator import get_operation_record, run_analyze, run_create, run_document_project
+from app.confluence.context_analyzer import analyze_chat_context
 
 logger = logging.getLogger(__name__)
 
@@ -139,18 +141,43 @@ def _memory_limit_response() -> dict[str, Any]:
 
 # POST /confluence/intelligent-analyze
 def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
-    """Analyze: check memory, run coordinator.run_analyze with timers, return result."""
+    """Analyze: check memory, run coordinator.run_analyze with timers, return result. Optional chat_context (US-2)."""
     if not body or not isinstance(body, dict):
         body = {}
+    chat_context = body.get("chat_context")
+    context_result: dict[str, Any] = {}
+    if chat_context and isinstance(chat_context, dict):
+        messages = chat_context.get("messages") or chat_context.get("last_messages") or []
+        selected_text = chat_context.get("selected_text") or chat_context.get("selection") or ""
+        workspace_path = chat_context.get("workspace_path") or chat_context.get("workspacePath") or ""
+        try:
+            context_result = analyze_chat_context(
+                messages=messages,
+                selected_text=selected_text,
+                workspace_path=workspace_path,
+            )
+        except Exception as e:
+            logger.debug("Context analysis skipped: %s", e)
+
     files_or_contents = body.get("files") or body.get("file_contents") or []
     has_content = (
         body.get("content", "") != "" if body.get("content") is not None else False
     )
     if not files_or_contents and not has_content:
+        if context_result:
+            return {
+                "context_suggestions": {
+                    "mentioned_files": context_result.get("mentioned_files", []),
+                    "related_files": context_result.get("related_files", []),
+                    "project_type_label": context_result.get("project_type_label", "Mixed project"),
+                    "detected_language": context_result.get("detected_language", "Mixed"),
+                    "should_suggest_readme": context_result.get("should_suggest_readme", False),
+                },
+            }
         err = prd_error_response(
             error_code="intelligence_error",
-            message="Missing request: provide 'files', 'file_contents', or 'content'.",
-            intelligence_suggestion="Send JSON with files or content (string).",
+            message="Missing request: provide 'files', 'file_contents', 'content', or 'chat_context'.",
+            intelligence_suggestion="Send JSON with files or content (string) or chat_context.",
             fallback_available=False,
             intelligence_confidence=0.0,
         )
@@ -193,6 +220,15 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
     except Exception as e:
         logger.exception("intelligent-analyze failed: %s", e)
         return handle_error(e, error_code="analysis_failed")
+
+    if context_result:
+        result["context_suggestions"] = {
+            "mentioned_files": context_result.get("mentioned_files", []),
+            "related_files": context_result.get("related_files", []),
+            "project_type_label": context_result.get("project_type_label", "Mixed project"),
+            "detected_language": context_result.get("detected_language", "Mixed"),
+            "should_suggest_readme": context_result.get("should_suggest_readme", False),
+        }
 
     record = get_operation_record()
     peak_mb = get_peak_memory_mb()
@@ -266,6 +302,23 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
     except Exception as e:
         logger.exception("intelligent-create failed: %s", e)
         return handle_error(e, error_code="create_failed")
+
+    project_path = body.get("workspace_path") or body.get("workspacePath") or body.get("project_path") or ""
+    if project_path or space_key:
+        try:
+            import uuid as _uuid
+            creation_id = str(_uuid.uuid4())
+            page_id = str(result.get("id", ""))
+            page_url = result.get("url", "")
+            _db_record_creation(
+                creation_id=creation_id,
+                confluence_page_id=page_id,
+                confluence_url=page_url,
+                project_path=project_path.strip() or None,
+                space_key=space_key,
+            )
+        except Exception:
+            pass
 
     record = get_operation_record()
     peak_mb = get_peak_memory_mb()

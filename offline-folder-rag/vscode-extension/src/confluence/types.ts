@@ -26,11 +26,21 @@ export interface IntelligentRecommendation {
   };
 }
 
+/** US-2: Context suggestions from chat */
+export interface ContextSuggestions {
+  mentioned_files: string[];
+  related_files: string[];
+  project_type_label: string;
+  detected_language?: string;
+  should_suggest_readme?: boolean;
+}
+
 export interface AnalyzeResponse {
-  intelligence_analysis: IntelligenceAnalysis;
-  intelligent_recommendation: IntelligentRecommendation;
+  intelligence_analysis?: IntelligenceAnalysis;
+  intelligent_recommendation?: IntelligentRecommendation;
   performance?: Record<string, unknown>;
   optimization_suggestions?: unknown[];
+  context_suggestions?: ContextSuggestions;
 }
 
 /** PRD §9.1 create request */

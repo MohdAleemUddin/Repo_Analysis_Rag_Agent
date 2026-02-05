@@ -13,6 +13,8 @@ __all__ = [
     "get_intelligent_defaults",
     "test_connection",
     "get_available_spaces",
+    "get_preferred_space",
+    "get_default_space_for_project_type",
 ]
 
 CONNECTION_TEST_TIMEOUT_SEC = 5
@@ -124,3 +126,30 @@ def get_available_spaces(url: str, email: str, api_token: str) -> list[dict[str,
         for s in data.get("results", [])
         if isinstance(s, dict) and s.get("key")
     ]
+
+
+def get_default_space_for_project_type(project_path: str) -> str:
+    """
+    Auto-select space by project type (US-2).
+    Code projects -> DEV; Documentation projects -> DOCS; Mixed content -> DEV.
+    """
+    path = (project_path or "").strip().lower()
+    if any(part in path for part in ("src", "app", "lib", "api", "packages")):
+        return "DEV"
+    if any(part in path for part in ("docs", "wiki", "doc")):
+        return "DOCS"
+    return "DEV"
+
+
+def get_preferred_space(project_path: str | None) -> str:
+    """
+    Remember user's preferred Confluence space per project folder (US-2).
+    1. Check database for previous space usage in this project
+    2. Fallback to get_default_space_for_project_type()
+    3. Stored in intelligent_creations.space_key column
+    """
+    if not project_path or not str(project_path).strip():
+        return get_default_space_for_project_type("")
+    from app.confluence.db_adapter import db_get_preferred_space
+    stored = db_get_preferred_space(project_path.strip())
+    return stored if stored else get_default_space_for_project_type(project_path)

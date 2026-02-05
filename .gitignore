@@ -13,4 +13,3 @@ htmlcov/
 docs/
 confluence_data/examples/vector_embeddings/*.index
 errors.log/
-errors.log

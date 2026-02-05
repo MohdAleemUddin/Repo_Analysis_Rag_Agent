@@ -62,6 +62,23 @@ function escapeHtml(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
+/** US-2: Trigger chat message flow with selection (NO PANEL). Stores selection for chat; focuses chat. */
+function triggerChatFlowWithSelection(context: vscode.ExtensionContext): void {
+  const editor = vscode.window.activeTextEditor;
+  const selection = editor?.selection;
+  const text = selection && !selection.isEmpty && editor ? editor.document.getText(selection) : '';
+  context.globalState.update('rag-confluence.preloadedSelection', text || undefined);
+  void vscode.commands.executeCommand('workbench.panel.chat.view.focus').then(() => {
+    if (text) {
+      vscode.window.showInformationMessage('Selection ready for Confluence. Use Save to Confluence in the chat.');
+    }
+  }, () => {
+    if (text) {
+      vscode.window.showInformationMessage('Selection saved. Open the RAG chat and click Save to Confluence to use it.');
+    }
+  });
+}
+
 function openConfluenceConfigPanel(context: vscode.ExtensionContext): void {
   const cfg = vscode.workspace.getConfiguration('confluence');
   const baseUrl = (cfg.get<string>('apiBaseUrl') ?? 'http://localhost:8000').replace(/\/$/, '');
@@ -115,6 +132,7 @@ function getConfluenceFileSelectorWebviewHtml(webview: vscode.Webview): string {
 <body>
 <div class="confluence-card" style="border:1px solid var(--vscode-widget-border);border-radius:4px;padding:12px;background:var(--vscode-editor-background);max-width:400px;">
   <h3 style="margin:0 0 12px 0;font-size:14px;">Select files for intelligent formatting</h3>
+  <div id="preloaded-info" style="display:none;margin-bottom:8px;font-size:11px;color:var(--vscode-descriptionForeground);"></div>
   <div style="margin-bottom:12px;">
     <button id="browse-files" type="button" style="padding:4px 8px;background:var(--vscode-button-background);color:var(--vscode-button-foreground);border:none;border-radius:2px;cursor:pointer;font-size:12px;">📁 Browse Files...</button>
   </div>
@@ -150,16 +168,23 @@ function getConfluenceFileSelectorWebviewHtml(webview: vscode.Webview): string {
     nextBtn.style.opacity = selectedFiles.length === 0 ? '0.5' : '1';
     nextBtn.style.backgroundColor = selectedFiles.length === 0 ? 'var(--vscode-button-secondaryBackground)' : 'var(--vscode-button-background)';
   }
+  let preloadedContent = '';
   window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'browseFilesResult' && Array.isArray(e.data.paths)) {
       availableFiles = [...new Set(availableFiles.concat(e.data.paths))];
       selectedFiles = [...new Set(selectedFiles.concat(e.data.paths))];
       render();
     }
+    if (e.data && e.data.type === 'preloadedSelection' && typeof e.data.content === 'string') {
+      preloadedContent = e.data.content;
+      var el = document.getElementById('preloaded-info');
+      if (el) { el.style.display = 'block'; el.textContent = 'Selection pre-loaded (' + preloadedContent.length + ' chars) for Confluence.'; }
+      render();
+    }
   });
   document.getElementById('browse-files').onclick = function() { vscode.postMessage({ type: 'browseFiles' }); };
   document.getElementById('cancel').onclick = function() { vscode.postMessage({ type: 'cancel' }); };
-  document.getElementById('next').onclick = function() { vscode.postMessage({ type: 'next', paths: selectedFiles }); };
+  document.getElementById('next').onclick = function() { vscode.postMessage({ type: 'next', paths: selectedFiles, preloadedContent: preloadedContent || undefined }); };
   render();
 })();
 </script>
@@ -215,12 +240,8 @@ export function activate(context: vscode.ExtensionContext): void {
         }
       });
     }),
-    vscode.commands.registerCommand('confluence.saveSelection', () => {
-      const selection = vscode.window.activeTextEditor?.selection;
-      if (selection && !selection.isEmpty) {
-        vscode.window.showInformationMessage('Saving selection to Confluence...');
-      }
-    }),
+    vscode.commands.registerCommand('confluence.saveSelection', () => triggerChatFlowWithSelection(context)),
+    vscode.commands.registerCommand('rag-confluence.saveSelection', () => triggerChatFlowWithSelection(context)),
     vscode.commands.registerCommand('confluence.documentProject', () => {
       vscode.window.showInformationMessage('Documenting project intelligently...');
     }),

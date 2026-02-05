@@ -13,6 +13,7 @@ try:
         spaces_handler,
         validate_handler,
         defaults_handler,
+        preferred_space_handler,
         register_config_routes,
     )
     from app.config.config import (
@@ -25,6 +26,8 @@ try:
         get_intelligent_defaults,
         test_connection as confluence_test_connection,
         get_available_spaces,
+        get_default_space_for_project_type,
+        get_preferred_space,
         _confluence_request,
     )
     from app.config.confluence_schema import (
@@ -53,6 +56,7 @@ except ImportError:
         spaces_handler,
         validate_handler,
         defaults_handler,
+        preferred_space_handler,
         register_config_routes,
     )
     from app.config.config import (
@@ -65,6 +69,8 @@ except ImportError:
         get_intelligent_defaults,
         test_connection as confluence_test_connection,
         get_available_spaces,
+        get_default_space_for_project_type,
+        get_preferred_space,
         _confluence_request,
     )
     from app.config.confluence_schema import (
@@ -241,6 +247,9 @@ def test_config_routes_via_fastapi_test_client():
     r4 = client.post("/confluence/config/spaces", json={})
     assert r4.status_code == 200
     assert "spaces" in r4.json()
+    r5 = client.get("/confluence/config/preferred-space?project_path=/my/project")
+    assert r5.status_code == 200
+    assert "preferred_space" in r5.json()
 
 
 def test_config_routes_request_style_handlers_invoked():
@@ -280,6 +289,9 @@ def test_config_routes_request_style_via_test_client():
         assert r3.json().get("valid") is True
         r4 = client.post("/confluence/config/spaces", json={})
         assert "spaces" in r4.json()
+        r5 = client.get("/confluence/config/preferred-space?project_path=/foo/bar")
+        assert r5.status_code == 200
+        assert "preferred_space" in r5.json()
 
 
 def test_config_routes_request_style_defaults_with_query_params():
@@ -305,6 +317,16 @@ def test_config_routes_request_style_defaults_with_query_params():
                 break
         else:
             pytest.fail("GET /confluence/config/defaults route not found")
+        for r in router.routes:
+            if getattr(r, "path", "") == "/confluence/config/preferred-space" and "GET" in getattr(r, "methods", set()):
+                req = MagicMock()
+                req.query_params = MagicMock()
+                req.query_params.get = lambda k: "/my/proj" if k == "project_path" else None
+                out = r.endpoint(req)
+                assert "preferred_space" in out
+                break
+        else:
+            pytest.fail("GET /confluence/config/preferred-space route not found")
 
 
 def test_register_config_routes_handlers_dict():
@@ -317,6 +339,59 @@ def test_register_config_routes_handlers_dict():
     assert "spaces" in router.config_handlers
     assert "validate" in router.config_handlers
     assert "defaults" in router.config_handlers
+    assert "preferred_space" in router.config_handlers
+    out = router.config_handlers["preferred_space"]("/my/project")
+    assert "preferred_space" in out
+    assert out["preferred_space"] in ("DEV", "DOCS")
+
+
+def test_preferred_space_handler_none():
+    out = preferred_space_handler(None)
+    assert out["preferred_space"] in ("DEV", "DOCS")
+
+
+@patch("app.api.config_routes.get_preferred_space")
+def test_preferred_space_handler_with_path(mock_get):
+    mock_get.return_value = "DEV"
+    out = preferred_space_handler("/some/project")
+    assert out["preferred_space"] == "DEV"
+    mock_get.assert_called_once_with("/some/project")
+
+
+def test_get_default_space_for_project_type_code():
+    assert get_default_space_for_project_type("/home/src/app") == "DEV"
+    assert get_default_space_for_project_type("/api/service") == "DEV"
+
+
+def test_get_default_space_for_project_type_docs():
+    assert get_default_space_for_project_type("/home/docs") == "DOCS"
+    assert get_default_space_for_project_type("/wiki/page") == "DOCS"
+
+
+def test_get_default_space_for_project_type_default():
+    assert get_default_space_for_project_type("") == "DEV"
+    assert get_default_space_for_project_type("/other") == "DEV"
+
+
+@patch("app.confluence.db_adapter.db_get_preferred_space")
+def test_get_preferred_space_stored(mock_db):
+    mock_db.return_value = "DEV"
+    assert get_preferred_space("/my/project") == "DEV"
+    mock_db.assert_called_once_with("/my/project")
+
+
+@patch("app.confluence.db_adapter.db_get_preferred_space")
+def test_get_preferred_space_fallback(mock_db):
+    mock_db.return_value = None
+    out = get_preferred_space("/docs/readme")
+    assert out == "DOCS"
+
+
+def test_get_preferred_space_empty():
+    out = get_preferred_space(None)
+    assert out in ("DEV", "DOCS")
+    out2 = get_preferred_space("   ")
+    assert out2 in ("DEV", "DOCS")
 
 
 # ---- config.py ----

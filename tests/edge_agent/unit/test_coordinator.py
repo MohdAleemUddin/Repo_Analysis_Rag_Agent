@@ -1,4 +1,6 @@
 """Unit tests for app.agents.coordinator."""
+import tempfile
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 try:
@@ -7,6 +9,7 @@ try:
         get_last_coordinator_error,
         run_analyze,
         run_create,
+        run_document_project,
         get_operation_record,
     )
     from app.agents.contracts import PipelineState
@@ -19,6 +22,7 @@ except ImportError:
         get_last_coordinator_error,
         run_analyze,
         run_create,
+        run_document_project,
         get_operation_record,
     )
     from app.agents.contracts import PipelineState
@@ -246,3 +250,165 @@ def test_run_create_dict_result_with_feedback(mock_sched, mock_create, mock_form
 def test_get_operation_record():
     r = get_operation_record()
     assert r is None or hasattr(r, "operation_id")
+
+
+@patch("app.agents.coordinator.check_memory_before_step", return_value=False)
+@patch("app.agents.coordinator.start_operation")
+def test_run_document_project_memory_limit(mock_start, mock_mem):
+    with patch("app.agents.coordinator._set_state"):
+        try:
+            run_document_project("/tmp/ws", "DOC", "http://x", auth=None)
+        except RuntimeError as ex:
+            assert "Memory" in str(ex)
+
+
+@patch("app.agents.coordinator.check_memory_before_step", return_value=True)
+@patch("app.agents.coordinator.start_operation")
+def test_run_document_project_no_paths(mock_start, mock_mem):
+    with patch("app.agents.coordinator.project_scan", return_value=[]):
+        with patch("app.agents.coordinator._set_state"):
+            try:
+                run_document_project("/nonexistent", "DOC", "http://x", auth=None)
+            except ValueError as ex:
+                assert "No files found" in str(ex)
+
+
+@patch("app.agents.coordinator.schedule_learning_after_create")
+@patch("app.agents.coordinator.integration_create_page")
+@patch("app.agents.coordinator.format_project_content")
+@patch("app.agents.coordinator.match_project_template")
+@patch("app.agents.coordinator.analyze_project")
+@patch("app.agents.coordinator.project_scan")
+@patch("app.agents.coordinator.check_memory_before_step", return_value=True)
+@patch("app.agents.coordinator.start_operation")
+def test_run_document_project_success(
+    mock_start,
+    mock_mem,
+    mock_scan,
+    mock_analyze,
+    mock_match,
+    mock_format,
+    mock_create,
+    mock_sched,
+):
+    from app.confluence.project_analyzer import ProjectAnalysis
+    from app.confluence.project_template_matcher import ProjectTemplateMatch
+    from app.agents.contracts import IntegrationResult, PageInfo, VerificationResult
+
+    progress_calls = []
+
+    def track_progress(current: int, total: int) -> None:
+        progress_calls.append((current, total))
+
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "main.py").write_text("x = 1")
+        main_py = str(Path(tmp) / "main.py")
+
+        def scan_side_effect(workspace_path, progress_callback=None, limit=100):
+            if progress_callback and callable(progress_callback):
+                progress_callback(0, 1)
+            return [main_py]
+
+        mock_scan.side_effect = scan_side_effect
+        mock_analyze.return_value = ProjectAnalysis(
+            project_type="API",
+            content_types=["python_api"],
+            detected_patterns=[],
+            source_file_count=1,
+        )
+        mock_match.return_value = ProjectTemplateMatch(
+            template_name="T1",
+            template_id="tid",
+            confidence=85.0,
+            match_count=1,
+            ai_reasoning="match",
+        )
+        mock_format.return_value = MagicMock(confluence_storage_format="<p>doc</p>")
+        mock_create.return_value = IntegrationResult(
+            page=PageInfo(id="1", url="http://x/page", title="API Project Documentation", space="DOC"),
+            intelligence_tag="AI",
+            retries_used=0,
+            rate_limit_state="ok",
+            verification=VerificationResult(passed=True, checks=[]),
+        )
+        out = run_document_project(tmp, "DOC", "http://x", auth=None, progress_callback=track_progress)
+    assert out["confluence_url"] == "http://x/page"
+    assert out["template_name"] == "T1"
+    assert out["learning_indicator"] is True
+    mock_sched.assert_called_once()
+    mock_scan.assert_called_once()
+    assert progress_calls == [(0, 1)]
+
+
+@patch("app.agents.coordinator.integration_create_page")
+@patch("app.agents.coordinator.format_project_content")
+@patch("app.agents.coordinator.match_project_template")
+@patch("app.agents.coordinator.analyze_project")
+@patch("app.agents.coordinator.project_scan")
+@patch("app.agents.coordinator.check_memory_before_step", return_value=True)
+@patch("app.agents.coordinator.start_operation")
+def test_run_document_project_success_dict_result(
+    mock_start, mock_mem, mock_scan, mock_analyze, mock_match, mock_format, mock_create
+):
+    from app.confluence.project_analyzer import ProjectAnalysis
+    from app.confluence.project_template_matcher import ProjectTemplateMatch
+
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "a.py").write_text("a = 1")
+        a_py = str(Path(tmp) / "a.py")
+        mock_scan.return_value = [a_py, "/nonexistent/fake_raise.py"]
+        mock_analyze.return_value = ProjectAnalysis(
+            project_type="mixed",
+            content_types=[],
+            detected_patterns=[],
+            source_file_count=1,
+        )
+        mock_match.return_value = ProjectTemplateMatch(
+            template_name="T2",
+            template_id="t2",
+            confidence=90.0,
+            match_count=1,
+            ai_reasoning="",
+        )
+        mock_format.return_value = MagicMock(confluence_storage_format="<p>x</p>")
+        mock_create.return_value = {"id": "2", "title": "Mixed Project Documentation", "space": "DOC", "url": "http://y"}
+        out = run_document_project(tmp, "DOC", "http://x", auth=None)
+    assert out["confluence_url"] == "http://y"
+    assert out["intelligence_analysis"]["project_type"] == "mixed"
+
+
+@patch("app.agents.coordinator.integration_create_page", side_effect=RuntimeError("create failed"))
+@patch("app.agents.coordinator.format_project_content")
+@patch("app.agents.coordinator.match_project_template")
+@patch("app.agents.coordinator.analyze_project")
+@patch("app.agents.coordinator.project_scan")
+@patch("app.agents.coordinator.check_memory_before_step", return_value=True)
+@patch("app.agents.coordinator.start_operation")
+def test_run_document_project_exception(
+    mock_start, mock_mem, mock_scan, mock_analyze, mock_match, mock_format, mock_create
+):
+    from app.confluence.project_analyzer import ProjectAnalysis
+    from app.confluence.project_template_matcher import ProjectTemplateMatch
+
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "b.py").write_text("b = 1")
+        mock_scan.return_value = [str(Path(tmp) / "b.py")]
+        mock_analyze.return_value = ProjectAnalysis(
+            project_type="API",
+            content_types=[],
+            detected_patterns=[],
+            source_file_count=1,
+        )
+        mock_match.return_value = ProjectTemplateMatch(
+            template_name="T",
+            template_id="t",
+            confidence=80.0,
+            match_count=1,
+            ai_reasoning="",
+        )
+        mock_format.return_value = MagicMock(confluence_storage_format="<p>y</p>")
+        with patch("app.agents.coordinator._set_state"):
+            try:
+                run_document_project(tmp, "DOC", "http://x", auth=None)
+            except RuntimeError as ex:
+                assert "create failed" in str(ex)

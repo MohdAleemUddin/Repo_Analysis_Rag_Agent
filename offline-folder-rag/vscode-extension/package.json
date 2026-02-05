@@ -25,6 +25,11 @@
         "category": "Confluence"
       },
       {
+        "command": "rag-confluence.saveSelection",
+        "title": "🤖 Save to Confluence (AI will format perfectly)",
+        "category": "Confluence"
+      },
+      {
         "command": "confluence.documentProject",
         "title": "PRD: Document Project Intelligently",
         "category": "Confluence"
@@ -51,6 +56,11 @@
           "command": "confluence.saveSelection",
           "when": "editorHasSelection",
           "group": "confluence@1"
+        },
+        {
+          "command": "rag-confluence.saveSelection",
+          "when": "editorHasSelection",
+          "group": "confluence"
         }
       ]
     },
