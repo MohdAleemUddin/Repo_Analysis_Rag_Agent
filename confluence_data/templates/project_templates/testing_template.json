@@ -1,0 +1,6 @@
+{
+  "name": "Testing Project Template",
+  "content_type": "testing",
+  "sections": ["Overview", "Architecture", "Setup", "API Endpoints", "Configuration", "Testing"],
+  "description": "Template for test automation and QA projects"
+}

@@ -1,0 +1,1189 @@
+// @ts-nocheck
+import * as fs from "fs";
+import * as path from "path";
+import * as vscode from "vscode";
+
+import { parseSlashCommand, CommandResultMessage, CommandRouter } from "../commands/commandRouter";
+import { intelligentAnalyze, intelligentCreate, getPreferredSpace, getIntelligenceStatus, postIntelligenceFeedback, documentProject, exportExamples, importExamples } from "../confluence/confluence-api";
+import { getConfluenceConfigAsync } from "../confluence/confluence-settings";
+import type { AnalyzeResponse, IntelligenceErrorResponse, IntelligenceMetrics } from "../confluence/types";
+import { getChatPanelHtml } from "./ui/chatPanelHtml";
+import {
+    getConfluenceFileSelectorHtml,
+    getConfluenceAnalysisHtml,
+    getConfluenceProgressHtml,
+    getConfluenceErrorHtml,
+    getConfluenceSuccessHtml,
+    getConfluenceViewCreationsHtml,
+    getIntelligenceDashboardHtml,
+    getConfluenceDocumentProjectProgressHtml,
+    getConfluenceDocumentProjectSuccessHtml,
+} from "./ui/confluenceHtml";
+import { triggerFullIndex, setIndexing, clearIndexing, isPathInsideRoot } from "../services/indexGate";
+// import { renderAssistantResponse } from "./components/AssistantResponseRenderer";
+const renderAssistantResponse = (payload: any) => JSON.stringify(payload);
+import {
+    askWithOverride,
+    startHealthPolling,
+    stopHealthPolling,
+    HealthResponse,
+    isComposerMode,
+    readComposerMode,
+    writeComposerMode,
+    ComposerMode,
+    DEFAULT_AGENT_BASE_URL,
+    getIndexReport,
+    trackConfluenceUsage
+} from "../services/agentClient";
+import { readRecentFolders, readRootPath, writeRootPath, readAutoIndex, writeAutoIndex } from "../services/storage";
+import { AutoIndexScheduler } from "../services/autoIndexScheduler";
+import { getOnboardingState, markTooltipShown, incrementUsage } from "../confluence/onboarding";
+import { getSpacePreference, setSpacePreference, getSuggestedSpaceFromProjectType } from "../confluence/confluenceSpacePreferences";
+
+const COMPOSER_PLACEHOLDER = "Plan · @ for context · / for commands";
+
+class ModeState {
+    private mode: ComposerMode;
+
+    constructor() {
+        this.mode = readComposerMode() ?? "auto";
+    }
+
+    public getMode(): ComposerMode {
+        return this.mode;
+    }
+
+    public setMode(mode: ComposerMode): void {
+        this.mode = mode;
+        writeComposerMode(mode);
+    }
+}
+
+interface ConfluenceState {
+    analyzeResult?: AnalyzeResponse;
+    fileContents?: string[];
+    selectedPaths?: string[];
+    lastTitle?: string;
+    lastSpace?: string;
+    contextSuggestions?: { mentioned_files?: string[]; related_files?: string[]; project_type_label?: string; should_suggest_readme?: boolean };
+}
+
+const MAX_CONVERSATION_HISTORY = 5;
+
+const DEBUG_LOG_ENDPOINT = 'http://127.0.0.1:7243/ingest/be5e723f-4f73-46b4-bfeb-c2d4f3314dbc';
+const DEBUG_LOG_PATH = '.cursor/debug.log';
+
+function debugLog(payload: { location: string; message: string; data?: object; hypothesisId?: string }): void {
+    const full = { ...payload, timestamp: Date.now(), sessionId: 'debug-session' };
+    const line = JSON.stringify(full) + '\n';
+    fetch(DEBUG_LOG_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: line }).catch(() => {});
+    try {
+        const w = vscode.workspace.workspaceFolders?.[0]?.uri?.fsPath;
+        if (w) fs.appendFileSync(path.join(w, DEBUG_LOG_PATH), line);
+    } catch (_) {}
+}
+
+export class ChatPanelViewProvider {
+    private panel: vscode.WebviewPanel | undefined;
+    private panelNonce: string | undefined;
+    private readonly router: CommandRouter;
+    private readonly modeState: ModeState;
+    private readonly agentBaseUrl = DEFAULT_AGENT_BASE_URL; // Default agent URL
+    private readonly scheduler: AutoIndexScheduler;
+    private confluenceState: ConfluenceState = {};
+    private conversationHistory: Array<{ content: string }> = [];
+    private readonly confluenceOutput: vscode.OutputChannel | undefined;
+
+    constructor(
+        private readonly extensionContext: vscode.ExtensionContext,
+        private readonly extensionUri: vscode.Uri,
+        confluenceOutput?: vscode.OutputChannel
+    ) {
+        this.confluenceOutput = confluenceOutput;
+        this.router = new CommandRouter(extensionContext, (message) => this.postMessage(message));
+        this.modeState = new ModeState();
+        this.scheduler = new AutoIndexScheduler({
+            triggerIndex: () => this.handleIndexAndReport('incremental'),
+            getRootPath: () => this.getEffectiveRootPath(),
+            agentBaseUrl: this.agentBaseUrl
+        });
+        
+        // Listen for file saves to trigger auto-indexing
+        vscode.workspace.onDidSaveTextDocument((doc) => {
+            const rootPath = this.getEffectiveRootPath();
+            if (rootPath && isPathInsideRoot(rootPath, doc.uri.fsPath)) {
+                if (readAutoIndex(this.extensionContext)) {
+                    this.scheduler.requestIndex();
+                }
+            }
+        });
+    }
+
+    private pushToConversationHistory(content: string): void {
+        if (!content || typeof content !== 'string') return;
+        this.conversationHistory.push({ content });
+        this.conversationHistory = this.conversationHistory.slice(-MAX_CONVERSATION_HISTORY);
+    }
+
+    private getPreloadedSelection(): string | undefined {
+        return this.extensionContext.globalState.get<string>('rag-confluence.preloadedSelection');
+    }
+
+    public async triggerConfluenceSave(): Promise<void> {
+        if (!this.panel) return;
+        await this.handleConfluenceSaveWithContext([]);
+    }
+
+    public async triggerDocumentProject(): Promise<void> {
+        if (!this.panel) return;
+        const rootPath = this.getEffectiveRootPath();
+        if (!rootPath || !rootPath.trim()) {
+            this.postMessage({ type: 'commandResult', payload: 'Please open a project folder first.', isConfluence: true });
+            return;
+        }
+        this.postMessage({
+            type: 'commandResult',
+            payload: getConfluenceDocumentProjectProgressHtml(this.getConfluenceNonce()),
+            isHtml: true,
+            isConfluence: true,
+        });
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const space = getSpacePreference(this.extensionContext, rootPath) ?? 'DOC';
+            const result = await documentProject(config, { workspace_path: rootPath, space });
+            if (result.error) {
+                const html = getConfluenceErrorHtml({
+                    error: result.error,
+                    message: result.message ?? 'Document project failed.',
+                    suggestion: 'Check Confluence settings and workspace path. Ensure the agent backend is running.',
+                    confidence: 0.5,
+                    fallbackAvailable: false,
+                    actions: ['Retry', 'Update Settings', 'Cancel'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            const html = getConfluenceDocumentProjectSuccessHtml(result, this.getConfluenceNonce());
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+            if (result.confluence_url) {
+                const title = result.intelligence_analysis ? `${(result.intelligence_analysis.project_type ?? 'Project').replace(/^\w/, c => c.toUpperCase())} Project Documentation` : 'Project Documentation';
+                const newCreation = { url: result.confluence_url, title, space: space, createdAt: Date.now() };
+                const existing = this.extensionContext.globalState.get<Array<{ url?: string; title?: string; space?: string; createdAt?: number }>>('confluence.intelligentCreations') ?? [];
+                const updated = [newCreation, ...existing].slice(0, 50);
+                await this.extensionContext.globalState.update('confluence.intelligentCreations', updated);
+            }
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const html = getConfluenceErrorHtml({
+                error: 'document_project_failed',
+                message: msg,
+                suggestion: 'Check Confluence settings and ensure the agent backend is running.',
+                confidence: 0.5,
+                fallbackAvailable: false,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
+
+    public async triggerExportExamples(): Promise<void> {
+        if (!this.panel) return;
+        await this.handleConfluenceExportExamples();
+    }
+
+    public async triggerImportExamples(): Promise<void> {
+        if (!this.panel) return;
+        await this.handleConfluenceImportExamples();
+    }
+
+    public async triggerViewCreations(): Promise<void> {
+        if (!this.panel) return;
+        let metrics: IntelligenceMetrics | null = null;
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const status = await getIntelligenceStatus(config);
+            const im = status.intelligence_metrics;
+            const lp = status.learning_progress;
+            const ir = status.improvement_rates;
+            const m = status.metrics;
+            metrics = {
+                templateSelectionAccuracy: im?.template_selection_accuracy ?? im?.template_selection_intelligence ?? lp?.template_selection_accuracy ?? m?.template_selection_accuracy,
+                examplesLearned: lp?.examples_learned,
+                intelligenceConfidencePct: im?.intelligence_confidence_pct,
+                learningRatePct: im?.learning_rate_pct ?? ir?.learning_rate_pct ?? lp?.learning_rate_pct,
+                statusSummary: im?.status_summary,
+                successRate: m?.success_rate,
+                collectiveIntelligenceCount: im?.team_examples_count ?? lp?.team_examples_count,
+            };
+        } catch {
+            metrics = null;
+        }
+        const creations = this.extensionContext.globalState.get<Array<{ url?: string; title?: string; space?: string; creationId?: string }>>('confluence.intelligentCreations') ?? [];
+        const html = getIntelligenceDashboardHtml({ metrics, creations, nonce: this.getConfluenceNonce() });
+        this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+    }
+
+    private async handleConfluenceSaveWithContext(
+        existingFiles: string[] = [],
+        skipApiCall?: boolean
+    ): Promise<void> {
+        const usageCount = getOnboardingState(this.extensionContext).usageCount;
+        const rootPath = this.getEffectiveRootPath();
+        const chat_context = {
+            messages: this.conversationHistory,
+            selected_text: this.getPreloadedSelection() ?? undefined,
+            workspace_path: rootPath ?? undefined,
+        };
+        const hasContext = !!(chat_context.messages?.length || chat_context.selected_text);
+        let availableFiles = [...existingFiles];
+        let options: { contextSuggestions?: { projectTypeLabel?: string }; hasPreloadedSelection?: boolean } = {};
+        if (!skipApiCall && hasContext) {
+            try {
+                const config = await getConfluenceConfigAsync(this.extensionContext);
+                const result = await intelligentAnalyze(config, { chat_context });
+                const ctx = (result as { context_suggestions?: { mentioned_files?: string[]; related_files?: string[]; project_type_label?: string; should_suggest_readme?: boolean } }).context_suggestions;
+                if (ctx) {
+                    this.confluenceState.contextSuggestions = ctx;
+                    options = {
+                        contextSuggestions: ctx.project_type_label ? { projectTypeLabel: ctx.project_type_label } : undefined,
+                        hasPreloadedSelection: !!chat_context.selected_text,
+                        shouldSuggestReadme: !!ctx.should_suggest_readme,
+                    };
+                    const mentioned = ctx.mentioned_files ?? [];
+                    const related = ctx.related_files ?? [];
+                    const allRelative = [...new Set([...mentioned, ...related])];
+                    if (rootPath && allRelative.length > 0) {
+                        const resolved = allRelative
+                            .map((p) => path.join(rootPath, p.replace(/\\/g, path.sep)))
+                            .filter((p) => { try { return fs.existsSync(p); } catch { return false; } });
+                        availableFiles = [...new Set([...existingFiles, ...resolved])];
+                    }
+                    if (ctx.should_suggest_readme && rootPath) {
+                        const readmeNames = ["README.md", "README.txt", "readme.md", "readme.txt"];
+                        for (const name of readmeNames) {
+                            const readmePath = path.join(rootPath, name);
+                            try {
+                                if (fs.existsSync(readmePath) && !availableFiles.includes(readmePath)) {
+                                    availableFiles = [readmePath, ...availableFiles];
+                                    break;
+                                }
+                            } catch { /* ignore */ }
+                        }
+                    }
+                }
+            } catch {
+                // Fall through to default
+            }
+        } else if (skipApiCall && this.confluenceState.contextSuggestions) {
+            const ctx = this.confluenceState.contextSuggestions;
+            options = {
+                contextSuggestions: ctx.project_type_label ? { projectTypeLabel: ctx.project_type_label } : undefined,
+                hasPreloadedSelection: !!chat_context.selected_text,
+                shouldSuggestReadme: !!ctx.should_suggest_readme,
+            };
+        }
+        const html = getConfluenceFileSelectorHtml(availableFiles, usageCount, this.getConfluenceNonce(), options);
+        this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        if (chat_context.selected_text) {
+            await this.extensionContext.globalState.update('rag-confluence.preloadedSelection', undefined);
+        }
+    }
+
+    private async handleConfluenceAddRelatedFiles(currentFiles: string[]): Promise<void> {
+        const ctx = this.confluenceState.contextSuggestions;
+        const rootPath = this.getEffectiveRootPath();
+        let merged = [...currentFiles];
+        if (ctx?.related_files && rootPath) {
+            const resolved = ctx.related_files
+                .map((p) => path.join(rootPath, p.replace(/\\/g, path.sep)))
+                .filter((p) => { try { return fs.existsSync(p); } catch { return false; } });
+            merged = [...new Set([...currentFiles, ...resolved])];
+        }
+        const additional = await vscode.window.showOpenDialog({
+            canSelectMany: true,
+            canSelectFolders: false,
+            canSelectFiles: true,
+            defaultUri: rootPath ? vscode.Uri.file(rootPath) : undefined,
+            filters: { 'Code and Text': ['txt', 'py', 'js', 'ts', 'tsx', 'json', 'md', 'html', 'css', 'yml', 'yaml'] },
+            openLabel: "Add Related Files",
+        });
+        if (additional && additional.length > 0) {
+            merged = [...new Set([...merged, ...additional.map((f) => f.fsPath)])];
+        }
+        await this.handleConfluenceSaveWithContext(merged, true);
+    }
+
+    public show(): void {
+        if (this.panel) {
+            this.panel.reveal(vscode.ViewColumn.One);
+            return;
+        }
+
+        this.panel = vscode.window.createWebviewPanel(
+            "offlineFolderRag.chat",
+            "Offline Folder RAG",
+            vscode.ViewColumn.One,
+            {
+                enableScripts: true,
+                enableCommandUris: true,
+            }
+        );
+
+        this.panel.onDidDispose(() => {
+            this.panel = undefined;
+            stopHealthPolling();
+        });
+
+        this.panelNonce = this.getNonce();
+        this.panel.webview.html = getChatPanelHtml(this.extensionUri, COMPOSER_PLACEHOLDER, this.panelNonce);
+
+        this.panel.webview.onDidReceiveMessage(async (message) => {
+            const confluenceTypes = ['confluenceDone', 'confluenceCancel', 'openUrl', 'copyToClipboard', 'confluenceCreate', 'confluenceScriptReady', 'confluenceSave', 'confluenceBrowse', 'confluenceNext', 'confluenceRetryAnalyze', 'confluenceSettings', 'confluenceViewCreations', 'confluenceExportExamples', 'confluenceImportExamples', 'confluenceIntelligenceFeedback', 'confluenceAddRelatedFiles', 'confluenceOnboardingTooltipShown'];
+            if (message?.type && confluenceTypes.includes(message.type)) {
+                this.confluenceOutput?.appendLine('[Confluence] Webview message: type=' + message.type);
+            }
+            // #region agent log
+            if (message.type === 'confluenceScriptReady') {
+                debugLog({ location: 'ChatPanelViewProvider.ts:onDidReceiveMessage', message: 'Confluence analysis script ran', data: {}, hypothesisId: 'H1' });
+            }
+            if (message.type === 'confluenceCreate') {
+                this.confluenceOutput?.appendLine(`[Confluence] Webview message received: type=confluenceCreate title=${message.title ?? '(none)'} space=${message.space ?? '(none)'}`);
+                debugLog({ location: 'ChatPanelViewProvider.ts:onDidReceiveMessage', message: 'confluenceCreate received', data: { title: message.title, space: message.space }, hypothesisId: 'H2' });
+                vscode.window.showInformationMessage('Creating Confluence page…', { modal: false });
+            }
+            // #endregion
+            await this.handleWebviewMessage(message);
+            if (message.type === "dispatch") {
+                const { text, mode } = message;
+                this.pushToConversationHistory(text);
+                const normalizedMode = isComposerMode(mode) ? mode : this.modeState.getMode();
+                
+                if (text.startsWith("/")) {
+                    const result = await parseSlashCommand(text, this.extensionContext);
+                    if (result.type === 'assistantResponse') {
+                        const html = renderAssistantResponse(result.payload);
+                        this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
+                    } else if (result.type === 'commandResult' && result.payload === 'Indexing started: full scan') {
+                        this.postMessage(result);
+                        this.handleIndexAndReport('full');
+                    } else if (result.type === 'commandResult' && result.payload === 'Indexing started: incremental scan') {
+                        this.postMessage(result);
+                        this.handleIndexAndReport('incremental');
+                    } else if (result.type === 'commandResult' && result.payload === 'Auto-index disabled.') {
+                        this.scheduler.stop();
+                        this.postMessage(result);
+                    } else if (result.type === 'commandResult' && result.payload === 'CONFLUENCE_DOCUMENT_PROJECT') {
+                        await this.triggerDocumentProject();
+                    } else {
+                        this.postMessage(result);
+                    }
+                } else {
+                    const extraContext = this.buildExtraContext();
+                    if (normalizedMode === "rag") {
+                        try {
+                            const response = await askWithOverride(text, "rag", extraContext);
+                            const result = await response.json();
+                            
+                            if (result.error === "INVALID_TOKEN") {
+                                this.postMessage({ type: "commandResult", payload: "Error: INVALID_TOKEN. Please check your agent token." });
+                                return;
+                            }
+
+                            let payload = result.answer || JSON.stringify(result);
+                            
+                            const assistantResponseHtml = renderAssistantResponse({
+                                mode: "rag",
+                                confidence: result.confidence || "found",
+                                answer: payload,
+                                citations: result.citations || []
+                            });
+
+                            this.postMessage({
+                                type: "commandResult",
+                                payload: assistantResponseHtml,
+                                isHtml: true
+                            });
+                        } catch (error) {
+                            this.postMessage({
+                                type: "commandResult",
+                                payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                            });
+                        }
+                    } else if (normalizedMode === "auto") {
+                        try {
+                            await this.router.autoRouteInput(text, extraContext);
+                        } catch (error) {
+                            this.postMessage({
+                                type: "commandResult",
+                                payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                            });
+                        }
+                    } else {
+                        await this.router.handleCommand(text, extraContext);
+                    }
+                }
+            } else if (message.type === "indexAction") {
+                const workspaceFolders = vscode.workspace.workspaceFolders;
+                if (!workspaceFolders || workspaceFolders.length === 0) return;
+                const rootPath = workspaceFolders[0].uri.fsPath;
+
+                if (message.action === "full") {
+                    this.postMessage({ type: "dismissIndexModal" });
+                    this.handleIndexAndReport('full');
+                } else if (message.action === "cancel") {
+                    this.postMessage({ type: "dismissIndexModal" });
+                    this.postMessage({ type: "commandResult", payload: "Index not available; cannot answer" });
+                }
+            } else if (message.type === "openCitation") {
+                const { path: filePath, start, end } = message;
+                const workspaceFolders = vscode.workspace.workspaceFolders;
+                if (workspaceFolders && workspaceFolders.length > 0) {
+                    const fullPath = vscode.Uri.joinPath(workspaceFolders[0].uri, filePath);
+                    const doc = await vscode.workspace.openTextDocument(fullPath);
+                    const editor = await vscode.window.showTextDocument(doc);
+                    const range = new vscode.Range(start - 1, 0, end - 1, 0);
+                    editor.selection = new vscode.Selection(range.start, range.end);
+                    editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
+                }
+            } else if (message.type === "modeChange" && isComposerMode(message.mode)) {
+                this.modeState.setMode(message.mode);
+                this.postModeState();
+            } else if (message.type === "confluenceOnboardingTooltipShown") {
+                markTooltipShown(this.extensionContext);
+                this.postOnboardingState();
+            } else if (message.type === "confluenceSave") {
+                await this.handleConfluenceSaveWithContext([]);
+            } else if (message.type === "contextRequest") {
+                this.handleContextRequest(message.action);
+            } else if (message.type === "attachmentPick") {
+                await this.handleAttachmentRequest();
+            } else if (message.type === "localSelect" && typeof message.folder === "string") {
+                await writeRootPath(this.extensionContext, message.folder);
+                this.postLocalState();
+            } else if (message.type === "localPick") {
+                const folder = await vscode.window.showOpenDialog({
+                    canSelectMany: false,
+                    canSelectFolders: true,
+                    canSelectFiles: false,
+                    openLabel: "Select Folder",
+                });
+
+                if (folder && folder.length > 0) {
+                    await writeRootPath(this.extensionContext, folder[0].fsPath);
+                    this.postLocalState();
+                }
+            } else if (message.type === "confluenceBrowse") {
+                const files = await vscode.window.showOpenDialog({
+                    canSelectMany: true,
+                    canSelectFolders: false,
+                    canSelectFiles: true,
+                    filters: {
+                        'Code and Text': ['txt', 'py', 'js', 'ts', 'tsx', 'json', 'md', 'html', 'css', 'yml', 'yaml']
+                    },
+                    openLabel: "Select Files for Confluence",
+                });
+                if (files && files.length > 0) {
+                    const fullPaths = files.map(f => f.fsPath);
+                    await this.handleConfluenceSaveWithContext(fullPaths);
+                }
+            } else if (message.type === "confluenceAddRelatedFiles") {
+                await this.handleConfluenceAddRelatedFiles(message.currentFiles || []);
+            } else if (message.type === "confluenceNext") {
+                await this.handleConfluenceNext(message.files || []);
+            } else if (message.type === "confluenceRetryAnalyze") {
+                await this.handleConfluenceNext(message.files || []);
+            } else if (message.type === "confluenceCreate") {
+                await this.handleConfluenceCreate(message.title || '', message.space || 'DEV');
+            } else if (message.type === "confluenceDone" || message.type === "confluenceCancel") {
+                this.confluenceOutput?.appendLine('[Confluence] Success card: Done/Cancel received.');
+                this.confluenceState = {};
+                // Cards remain in conversation as history; no action needed
+            } else if (message.type === "openUrl" && message.url) {
+                this.confluenceOutput?.appendLine('[Confluence] Success card: View page requested: ' + (message.url ?? ''));
+                try {
+                    await vscode.env.openExternal(vscode.Uri.parse(message.url));
+                } catch (e) {
+                    this.confluenceOutput?.appendLine('[Confluence] openExternal error: ' + (e instanceof Error ? e.message : String(e)));
+                    vscode.window.showErrorMessage('Confluence: Could not open link. ' + (e instanceof Error ? e.message : String(e)));
+                }
+            } else if (message.type === "copyToClipboard" && message.text) {
+                this.confluenceOutput?.appendLine('[Confluence] Success card: Copy link requested (length ' + (message.text?.length ?? 0) + ').');
+                try {
+                    await vscode.env.clipboard.writeText(message.text);
+                    vscode.window.showInformationMessage('Link copied to clipboard!');
+                } catch (e) {
+                    this.confluenceOutput?.appendLine('[Confluence] clipboard error: ' + (e instanceof Error ? e.message : String(e)));
+                    vscode.window.showErrorMessage('Confluence: Could not copy link. ' + (e instanceof Error ? e.message : String(e)));
+                }
+            } else if (message.type === "confluenceSettings") {
+                vscode.commands.executeCommand('workbench.action.openSettings', 'confluence');
+            } else if (message.type === "confluenceViewCreations") {
+                await this.triggerViewCreations();
+            } else if (message.type === "confluenceExportExamples") {
+                await this.handleConfluenceExportExamples();
+            } else if (message.type === "confluenceImportExamples") {
+                await this.handleConfluenceImportExamples();
+            } else if (message.type === "confluenceIntelligenceFeedback") {
+                await this.handleConfluenceIntelligenceFeedback(message.creationId, message.intelligenceScore, message.feedback);
+            }
+        });
+
+        this.postModeState();
+        this.postLocalState();
+        this.postOnboardingState();
+    }
+
+    private async handleWebviewMessage(message: any): Promise<void> {
+        if (message.type === "dispatch") {
+            const { text, mode } = message;
+            const normalizedMode = isComposerMode(mode) ? mode : this.modeState.getMode();
+            
+            if (text.startsWith("/")) {
+                const result = await parseSlashCommand(text, this.extensionContext);
+                if (result.type === 'assistantResponse') {
+                    const html = renderAssistantResponse(result.payload);
+                    this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
+                } else {
+                    this.postMessage(result);
+                }
+            } else {
+                const extraContext = this.buildExtraContext();
+                if (normalizedMode === "rag") {
+                    try {
+                        const response = await askWithOverride(text, "rag", extraContext);
+                        const result = await response.json();
+                        let payload = result.answer || JSON.stringify(result);
+                        
+                        if (result.citations && Array.isArray(result.citations)) {
+                            const citationsHtml = result.citations.map((c: any) => this.renderCitation(c)).join('<br>');
+                            payload = `${payload}<br><br><b>Citations:</b><br>${citationsHtml}`;
+                        }
+
+                        this.postMessage({
+                            type: "commandResult",
+                            payload: payload,
+                            isHtml: true
+                        });
+                    } catch (error) {
+                        this.postMessage({
+                            type: "commandResult",
+                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                        });
+                    }
+                } else if (normalizedMode === "auto") {
+                    try {
+                        await this.router.autoRouteInput(text, extraContext);
+                    } catch (error) {
+                        this.postMessage({
+                            type: "commandResult",
+                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                        });
+                    }
+                } else {
+                    await this.router.handleCommand(text, extraContext);
+                }
+            }
+        } else if (message.type === "indexAction") {
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            if (!workspaceFolders || workspaceFolders.length === 0) return;
+            const rootPath = workspaceFolders[0].uri.fsPath;
+
+            if (message.action === "full") {
+                this.postMessage({ type: "dismissIndexModal" });
+                setIndexing(rootPath);
+                try {
+                    await triggerFullIndex(
+                        { storageRoot: this.extensionContext.globalStorageUri.fsPath },
+                        rootPath,
+                        (msg) => this.postMessage({ type: "commandResult", payload: msg })
+                    );
+                } finally {
+                    clearIndexing(rootPath);
+                }
+            } else if (message.action === "cancel") {
+                this.postMessage({ type: "dismissIndexModal" });
+                this.postMessage({ type: "commandResult", payload: "Index not available; cannot answer" });
+            }
+        } else if (message.type === "openCitation") {
+            const { path: filePath, start, end } = message;
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            if (workspaceFolders && workspaceFolders.length > 0) {
+                const fullPath = vscode.Uri.joinPath(workspaceFolders[0].uri, filePath);
+                const doc = await vscode.workspace.openTextDocument(fullPath);
+                const editor = await vscode.window.showTextDocument(doc);
+                const range = new vscode.Range(start - 1, 0, end - 1, 0);
+                editor.selection = new vscode.Selection(range.start, range.end);
+                editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
+            }
+        } else if (message.type === "modeChange" && isComposerMode(message.mode)) {
+            this.modeState.setMode(message.mode);
+            this.postModeState();
+        } else if (message.type === "contextRequest") {
+            this.handleContextRequest(message.action);
+        } else if (message.type === "attachmentPick") {
+            await this.handleAttachmentRequest();
+        } else if (message.type === "localSelect" && typeof message.folder === "string") {
+            await writeRootPath(this.extensionContext, message.folder);
+            this.postLocalState();
+        } else if (message.type === "localPick") {
+            const folder = await vscode.window.showOpenDialog({
+                canSelectMany: false,
+                canSelectFolders: true,
+                canSelectFiles: false,
+                openLabel: "Select Folder",
+            });
+
+            if (folder && folder.length > 0) {
+                await writeRootPath(this.extensionContext, folder[0].fsPath);
+                this.postLocalState();
+            } else {
+                // Cancellation: post current state to ensure UI reflects unchanged rootPath
+                this.postLocalState();
+            }
+        }
+    }
+
+    private async handleIndexAndReport(mode: 'full' | 'incremental') {
+        const workspaceFolders = vscode.workspace.workspaceFolders;
+        if (!workspaceFolders || workspaceFolders.length === 0) return;
+        const rootPath = workspaceFolders[0].uri.fsPath;
+
+        setIndexing(rootPath);
+        try {
+            await triggerFullIndex(
+                { storageRoot: this.extensionContext.globalStorageUri.fsPath },
+                rootPath,
+                (msg) => this.postMessage({ type: "commandResult", payload: msg })
+            );
+            
+            const report = await getIndexReport(this.agentBaseUrl, rootPath);
+            const reportHtml = this.renderIndexReport(report);
+            this.postMessage({
+                type: "commandResult",
+                payload: reportHtml,
+                isHtml: true
+            });
+        } catch (error) {
+            this.postMessage({
+                type: "commandResult",
+                payload: `Indexing failed: ${error instanceof Error ? error.message : String(error)}`
+            });
+        } finally {
+            clearIndexing(rootPath);
+        }
+    }
+
+    private renderIndexReport(report: any): string {
+        const indexedCount = report.indexed_files?.length || 0;
+        const skippedCount = report.skipped_files?.length || 0;
+        const topReasons = report.top_skip_reasons?.slice(0, 3)
+            .map((r: any) => `${r.reason} (${r.count})`)
+            .join(', ') || 'None';
+
+        return `
+            <div class="index-report">
+                <h3>Index Summary</h3>
+                <p><b>Indexed:</b> ${indexedCount} files</p>
+                <p><b>Skipped:</b> ${skippedCount} files</p>
+                <p><b>Top Skip Reasons:</b> ${topReasons}</p>
+            </div>
+        `;
+    }
+
+    private async handleAttachmentRequest(): Promise<void> {
+        if (!this.panel) return;
+        const options: vscode.OpenDialogOptions = {
+            canSelectMany: false,
+            canSelectFiles: true,
+            openLabel: "Insert reference",
+        };
+        const rootPath = this.getEffectiveRootPath();
+        if (rootPath) options.defaultUri = vscode.Uri.file(rootPath);
+
+        const selection = await vscode.window.showOpenDialog(options);
+        if (selection && selection.length > 0) {
+            const filePath = selection[0].fsPath;
+            if (rootPath && !isPathInsideRoot(rootPath, filePath)) {
+                vscode.window.showErrorMessage("Select a file inside the chosen folder.");
+                return;
+            }
+            this.postMessage({
+                type: "insertText",
+                text: `@file:${filePath}`,
+            });
+        }
+    }
+
+    private renderCitation(citation: {path: string, start_line: number, end_line: number}) {
+        const commandUri = vscode.Uri.parse(
+            `command:citation.open?${encodeURIComponent(JSON.stringify({
+                path: citation.path,
+                startLine: citation.start_line,
+                endLine: citation.end_line
+            }))}`
+        );
+        
+        return `<a href="${commandUri}">${citation.path} : ${citation.start_line}–${citation.end_line}</a>`;
+    }
+
+    private handleContextRequest(action: string): void {
+        if (!this.panel) return;
+        switch (action) {
+            case "folder": {
+                const rootPath = this.getEffectiveRootPath();
+                if (!rootPath) {
+                    this.postMessage({ type: "commandResult", payload: "Workspace root not available for context." });
+                    this.postContextResponse(action, undefined, "no_workspace");
+                    return;
+                }
+                this.postContextResponse(action, { root_path: rootPath });
+                return;
+            }
+            case "selection": {
+                const editor = vscode.window.activeTextEditor;
+                const selection = editor?.selection;
+                const selectedText = selection ? editor.document.getText(selection).trim() : "";
+                if (!selectedText) {
+                    this.postMessage({ type: "commandResult", payload: "INVALID_COMMAND: Select text in the editor and try again." });
+                    this.postContextResponse(action, undefined, "no_selection");
+                    return;
+                }
+                this.postContextResponse(action, { selection_text: selectedText });
+                return;
+            }
+            case "file": {
+                const editor = vscode.window.activeTextEditor;
+                const filePath = editor?.document.uri.fsPath;
+                if (!filePath) {
+                    this.postContextResponse(action, undefined, "no_file");
+                    return;
+                }
+                this.postContextResponse(action, { active_file_path: filePath });
+                return;
+            }
+            default:
+                return;
+        }
+    }
+
+    private postContextResponse(action: string, context?: any, error?: string): void {
+        if (!this.panel) return;
+        this.panel.webview.postMessage({
+            type: "contextResponse",
+            action,
+            context,
+            error,
+        });
+    }
+
+    private async handleConfluenceNext(files: string[]): Promise<void> {
+        if (!files.length) return;
+        const validPaths = files.filter((p) => {
+            try { return fs.existsSync(p); } catch { return false; }
+        });
+        if (validPaths.length === 0) {
+            this.postMessage({ type: 'commandResult', payload: 'No valid files selected.', isConfluence: true });
+            return;
+        }
+        let fileContents: string[];
+        try {
+            fileContents = validPaths.map((p) => fs.readFileSync(p, 'utf-8'));
+        } catch (e) {
+            this.postMessage({
+                type: 'commandResult',
+                payload: `Failed to read files: ${e instanceof Error ? e.message : String(e)}`,
+                isConfluence: true,
+            });
+            return;
+        }
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const chat_context = {
+                messages: this.conversationHistory,
+                selected_text: this.getPreloadedSelection() ?? undefined,
+                workspace_path: this.getEffectiveRootPath() ?? undefined,
+            };
+            const hasContext = !!(chat_context.messages?.length || chat_context.selected_text);
+            const result = await intelligentAnalyze(config, {
+                file_contents: fileContents,
+                chat_context: hasContext ? chat_context : undefined,
+            });
+            if ('error' in result && result.error) {
+                const err = result as IntelligenceErrorResponse;
+                const html = getConfluenceErrorHtml({
+                    error: err.error,
+                    message: err.message,
+                    suggestion: err.intelligence_suggestion ?? 'Try different files or content.',
+                    confidence: err.intelligence_confidence ?? 0.5,
+                    fallbackAvailable: err.fallback_available ?? true,
+                    actions: err.actions ?? ['Retry', 'Cancel', 'Update Settings'],
+                    suggestedFiles: err.suggested_files ?? [],
+                    retryContext: 'analyze',
+                    retryFiles: validPaths,
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            const analyze = result as AnalyzeResponse & { context_suggestions?: { mentioned_files?: string[]; related_files?: string[]; project_type_label?: string } };
+            const ctxSuggestions = analyze.context_suggestions;
+            this.confluenceState = {
+                analyzeResult: analyze,
+                fileContents,
+                selectedPaths: validPaths,
+                contextSuggestions: ctxSuggestions ?? this.confluenceState.contextSuggestions,
+            };
+            const analysis = analyze.intelligence_analysis ?? {};
+            const rec = analyze.intelligent_recommendation ?? {};
+            const cachedSpaces = this.extensionContext.globalState.get<Array<{ key?: string; name?: string }>>('confluence.cachedSpaces') ?? [];
+            let preferredSpace = getSpacePreference(this.extensionContext, this.getEffectiveRootPath());
+            if (!preferredSpace) {
+                try {
+                    preferredSpace = await getPreferredSpace(config.baseUrl, this.getEffectiveRootPath() ?? '');
+                } catch {
+                    preferredSpace = undefined;
+                }
+            }
+            preferredSpace = preferredSpace
+                ?? getSuggestedSpaceFromProjectType(ctxSuggestions?.project_type_label)
+                ?? (cachedSpaces[0]?.key)
+                ?? "DEV";
+            const spaces = cachedSpaces
+                .filter((s): s is { key: string; name?: string } => !!s?.key)
+                .map(s => ({ key: s.key, name: s.name ?? s.key }));
+            const cb = rec.confidence_breakdown;
+            const cbVals = cb ? [cb.content_match, cb.structure_match, cb.context_match].filter((n): n is number => typeof n === 'number') : [];
+            const avgConf = cbVals.length > 0 ? cbVals.reduce((a, b) => a + b, 0) / cbVals.length : undefined;
+            const analysisData = {
+                content_types: analysis.content_types,
+                detected_patterns: analysis.detected_patterns,
+                intelligent_title: analysis.intelligent_title ?? rec.template_name ?? 'Documentation',
+                template_name: rec.template_name ?? 'Documentation',
+                intelligence_reason: rec.intelligence_reason ?? analysis.ai_reasoning ?? '(Matches similar successful examples)',
+                intelligence_confidence: analysis.intelligence_confidence ?? avgConf,
+                confidence_breakdown: rec.confidence_breakdown,
+                ai_reasoning: analysis.ai_reasoning ?? rec.intelligence_reason,
+                file_count: validPaths.length,
+            };
+            const usageCount = getOnboardingState(this.extensionContext).usageCount;
+            const html = getConfluenceAnalysisHtml(validPaths, analysisData, this.getConfluenceNonce(), usageCount, {
+                preferredSpace,
+                spaces: spaces.length > 0 ? spaces : undefined,
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const html = getConfluenceErrorHtml({
+                error: 'analysis_failed',
+                message: msg,
+                suggestion: 'Check backend is running and Confluence settings are configured.',
+                confidence: 0.5,
+                fallbackAvailable: true,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'analyze',
+                retryFiles: validPaths,
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
+
+    private async handleConfluenceCreate(title: string, space: string): Promise<void> {
+        const effectiveTitle = (title && title.trim()) || this.confluenceState.lastTitle || 'Documentation';
+        const effectiveSpace = (space && space.trim()) || this.confluenceState.lastSpace || 'DEV';
+        this.confluenceOutput?.appendLine(`[Confluence] handleConfluenceCreate entered: title="${effectiveTitle}" space="${effectiveSpace}"`);
+        // #region agent log
+        debugLog({ location: 'ChatPanelViewProvider.ts:handleConfluenceCreate', message: 'handler entered', data: { title, space }, hypothesisId: 'H3' });
+        // #endregion
+        this.confluenceState.lastTitle = effectiveTitle;
+        this.confluenceState.lastSpace = effectiveSpace;
+        let { fileContents } = this.confluenceState;
+        if (!fileContents?.length && this.confluenceState.selectedPaths?.length) {
+            try {
+                const validPaths = this.confluenceState.selectedPaths.filter((p: string) => {
+                    try { return fs.existsSync(p); } catch { return false; }
+                });
+                if (validPaths.length) {
+                    fileContents = validPaths.map((p: string) => fs.readFileSync(p, 'utf-8'));
+                    this.confluenceState.fileContents = fileContents;
+                }
+            } catch {
+                // ignore re-read errors
+            }
+        }
+        if (!fileContents?.length) {
+            const html = getConfluenceErrorHtml({
+                error: 'no_analysis_data',
+                message: 'No file content to publish.',
+                suggestion: 'Click "Save to Confluence", select files, then click Next to analyze. After that, click Create Perfect Page.',
+                confidence: 0,
+                fallbackAvailable: true,
+                actions: ['Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+            return;
+        }
+        const progressUpdateId = 'msg-progress-' + Date.now();
+        const progressHtml = getConfluenceProgressHtml(this.getConfluenceNonce()).replace('data-confluence-id="msg-progress"', 'data-confluence-id="' + progressUpdateId + '"');
+        this.postMessage({ type: 'commandResult', payload: progressHtml, isHtml: true, isConfluence: true });
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            if (!config.auth || config.auth.length < 2) {
+                const html = getConfluenceErrorHtml({
+                    error: 'missing_credentials',
+                    message: 'Confluence credentials not set.',
+                    suggestion: 'Open Settings (Confluence: Configure Settings), set Confluence URL, email, and store your API token.',
+                    confidence: 0,
+                    fallbackAvailable: false,
+                    actions: ['Update Settings', 'Cancel'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true, updateId: progressUpdateId });
+                return;
+            }
+            this.confluenceOutput?.appendLine('[Confluence] Calling intelligentCreate API');
+            const rec = this.confluenceState.analyzeResult?.intelligent_recommendation;
+            const intelligence_context: { suggested_title: string; title_override: string; template_id?: string; template_name?: string } = {
+                suggested_title: effectiveTitle,
+                title_override: effectiveTitle,
+            };
+            if (rec?.template_id) intelligence_context.template_id = rec.template_id;
+            if (rec?.template_name) intelligence_context.template_name = rec.template_name;
+            const result = await intelligentCreate(config, {
+                files: fileContents,
+                intelligent_mode: true,
+                auto_title: false,
+                space: effectiveSpace,
+                intelligence_context,
+                base_url: config.confluenceInstanceUrl || undefined,
+                auth: config.auth ?? undefined,
+            });
+
+            if ('error' in result && result.error) {
+                const err = result as IntelligenceErrorResponse;
+                this.confluenceOutput?.appendLine(`[Confluence] intelligentCreate error (API): ${err.message ?? err.error}`);
+                vscode.window.showErrorMessage(`Confluence: Create failed — ${err.message ?? err.error}`);
+                const html = getConfluenceErrorHtml({
+                    error: err.error,
+                    message: err.message,
+                    suggestion: err.intelligence_suggestion ?? 'Check Confluence settings, network, and credentials.',
+                    confidence: err.intelligence_confidence ?? 0.5,
+                    fallbackAvailable: err.fallback_available ?? true,
+                    actions: err.actions ?? ['Retry', 'Cancel', 'Update Settings'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true, updateId: progressUpdateId });
+                return;
+            }
+
+            this.confluenceOutput?.appendLine('[Confluence] intelligentCreate success');
+            vscode.window.showInformationMessage(`Confluence: Page "${result.title ?? effectiveTitle}" created.`);
+            incrementUsage(this.extensionContext);
+            this.postOnboardingState();
+            const workspace = this.getEffectiveRootPath() ?? 'default';
+            trackConfluenceUsage(this.agentBaseUrl, { feature: 'create_success', workspace }).catch(() => {});
+            const usageCount = getOnboardingState(this.extensionContext).usageCount;
+            await setSpacePreference(this.extensionContext, this.getEffectiveRootPath(), effectiveSpace);
+            const successHtml = getConfluenceSuccessHtml(usageCount, {
+                pageUrl: result.url,
+                title: result.title ?? effectiveTitle,
+                space: result.space ?? effectiveSpace,
+                learning: result.ai_learning_applied ?? false,
+                examplesCount: (result as { examples_count?: number }).examples_count,
+            }, this.getConfluenceNonce());
+            this.postMessage({ type: 'commandResult', payload: successHtml, isHtml: true, isConfluence: true, updateId: progressUpdateId });
+            const newCreation = { url: result.url, title: result.title ?? effectiveTitle, space: result.space ?? effectiveSpace, creationId: result.id, createdAt: Date.now() };
+            const existing = this.extensionContext.globalState.get<Array<{ url?: string; title?: string; space?: string; creationId?: string; createdAt?: number }>>('confluence.intelligentCreations') ?? [];
+            const updated = [newCreation, ...existing].slice(0, 50);
+            await this.extensionContext.globalState.update('confluence.intelligentCreations', updated);
+            // #region agent log
+            debugLog({ location: 'ChatPanelViewProvider.ts:handleConfluenceCreate', message: 'handler success', data: {}, hypothesisId: 'H3' });
+            // #endregion
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            this.confluenceOutput?.appendLine(`[Confluence] intelligentCreate error: ${msg}`);
+            vscode.window.showErrorMessage(`Confluence: Create failed — ${msg}`);
+            // #region agent log
+            debugLog({ location: 'ChatPanelViewProvider.ts:handleConfluenceCreate', message: 'handler error', data: { error: msg }, hypothesisId: 'H3' });
+            // #endregion
+            const html = getConfluenceErrorHtml({
+                error: 'create_failed',
+                message: msg,
+                suggestion: 'Check Confluence settings, network, and credentials.',
+                confidence: 0.5,
+                fallbackAvailable: true,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true, updateId: progressUpdateId });
+        }
+    }
+
+    private async handleConfluenceIntelligenceFeedback(creationId: string | undefined, intelligenceScore: number | undefined, feedback?: string): Promise<void> {
+        if (!this.panel || !creationId || typeof intelligenceScore !== 'number' || intelligenceScore < 1 || intelligenceScore > 5) return;
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const result = await postIntelligenceFeedback(config, {
+                creation_id: creationId,
+                intelligence_score: intelligenceScore,
+                feedback: feedback || undefined,
+            });
+            const im = result.intelligence_metrics;
+            const acc = im?.template_selection_accuracy ?? im?.template_selection_intelligence;
+            const improvedMsg = typeof acc === 'number'
+                ? `Intelligence Improved: Template matching accuracy increased to ${acc}%`
+                : 'Intelligence Improved: Thank you for your feedback.';
+            const html = `<div class="confluence-card" style="border: 1px solid var(--vscode-testing-iconPassed); border-radius: 8px; padding: 12px 16px; background: var(--vscode-editor-background); max-width: 400px;"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 18px;">🎓</span><strong>${improvedMsg}</strong></div></div>`;
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+            await this.triggerViewCreations();
+        } catch {
+            this.postMessage({ type: 'commandResult', payload: 'Feedback could not be submitted. Please try again.', isConfluence: true });
+        }
+    }
+
+    private async handleConfluenceExportExamples(): Promise<void> {
+        if (!this.panel) return;
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const projectPath = this.getEffectiveRootPath() ?? undefined;
+            const jsonStr = await exportExamples(config, { project_path: projectPath });
+            const dateStr = new Date().toISOString().slice(0, 10);
+            const defaultUri = projectPath ? vscode.Uri.file(path.join(projectPath, `intelligence-examples-${dateStr}.json`)) : undefined;
+            const saveUri = await vscode.window.showSaveDialog({
+                defaultUri,
+                filters: [{ name: 'JSON', extensions: ['json'] }],
+                saveLabel: 'Export Examples',
+            });
+            if (!saveUri) return;
+            fs.writeFileSync(saveUri.fsPath, jsonStr, 'utf-8');
+            const msg = `Export complete. Saved to ${saveUri.fsPath}`;
+            const html = `<div class="confluence-card" style="border: 1px solid var(--vscode-testing-iconPassed); border-radius: 8px; padding: 12px 16px; background: var(--vscode-editor-background); max-width: 400px;"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 18px;">📦</span><strong>${msg.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</strong></div></div>`;
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        } catch (e) {
+            const errMsg = e instanceof Error ? e.message : String(e);
+            const html = getConfluenceErrorHtml({
+                error: 'export_failed',
+                message: errMsg,
+                suggestion: 'Check Confluence settings and ensure the agent backend is running.',
+                confidence: 0.5,
+                fallbackAvailable: false,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
+
+    private async handleConfluenceImportExamples(): Promise<void> {
+        if (!this.panel) return;
+        const files = await vscode.window.showOpenDialog({
+            canSelectMany: false,
+            canSelectFolders: false,
+            canSelectFiles: true,
+            filters: [{ name: 'JSON', extensions: ['json'] }],
+            openLabel: 'Import Intelligence Examples',
+        });
+        if (!files || files.length === 0) return;
+        try {
+            const raw = fs.readFileSync(files[0].fsPath, 'utf-8');
+            const parsed = JSON.parse(raw) as object;
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            const result = await importExamples(config, parsed);
+            const msg = `Intelligence Examples Imported: ${result.importedCount} new examples learned`;
+            const html = `<div class="confluence-card" style="border: 1px solid var(--vscode-testing-iconPassed); border-radius: 8px; padding: 12px 16px; background: var(--vscode-editor-background); max-width: 400px;"><div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 18px;">📦</span><strong>${msg}</strong></div></div>`;
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        } catch (e) {
+            const errMsg = e instanceof Error ? e.message : String(e);
+            const html = getConfluenceErrorHtml({
+                error: 'import_failed',
+                message: errMsg,
+                suggestion: 'Ensure the file matches the PRD export format. See confluence_data/examples/export_format.json.',
+                confidence: 0.5,
+                fallbackAvailable: false,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
+
+    private getEffectiveRootPath(): string | undefined {
+        return readRootPath(this.extensionContext) ?? this.getWorkspaceRootPath();
+    }
+
+    private getWorkspaceRootPath(): string | undefined {
+        const folders = vscode.workspace.workspaceFolders;
+        if (folders && folders.length > 0) return folders[0].uri.fsPath;
+        if (vscode.workspace.workspaceFile) return path.dirname(vscode.workspace.workspaceFile.fsPath);
+        return undefined;
+    }
+
+    private postMessage(message: any): void {
+        if (!this.panel) return;
+        if (message.type === 'commandResult' && message.payload && !message.isConfluence) {
+            const payload = typeof message.payload === 'string' ? message.payload : JSON.stringify(message.payload);
+            this.pushToConversationHistory(payload);
+        }
+        this.panel.webview.postMessage(message);
+    }
+
+    private postModeState(): void {
+        if (!this.panel) return;
+        this.panel.webview.postMessage({
+            type: "modeState",
+            mode: this.modeState.getMode(),
+        });
+    }
+
+    private postLocalState(): void {
+        if (!this.panel) return;
+        this.panel.webview.postMessage({
+            type: "localState",
+            rootPath: this.getEffectiveRootPath(),
+            recentFolders: readRecentFolders(this.extensionContext),
+        });
+    }
+
+    private postOnboardingState(): void {
+        if (!this.panel) return;
+        const state = getOnboardingState(this.extensionContext);
+        this.panel.webview.postMessage({
+            type: "onboardingState",
+            tooltipShown: state.tooltipShown,
+            usageCount: state.usageCount,
+        });
+    }
+
+    private getNonce(): string {
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let text = "";
+        for (let i = 0; i < 16; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    }
+
+    /** Nonce used in Confluence HTML must match panel CSP; use panel nonce when available. */
+    private getConfluenceNonce(): string {
+        return this.panelNonce ?? this.getNonce();
+    }
+
+    private buildExtraContext(): { root_path: string } | undefined {
+        const rootPath = this.getEffectiveRootPath();
+        if (!rootPath) {
+            return undefined;
+        }
+        return { root_path: rootPath };
+    }
+}

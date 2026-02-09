@@ -15,10 +15,13 @@ from app.confluence.prd_monitor import (
     start_operation,
 )
 from app.agents.content_analysis_agent import analyze_file_with_timer
-from app.agents.formatting_agent import format_content
+from app.agents.formatting_agent import format_content, format_project_content
 from app.agents.integration_agent import create_page as integration_create_page
 from app.agents.integration_agent import schedule_learning_after_create
 from app.agents.pattern_matching_agent import match
+from app.confluence.project_analyzer import ProjectAnalysis, analyze_project
+from app.confluence.project_scanner import scan as project_scan
+from app.confluence.project_template_matcher import ProjectTemplateMatch, match_project_template
 
 logger = logging.getLogger(__name__)
 
@@ -193,6 +196,117 @@ def run_create(
         _set_state(PipelineState.Failed, CoordinatorError(
             error_code="create_failed",
             message=str(e)[:500] if e else "Create failed",
+            stage=_pipeline_state.value,
+        ))
+        raise
+
+
+def run_document_project(
+    workspace_path: str,
+    space_key: str,
+    base_url: str,
+    auth: tuple[str, str] | None = None,
+    progress_callback: Any = None,
+) -> dict[str, Any]:
+    """
+    US-16: Full project documentation pipeline.
+    Scan -> Analyze -> Template Match -> Format (project) -> Create.
+    Returns PRD §9.1 shape: confluence_url, intelligence_analysis, intelligent_recommendation,
+    confidence, template name, learning indicator.
+    """
+    global _pipeline_state, _last_coordinator_error
+    start_operation()
+    _set_state(PipelineState.Idle)
+
+    def _progress(current: int, total: int) -> None:
+        if progress_callback and callable(progress_callback):
+            progress_callback(current, total)
+
+    try:
+        _set_state(PipelineState.Analyzing)
+        if not check_memory_before_step():
+            _set_state(PipelineState.Failed, CoordinatorError(error_code="resource_limit", message="Memory limit", stage="Analyzing"))
+            raise RuntimeError("Memory limit reached")
+
+        paths = project_scan(workspace_path, progress_callback=_progress, limit=100)
+        if not paths:
+            _set_state(PipelineState.Failed, CoordinatorError(error_code="analysis_failed", message="No files found in project", stage="Analyzing"))
+            raise ValueError("No files found in project")
+
+        analysis = analyze_project(paths)
+        _set_state(PipelineState.Matching)
+        template_match = match_project_template(analysis)
+
+        _set_state(PipelineState.Formatting)
+        file_contents: list[str] = []
+        for fp in paths[:30]:
+            try:
+                with open(fp, "r", encoding="utf-8", errors="replace") as f:
+                    file_contents.append(f.read(8192))
+            except (OSError, UnicodeDecodeError):
+                continue
+        merged = "\n\n---\n\n".join(file_contents)
+
+        payload = format_project_content(
+            project_analysis=analysis,
+            template_name=template_match.template_name,
+            template_match=template_match,
+            file_contents_merged=merged,
+        )
+        body_html = payload.confluence_storage_format if hasattr(payload, "confluence_storage_format") else str(getattr(payload, "confluence_storage_format", ""))
+
+        title = f"{analysis.project_type.title()} Project Documentation"
+        _set_state(PipelineState.Integrating)
+        result = integration_create_page(
+            base_url=base_url,
+            space_key=space_key,
+            title=title,
+            body_html=body_html,
+            auth=auth,
+        )
+
+        ir = result
+        if hasattr(ir, "page"):
+            page = ir.page
+            api_dict = {"id": page.id, "title": page.title, "space": page.space, "url": page.url}
+        else:
+            api_dict = result if isinstance(result, dict) else {"id": "", "title": title, "space": space_key, "url": ""}
+
+        _set_state(PipelineState.Completed)
+        schedule_learning_after_create(f"Project documentation: {analysis.project_type}", api_dict)
+
+        intelligence_analysis = {
+            "content_types": analysis.content_types or [],
+            "detected_patterns": analysis.detected_patterns or [],
+            "intelligent_title": title,
+            "intelligence_confidence": template_match.confidence / 100.0,
+            "ai_reasoning": template_match.ai_reasoning,
+            "project_type": analysis.project_type,
+            "source_file_count": analysis.source_file_count,
+        }
+        intelligent_recommendation = {
+            "template_id": template_match.template_id,
+            "template_name": template_match.template_name,
+            "intelligence_reason": template_match.ai_reasoning,
+            "confidence_breakdown": {
+                "content_match": template_match.confidence / 100.0,
+                "structure_match": template_match.confidence / 100.0,
+                "context_match": template_match.confidence / 100.0,
+            },
+        }
+
+        return {
+            "confluence_url": api_dict.get("url", ""),
+            "intelligence_analysis": intelligence_analysis,
+            "intelligent_recommendation": intelligent_recommendation,
+            "confidence": template_match.confidence,
+            "template_name": template_match.template_name,
+            "learning_indicator": True,
+        }
+    except Exception as e:
+        _set_state(PipelineState.Failed, CoordinatorError(
+            error_code="document_project_failed",
+            message=str(e)[:500] if e else "Document project failed",
             stage=_pipeline_state.value,
         ))
         raise

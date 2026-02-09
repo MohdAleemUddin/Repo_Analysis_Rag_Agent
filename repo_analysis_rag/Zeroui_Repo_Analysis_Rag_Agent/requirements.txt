@@ -1,0 +1,13 @@
+fastapi==0.115.6
+uvicorn==0.30.6
+chromadb
+langchain
+langchain-chroma
+langchain-ollama
+pypdf
+python-dotenv
+rich
+tiktoken
+tqdm
+unstructured
+watchdog

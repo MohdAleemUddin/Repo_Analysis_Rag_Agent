@@ -4,14 +4,17 @@ from typing import Any, Tuple
 from ..confluence.db_adapter import (
     db_execute as _db_execute,
     db_fetch_examples,
+    db_fetch_examples_count,
     db_fetch_intelligence_metrics,
     db_ensure_creation_for_feedback,
     db_get_creation_template_id,
+    db_record_creation as _db_record_creation,
     db_update_template_confidence,
 )
 from ..confluence.export_import import export_examples, import_examples
 from ..confluence.status_manager import get_intelligence_status
-from ..agents.learning_agent import learn_from_feedback
+from ..agents.learning_agent import learn_from_feedback, get_collective_intelligence_count
+from ..config.confluence_config import get_confluence_config
 
 
 def _get_query_param(request: Any, name: str) -> Any:
@@ -90,7 +93,6 @@ def examples_import_handler(request: Any) -> Tuple[Any, int]:
     return {"message": message, "imported_count": imported_count}, 200
 # PRD Confluence: analyze, create, status, feedback; PRD §9.2 error format.
 
-import logging
 from typing import Any
 
 try:
@@ -102,6 +104,7 @@ except ImportError:
 
 from app.config.config import CONFLUENCE_MEMORY_LIMIT_MB
 from app.confluence.error_handler import (
+    classify_exception,
     get_actions_for_category,
     get_reliability_metrics,
     handle_error,
@@ -115,6 +118,7 @@ from app.confluence.prd_monitor import (
     get_peak_memory_mb,
     record_confluence_operation,
     start_operation,
+    verify_targets_met,
 )
 
 from app.agents.coordinator import get_operation_record, run_analyze, run_create
@@ -168,18 +172,43 @@ def _memory_limit_response() -> dict[str, Any]:
 
 # POST /confluence/intelligent-analyze
 def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
-    """Analyze: check memory, run coordinator.run_analyze with timers, return result."""
+    """Analyze: check memory, run coordinator.run_analyze with timers, return result. Optional chat_context (US-2)."""
     if not body or not isinstance(body, dict):
         body = {}
+    chat_context = body.get("chat_context")
+    context_result: dict[str, Any] = {}
+    if chat_context and isinstance(chat_context, dict):
+        messages = chat_context.get("messages") or chat_context.get("last_messages") or []
+        selected_text = chat_context.get("selected_text") or chat_context.get("selection") or ""
+        workspace_path = chat_context.get("workspace_path") or chat_context.get("workspacePath") or ""
+        try:
+            context_result = analyze_chat_context(
+                messages=messages,
+                selected_text=selected_text,
+                workspace_path=workspace_path,
+            )
+        except Exception as e:
+            logger.debug("Context analysis skipped: %s", e)
+
     files_or_contents = body.get("files") or body.get("file_contents") or []
     has_content = (
         body.get("content", "") != "" if body.get("content") is not None else False
     )
     if not files_or_contents and not has_content:
+        if context_result:
+            return {
+                "context_suggestions": {
+                    "mentioned_files": context_result.get("mentioned_files", []),
+                    "related_files": context_result.get("related_files", []),
+                    "project_type_label": context_result.get("project_type_label", "Mixed project"),
+                    "detected_language": context_result.get("detected_language", "Mixed"),
+                    "should_suggest_readme": context_result.get("should_suggest_readme", False),
+                },
+            }
         err = prd_error_response(
             error_code="intelligence_error",
-            message="Missing request: provide 'files', 'file_contents', or 'content'.",
-            intelligence_suggestion="Send JSON with files or content (string).",
+            message="Missing request: provide 'files', 'file_contents', 'content', or 'chat_context'.",
+            intelligence_suggestion="Send JSON with files or content (string) or chat_context.",
             fallback_available=False,
             intelligence_confidence=0.0,
         )
@@ -221,7 +250,24 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
         result = run_analyze(file_contents)
     except Exception as e:
         logger.exception("intelligent-analyze failed: %s", e)
-        return handle_error(e, error_code="analysis_failed")
+        cat = classify_exception(e)
+        suggested: list[str] = []
+        if cat in ("content", "intelligence_error") and context_result:
+            related = context_result.get("related_files") or []
+            mentioned = context_result.get("mentioned_files") or []
+            suggested = list(dict.fromkeys(related + mentioned))
+        return handle_error(
+            e, error_code="analysis_failed", suggested_files=suggested or None
+        )
+
+    if context_result:
+        result["context_suggestions"] = {
+            "mentioned_files": context_result.get("mentioned_files", []),
+            "related_files": context_result.get("related_files", []),
+            "project_type_label": context_result.get("project_type_label", "Mixed project"),
+            "detected_language": context_result.get("detected_language", "Mixed"),
+            "should_suggest_readme": context_result.get("should_suggest_readme", False),
+        }
 
     record = get_operation_record()
     peak_mb = get_peak_memory_mb()
@@ -249,13 +295,18 @@ def intelligent_analyze_handler(body: dict[str, Any]) -> dict[str, Any]:
 # POST /confluence/intelligent-create (PRD §9.1: files, intelligent_mode, auto_title, space, intelligence_context)
 def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
     """Create: check memory, resolve title from auto_title/title_override, run coordinator.run_create."""
+    logger.info("intelligent-create request received")
     if not check_memory_before_step():
         return _memory_limit_response()
 
     start_operation()
     base_url = body.get("base_url", "")
     space_key = body.get("space") or body.get("space_key", "DOC")
-    auth = body.get("auth")  # (email, api_token) or None
+    auth = body.get("auth")  # (email, api_token) or None; JSON sends list
+    if isinstance(auth, list) and len(auth) >= 2:
+        auth = (auth[0], auth[1])
+    elif not isinstance(auth, tuple):
+        auth = None
     feedback = body.get("feedback_for_learning", "")
     intelligence_context = body.get("intelligence_context") or {}
     auto_title = body.get("auto_title", True)
@@ -272,6 +323,14 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
         )
     title = (title or "Untitled").strip() or "Untitled"
 
+    # Template from analysis so create uses same format (PRD full AI intelligence)
+    template_decision_from_analyze = None
+    rec = intelligence_context.get("intelligent_recommendation") or {}
+    tid = (intelligence_context.get("template_id") or rec.get("template_id") or "").strip()
+    if tid:
+        tname = (intelligence_context.get("template_name") or rec.get("template_name") or tid) or ""
+        template_decision_from_analyze = {"template_id": tid, "template_name": tname}
+
     files = body.get("files") or []
     if isinstance(files, list) and files and not isinstance(files[0], str):
         file_contents = [
@@ -282,6 +341,7 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
         file_contents = [c for c in files if isinstance(c, str)] if files else []
     content = body.get("content", "") or body.get("body_content", "")
 
+    logger.info("intelligent-create calling run_create")
     try:
         result = run_create(
             base_url=base_url,
@@ -291,6 +351,7 @@ def intelligent_create_handler(body: dict[str, Any]) -> dict[str, Any]:
             auth=auth,
             feedback_for_learning=feedback,
             file_contents=file_contents if file_contents else None,
+            template_decision_from_analyze=template_decision_from_analyze,
         )
     except Exception as e:
         logger.exception("intelligent-create failed: %s", e)
@@ -350,18 +411,34 @@ def intelligence_status_handler(request: Any = None) -> Tuple[Any, int] | dict[s
             detail_level=detail_level,
             db_fetch_metrics=db_fetch_intelligence_metrics,
         )
+        recs = get_last_records(1)
+        last_rec = recs[-1] if recs else None
         resp = {
             "intelligence_metrics": data.get("intelligence_metrics", {}),
             "learning_progress": data.get("learning_progress", {}),
             "intelligence_summary": data.get("intelligence_summary", {}),
+            "last_operation_targets_met": verify_targets_met(last_rec),
         }
         if "improvement_rates" in data:
             resp["improvement_rates"] = data["improvement_rates"]
+        team_count = get_collective_intelligence_count(
+            db_fetch_count=db_fetch_examples_count,
+            team_sharing_opt_in=get_confluence_config().get("team_sharing_opt_in", True),
+        )
+        resp["intelligence_metrics"]["team_examples_count"] = team_count
+        resp["learning_progress"]["team_examples_count"] = team_count
         return resp, 200
     records = get_last_records(20)
     if not records:
         empty_metrics = {"template_selection_accuracy": 0.0, **get_reliability_metrics()}
-        return {"metrics": empty_metrics, "intelligence_metrics": empty_metrics, "learning_progress": {}, "improvement_rates": {}, "recent_records": []}
+        return {
+            "metrics": empty_metrics,
+            "intelligence_metrics": empty_metrics,
+            "learning_progress": {},
+            "improvement_rates": {},
+            "recent_records": [],
+            "last_operation_targets_met": False,
+        }
     analysis_times = []
     create_times = []
     memory_peaks = []
@@ -384,7 +461,75 @@ def intelligence_status_handler(request: Any = None) -> Tuple[Any, int] | dict[s
         "template_selection_accuracy": reliability.get("template_selection_accuracy", 0.0),
         **reliability,
     }
-    return {"metrics": metrics, "intelligence_metrics": metrics, "learning_progress": {}, "improvement_rates": {}, "recent_records": [r.to_dict() for r in records[-5:]]}
+    last_rec = records[-1] if records else None
+    return {
+        "metrics": metrics,
+        "intelligence_metrics": metrics,
+        "learning_progress": {},
+        "improvement_rates": {},
+        "recent_records": [r.to_dict() for r in records[-5:]],
+        "last_operation_targets_met": verify_targets_met(last_rec),
+    }
+
+
+# POST /confluence/document-project (US-16)
+def document_project_handler(body: dict[str, Any]) -> dict[str, Any]:
+    """Document project: scan, analyze, template match, format, create. PRD §9.1/§9.2."""
+    if not check_memory_before_step():
+        return _memory_limit_response()
+
+    workspace_path = body.get("workspace_path") or body.get("workspacePath") or ""
+    space_key = body.get("space") or body.get("space_key", "DOC")
+    base_url = body.get("base_url", "")
+    auth = body.get("auth")
+    if isinstance(auth, list) and len(auth) >= 2:
+        auth = (auth[0], auth[1])
+    elif not isinstance(auth, tuple):
+        auth = None
+
+    if not workspace_path or not workspace_path.strip():
+        err = prd_error_response(
+            error_code="intelligence_error",
+            message="Please open a project folder first.",
+            intelligence_suggestion="Open a workspace folder in VS Code and try again.",
+            fallback_available=False,
+            intelligence_confidence=0.0,
+        )
+        if HTTPException is not None:
+            raise HTTPException(status_code=400, detail=err)
+        return err
+
+    start_operation()
+    try:
+        result = run_document_project(
+            workspace_path=workspace_path.strip(),
+            space_key=space_key,
+            base_url=base_url,
+            auth=auth,
+        )
+    except Exception as e:
+        logger.exception("document-project failed: %s", e)
+        return handle_error(e, error_code="document_project_failed")
+
+    record = get_operation_record()
+    peak_mb = get_peak_memory_mb()
+    if record:
+        from app.confluence.prd_monitor import append_record, record_confluence_operation
+        perf = record_confluence_operation(
+            operation_id=record.operation_id,
+            per_file_analysis_ms=record.per_file_analysis_ms,
+            template_selection_ms=record.template_selection_ms,
+            create_e2e_ms=record.create_e2e_ms,
+            peak_memory_mb=peak_mb,
+        )
+        append_record(perf)
+        result["performance"] = {
+            "operation_id": perf.operation_id,
+            "create_e2e_ms": perf.create_e2e_ms,
+            "peak_memory_mb": perf.peak_memory_mb,
+            "targets_met": perf.targets_met,
+        }
+    return result
 
 
 # POST /confluence/intelligence-feedback
@@ -437,12 +582,18 @@ def register_confluence_routes(router: Any) -> None:
             def track_usage_route(body: dict = Body(default=None)):
                 return track_usage_handler(body or {})
 
+            def document_project_route(body: dict = Body(default=None)):
+                return document_project_handler(body or {})
+
             def status_route(request: Any = None):
                 out = intelligence_status_handler(request)
                 return out[0] if isinstance(out, tuple) else out
 
             router.post("/confluence/intelligent-analyze")(analyze_route)
+            router.post("/confluence/intelligent-analyz")(analyze_route)  # alias for client typo
+            router.get("/confluence/intelligent-analyz")(status_route)  # GET typo -> status
             router.post("/confluence/intelligent-create")(create_route)
+            router.post("/confluence/document-project")(document_project_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
             router.post("/confluence/track-usage")(track_usage_route)
@@ -467,6 +618,10 @@ def register_confluence_routes(router: Any) -> None:
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
                 return intelligent_create_handler(body)
 
+            def document_project_route(request: Any = None):
+                body = getattr(request, "json", lambda: {})() if request is not None else {}
+                return document_project_handler(body)
+
             def feedback_route(request: Any = None):
                 body = getattr(request, "json", lambda: {})() if request is not None else {}
                 out = intelligence_feedback_handler(body, request)
@@ -481,7 +636,10 @@ def register_confluence_routes(router: Any) -> None:
                 return out[0] if isinstance(out, tuple) else out
 
             router.post("/confluence/intelligent-analyze")(analyze_route)
+            router.post("/confluence/intelligent-analyz")(analyze_route)  # alias for client typo
+            router.get("/confluence/intelligent-analyz")(status_route)  # GET typo -> status
             router.post("/confluence/intelligent-create")(create_route)
+            router.post("/confluence/document-project")(document_project_route)
             router.get("/confluence/intelligence-status")(status_route)
             router.post("/confluence/intelligence-feedback")(feedback_route)
             router.post("/confluence/track-usage")(track_usage_route)
@@ -491,9 +649,15 @@ def register_confluence_routes(router: Any) -> None:
         router.confluence_handlers = {
             "intelligent_analyze": lambda body: intelligent_analyze_handler(body),
             "intelligent_create": lambda body: intelligent_create_handler(body),
+            "document_project": lambda body: document_project_handler(body),
             "intelligence_status": lambda: intelligence_status_handler(),
             "intelligence_feedback": lambda body: intelligence_feedback_handler(body),
             "track_usage": track_usage_handler,
             "examples_export": examples_export_handler,
             "examples_import": examples_import_handler,
         }
+
+    # Register Confluence config endpoints (test-connection, spaces, validate, defaults)
+    from app.api.config_routes import register_config_routes
+
+    register_config_routes(router)

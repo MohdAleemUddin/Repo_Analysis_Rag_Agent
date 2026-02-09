@@ -24,7 +24,7 @@ export function registerCommands(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('confluence.saveToConfluence', async () => {
-      const config = getConfluenceConfig();
+      const config = await getConfluenceConfigAsync(context);
       const { fileContents, fileCount } = await getContentForAnalyze();
       if (!fileContents.length) {
         vscode.window.showErrorMessage('No content to analyze. Open a file or select text.');
@@ -43,12 +43,19 @@ export function registerCommands(context: vscode.ExtensionContext): void {
         panel.webview.onDidReceiveMessage(async (msg: { command: string; titleOverride?: string; autoTitle?: boolean }) => {
           if (msg.command === 'create' && lastAnalyze) {
             const stored = lastAnalyze;
+            const analyzeResp = stored.response as AnalyzeResponse;
+            const rec = analyzeResp.intelligent_recommendation;
+            const intelligence_context: CreateRequest['intelligence_context'] = msg.titleOverride
+              ? { title_override: msg.titleOverride }
+              : { suggested_title: analyzeResp.intelligence_analysis?.intelligent_title };
+            if (rec?.template_id) intelligence_context.template_id = rec.template_id;
+            if (rec?.template_name) intelligence_context.template_name = rec.template_name;
             const req: CreateRequest = {
               files: stored.fileContents,
               intelligent_mode: true,
               auto_title: msg.autoTitle !== false,
               space: 'DOC',
-              intelligence_context: msg.titleOverride ? { title_override: msg.titleOverride } : { suggested_title: (stored.response as AnalyzeResponse).intelligence_analysis?.intelligent_title },
+              intelligence_context,
             };
             try {
               const result = await intelligentCreate(
@@ -68,11 +75,6 @@ export function registerCommands(context: vscode.ExtensionContext): void {
       }
     })
   );
-}
-
-function getConfluenceConfig(): { baseUrl: string; auth?: [string, string] | null } {
-  const baseUrl = vscode.workspace.getConfiguration('confluence').get<string>('apiBaseUrl') ?? 'http://localhost:8000';
-  return { baseUrl };
 }
 
 async function getContentForAnalyze(): Promise< { fileContents: string[]; fileCount: number }> {

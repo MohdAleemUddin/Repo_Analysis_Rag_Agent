@@ -8,29 +8,39 @@ export interface ConfidenceBreakdown {
 }
 
 export interface IntelligenceAnalysis {
-  content_types: string[];
-  detected_patterns: string[];
-  intelligent_title: string;
-  intelligence_confidence: number;
-  ai_reasoning: string;
+  content_types?: string[];
+  detected_patterns?: string[];
+  intelligent_title?: string;
+  intelligence_confidence?: number;
+  ai_reasoning?: string;
 }
 
 export interface IntelligentRecommendation {
-  template_id: string;
-  template_name: string;
-  intelligence_reason: string;
-  confidence_breakdown: {
-    content_match: number;
-    structure_match: number;
-    context_match: number;
+  template_id?: string;
+  template_name?: string;
+  intelligence_reason?: string;
+  confidence_breakdown?: {
+    content_match?: number;
+    structure_match?: number;
+    context_match?: number;
   };
 }
 
+/** US-2: Context suggestions from chat */
+export interface ContextSuggestions {
+  mentioned_files: string[];
+  related_files: string[];
+  project_type_label: string;
+  detected_language?: string;
+  should_suggest_readme?: boolean;
+}
+
 export interface AnalyzeResponse {
-  intelligence_analysis: IntelligenceAnalysis;
-  intelligent_recommendation: IntelligentRecommendation;
+  intelligence_analysis?: IntelligenceAnalysis;
+  intelligent_recommendation?: IntelligentRecommendation;
   performance?: Record<string, unknown>;
   optimization_suggestions?: unknown[];
+  context_suggestions?: ContextSuggestions;
 }
 
 /** PRD §9.1 create request */

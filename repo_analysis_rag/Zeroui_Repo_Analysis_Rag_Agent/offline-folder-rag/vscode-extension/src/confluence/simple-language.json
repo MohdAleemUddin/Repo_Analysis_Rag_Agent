@@ -1,0 +1,57 @@
+{
+  "helpUrl": "https://github.com/your-org/repo/blob/main/docs/CONFLUENCE_USERSTORY.md",
+  "firstClick": "Select files for intelligent formatting",
+  "progress": "Creating Intelligent Documentation...",
+  "success": "✅ Intelligent Documentation Created!",
+  "successEncouragement": "Great! Intelligent formatting applied perfectly",
+  "learning": "🎓 Intelligence learning from your successful creation",
+  "errorSuggestions": {
+    "network": "Cannot reach Confluence. Check your connection.",
+    "auth": "Invalid credentials. Update in settings.",
+    "rateLimit": "Too many requests. Try again in 30 seconds."
+  },
+  "phrases": {
+    "firstInteraction": {
+      "buttonTooltip": "Click to save files with intelligent formatting",
+      "fileSelector": "Select files for intelligent formatting",
+      "progress": "Creating Intelligent Documentation...",
+      "success": "✅ Intelligent Documentation Created!"
+    },
+    "encouragement": [
+      "Great! Intelligent formatting applied perfectly",
+      "Perfect! AI organized your documentation intelligently",
+      "Excellent! The system learned from this successful creation"
+    ],
+    "errors": {
+      "network": "Cannot reach Confluence. Check your internet connection.",
+      "auth": "Invalid credentials. Click 'Update Settings' to fix.",
+      "rateLimit": "Too many requests. Will retry in 30 seconds.",
+      "generic": "Something went wrong. Try again or check settings."
+    },
+    "learning": "🎓 Intelligence learning from your successful creation",
+    "confidence": "Confidence",
+    "explainChoice": "Explain AI Choice",
+    "confidenceTooltip": "Intelligence Confidence: How sure AI is about this decision"
+  },
+  "tooltips": {
+    "firstTime": "Click to save files with intelligent formatting"
+  },
+  "buttons": {
+    "saveToConfluence": "💾 Save to Confluence",
+    "viewPage": "View page",
+    "copyLink": "Copy Link",
+    "updateSettings": "Update Settings"
+  },
+  "progressiveDisclosure": {
+    "level1": ["basic_flow"],
+    "level2": ["basic_flow", "confidence_scores"],
+    "level3": ["basic_flow", "confidence_scores", "explain_choice", "advanced_options"]
+  },
+  "exportImport": {
+    "sectionTitle": "Export/Import Examples",
+    "exportButton": "Export Examples",
+    "importButton": "Import Examples",
+    "exportSuccess": "Export complete. Saved to {path}",
+    "importSuccess": "Intelligence Examples Imported: {count} new examples learned"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Python FastAPI Project Template",
+  "content_type": "python_api",
+  "sections": ["Overview", "Architecture", "Setup", "API Endpoints", "Configuration", "Testing"],
+  "description": "Template for Python FastAPI REST API projects"
+}

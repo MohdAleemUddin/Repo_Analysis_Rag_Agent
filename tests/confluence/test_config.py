@@ -44,3 +44,12 @@ def test_get_confluence_config_uses_env(monkeypatch):
     out = get_confluence_config()
     assert "team_sharing_opt_in" in out
     assert "database_url" in out
+
+
+def test_merge_confluence_settings_retry_invalid(monkeypatch):
+    """Covers config.py lines 58-59: except ValueError in retry_attempts."""
+    from app.config.config import _merge_confluence_settings_from_env
+    out = {}
+    monkeypatch.setenv("CONFLUENCE_RETRY_ATTEMPTS", "not_a_number")
+    _merge_confluence_settings_from_env(out)
+    assert "retry_attempts" not in out

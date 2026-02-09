@@ -67,3 +67,47 @@ def format_content(
         ),
         ai_reasoning="Formatted with template and validated for Confluence storage.",
     )
+
+
+def format_project_content(
+    project_analysis: Any,
+    template_name: str,
+    template_match: Any,
+    file_contents_merged: str = "",
+) -> FormattedConfluencePayload:
+    """
+    Format project documentation for Confluence (US-16).
+    Sections: Overview, Architecture, Setup, API Endpoints, Configuration, Testing.
+    """
+    pa = project_analysis
+    pt = getattr(pa, "project_type", "mixed")
+    patterns = getattr(pa, "patterns", []) or getattr(pa, "detected_patterns", [])
+    key_files = getattr(pa, "key_file_types", [])
+    summary = getattr(pa, "structure_summary", "")
+
+    overview = f"<p><strong>Project Type:</strong> {pt}</p><p>{summary}</p>"
+    if patterns:
+        overview += "<p><strong>Detected patterns:</strong> " + ", ".join(str(p) for p in patterns[:15]) + "</p>"
+    if key_files:
+        overview += "<p><strong>Key file types:</strong> " + ", ".join(str(k) for k in key_files[:10]) + "</p>"
+
+    arch = "<p>Architecture and structure derived from project scan.</p>"
+    if file_contents_merged:
+        preview = file_contents_merged[:2000].replace("<", "&lt;").replace(">", "&gt;")
+        arch += f"<h4>Content Preview</h4><pre>{preview}</pre>"
+
+    html = (
+        "<h2>Overview</h2>" + overview
+        + "<h2>Architecture</h2>" + arch
+        + "<h2>Setup</h2><p>Setup instructions based on project type.</p>"
+        + "<h2>API Endpoints</h2><p>API endpoints if applicable.</p>"
+        + "<h2>Configuration</h2><p>Configuration options.</p>"
+        + "<h2>Testing</h2><p>Testing approach and commands.</p>"
+    )
+
+    return FormattedConfluencePayload(
+        confluence_storage_format=html,
+        attachments=[],
+        validation_results=ValidationResults(warnings=[], corrections_applied=[]),
+        ai_reasoning=f"Project documentation formatted with template: {template_name}.",
+    )

@@ -1,5 +1,7 @@
 logs/
 .env
+# VS Code extension test runner binary (exceeds Windows path limit; not for version control)
+**/.vscode-test/
 __pycache__/
 node_modules/
 .venv/
@@ -11,4 +13,3 @@ htmlcov/
 docs/
 confluence_data/examples/vector_embeddings/*.index
 errors.log/
-errors.log

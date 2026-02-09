@@ -1,0 +1,8 @@
+{
+  "files": {
+    "src/app.py": {
+      "truncated": true,
+      "skip_reason": "CHUNK_LIMIT"
+    }
+  }
+}
