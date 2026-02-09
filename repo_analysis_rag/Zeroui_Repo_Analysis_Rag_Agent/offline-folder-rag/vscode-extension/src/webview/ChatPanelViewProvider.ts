@@ -4,7 +4,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 
 import { parseSlashCommand, CommandResultMessage, CommandRouter } from "../commands/commandRouter";
-import { intelligentAnalyze, intelligentCreate, getPreferredSpace, getIntelligenceStatus, postIntelligenceFeedback, documentProject, exportExamples, importExamples } from "../confluence/confluence-api";
+import { intelligentAnalyze, intelligentCreate, getPreferredSpace, fetchSpaces, getIntelligenceStatus, postIntelligenceFeedback, documentProject, exportExamples, importExamples } from "../confluence/confluence-api";
 import { getConfluenceConfigAsync } from "../confluence/confluence-settings";
 import type { AnalyzeResponse, IntelligenceErrorResponse, IntelligenceMetrics } from "../confluence/types";
 import { getChatPanelHtml } from "./ui/chatPanelHtml";
@@ -840,6 +840,15 @@ export class ChatPanelViewProvider {
             const analysis = analyze.intelligence_analysis ?? {};
             const rec = analyze.intelligent_recommendation ?? {};
             const cachedSpaces = this.extensionContext.globalState.get<Array<{ key?: string; name?: string }>>('confluence.cachedSpaces') ?? [];
+            let spacesList = await fetchSpaces(config);
+            if (spacesList.length === 0) {
+                spacesList = cachedSpaces
+                    .filter((s): s is { key: string; name?: string } => !!s?.key)
+                    .map(s => ({ key: s.key, name: s.name ?? s.key }));
+                this.confluenceOutput?.appendLine("[Confluence] Using cached spaces (fetch failed or no credentials).");
+            } else {
+                await this.extensionContext.globalState.update('confluence.cachedSpaces', spacesList);
+            }
             let preferredSpace = getSpacePreference(this.extensionContext, this.getEffectiveRootPath());
             if (!preferredSpace) {
                 try {
@@ -850,9 +859,9 @@ export class ChatPanelViewProvider {
             }
             preferredSpace = preferredSpace
                 ?? getSuggestedSpaceFromProjectType(ctxSuggestions?.project_type_label)
-                ?? (cachedSpaces[0]?.key)
+                ?? (spacesList[0]?.key)
                 ?? "DEV";
-            const spaces = cachedSpaces
+            const spaces = spacesList
                 .filter((s): s is { key: string; name?: string } => !!s?.key)
                 .map(s => ({ key: s.key, name: s.name ?? s.key }));
             const cb = rec.confidence_breakdown;

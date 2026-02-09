@@ -284,6 +284,34 @@ export async function getPreferredSpace(baseUrl: string, projectPath: string): P
   }
 }
 
+/** Fetch current Confluence spaces from backend. Used when showing space dropdown. */
+export async function fetchSpaces(config: ConfluenceApiConfig): Promise<Array<{ key: string; name?: string }>> {
+  if (!config.auth || config.auth.length < 2 || !config.auth[0] || !config.auth[1]) {
+    return [];
+  }
+  const base = config.baseUrl.replace(/\/$/, '');
+  const url = `${base.startsWith('http') ? base : `http://${base}`}/confluence/config/spaces`;
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url: config.confluenceInstanceUrl ?? '',
+        email: config.auth[0],
+        api_token: config.auth[1],
+      }),
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { spaces?: Array<{ key?: string; name?: string }> };
+    const list = data.spaces ?? [];
+    return list
+      .filter((s): s is { key: string; name?: string } => !!s?.key)
+      .map((s) => ({ key: s.key, name: s.name ?? s.key }));
+  } catch {
+    return [];
+  }
+}
+
 /** US-6: Export learned examples as JSON via GET /confluence/examples/export. */
 export interface ExportExamplesOptions {
   project_path?: string;
