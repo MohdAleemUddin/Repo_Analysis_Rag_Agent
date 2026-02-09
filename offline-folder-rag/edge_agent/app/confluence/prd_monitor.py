@@ -3,7 +3,6 @@ PRD performance monitor for Confluence.
 Measures per-file analysis, template selection, e2e create; memory limit; emits records.
 """
 
-import logging
 import time
 import uuid
 from contextlib import contextmanager
@@ -16,47 +15,68 @@ from app.config.config import (
     CREATE_E2E_MAX_SECONDS,
     TEMPLATE_SELECTION_MAX_SECONDS,
 )
+from app.logging.logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
-# NFR1 targets (seconds or MB) - exported for tests
-ANALYSIS_TARGET_SEC = 3.0
-TEMPLATE_SELECT_TARGET_SEC = 2.0
-CREATION_TARGET_SEC = 15.0
-MEMORY_TARGET_MB = 300
-# US-16 project documentation targets
+# Re-export config constants for backward compatibility (single source of truth: config)
+ANALYSIS_TARGET_SEC = float(ANALYSIS_MAX_SECONDS_PER_FILE)
+TEMPLATE_SELECT_TARGET_SEC = float(TEMPLATE_SELECTION_MAX_SECONDS)
+CREATION_TARGET_SEC = float(CREATE_E2E_MAX_SECONDS)
+MEMORY_TARGET_MB = float(CONFLUENCE_MEMORY_LIMIT_MB)
+# US-16 project documentation targets (not in config)
 PROJECT_SCAN_TARGET_SEC = 10.0
 PROJECT_FULL_TARGET_SEC = 30.0
 
 
 def record_analysis_duration_sec(sec: float) -> dict[str, Any]:
-    ok = sec < ANALYSIS_TARGET_SEC
-    return {"metric": "analysis_duration_sec", "value": sec, "target_sec": ANALYSIS_TARGET_SEC, "ok": ok}
+    ok = sec < ANALYSIS_MAX_SECONDS_PER_FILE
+    return {
+        "metric": "analysis_duration_sec",
+        "value": sec,
+        "target_sec": ANALYSIS_MAX_SECONDS_PER_FILE,
+        "ok": ok,
+    }
 
 
 def record_template_select_duration_sec(sec: float) -> dict[str, Any]:
-    ok = sec < TEMPLATE_SELECT_TARGET_SEC
-    return {"metric": "template_select_duration_sec", "value": sec, "target_sec": TEMPLATE_SELECT_TARGET_SEC, "ok": ok}
+    ok = sec < TEMPLATE_SELECTION_MAX_SECONDS
+    return {
+        "metric": "template_select_duration_sec",
+        "value": sec,
+        "target_sec": TEMPLATE_SELECTION_MAX_SECONDS,
+        "ok": ok,
+    }
 
 
 def record_creation_duration_sec(sec: float) -> dict[str, Any]:
-    ok = sec < CREATION_TARGET_SEC
-    return {"metric": "creation_duration_sec", "value": sec, "target_sec": CREATION_TARGET_SEC, "ok": ok}
+    ok = sec < CREATE_E2E_MAX_SECONDS
+    return {
+        "metric": "creation_duration_sec",
+        "value": sec,
+        "target_sec": CREATE_E2E_MAX_SECONDS,
+        "ok": ok,
+    }
 
 
 def record_memory_mb(mb: float | None = None) -> dict[str, Any]:
     val = mb if mb is not None else _get_process_memory_mb()
-    ok = val <= MEMORY_TARGET_MB
-    return {"metric": "memory_mb", "value": val, "target_mb": MEMORY_TARGET_MB, "ok": ok}
+    ok = val <= CONFLUENCE_MEMORY_LIMIT_MB
+    return {
+        "metric": "memory_mb",
+        "value": val,
+        "target_mb": CONFLUENCE_MEMORY_LIMIT_MB,
+        "ok": ok,
+    }
 
 
 def check_prd() -> dict[str, Any]:
-    """Return PRD NFR1 compliance summary."""
+    """Return PRD NFR1 compliance summary (single source: config)."""
     return {
-        "analysis_target_sec": ANALYSIS_TARGET_SEC,
-        "template_select_target_sec": TEMPLATE_SELECT_TARGET_SEC,
-        "creation_target_sec": CREATION_TARGET_SEC,
-        "memory_target_mb": MEMORY_TARGET_MB,
+        "analysis_target_sec": ANALYSIS_MAX_SECONDS_PER_FILE,
+        "template_select_target_sec": TEMPLATE_SELECTION_MAX_SECONDS,
+        "creation_target_sec": CREATE_E2E_MAX_SECONDS,
+        "memory_target_mb": CONFLUENCE_MEMORY_LIMIT_MB,
         "project_scan_target_sec": PROJECT_SCAN_TARGET_SEC,
         "project_full_target_sec": PROJECT_FULL_TARGET_SEC,
     }
@@ -174,10 +194,10 @@ def record_confluence_operation(
     if peak_memory_mb is None:
         peak_memory_mb = _current_peak_memory_mb
     analysis_ok = all(
-        ms <= ANALYSIS_MAX_SECONDS_PER_FILE * 1000 for ms in per_file_analysis_ms
+        ms < ANALYSIS_MAX_SECONDS_PER_FILE * 1000 for ms in per_file_analysis_ms
     )
-    template_ok = template_selection_ms <= TEMPLATE_SELECTION_MAX_SECONDS * 1000
-    create_ok = create_e2e_ms <= CREATE_E2E_MAX_SECONDS * 1000
+    template_ok = template_selection_ms < TEMPLATE_SELECTION_MAX_SECONDS * 1000
+    create_ok = create_e2e_ms < CREATE_E2E_MAX_SECONDS * 1000
     memory_ok = peak_memory_mb <= CONFLUENCE_MEMORY_LIMIT_MB
 
     record = PerformanceRecord(
@@ -197,7 +217,7 @@ def record_confluence_operation(
     # Alerts
     if not analysis_ok:
         for i, ms in enumerate(per_file_analysis_ms):
-            if ms > ANALYSIS_MAX_SECONDS_PER_FILE * 1000:
+            if ms >= ANALYSIS_MAX_SECONDS_PER_FILE * 1000:
                 logger.warning(
                     "PRD target missed: analysis %.2f s for file index %s (limit %s s)",
                     ms / 1000,
@@ -248,7 +268,7 @@ def timer_per_file_analysis(file_index: int = 0) -> Generator[None, None, None]:
         _update_peak()
         if _current_record is not None:
             _current_record.per_file_analysis_ms.append(elapsed_ms)
-            if elapsed_ms > ANALYSIS_MAX_SECONDS_PER_FILE * 1000:
+            if elapsed_ms >= ANALYSIS_MAX_SECONDS_PER_FILE * 1000:
                 _current_record.targets_met["analysis_per_file"] = False
                 logger.warning(
                     "PRD target missed: analysis %.2f s for file index %s (limit %s s)",
@@ -269,7 +289,7 @@ def timer_template_selection() -> Generator[None, None, None]:
         _update_peak()
         if _current_record is not None:
             _current_record.template_selection_ms = elapsed_ms
-            if elapsed_ms > TEMPLATE_SELECTION_MAX_SECONDS * 1000:
+            if elapsed_ms >= TEMPLATE_SELECTION_MAX_SECONDS * 1000:
                 _current_record.targets_met["template_selection"] = False
                 logger.warning(
                     "PRD target missed: template selection %.2f s (limit %s s)",
@@ -289,7 +309,7 @@ def timer_create_e2e() -> Generator[None, None, None]:
         _update_peak()
         if _current_record is not None:
             _current_record.create_e2e_ms = elapsed_ms
-            if elapsed_ms > CREATE_E2E_MAX_SECONDS * 1000:
+            if elapsed_ms >= CREATE_E2E_MAX_SECONDS * 1000:
                 _current_record.targets_met["create_e2e"] = False
                 logger.warning(
                     "PRD target missed: create e2e %.2f s (limit %s s)",
@@ -317,3 +337,10 @@ def append_record(record: PerformanceRecord) -> None:
 
 def get_last_records(n: int = 20) -> list[PerformanceRecord]:
     return _last_records[-n:] if _last_records else []
+
+
+def verify_targets_met(record: PerformanceRecord | None) -> bool:
+    """Return True iff all NFR1 targets are met. For regression tests and CI."""
+    if record is None:
+        return False
+    return all(record.targets_met.values())

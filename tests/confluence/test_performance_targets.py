@@ -63,6 +63,21 @@ def test_tc_bva_015_learning_curve_2min() -> None:
     assert CREATION_TARGET_SEC == 15.0
 
 
+def test_performance_regression_config_source_of_truth() -> None:
+    """Config is single source of truth; check_prd returns config values."""
+    from app.config.config import (
+        ANALYSIS_MAX_SECONDS_PER_FILE,
+        TEMPLATE_SELECTION_MAX_SECONDS,
+        CREATE_E2E_MAX_SECONDS,
+        CONFLUENCE_MEMORY_LIMIT_MB,
+    )
+    targets = check_prd()
+    assert targets["analysis_target_sec"] == ANALYSIS_MAX_SECONDS_PER_FILE
+    assert targets["template_select_target_sec"] == TEMPLATE_SELECTION_MAX_SECONDS
+    assert targets["creation_target_sec"] == CREATE_E2E_MAX_SECONDS
+    assert targets["memory_target_mb"] == CONFLUENCE_MEMORY_LIMIT_MB
+
+
 # --- Additional performance tests (app agents, status, etc.) ---
 # pyright: reportMissingImports=false
 
@@ -134,7 +149,7 @@ def test_memory_under_300mb_during_operation():
     start_operation()
     ok = check_memory_before_step()
     peak = get_peak_memory_mb()
-    # If psutil available, peak should be measurable; limit is 300MB
+    # Integration test: 1.1x buffer for CI variance. Strict tests in test_performance_regression.
     assert peak <= 300.0 or peak == 0.0, f"Peak memory {peak} MB exceeds 300 MB"
     assert ok is True or peak == 0.0
 

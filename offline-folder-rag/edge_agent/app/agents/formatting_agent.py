@@ -54,7 +54,11 @@ def format_content(
     if not raw_storage.strip():
         raw_storage = "<p></p>"
         corrections_applied.append("Set empty payload to minimal paragraph")
-    if "<p>" not in raw_storage and "<p " not in raw_storage:
+    # Do not wrap in <p> when content already has block structure (h2, pre, code); would break headings
+    has_block_structure = any(
+        tag in raw_storage for tag in ("<h2>", "<h3>", "<h4>", "<pre>", "<code>")
+    )
+    if not has_block_structure and "<p>" not in raw_storage and "<p " not in raw_storage:
         raw_storage = f"<p>{raw_storage}</p>" if raw_storage else "<p></p>"
         corrections_applied.append("Wrapped in paragraph tag")
 

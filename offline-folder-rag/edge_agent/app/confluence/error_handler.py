@@ -5,12 +5,13 @@ Handler returns response dicts only; no writes. Clean-failure in integration_age
 
 from __future__ import annotations
 
-import logging
 import socket
 from dataclasses import dataclass
 from typing import Any, Iterable
 
-logger = logging.getLogger(__name__)
+from app.logging.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def _iter_leaf_exceptions(exc: BaseException) -> Iterable[BaseException]:
@@ -73,6 +74,10 @@ def _is_network_error(leaf: BaseException) -> bool:
         "temporary failure in name resolution",
         "name or service not known",
         "name resolution",
+        "timeout",
+        "ssl",
+        "certificate",
+        "cert_",
     )
     return any(p in msg for p in network_phrases)
 
@@ -108,6 +113,12 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
         "Check the Confluence space and page ID.",
         False,
         ["Retry", "Cancel"],
+    ),
+    "bad_request": (
+        "Confluence rejected the request (Bad Request).",
+        "Check the Confluence space key, page title, and that content is valid.",
+        True,
+        ["Retry", "Update Settings", "Cancel"],
     ),
     "permission_denied": (
         "Permission denied. Check access rights.",
@@ -173,28 +184,36 @@ CLASSIFICATION: dict[str, tuple[str, str, bool, list[str]]] = {
 
 
 def _classify(exc: BaseException) -> str:
+    # Classify by HTTP status first when server was reached (4xx/429)
+    for leaf in _iter_leaf_exceptions(exc):
+        resp = getattr(leaf, "response", None)
+        if resp is not None and getattr(resp, "status_code", None) is not None:
+            sc = resp.status_code
+            if sc == 401:
+                return "auth"
+            if sc == 429:
+                return "rate_limit"
+            if sc == 404:
+                return "not_found"
+            if sc == 400:
+                return "bad_request"
+            if sc == 403:
+                return "permission_denied"
     # Network: Linux errnos, ExceptionGroup, requests/httpx/urllib3, socket
     for leaf in _iter_leaf_exceptions(exc):
         if _is_network_error(leaf):
             return "network"
     msg = str(exc).lower()
-    resp = getattr(exc, "response", None)
-    if resp is not None and getattr(resp, "status_code", None) is not None:
-        sc = resp.status_code
-        if sc == 401:
-            return "auth"
-        if sc == 429:
-            return "rate_limit"
-        if sc == 404:
-            return "not_found"
-        if sc == 403:
-            return "permission_denied"
-    if "401" in msg or "unauthorized" in msg or "auth" in msg or "credential" in msg:
+    if "401" in msg or "unauthorized" in msg or "auth" in msg or "credential" in msg or "token" in msg:
         return "auth"
+    if "ssl" in msg or "certificate" in msg or "timeout" in msg:
+        return "network"
     if "429" in msg or "rate" in msg or "too many" in msg:
         return "rate_limit"
     if "404" in msg or "not found" in msg:
         return "not_found"
+    if "400" in msg or "bad request" in msg:
+        return "bad_request"
     if "403" in msg or "permission" in msg or "forbidden" in msg:
         return "permission_denied"
     if "disk" in msg or "storage" in msg or ("write" in msg and "fail" in msg):
@@ -223,21 +242,24 @@ def prd_error_response(
     fallback_available: bool = False,
     intelligence_confidence: float = 0.0,
     category: str | None = None,
+    suggested_files: list[str] | None = None,
 ) -> dict[str, Any]:
     """Build PRD §9.2 error response. If category given, fill from CLASSIFICATION."""
     if category and category in CLASSIFICATION:
         msg, sugg, fallback, acts = CLASSIFICATION[category]
-        out = {
+        out: dict[str, Any] = {
             "error": error_code,
             "message": message or msg,
             "intelligence_suggestion": intelligence_suggestion or sugg,
             "fallback_available": fallback if message is None else fallback_available,
             "intelligence_confidence": intelligence_confidence,
+            "actions": acts,
+            "category": category,
         }
-        out["actions"] = acts
-        out["category"] = category
+        if suggested_files:
+            out["suggested_files"] = suggested_files
         return out
-    return {
+    out = {
         "error": error_code,
         "message": message or "Something went wrong.",
         "intelligence_suggestion": intelligence_suggestion
@@ -247,14 +269,29 @@ def prd_error_response(
         "actions": ["Retry", "Update Settings", "Cancel"],
         "category": "other",
     }
+    if suggested_files:
+        out["suggested_files"] = suggested_files
+    return out
 
 
-def handle_error(exc: BaseException, error_code: str = "error") -> dict[str, Any]:
+def handle_error(
+    exc: BaseException,
+    error_code: str = "error",
+    suggested_files: list[str] | None = None,
+) -> dict[str, Any]:
     """Classify exception and return PRD §9.2 error response. Clean failure."""
     category = _classify(exc)
     return prd_error_response(
-        error_code=error_code, intelligence_confidence=0.0, category=category
+        error_code=error_code,
+        intelligence_confidence=0.0,
+        category=category,
+        suggested_files=suggested_files,
     )
+
+
+def classify_exception(exc: BaseException) -> str:
+    """Classify exception to a category string. Public API for callers needing category before handle_error."""
+    return _classify(exc)
 
 
 def get_actions_for_category(category: str) -> list[str]:

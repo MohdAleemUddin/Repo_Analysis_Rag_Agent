@@ -1,3 +1,51 @@
-
 # Don't index SpecStory auto-save files, but allow explicit context inclusion via @ references
 .specstory/**
+node_modules/
+**/dist/
+**/build/
+
+# Python & env
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+*.egg
+.env
+
+# Build & output
+out/
+
+# Test & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+bandit-report.json
+test-results-*.xml
+**/.vscode-test/
+
+# Logs & temp
+logs/
+*.log
+temp/
+tmp/
+.zeroui/
+
+# IDE
+.vscode/
+.idea/
+
+# Cursor internal (debug, plans)
+.cursor/
+
+# Confluence/RAG generated data (vector indexes; config/templates stay indexed)
+confluence_data/examples/vector_embeddings/
+
+# Optional: generated repo snapshots (uncomment if you don't need them in context)
+# REPO_SNAPSHOT.md
+# CURRENT_REPO_TREE.md
+
+# Binaries / large generated
+tools/k6/*.exe
+tools/k6/*/k6.exe

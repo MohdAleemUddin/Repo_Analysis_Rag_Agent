@@ -41,14 +41,20 @@ def _confluence_request(
     auth: tuple[str, str],
     timeout: int = CONNECTION_TEST_TIMEOUT_SEC,
     method: str = "GET",
-) -> tuple[Any, float]:
-    """Perform a single Confluence REST request. Returns (response_json or None, latency_sec)."""
+) -> tuple[Any, float, int | None, bool]:
+    """
+    Perform a single Confluence REST request.
+    Returns (response_json or None, latency_sec, status_code or None, parse_error).
+    parse_error is True when status was 200 but response body was not valid JSON.
+    """
     try:
         import requests
     except ImportError:
-        return None, 0.0
+        return None, 0.0, None, False
     url = f"{base_url.rstrip('/')}{path}"
     start = time.perf_counter()
+    status_code: int | None = None
+    parse_error = False
     try:
         resp = requests.request(
             method,
@@ -58,15 +64,20 @@ def _confluence_request(
             headers={"Accept": "application/json"},
         )
         elapsed = time.perf_counter() - start
+        status_code = getattr(resp, "status_code", None)
         if resp.status_code == 200:
             try:
-                return resp.json(), elapsed
+                return resp.json(), elapsed, 200, False
             except Exception:
-                return None, elapsed
-        return None, elapsed
-    except Exception:
+                parse_error = True
+                return None, elapsed, 200, True
+        return None, elapsed, status_code, False
+    except Exception as e:
         elapsed = time.perf_counter() - start
-        return None, elapsed
+        resp = getattr(e, "response", None)
+        if resp is not None:
+            status_code = getattr(resp, "status_code", None)
+        return None, elapsed, status_code, False
 
 
 def test_connection(url: str, email: str, api_token: str) -> dict[str, Any]:
@@ -79,7 +90,7 @@ def test_connection(url: str, email: str, api_token: str) -> dict[str, Any]:
     base_url = creds.url
     auth = (creds.email, creds.api_token)
     result: dict[str, Any] = {"ok": False, "latency_ms": 0, "error": ""}
-    data, elapsed = _confluence_request(
+    data, elapsed, status_code, parse_error = _confluence_request(
         base_url,
         "/rest/api/user/current",
         auth,
@@ -87,12 +98,23 @@ def test_connection(url: str, email: str, api_token: str) -> dict[str, Any]:
     )
     result["latency_ms"] = round(elapsed * 1000)
     if data is None:
-        result["error"] = "Connection failed or invalid response (check URL and credentials)"
+        if status_code == 401:
+            result["error"] = "Confluence returned 401. Check email and API token."
+        elif status_code == 403:
+            result["error"] = "Confluence returned 403. Check permissions or space access."
+        elif status_code == 404:
+            result["error"] = "Confluence returned 404. Check Confluence URL (include /wiki)."
+        elif status_code is not None:
+            result["error"] = f"Confluence returned {status_code}."
+        elif parse_error:
+            result["error"] = "Confluence returned 200 but response was not JSON (login page or block?)."
+        else:
+            result["error"] = "Connection failed (timeout or network). Check URL and connectivity."
         return result
     result["ok"] = True
     result["error"] = ""
     # Optionally fetch spaces for convenience
-    spaces_data, _ = _confluence_request(
+    spaces_data, *_ = _confluence_request(
         base_url,
         "/rest/api/space?limit=50",
         auth,
@@ -113,7 +135,7 @@ def get_available_spaces(url: str, email: str, api_token: str) -> list[dict[str,
     """Return list of {key, name} for Confluence spaces. Does not store credentials."""
     creds = ConfluenceCredentials(url=url, email=email, api_token=api_token)
     auth = (creds.email, creds.api_token)
-    data, _ = _confluence_request(
+    data, *_ = _confluence_request(
         creds.url,
         "/rest/api/space?limit=100",
         auth,

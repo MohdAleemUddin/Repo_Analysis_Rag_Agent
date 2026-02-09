@@ -19,10 +19,13 @@ def match(
     content: str | None,
     analysis: ContentProfile | dict[str, Any] | None = None,
     vector_store: Any = None,
+    content_types_for_template: list[str] | None = None,
+    is_single_type: bool | None = None,
 ) -> TemplateDecision:
     """
     Select template via matching_chain (vector + rules). Must complete in <2s (timer).
     If no template match found, returns deterministic fallback template (TC-NEG-013).
+    When content_types_for_template and is_single_type are provided, selects single_type or mixed_content (additive).
     """
     with timer_template_selection():
         profile_dict: dict[str, Any] = {}
@@ -36,6 +39,8 @@ def match(
             content or "",
             profile=profile_dict,
             vector_store=vector_store,
+            content_types_for_template=content_types_for_template,
+            is_single_type=is_single_type,
         )
         template_id = raw.get("template_id") or FALLBACK_TEMPLATE_ID
         template_name = raw.get("template_name") or FALLBACK_TEMPLATE_NAME

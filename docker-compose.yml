@@ -1,5 +1,4 @@
 # Placeholder docker-compose
-version: "3"
 services:
   placeholder:
     image: alpine

@@ -1,4 +1,5 @@
 # PRD endpoints and export/import for Confluence intelligence
+import logging
 from typing import Any, Tuple
 
 from ..confluence.db_adapter import (

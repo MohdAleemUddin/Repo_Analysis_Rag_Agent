@@ -56,8 +56,15 @@ def test_tc_ui_008_command_palette() -> None:
 
 
 def test_tc_ui_009_settings_interface() -> None:
-    """TC-UI-009: Confluence section under existing RAG settings."""
+    """TC-UI-009: Confluence section under existing RAG settings. No new settings panel or tab."""
     assert True  # Contract: no new settings panel
+    # US-10: configureProjectSettings must NOT open a webview; must use openSettings
+    from pathlib import Path
+    ext_path = Path(__file__).resolve().parents[1] / "offline-folder-rag" / "vscode-extension" / "src" / "extension.ts"
+    if ext_path.exists():
+        src = ext_path.read_text(encoding="utf-8", errors="ignore")
+        assert "openConfluenceConfigPanel" not in src, "US-10: No config webview panel"
+        assert "workbench.action.openSettings" in src, "US-10: Config must use native Settings"
 
 
 def test_tc_ui_010_responsiveness() -> None:

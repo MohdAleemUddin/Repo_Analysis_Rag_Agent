@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 from typing import Any
 
 from app.agents.contracts import (
@@ -22,8 +21,9 @@ from app.agents.pattern_matching_agent import match
 from app.confluence.project_analyzer import ProjectAnalysis, analyze_project
 from app.confluence.project_scanner import scan as project_scan
 from app.confluence.project_template_matcher import ProjectTemplateMatch, match_project_template
+from app.logging.logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 _pipeline_state: PipelineState = PipelineState.Idle
 _last_coordinator_error: CoordinatorError | None = None
@@ -85,7 +85,25 @@ def run_analyze(file_contents: list[str]) -> dict[str, Any]:
 
         _set_state(PipelineState.Matching)
         combined = "\n".join(str(p) for p in profiles)
-        template_decision = match(combined, analysis=profiles[0] if profiles else None)
+        # Content-type for template selection: code vs text (additive; no breaking change)
+        content_types_for_template: list[str] = []
+        for p in profiles:
+            prof = p.model_dump() if hasattr(p, "model_dump") else (p if isinstance(p, dict) else {})
+            ctypes = prof.get("content_types") or []
+            signals = prof.get("structure_signals") or []
+            langs = prof.get("languages") or []
+            if "module" in ctypes or "document" in ctypes or "code_like" in signals or "python_ast" in signals or any("python" in str(l) for l in langs):
+                content_types_for_template.append("code")
+            else:
+                content_types_for_template.append("text")
+        content_types_for_template = list(dict.fromkeys(content_types_for_template))
+        is_single_type = len(content_types_for_template) <= 1
+        template_decision = match(
+            combined,
+            analysis=profiles[0] if profiles else None,
+            content_types_for_template=content_types_for_template,
+            is_single_type=is_single_type,
+        )
         td = template_decision.model_dump() if hasattr(template_decision, "model_dump") else template_decision
 
         first_profile = profiles[0] if profiles else None
@@ -141,10 +159,13 @@ def run_create(
     auth: tuple[str, str] | None = None,
     feedback_for_learning: str = "",
     file_contents: list[str] | None = None,
+    template_decision_from_analyze: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """
     Sequential pipeline: Analysis → Matching → Formatting → Integration.
     If file_contents is provided, order (code before docs, main first) and merge into body.
+    When template_decision_from_analyze is provided (from intelligence_context), use it
+    for formatting instead of calling match(); otherwise run match() as before (backward compatible).
     Returns API-compatible dict (id, title, space, etc.) for confluence_routes.
     """
     global _pipeline_state, _last_coordinator_error
@@ -162,7 +183,10 @@ def run_create(
         profile = analyze_file_with_timer(body_content, file_index=0)
 
         _set_state(PipelineState.Matching)
-        template_decision = match(body_content, analysis=profile)
+        if template_decision_from_analyze and template_decision_from_analyze.get("template_id"):
+            template_decision = template_decision_from_analyze
+        else:
+            template_decision = match(body_content, analysis=profile)
 
         _set_state(PipelineState.Formatting)
         payload = format_content(body_content, template=template_decision)

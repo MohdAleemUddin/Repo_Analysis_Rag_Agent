@@ -1,7 +1,6 @@
 # Confluence config API: test-connection, spaces, validate, defaults (PRD §9.1)
 from __future__ import annotations
 
-import logging
 from typing import Any
 
 from app.config.confluence_config import (
@@ -11,15 +10,9 @@ from app.config.confluence_config import (
     test_connection,
 )
 from app.config.confluence_schema import ConfluenceCredentials, ConfluenceConfigValidate
+from app.logging.logger import get_logger, mask_tokens
 
-logger = logging.getLogger(__name__)
-
-MASK = "***"
-
-
-def _mask_token(msg: str) -> str:
-    """Replace any api_token-like content with *** for logging."""
-    return msg.replace("api_token", "api_token=***") if msg else msg
+logger = get_logger(__name__)
 
 
 # POST /confluence/config/test-connection
@@ -34,7 +27,7 @@ def test_connection_handler(body: dict[str, Any]) -> dict[str, Any]:
             api_token=str(body.get("api_token", "")).strip(),
         )
     except Exception as e:
-        logger.info("Config test-connection validation failed: %s", _mask_token(str(e)))
+        logger.info("Config test-connection validation failed: %s", mask_tokens(str(e)))
         return {"ok": False, "error": str(e).replace("api_token", "api_token (masked)"), "latency_ms": 0}
     result = test_connection(creds.url, creds.email, creds.api_token)
     return result
@@ -52,7 +45,7 @@ def spaces_handler(body: dict[str, Any]) -> dict[str, Any]:
             api_token=str(body.get("api_token", "")).strip(),
         )
     except Exception as e:
-        logger.info("Config spaces validation failed: %s", _mask_token(str(e)))
+        logger.info("Config spaces validation failed: %s", mask_tokens(str(e)))
         return {"spaces": [], "error": str(e).replace("api_token", "api_token (masked)")}
     spaces = get_available_spaces(creds.url, creds.email, creds.api_token)
     return {"spaces": spaces}

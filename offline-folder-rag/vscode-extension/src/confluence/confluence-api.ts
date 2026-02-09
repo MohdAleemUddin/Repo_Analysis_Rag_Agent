@@ -59,7 +59,12 @@ export async function intelligentCreate(
     intelligent_mode: boolean;
     auto_title: boolean;
     space: string;
-    intelligence_context?: { title_override?: string; suggested_title?: string };
+    intelligence_context?: {
+      title_override?: string;
+      suggested_title?: string;
+      template_id?: string;
+      template_name?: string;
+    };
     base_url?: string;
     auth?: [string, string];
     suggested_title?: string;
@@ -87,4 +92,18 @@ export async function intelligentCreate(
   if (payload.body_content !== undefined) body.body_content = payload.body_content;
   if (payload.feedback_for_learning !== undefined) body.feedback_for_learning = payload.feedback_for_learning;
   return postJson(url, body, config.auth);
+}
+
+/** US-10: Get preferred Confluence space for project (from intelligent_creations or default by type). */
+export async function getPreferredSpace(baseUrl: string, projectPath: string): Promise<string> {
+  const base = baseUrl.replace(/\/$/, '');
+  const u = new URL('/confluence/config/preferred-space', base.startsWith('http') ? base : `http://${base}`);
+  u.searchParams.set('project_path', projectPath);
+  try {
+    const res = await fetch(u.toString());
+    const data = (await res.json()) as { preferred_space?: string };
+    return data.preferred_space ?? 'DEV';
+  } catch {
+    return 'DEV';
+  }
 }

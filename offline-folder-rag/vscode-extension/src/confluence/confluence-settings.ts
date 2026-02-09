@@ -37,6 +37,21 @@ export async function getConfluenceConfigAsync(context: vscode.ExtensionContext)
 }
 
 /**
+ * Validate Confluence URL. US-10: Cloud URLs must use HTTPS.
+ */
+export function validateConfluenceUrl(url: string): { valid: boolean; error?: string } {
+  const s = (url || '').trim().toLowerCase();
+  if (!s) return { valid: true };
+  if (s.includes('.atlassian.net') && !s.startsWith('https://')) {
+    return { valid: false, error: 'Confluence Cloud URLs must use HTTPS' };
+  }
+  if (!s.startsWith('http://') && !s.startsWith('https://')) {
+    return { valid: false, error: 'URL must start with http:// or https://' };
+  }
+  return { valid: true };
+}
+
+/**
  * Get Confluence instance URL and email only (for test-connection UI). Token must be read separately.
  */
 export function getConfluenceCredentialsFromSettings(): { url: string; email: string } {

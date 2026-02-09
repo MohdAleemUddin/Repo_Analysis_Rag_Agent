@@ -27,8 +27,8 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         per_file_ms = record.get("per_file_analysis_ms", [])
         _ = record.get("targets_met", {})  # reserved for future use
 
-    # Per-file analysis exceeded 3s
-    over = [ms for ms in per_file_ms if ms > ANALYSIS_MAX_SECONDS_PER_FILE * 1000]
+    # Per-file analysis exceeded 3s (strict: >= 3s fails)
+    over = [ms for ms in per_file_ms if ms >= ANALYSIS_MAX_SECONDS_PER_FILE * 1000]
     if over:
         n = len(over)
         suggestions.append(
@@ -41,7 +41,7 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         template_ms = record.template_selection_ms
     else:
         template_ms = record.get("template_selection_ms", 0)
-    if template_ms > TEMPLATE_SELECTION_MAX_SECONDS * 1000:
+    if template_ms >= TEMPLATE_SELECTION_MAX_SECONDS * 1000:
         suggestions.append(
             f"Template selection {template_ms/1000:.2f}s "
             f"(limit {TEMPLATE_SELECTION_MAX_SECONDS}s). Cache template index."
@@ -52,7 +52,7 @@ def get_optimization_suggestions(record: PerformanceRecordLike) -> list[str]:
         create_ms = record.create_e2e_ms
     else:
         create_ms = record.get("create_e2e_ms", 0)
-    if create_ms > CREATE_E2E_MAX_SECONDS * 1000:
+    if create_ms >= CREATE_E2E_MAX_SECONDS * 1000:
         suggestions.append(
             f"E2E create {create_ms/1000:.2f}s "
             f"(limit {CREATE_E2E_MAX_SECONDS}s). Check network or reduce."

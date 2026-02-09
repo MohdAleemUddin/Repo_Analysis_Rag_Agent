@@ -41,6 +41,47 @@ def test_token_masking_get_logger_uses_masking_filter() -> None:
     assert "***" in mask_tokens(s)
 
 
+def test_token_masking_logger_exception_does_not_leak_token() -> None:
+    """get_logger masks tokens when logging exceptions."""
+    import io
+    import logging
+
+    from app.logging.logger import get_logger
+
+    log = get_logger("test_security_logger_leak")
+    buf = io.StringIO()
+    h = logging.StreamHandler(buf)
+    log.addHandler(h)
+    log.setLevel(logging.DEBUG)
+    try:
+        log.exception("fail: %s", "auth=secret123")
+        out = buf.getvalue()
+        assert "secret123" not in out
+        assert "***" in out
+    finally:
+        log.removeHandler(h)
+
+
+def test_token_masking_basic_auth_masked() -> None:
+    """mask_tokens() must hide Basic auth header value."""
+    from app.logging.logger import mask_tokens
+
+    raw = "Authorization: Basic dXNlcjp0b2tlbg=="
+    masked = mask_tokens(raw)
+    assert "dXNlcjp0b2tlbg==" not in masked
+    assert "***" in masked
+
+
+def test_token_masking_json_api_token_masked() -> None:
+    """mask_tokens() must hide api_token value in JSON."""
+    from app.logging.logger import mask_tokens
+
+    raw = '{"api_token": "sk-abc123"}'
+    masked = mask_tokens(raw)
+    assert "sk-abc123" not in masked
+    assert "***" in masked
+
+
 # --- Workspace isolation ---
 
 
@@ -114,6 +155,35 @@ def test_workspace_isolation_create_page_uses_workspace_credentials() -> None:
         os.environ.pop("CONFLUENCE_WS_ISOL_BASE_URL", None)
         os.environ.pop("CONFLUENCE_WS_ISOL_EMAIL", None)
         os.environ.pop("CONFLUENCE_WS_ISOL_API_TOKEN", None)
+
+
+def test_project_isolation_concurrent_workspaces_no_cross_creds() -> None:
+    """Two workspaces must return distinct credentials; no cross-contamination."""
+    import os
+
+    from app.config.config import get_confluence_config
+
+    os.environ["CONFLUENCE_WS_A_BASE_URL"] = "https://wiki-a.example.com"
+    os.environ["CONFLUENCE_WS_A_EMAIL"] = "a@example.com"
+    os.environ["CONFLUENCE_WS_A_API_TOKEN"] = "token-a-secret"
+    os.environ["CONFLUENCE_WS_B_BASE_URL"] = "https://wiki-b.example.com"
+    os.environ["CONFLUENCE_WS_B_EMAIL"] = "b@example.com"
+    os.environ["CONFLUENCE_WS_B_API_TOKEN"] = "token-b-secret"
+    try:
+        cfg_a = get_confluence_config(workspace_id="a")
+        cfg_b = get_confluence_config(workspace_id="b")
+        assert cfg_a["auth"][1] != cfg_b["auth"][1]
+        assert cfg_a["base_url"] != cfg_b["base_url"]
+    finally:
+        for k in [
+            "CONFLUENCE_WS_A_BASE_URL",
+            "CONFLUENCE_WS_A_EMAIL",
+            "CONFLUENCE_WS_A_API_TOKEN",
+            "CONFLUENCE_WS_B_BASE_URL",
+            "CONFLUENCE_WS_B_EMAIL",
+            "CONFLUENCE_WS_B_API_TOKEN",
+        ]:
+            os.environ.pop(k, None)
 
 
 # --- Verification module ---

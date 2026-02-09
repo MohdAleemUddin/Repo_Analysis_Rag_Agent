@@ -41,6 +41,50 @@
       },
       "template_name": "Mixed Project Intelligence Template",
       "confidence_score": 0.90
+    },
+    {
+      "content_profile": {
+        "project_type": "code only",
+        "content_types": ["code"],
+        "detected_patterns": ["module", "code"],
+        "key_file_types": [".py", ".ts"]
+      },
+      "template_name": "Single-type (Code or Text)",
+      "template_id": "single_type",
+      "confidence_score": 0.85
+    },
+    {
+      "content_profile": {
+        "project_type": "text only",
+        "content_types": ["text"],
+        "detected_patterns": ["readme", "doc"],
+        "key_file_types": [".md", ".txt"]
+      },
+      "template_name": "Single-type (Code or Text)",
+      "template_id": "single_type",
+      "confidence_score": 0.85
+    },
+    {
+      "content_profile": {
+        "project_type": "mixed media",
+        "content_types": ["image", "text", "code"],
+        "detected_patterns": ["screenshot", "readme", "api"],
+        "key_file_types": [".png", ".md", ".py"]
+      },
+      "template_name": "Mixed (Image + Text + Code)",
+      "template_id": "mixed_content",
+      "confidence_score": 0.88
+    },
+    {
+      "content_profile": {
+        "project_type": "media and code",
+        "content_types": ["video", "image", "code"],
+        "detected_patterns": ["demo", "assets", "src"],
+        "key_file_types": [".mp4", ".png", ".ts"]
+      },
+      "template_name": "Mixed (Image + Text + Code)",
+      "template_id": "mixed_content",
+      "confidence_score": 0.88
     }
   ]
 }

@@ -6,6 +6,11 @@ MASK = "***MASKED***"
 _token_pattern = re.compile(r"(api[_-]?token|password|secret|auth)\s*[=:]\s*[\w\-]+", re.I)
 _bearer_pattern = re.compile(r"Bearer\s+[\w\-\.]+", re.I)
 _token_param_pattern = re.compile(r"token=[\w\-\.]+", re.I)
+_basic_auth_pattern = re.compile(r"Basic\s+[A-Za-z0-9+/=]+", re.I)
+_json_api_token_pattern = re.compile(r'"api_token"\s*:\s*"[^"]*"', re.I)
+_value_secret_pattern = re.compile(
+    r"(api[_-]?token|password|secret).*?value:\s*['\"][^'\"]+['\"]", re.I | re.DOTALL
+)
 
 
 def mask_tokens(msg: str) -> str:
@@ -13,6 +18,9 @@ def mask_tokens(msg: str) -> str:
     s = _token_pattern.sub(r"\1=***MASKED***", msg)
     s = _bearer_pattern.sub("Bearer ***MASKED***", s)
     s = _token_param_pattern.sub("token=***MASKED***", s)
+    s = _basic_auth_pattern.sub("Basic ***MASKED***", s)
+    s = _json_api_token_pattern.sub('"api_token":"***MASKED***"', s)
+    s = _value_secret_pattern.sub(r"\1=***MASKED***", s)
     return s
 
 

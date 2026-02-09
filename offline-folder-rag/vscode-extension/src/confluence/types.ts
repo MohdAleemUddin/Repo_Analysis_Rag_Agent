@@ -43,10 +43,12 @@ export interface AnalyzeResponse {
   context_suggestions?: ContextSuggestions;
 }
 
-/** PRD §9.1 create request */
+/** PRD §9.1 create request; template from analysis so create uses same format */
 export interface IntelligenceContext {
   title_override?: string;
   suggested_title?: string;
+  template_id?: string;
+  template_name?: string;
 }
 
 export interface CreateRequest {

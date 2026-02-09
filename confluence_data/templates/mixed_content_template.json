@@ -1,0 +1,7 @@
+{
+  "id": "mixed_content",
+  "name": "Mixed (Image + Text + Code)",
+  "content_type": "mixed",
+  "sections": ["Overview", "Media", "Code / Details"],
+  "description": "Use when content has image+text+code or video+pic+code."
+}

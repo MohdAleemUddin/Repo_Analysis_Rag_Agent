@@ -74,3 +74,33 @@ def test_timer_create_e2e():
     prd_monitor.start_operation()
     with prd_monitor.timer_create_e2e():
         pass
+
+
+def test_verify_targets_met_all_met():
+    rec = prd_monitor.PerformanceRecord(
+        operation_id="ok",
+        targets_met={
+            "analysis_per_file": True,
+            "template_selection": True,
+            "create_e2e": True,
+            "memory": True,
+        },
+    )
+    assert prd_monitor.verify_targets_met(rec) is True
+
+
+def test_verify_targets_met_one_fail():
+    rec = prd_monitor.PerformanceRecord(
+        operation_id="fail",
+        targets_met={
+            "analysis_per_file": False,
+            "template_selection": True,
+            "create_e2e": True,
+            "memory": True,
+        },
+    )
+    assert prd_monitor.verify_targets_met(rec) is False
+
+
+def test_verify_targets_met_none():
+    assert prd_monitor.verify_targets_met(None) is False

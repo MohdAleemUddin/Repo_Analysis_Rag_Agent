@@ -79,7 +79,12 @@ function getChatViewHtml(webview: vscode.Webview): string {
       } else if (btn.classList.contains('confluence-next') && btn.getAttribute('data-msg-type') === 'file_selector') {
         vscode.postMessage({ type: 'next', paths: fileSelectorSelected });
       } else if (btn.classList.contains('confluence-create-page')) {
-        vscode.postMessage({ type: 'createPage', title: (btn.closest('.confluence-analysis-card')?.querySelector('.confluence-title-display')?.textContent || '').trim(), space: (btn.closest('.confluence-analysis-card')?.querySelector('.confluence-space-select')?.value || 'DEV') });
+        const card = btn.closest('.confluence-analysis-card');
+        const titleEl = card?.querySelector('.confluence-title-display');
+        const spaceEl = card?.querySelector('.confluence-space-select');
+        const title = (titleEl?.textContent || '').trim() || 'Documentation';
+        const space = (spaceEl && 'value' in spaceEl ? (spaceEl as HTMLSelectElement).value : undefined) || 'DEV';
+        vscode.postMessage({ type: 'createPage', title, space });
       } else if (btn.classList.contains('confluence-edit-title')) {
         vscode.postMessage({ type: 'editTitle' });
       } else if (btn.id === 'open-browser' || btn.classList.contains('confluence-open-browser')) {
@@ -163,10 +168,23 @@ export function getAnalysisMessageHtml(data: {
   intelligent_title: string;
   template_name: string;
   intelligence_reason: string;
+  spaces?: Array<{ key: string; name?: string }>;
+  preferredSpace?: string;
 }): string {
   const ct = (data.content_types || []).join(', ') || '—';
   const pats = (data.detected_patterns || []).map(p => `<li>${escapeHtml(p)}</li>`).join('') || '<li>—</li>';
   const title = escapeHtml(data.intelligent_title || '');
+  const spaces = data.spaces && data.spaces.length > 0
+    ? data.spaces
+    : [{ key: 'DEV', name: 'DEV' }, { key: 'DOCS', name: 'DOCS' }];
+  const preferred = data.preferredSpace && spaces.some(s => (s.key || '').toUpperCase() === (data.preferredSpace || '').toUpperCase())
+    ? data.preferredSpace
+    : (spaces[0]?.key || 'DEV');
+  const spaceOptions = spaces.map(s => {
+    const k = s.key || s.name || 'DEV';
+    const selected = (k.toUpperCase() === preferred.toUpperCase()) ? ' selected' : '';
+    return `<option value="${escapeHtml(k)}"${selected}>${escapeHtml(s.name || k)}</option>`;
+  }).join('');
   return `<div class="confluence-card confluence-analysis-card" data-suggested-title="${title}" style="border:1px solid var(--vscode-widget-border);border-radius:4px;padding:12px;background:var(--vscode-editor-background);max-width:400px;">
   <h3 style="margin:0 0 12px 0;font-size:14px;">🤖 Intelligent Analysis Complete</h3>
   <div style="font-size:12px;margin-bottom:8px;"><strong>Files:</strong> ${escapeHtml(ct)}</div>
@@ -176,7 +194,7 @@ export function getAnalysisMessageHtml(data: {
     <div style="font-size:11px;">(${escapeHtml(data.intelligence_reason || '')})</div>
   </div>
   <div style="font-size:12px;margin-bottom:12px;"><strong>📝 Suggested Title:</strong><div class="confluence-title-display" style="padding:4px;border:1px solid var(--vscode-input-border);border-radius:2px;">${title}</div></div>
-  <div style="font-size:12px;margin-bottom:16px;"><strong>📍 Confluence Space:</strong><select class="confluence-space-select" style="width:100%;padding:2px;"><option>DEV</option><option>DOCS</option></select></div>
+  <div style="font-size:12px;margin-bottom:16px;"><strong>📍 Confluence Space:</strong><select class="confluence-space-select" style="width:100%;padding:2px;">${spaceOptions}</select></div>
   <div style="display:flex;gap:8px;">
     <button class="confluence-edit-title" style="flex:1;padding:4px;cursor:pointer;">Edit Title</button>
     <button class="confluence-create-page" style="flex:1;padding:4px;cursor:pointer;background:var(--vscode-button-background);color:var(--vscode-button-foreground);border:none;">Create Perfect Page</button>

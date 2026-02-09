@@ -26,13 +26,25 @@ def verify_confluence_security() -> dict[str, bool]:
             results["https_enforcement"] = True
     except Exception:
         pass
-    # Token masking: mask_tokens must hide Bearer and token= values and show mask
+    # Token masking: mask_tokens must hide Bearer, token=, Basic auth, JSON api_token
     try:
         from app.logging.logger import mask_tokens
 
-        raw = "Authorization: Bearer sk-secret-123 and token=abc.xyz"
-        masked = mask_tokens(raw)
-        if "sk-secret-123" not in masked and "abc.xyz" not in masked and "***" in masked:
+        raw1 = "Authorization: Bearer sk-secret-123 and token=abc.xyz"
+        masked1 = mask_tokens(raw1)
+        basic_raw = "Authorization: Basic dXNlcjp0b2tlbg=="
+        basic_masked = mask_tokens(basic_raw)
+        json_raw = '{"api_token": "sk-abc123"}'
+        json_masked = mask_tokens(json_raw)
+        if (
+            "sk-secret-123" not in masked1
+            and "abc.xyz" not in masked1
+            and "***" in masked1
+            and "dXNlcjp0b2tlbg==" not in basic_masked
+            and "***" in basic_masked
+            and "sk-abc123" not in json_masked
+            and "***" in json_masked
+        ):
             results["token_masking"] = True
     except Exception:
         pass

@@ -95,6 +95,12 @@ def create_page(
                 )
                 time.sleep(RATE_LIMIT_WAIT_SECONDS)
                 resp = client.post(url, **kwargs)
+            if resp.status_code == 400:
+                try:
+                    body = getattr(resp, "text", None) or (resp.content[:1000].decode("utf-8", errors="replace") if getattr(resp, "content", None) else "no body")
+                    logger.warning("Confluence 400 Bad Request response: %s", (body or "no body")[:1000])
+                except Exception:
+                    pass
             if resp.status_code in (401, 403, 404):
                 resp.raise_for_status()
             resp.raise_for_status()

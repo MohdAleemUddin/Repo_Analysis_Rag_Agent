@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-import logging
 import time
 from typing import Any
 
-logger = logging.getLogger(__name__)
+from app.logging.logger import get_logger
+
+logger = get_logger(__name__)
 
 RATE_LIMIT_WAIT_SECONDS = 30
 MAX_RETRIES = 3

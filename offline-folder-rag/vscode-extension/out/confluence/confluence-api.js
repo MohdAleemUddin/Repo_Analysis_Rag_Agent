@@ -6,6 +6,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.intelligentAnalyze = intelligentAnalyze;
 exports.intelligentCreate = intelligentCreate;
+exports.getPreferredSpace = getPreferredSpace;
 async function postJson(url, body, auth) {
     const headers = {
         'Content-Type': 'application/json',
@@ -53,4 +54,18 @@ async function intelligentCreate(config, payload) {
     if (payload.feedback_for_learning !== undefined)
         body.feedback_for_learning = payload.feedback_for_learning;
     return postJson(url, body, config.auth);
+}
+/** US-10: Get preferred Confluence space for project (from intelligent_creations or default by type). */
+async function getPreferredSpace(baseUrl, projectPath) {
+    const base = baseUrl.replace(/\/$/, '');
+    const u = new URL('/confluence/config/preferred-space', base.startsWith('http') ? base : `http://${base}`);
+    u.searchParams.set('project_path', projectPath);
+    try {
+        const res = await fetch(u.toString());
+        const data = (await res.json());
+        return data.preferred_space ?? 'DEV';
+    }
+    catch {
+        return 'DEV';
+    }
 }

@@ -8,7 +8,6 @@ import pytest
 
 try:
     from app.api.config_routes import (
-        _mask_token,
         test_connection_handler as config_test_connection_handler,
         spaces_handler,
         validate_handler,
@@ -16,6 +15,7 @@ try:
         preferred_space_handler,
         register_config_routes,
     )
+    from app.logging.logger import mask_tokens
     from app.config.config import (
         _merge_confluence_settings_from_env,
         _validate_confluence_url,
@@ -51,7 +51,6 @@ except ImportError:
     from pathlib import Path
     sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
     from app.api.config_routes import (
-        _mask_token,
         test_connection_handler as config_test_connection_handler,
         spaces_handler,
         validate_handler,
@@ -59,6 +58,7 @@ except ImportError:
         preferred_space_handler,
         register_config_routes,
     )
+    from app.logging.logger import mask_tokens
     from app.config.config import (
         _merge_confluence_settings_from_env,
         _validate_confluence_url,
@@ -93,11 +93,13 @@ except ImportError:
 
 # ---- config_routes ----
 def test_mask_token_empty():
-    assert _mask_token("") == ""
+    assert mask_tokens("") == ""
 
 
 def test_mask_token_replaces_api_token():
-    assert "api_token=***" in _mask_token("api_token=secret")
+    masked = mask_tokens("api_token=secret")
+    assert "***MASKED***" in masked
+    assert "secret" not in masked
 
 
 def test_test_connection_handler_no_body():
@@ -532,7 +534,7 @@ def test_confluence_request_no_requests():
             raise ImportError("No module named 'requests'")
         return real_import(name, *args, **kwargs)
     with patch.object(builtins, "__import__", side_effect=fake_import):
-        data, elapsed = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
     assert data is None
     assert elapsed == 0.0
 
@@ -544,7 +546,7 @@ def test_confluence_request_200_json():
     mock_resp.json.return_value = {"user": "me"}
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
     assert data == {"user": "me"}
     assert elapsed >= 0
 
@@ -556,7 +558,7 @@ def test_confluence_request_200_bad_json():
     mock_resp.json.side_effect = ValueError()
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
     assert data is None
 
 
@@ -566,7 +568,7 @@ def test_confluence_request_non_200():
     mock_resp.status_code = 401
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, _ = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, _el, status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
     assert data is None
 
 
@@ -574,7 +576,7 @@ def test_confluence_request_exception():
     mock_requests = MagicMock()
     mock_requests.request.side_effect = OSError()
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
     assert data is None
     assert elapsed >= 0
 
@@ -582,8 +584,8 @@ def test_confluence_request_exception():
 @patch("app.config.confluence_config._confluence_request")
 def test_test_connection_success_with_spaces(mock_req):
     mock_req.side_effect = [
-        ({"type": "user"}, 0.1),
-        ({"results": [{"key": "DOC", "name": "Documentation"}]}, 0.05),
+        ({"type": "user"}, 0.1, 200, False),
+        ({"results": [{"key": "DOC", "name": "Documentation"}]}, 0.05, 200, False),
     ]
     out = confluence_test_connection("https://x.atlassian.net", "u@x.com", "tok")
     assert out["ok"] is True
@@ -593,7 +595,7 @@ def test_test_connection_success_with_spaces(mock_req):
 
 @patch("app.config.confluence_config._confluence_request")
 def test_test_connection_success_no_spaces(mock_req):
-    mock_req.side_effect = [({"type": "user"}, 0.1), (None, 0.0)]
+    mock_req.side_effect = [({"type": "user"}, 0.1, 200, False), (None, 0.0, None, False)]
     out = confluence_test_connection("https://x.atlassian.net", "u@x.com", "tok")
     assert out["ok"] is True
     assert out["spaces"] == []
@@ -601,7 +603,7 @@ def test_test_connection_success_no_spaces(mock_req):
 
 @patch("app.config.confluence_config._confluence_request")
 def test_test_connection_failure(mock_req):
-    mock_req.return_value = (None, 0.2)
+    mock_req.return_value = (None, 0.2, None, False)
     out = confluence_test_connection("https://x.atlassian.net", "u@x.com", "tok")
     assert out["ok"] is False
     assert "error" in out

@@ -78,12 +78,17 @@ export const IntelligentDecisions: React.FC<IntelligentDecisionsProps> = (props)
     const fileList = Array.isArray(files)
       ? files.map((f) => (typeof f === 'string' ? f : (f as { content: string }).content))
       : [];
+    const intelligence_context: CreateRequest['intelligence_context'] = wasEdited
+      ? { title_override: titleToUse }
+      : { suggested_title: titleToUse };
+    if (recommendation?.template_id) intelligence_context.template_id = recommendation.template_id;
+    if (recommendation?.template_name) intelligence_context.template_name = recommendation.template_name;
     onCreate({
       files: fileList.length ? fileList : [],
       intelligent_mode: true,
       auto_title: !wasEdited,
       space,
-      intelligence_context: wasEdited ? { title_override: titleToUse } : { suggested_title: titleToUse },
+      intelligence_context,
       base_url: baseUrl,
       auth,
     });

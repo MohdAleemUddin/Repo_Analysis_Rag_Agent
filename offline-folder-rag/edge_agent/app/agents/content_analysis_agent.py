@@ -2,7 +2,6 @@
 
 import ast
 import hashlib
-import logging
 import time
 from typing import Any
 
@@ -16,8 +15,9 @@ from app.config.config import (
 )
 from app.confluence.prd_monitor import timer_per_file_analysis
 from app.langchain.chains.analysis_chain import run_analysis as run_analysis_chain
+from app.logging.logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 _analysis_cache: dict[str, tuple[Any, float]] = {}
 

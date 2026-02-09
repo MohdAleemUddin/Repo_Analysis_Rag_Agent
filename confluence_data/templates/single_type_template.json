@@ -1,0 +1,7 @@
+{
+  "id": "single_type",
+  "name": "Single-type (Code or Text)",
+  "content_type": "single",
+  "sections": ["Content"],
+  "description": "One block: code, text, or single media. Use when only one content type is present."
+}

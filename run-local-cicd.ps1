@@ -540,6 +540,9 @@ function Invoke-Deploy {
         return
     }
 
+    Write-Info "Tearing down any existing stack and pruning unused networks..."
+    docker compose -f docker-compose.yml down 2>&1 | Out-Null
+    docker network prune -f
     Write-Info "Starting Docker Compose services (docker-compose.yml)..."
     docker compose -f docker-compose.yml up -d
     if ($?) {

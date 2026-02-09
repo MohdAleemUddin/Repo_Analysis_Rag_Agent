@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import concurrent.futures
-import logging
 from typing import Any
 
 from app.agents.contracts import (
@@ -17,10 +16,11 @@ from app.langchain.tools.confluence_tools import (
     confluence_create_page,
     confluence_get_page,
 )
+from app.logging.logger import get_logger
 
 from app.agents.learning_agent import learn
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 _learning_executor = concurrent.futures.ThreadPoolExecutor(
     max_workers=1, thread_name_prefix="confluence_learn"

@@ -151,13 +151,20 @@ export function activate(context: vscode.ExtensionContext): void {
 
       const config = getApiConfig();
       const mergedContent = fileContents.join('\n\n---\n\n');
+      const rec = analyzeResult.intelligent_recommendation;
+      const intelligence_context: { suggested_title: string; title_override: string; template_id?: string; template_name?: string } = {
+        suggested_title: m.title,
+        title_override: m.title,
+      };
+      if (rec?.template_id) intelligence_context.template_id = rec.template_id;
+      if (rec?.template_name) intelligence_context.template_name = rec.template_name;
       try {
         const createResult = await intelligentCreate(config, {
           content: mergedContent,
           intelligent_mode: true,
           auto_title: false,
           space: m.space || 'DEV',
-          intelligence_context: { suggested_title: m.title, title_override: m.title },
+          intelligence_context,
         });
 
         provider.postMessage({
@@ -169,7 +176,6 @@ export function activate(context: vscode.ExtensionContext): void {
             0
           ),
         });
-        const rec = analyzeResult.intelligent_recommendation;
         const analysis = analyzeResult.intelligence_analysis;
         const decisions = [
           rec?.intelligence_reason,

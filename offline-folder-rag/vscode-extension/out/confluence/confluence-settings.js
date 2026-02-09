@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStoredToken = getStoredToken;
 exports.setStoredToken = setStoredToken;
 exports.getConfluenceConfigAsync = getConfluenceConfigAsync;
+exports.validateConfluenceUrl = validateConfluenceUrl;
 exports.getConfluenceCredentialsFromSettings = getConfluenceCredentialsFromSettings;
 const vscode = require("vscode");
 const SECRET_KEY = 'confluence.apiToken';
@@ -30,6 +31,21 @@ async function getConfluenceConfigAsync(context) {
         return { baseUrl, auth: [email, token.trim()] };
     }
     return { baseUrl, auth: null };
+}
+/**
+ * Validate Confluence URL. US-10: Cloud URLs must use HTTPS.
+ */
+function validateConfluenceUrl(url) {
+    const s = (url || '').trim().toLowerCase();
+    if (!s)
+        return { valid: true };
+    if (s.includes('.atlassian.net') && !s.startsWith('https://')) {
+        return { valid: false, error: 'Confluence Cloud URLs must use HTTPS' };
+    }
+    if (!s.startsWith('http://') && !s.startsWith('https://')) {
+        return { valid: false, error: 'URL must start with http:// or https://' };
+    }
+    return { valid: true };
 }
 /**
  * Get Confluence instance URL and email only (for test-connection UI). Token must be read separately.

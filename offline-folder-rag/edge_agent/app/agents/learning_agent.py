@@ -6,7 +6,6 @@ TC-E2E-004, TC-E2E-006: learning improvement cycle and measurable improvement.
 """
 from __future__ import annotations
 
-import logging
 from typing import Any, Callable, Optional
 
 from ..confluence.example_manager import (
@@ -16,6 +15,9 @@ from ..confluence.example_manager import (
     store_example,
     update_embeddings_for_examples,
 )
+from ..logging.logger import get_logger
+
+_logger = get_logger(__name__)
 
 
 def on_creation_success(
@@ -127,7 +129,6 @@ def learn(feedback: str, creation_metadata: dict[str, Any] | None = None) -> Non
     Record feedback / store example for future template matching.
     Must not block the create response; called from background after create returns.
     """
-    logger = logging.getLogger(__name__)
-    logger.info(
+    _logger.info(
         "Learning from feedback (background): %s", feedback[:200] if feedback else ""
     )

@@ -339,12 +339,15 @@ jobs:
           pytest tests/confluence/test_prd_compliance.py \
             tests/confluence/test_api_prd_format.py \
             tests/confluence/test_performance_targets.py \
+            tests/confluence/test_performance_regression.py \
             tests/confluence/test_intelligence_learning.py \
             --junitxml=test-results-prd-compliance.xml -v --tb=short --timeout=120
 
       - name: Verify performance thresholds (NFR1)
         run: |
-          pytest tests/confluence/test_performance_targets.py -v --tb=short -m performance --timeout=120
+          pytest tests/confluence/test_performance_targets.py \
+            tests/confluence/test_performance_regression.py \
+            -v --tb=short -m performance --timeout=120
 
       - name: Upload PRD compliance results
         uses: actions/upload-artifact@v4
