@@ -1,13 +1,28 @@
 """Tests for optimizer coverage."""
+
 from unittest.mock import MagicMock
 
 try:
-    from app.confluence.optimizer import get_optimization_suggestions, get_recommended_max_parallel
+    from app.confluence.optimizer import (
+        get_optimization_suggestions,
+        get_recommended_max_parallel,
+    )
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
-    from app.confluence.optimizer import get_optimization_suggestions, get_recommended_max_parallel
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
+    from app.confluence.optimizer import (
+        get_optimization_suggestions,
+        get_recommended_max_parallel,
+    )
 
 
 def test_get_optimization_suggestions_analysis_over():
@@ -55,7 +70,13 @@ def test_get_optimization_suggestions_memory_over():
 
 
 def test_get_optimization_suggestions_dict():
-    rec = {"per_file_analysis_ms": [4000], "template_selection_ms": 0, "create_e2e_ms": 0, "peak_memory_mb": 0, "targets_met": {}}
+    rec = {
+        "per_file_analysis_ms": [4000],
+        "template_selection_ms": 0,
+        "create_e2e_ms": 0,
+        "peak_memory_mb": 0,
+        "targets_met": {},
+    }
     out = get_optimization_suggestions(rec)
     assert isinstance(out, list)
 

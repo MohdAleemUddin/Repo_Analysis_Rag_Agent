@@ -1,4 +1,5 @@
 """Tests for config and status_manager coverage."""
+
 from unittest.mock import MagicMock, patch
 
 try:
@@ -8,7 +9,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.config import config
     from app.confluence import status_manager
     from app.confluence import error_handler
@@ -33,13 +42,17 @@ def test_config_get_confluence_config_opt_out():
 
 
 def test_status_manager_get_intelligence_status_no_db():
-    out = status_manager.get_intelligence_status(detail_level="full", db_fetch_metrics=None)
+    out = status_manager.get_intelligence_status(
+        detail_level="full", db_fetch_metrics=None
+    )
     assert "intelligence_metrics" in out
     assert "learning_progress" in out
 
 
 def test_status_manager_get_intelligence_status_with_db():
-    mock_metrics = MagicMock(return_value={"examples_learned": 10, "template_selection_accuracy": 90})
+    mock_metrics = MagicMock(
+        return_value={"examples_learned": 10, "template_selection_accuracy": 90}
+    )
     out = status_manager.get_intelligence_status(db_fetch_metrics=mock_metrics)
     assert out["intelligence_metrics"]["template_selection_intelligence"] == 90
 
@@ -119,6 +132,7 @@ def test_error_handler_iter_leaf_exception_group():
 
 def test_error_handler_is_network_gaierror():
     import socket
+
     assert error_handler._is_network_error(socket.gaierror(1, "err")) is True
 
 
@@ -161,15 +175,22 @@ def test_error_handler_classify_invalid_template():
 
 
 def test_error_handler_classify_intelligence():
-    assert error_handler._classify(Exception("intelligence failed")) == "intelligence_error"
+    assert (
+        error_handler._classify(Exception("intelligence failed"))
+        == "intelligence_error"
+    )
 
 
 def test_error_handler_classify_template_matching():
-    assert error_handler._classify(Exception("template match fail")) == "template_matching"
+    assert (
+        error_handler._classify(Exception("template match fail")) == "template_matching"
+    )
 
 
 def test_error_handler_classify_agent_coordination():
-    assert error_handler._classify(Exception("agent coordination")) == "agent_coordination"
+    assert (
+        error_handler._classify(Exception("agent coordination")) == "agent_coordination"
+    )
 
 
 def test_error_handler_prd_error_response_with_message():

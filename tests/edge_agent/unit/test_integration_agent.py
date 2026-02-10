@@ -1,5 +1,6 @@
 """Unit tests for app.agents.integration_agent."""
-from unittest.mock import MagicMock, patch
+
+from unittest.mock import patch
 
 try:
     from app.agents.integration_agent import (
@@ -10,7 +11,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.agents.integration_agent import (
         create_page,
         _verify_page,
@@ -37,7 +46,12 @@ def test_verify_page_exception():
 @patch("app.agents.integration_agent.record_success")
 @patch("app.agents.integration_agent.confluence_get_page")
 def test_create_page_success(mock_get, mock_record, mock_create):
-    mock_create.return_value = {"id": "1", "title": "T", "space": {"key": "DOC"}, "_links": {"webui": "/pages/1"}}
+    mock_create.return_value = {
+        "id": "1",
+        "title": "T",
+        "space": {"key": "DOC"},
+        "_links": {"webui": "/pages/1"},
+    }
     mock_get.return_value = {"id": "1", "title": "T", "space": {"key": "DOC"}}
     out = create_page("http://x", "DOC", "T", "<p>body</p>", auth=None)
     assert out.page.id == "1"
@@ -63,6 +77,9 @@ def test_schedule_learning_after_create():
 def test_schedule_learning_learn_raises(mock_exec):
     def run_now(fn):
         fn()
+
     mock_exec.submit = run_now
-    with patch("app.agents.integration_agent.learn", side_effect=ValueError("learn fail")):
+    with patch(
+        "app.agents.integration_agent.learn", side_effect=ValueError("learn fail")
+    ):
         schedule_learning_after_create("feedback", {"id": "1"})

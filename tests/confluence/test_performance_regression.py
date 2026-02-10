@@ -7,7 +7,7 @@ import pytest
 pytestmark = [pytest.mark.performance, pytest.mark.performance_regression]
 
 try:
-    from offline_folder_rag.edge_agent.app.confluence.prd_monitor import (
+    from app.confluence.prd_monitor import (
         record_analysis_duration_sec,
         record_template_select_duration_sec,
         record_creation_duration_sec,
@@ -17,7 +17,7 @@ try:
         PerformanceRecord,
         check_prd,
     )
-    from offline_folder_rag.edge_agent.app.config.config import (
+    from app.config.config import (
         ANALYSIS_MAX_SECONDS_PER_FILE,
         TEMPLATE_SELECTION_MAX_SECONDS,
         CREATE_E2E_MAX_SECONDS,
@@ -26,7 +26,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.confluence.prd_monitor import (
         record_analysis_duration_sec,
         record_template_select_duration_sec,

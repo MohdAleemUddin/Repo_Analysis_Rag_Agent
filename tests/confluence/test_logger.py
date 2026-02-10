@@ -1,9 +1,11 @@
 """Tests for app.logging.logger: mask_tokens (all patterns), TokenMaskingFilter, get_logger."""
+
 import logging
 
 
 def _import_logger():
     from app.logging.logger import mask_tokens, TokenMaskingFilter, get_logger, MASK
+
     return mask_tokens, TokenMaskingFilter, get_logger, MASK
 
 

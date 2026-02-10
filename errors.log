@@ -2484,3 +2484,655 @@ Traceback (most recent call last):
   File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
     raise effect
 ValueError: learn fail
+
+--- Test failure ---
+tests\confluence\test_api_prd_format.py:75: in test_tc_api_004_intelligence_feedback_format
+    resp, code = intelligence_feedback_handler(MockReq())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:554: in intelligence_feedback_handler
+    learn_from_feedback(
+repo_analysis_rag\backend_confluence\app\agents\learning_agent.py:86: in learn_from_feedback
+    apply_feedback(
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:270: in apply_feedback
+    _save_file_feedback(items, examples_base_dir)
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:238: in _save_file_feedback
+    with open(path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   PermissionError: [Errno 13] Permission denied: 'D:\\repo_analysis_rag1_final\\confluence_data\\examples\\feedback_store.json'
+
+--- Test failure ---
+tests\confluence\test_api_prd_format.py:147: in test_tc_api_012_intelligence_metrics_validation
+    feedback_resp, _ = intelligence_feedback_handler(MockReqFeedback())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:554: in intelligence_feedback_handler
+    learn_from_feedback(
+repo_analysis_rag\backend_confluence\app\agents\learning_agent.py:86: in learn_from_feedback
+    apply_feedback(
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:270: in apply_feedback
+    _save_file_feedback(items, examples_base_dir)
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:238: in _save_file_feedback
+    with open(path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   PermissionError: [Errno 13] Permission denied: 'D:\\repo_analysis_rag1_final\\confluence_data\\examples\\feedback_store.json'
+
+--- Test failure ---
+tests\confluence\test_e2e_workflows.py:33: in test_tc_e2e_006_complete_learning_cycle
+    feedback_resp, code = intelligence_feedback_handler(MockReqFeedback())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:554: in intelligence_feedback_handler
+    learn_from_feedback(
+repo_analysis_rag\backend_confluence\app\agents\learning_agent.py:86: in learn_from_feedback
+    apply_feedback(
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:270: in apply_feedback
+    _save_file_feedback(items, examples_base_dir)
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:238: in _save_file_feedback
+    with open(path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   PermissionError: [Errno 13] Permission denied: 'D:\\repo_analysis_rag1_final\\confluence_data\\examples\\feedback_store.json'
+
+--- Test failure ---
+tests\confluence\test_intelligence_learning.py:53: in test_tc_uc_004_provide_feedback_to_improve_ai
+    learn_from_feedback(
+repo_analysis_rag\backend_confluence\app\agents\learning_agent.py:86: in learn_from_feedback
+    apply_feedback(
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:270: in apply_feedback
+    _save_file_feedback(items, examples_base_dir)
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:238: in _save_file_feedback
+    with open(path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   PermissionError: [Errno 13] Permission denied: 'D:\\repo_analysis_rag1_final\\confluence_data\\examples\\feedback_store.json'
+
+--- Test failure ---
+tests\confluence\test_prd_compliance.py:225: in test_fr5_accept_feedback_for_learning
+    learn_from_feedback(creation_id="c0000001-0001-4000-8000-000000000003", intelligence_score=4, feedback_text="Good")
+repo_analysis_rag\backend_confluence\app\agents\learning_agent.py:86: in learn_from_feedback
+    apply_feedback(
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:270: in apply_feedback
+    _save_file_feedback(items, examples_base_dir)
+repo_analysis_rag\backend_confluence\app\confluence\example_manager.py:238: in _save_file_feedback
+    with open(path, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   PermissionError: [Errno 13] Permission denied: 'D:\\repo_analysis_rag1_final\\confluence_data\\examples\\feedback_store.json'
+
+--- Test failure ---
+tests\confluence\test_project_pipeline.py:324: in test_project_template_matcher_patterns_match_examples
+    assert match.match_count >= 1
+E   AssertionError: assert 0 >= 1
+E    +  where 0 = ProjectTemplateMatch(template_name='Mixed Project Intelligence Template', template_id='mixed_project_template', confidence=75.0, match_count=0, ai_reasoning='Matched other project; 0 similar examples.').match_count
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_client_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_client_cov.py:6: in <module>
+    from app.confluence import client
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_client_cov.py:19: in <module>
+    from app.confluence import client
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_config_and_status_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_config_and_status_cov.py:6: in <module>
+    from app.config import config
+E   ImportError: cannot import name 'config' from 'app.config' (D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_rag\app\config\__init__.py)
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_config_and_status_cov.py:21: in <module>
+    from app.config import config
+E   ImportError: cannot import name 'config' from 'app.config' (D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_rag\app\config\__init__.py)
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_config_settings_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_config_settings_cov.py:10: in <module>
+    from app.api.config_routes import (
+E   ModuleNotFoundError: No module named 'app.api.config_routes'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_config_settings_cov.py:61: in <module>
+    from app.api.config_routes import (
+E   ModuleNotFoundError: No module named 'app.api.config_routes'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_confluence_routes_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_confluence_routes_cov.py:6: in <module>
+    from app.api.confluence_routes import (
+E   ModuleNotFoundError: No module named 'app.api.confluence_routes'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_confluence_routes_cov.py:31: in <module>
+    from app.api.confluence_routes import (
+E   ModuleNotFoundError: No module named 'app.api.confluence_routes'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_data_validation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_data_validation.py:7: in <module>
+    from app.confluence.validation import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_data_validation.py:26: in <module>
+    from app.confluence.validation import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_db_adapter_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_db_adapter_cov.py:6: in <module>
+    from app.confluence import db_adapter
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_db_adapter_cov.py:19: in <module>
+    from app.confluence import db_adapter
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_db_adapter_full_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_db_adapter_full_cov.py:6: in <module>
+    from app.confluence import db_adapter
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_db_adapter_full_cov.py:19: in <module>
+    from app.confluence import db_adapter
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_db_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_db_integration.py:10: in <module>
+    from app.confluence.db_adapter import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_db_integration.py:27: in <module>
+    from app.confluence.db_adapter import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_example_manager_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_example_manager_cov.py:9: in <module>
+    from app.confluence import example_manager
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_example_manager_cov.py:22: in <module>
+    from app.confluence import example_manager
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_export_import.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_export_import.py:9: in <module>
+    from app.confluence import export_import
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_export_import.py:22: in <module>
+    from app.confluence import export_import
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_intelligence_learning.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_intelligence_learning.py:14: in <module>
+    from app.config.confluence_config import get_confluence_config
+E   ModuleNotFoundError: No module named 'app.config.confluence_config'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_intelligence_learning.py:28: in <module>
+    from app.config.confluence_config import get_confluence_config
+E   ModuleNotFoundError: No module named 'app.config.confluence_config'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_optimizer_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_optimizer_cov.py:6: in <module>
+    from app.confluence.optimizer import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_optimizer_cov.py:22: in <module>
+    from app.confluence.optimizer import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_performance_regression.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_performance_regression.py:10: in <module>
+    from app.confluence.prd_monitor import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_performance_regression.py:38: in <module>
+    from app.confluence.prd_monitor import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_performance_targets.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_performance_targets.py:7: in <module>
+    from app.confluence.prd_monitor import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_performance_targets.py:30: in <module>
+    from app.confluence.prd_monitor import (
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_prd_monitor_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_prd_monitor_cov.py:4: in <module>
+    from app.confluence import prd_monitor
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_prd_monitor_cov.py:17: in <module>
+    from app.confluence import prd_monitor
+E   ModuleNotFoundError: No module named 'app.confluence'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_routes_export_import_cov.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_routes_export_import_cov.py:6: in <module>
+    from app.api.confluence_routes import (
+E   ModuleNotFoundError: No module named 'app.api.confluence_routes'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_routes_export_import_cov.py:24: in <module>
+    from app.api.confluence_routes import (
+E   ModuleNotFoundError: No module named 'app.api.confluence_routes'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\confluence\test_schemas.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\confluence\test_schemas.py:7: in <module>
+    from app.api.schemas import (
+E   ImportError: cannot import name 'AnalyzeRequest' from 'app.api.schemas' (D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_rag\app\api\schemas.py)
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\confluence\test_schemas.py:36: in <module>
+    from app.api.schemas import (
+E   ImportError: cannot import name 'AnalyzeRequest' from 'app.api.schemas' (D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_rag\app\api\schemas.py)
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_content_analysis_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_content_analysis_agent.py:6: in <module>
+    from app.agents.content_analysis_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_content_analysis_agent.py:24: in <module>
+    from app.agents.content_analysis_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_coordinator.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_coordinator.py:8: in <module>
+    from app.agents.coordinator import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_coordinator.py:29: in <module>
+    from app.agents.coordinator import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_credential_store.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_credential_store.py:7: in <module>
+    from app.auth.credential_store import get_workspace_credentials
+E   ModuleNotFoundError: No module named 'app.auth'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_credential_store.py:20: in <module>
+    from app.auth.credential_store import get_workspace_credentials
+E   ModuleNotFoundError: No module named 'app.auth'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_formatting_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_formatting_agent.py:6: in <module>
+    from app.agents.formatting_agent import format_content, _validate_storage_format
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_formatting_agent.py:19: in <module>
+    from app.agents.formatting_agent import format_content, _validate_storage_format
+E   ModuleNotFoundError: No module named 'app.agents'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_integration_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_integration_agent.py:6: in <module>
+    from app.agents.integration_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_integration_agent.py:23: in <module>
+    from app.agents.integration_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_learning_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_learning_agent.py:6: in <module>
+    from app.agents.learning_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_learning_agent.py:25: in <module>
+    from app.agents.learning_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_mcp_server_init.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_mcp_server_init.py:4: in <module>
+    from app.mcp_server import (
+E   ModuleNotFoundError: No module named 'app.mcp_server'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_mcp_server_init.py:29: in <module>
+    from app.mcp_server import (
+E   ModuleNotFoundError: No module named 'app.mcp_server'
+
+--- Test failure ---
+ImportError while importing test module 'D:\repo_analysis_rag1_final\repo_analysis_rag1\tests\edge_agent\unit\test_pattern_matching_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests\edge_agent\unit\test_pattern_matching_agent.py:6: in <module>
+    from app.agents.pattern_matching_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+
+During handling of the above exception, another exception occurred:
+C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\edge_agent\unit\test_pattern_matching_agent.py:23: in <module>
+    from app.agents.pattern_matching_agent import (
+E   ModuleNotFoundError: No module named 'app.agents'
+2026-02-10 17:28:46,145 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-10 17:28:53,171 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-10 17:28:53,173 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+
+--- Test failure ---
+tests\confluence\test_project_pipeline.py:380: in test_project_template_matcher_patterns_match_examples
+    assert match.match_count >= 1
+E   AssertionError: assert 0 >= 1
+E    +  where 0 = ProjectTemplateMatch(template_name='Mixed Project Intelligence Template', template_id='mixed_project_template', confidence=75.0, match_count=0, ai_reasoning='Matched other project; 0 similar examples.').match_count
+2026-02-10 17:28:55,329 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-10 17:28:55,589 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-10 17:37:49,720 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-10 17:37:56,747 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-10 17:37:56,750 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-10 17:37:58,817 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-10 17:37:59,057 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-10 17:41:12,460 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-10 17:41:19,484 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-10 17:41:19,488 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-10 17:41:20,984 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-10 17:41:21,201 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "D:\repo_analysis_rag1_final\repo_analysis_rag1\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail

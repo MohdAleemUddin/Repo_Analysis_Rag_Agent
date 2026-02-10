@@ -1,13 +1,29 @@
 """Unit tests for app.agents.pattern_matching_agent."""
+
 from unittest.mock import patch
 
 try:
-    from app.agents.pattern_matching_agent import match, FALLBACK_TEMPLATE_ID, MIN_SCORE_THRESHOLD
+    from app.agents.pattern_matching_agent import (
+        match,
+        FALLBACK_TEMPLATE_ID,
+        MIN_SCORE_THRESHOLD,
+    )
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
-    from app.agents.pattern_matching_agent import match, FALLBACK_TEMPLATE_ID, MIN_SCORE_THRESHOLD
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
+    from app.agents.pattern_matching_agent import (
+        match,
+        FALLBACK_TEMPLATE_ID,
+    )
 
 
 @patch("app.agents.pattern_matching_agent.run_matching")
@@ -16,7 +32,11 @@ def test_match_normal(mock_run):
         "template_id": "t1",
         "template_name": "T1",
         "intelligence_score": 0.9,
-        "confidence_breakdown": {"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9},
+        "confidence_breakdown": {
+            "content_match": 0.9,
+            "structure_match": 0.9,
+            "context_match": 0.9,
+        },
         "ai_reasoning": "match",
     }
     out = match("content", analysis=None)

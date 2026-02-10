@@ -1,4 +1,5 @@
 """Unit tests for app.agents.formatting_agent."""
+
 from unittest.mock import patch
 
 try:
@@ -6,7 +7,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.agents.formatting_agent import format_content, _validate_storage_format
 
 
@@ -53,7 +62,9 @@ def test_format_content_none_template():
 
 
 def test_format_content_template_dict():
-    with patch("app.agents.formatting_agent.run_formatting", return_value="<p>body</p>"):
+    with patch(
+        "app.agents.formatting_agent.run_formatting", return_value="<p>body</p>"
+    ):
         out = format_content("body", template={"template_id": "x"})
     assert "<p>" in out.confluence_storage_format
 
@@ -65,7 +76,9 @@ def test_format_content_empty_raw_storage():
 
 
 def test_format_content_no_p_tag_wraps():
-    with patch("app.agents.formatting_agent.run_formatting", return_value="<div>x</div>"):
+    with patch(
+        "app.agents.formatting_agent.run_formatting", return_value="<div>x</div>"
+    ):
         out = format_content("x", template=None)
     assert "<p>" in out.confluence_storage_format
 
@@ -78,13 +91,25 @@ def test_validate_storage_format_lt_entity_no_angle():
 
 def test_validate_storage_format_root_block_no_p():
     w, c = _validate_storage_format("<span>hi</span>")
-    assert any("paragraph" in x.lower() or "root" in x.lower() for x in c) or len(c) >= 0
+    assert (
+        any("paragraph" in x.lower() or "root" in x.lower() for x in c) or len(c) >= 0
+    )
 
 
 def test_format_content_template_decision():
     from app.agents.contracts import TemplateDecision
-    t = TemplateDecision(template_id="t1", template_name="T1", intelligence_score=0.9, ai_reasoning="",
-                        confidence_breakdown={"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9})
+
+    t = TemplateDecision(
+        template_id="t1",
+        template_name="T1",
+        intelligence_score=0.9,
+        ai_reasoning="",
+        confidence_breakdown={
+            "content_match": 0.9,
+            "structure_match": 0.9,
+            "context_match": 0.9,
+        },
+    )
     with patch("app.agents.formatting_agent.run_formatting", return_value="<p>ok</p>"):
         out = format_content("ok", template=t)
     assert "ok" in out.confluence_storage_format

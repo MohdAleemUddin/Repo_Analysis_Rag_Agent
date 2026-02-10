@@ -5,14 +5,22 @@ def test_placeholder() -> None:
 def test_tc_e2e_006_complete_learning_cycle() -> None:
     """TC-E2E-006: Complete learning cycle -> Measurable improvement in intelligence."""
     try:
-        from offline_folder_rag.edge_agent.app.api.confluence_routes import (
+        from app.api.confluence_routes import (
             intelligence_status_handler,
             intelligence_feedback_handler,
         )
     except ImportError:
         import sys
         from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from app.api.confluence_routes import (
             intelligence_status_handler,
             intelligence_feedback_handler,
@@ -27,6 +35,7 @@ def test_tc_e2e_006_complete_learning_cycle() -> None:
 
         def get_json(self, silent=True):
             import json
+
             return json.loads(self.body)
 
     status1, _ = intelligence_status_handler(MockReqStatus())

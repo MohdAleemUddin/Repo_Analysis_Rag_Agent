@@ -15,7 +15,7 @@
             },
             "label": "compile-rag",
             "options": {
-                "cwd": "${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension"
+                "cwd": "${workspaceFolder}/repo_analysis_rag/vscode-extension"
             },
             "problemMatcher": "$tsc"
         }

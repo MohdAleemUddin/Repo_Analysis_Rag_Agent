@@ -1,4 +1,5 @@
 """Tests for app.confluence.client coverage."""
+
 from unittest.mock import MagicMock, patch
 
 try:
@@ -6,7 +7,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.confluence import client
 
 

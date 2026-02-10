@@ -1,4 +1,5 @@
 """Unit test to load app.mcp_server __init__ for coverage (exports)."""
+
 try:
     from app.mcp_server import (
         RAG_QUERY,
@@ -16,7 +17,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.mcp_server import (
         RAG_QUERY,
         CONFLUENCE_INTELLIGENT_ANALYZE,

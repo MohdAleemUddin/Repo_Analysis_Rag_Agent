@@ -376,9 +376,9 @@ services:
     $runIntegration = $Integration -or (-not $Unit -and -not $Functional -and -not $Integration -and -not $E2E)
     $runE2E = $E2E -or (-not $Unit -and -not $Functional -and -not $Integration -and -not $E2E)
 
-    # PYTHONPATH so edge_agent and repo_analysis_rag are importable (use script dir as repo root)
+    # PYTHONPATH: backend_confluence first so app.* resolves to confluence (agents, api, confluence, etc.)
     $repoRoot = $PSScriptRoot
-    $env:PYTHONPATH = "$repoRoot;$repoRoot\offline-folder-rag"
+    $env:PYTHONPATH = "$repoRoot;$repoRoot\repo_analysis_rag\backend_confluence;$repoRoot\repo_analysis_rag\backend_rag;$repoRoot\offline-folder-rag"
 
     if ($runPython) {
         if ($runUnit) {

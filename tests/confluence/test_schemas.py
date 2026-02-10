@@ -1,4 +1,5 @@
 """Tests for app.api.schemas (Pydantic models)."""
+
 import pytest
 from pydantic import ValidationError
 
@@ -23,7 +24,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.api.schemas import (
         AnalyzeRequest,
         CreateRequest,
@@ -116,8 +125,10 @@ def test_intelligence_confidence_summary():
 
 def test_intelligence_summary():
     ics = IntelligenceConfidenceSummary(
-        content_detection=0.5, template_intelligence=0.5,
-        formatting_intelligence=0.5, overall_intelligence=0.5,
+        content_detection=0.5,
+        template_intelligence=0.5,
+        formatting_intelligence=0.5,
+        overall_intelligence=0.5,
     )
     s = IntelligenceSummary(intelligence_confidence=ics)
     assert s.ai_learning_applied is False
@@ -130,8 +141,10 @@ def test_intelligent_page():
 
 def test_create_response():
     ics = IntelligenceConfidenceSummary(
-        content_detection=0.5, template_intelligence=0.5,
-        formatting_intelligence=0.5, overall_intelligence=0.5,
+        content_detection=0.5,
+        template_intelligence=0.5,
+        formatting_intelligence=0.5,
+        overall_intelligence=0.5,
     )
     isum = IntelligenceSummary(intelligence_confidence=ics)
     ip = IntelligentPage()
@@ -150,18 +163,26 @@ def test_intelligence_metrics():
 
 def test_status_response():
     im = IntelligenceMetrics(
-        template_selection_accuracy=0.8, user_acceptance_rate=0.9, learning_rate=0.7,
+        template_selection_accuracy=0.8,
+        user_acceptance_rate=0.9,
+        learning_rate=0.7,
     )
-    r = StatusResponse(intelligence_metrics=im, learning_progress={}, improvement_rates={})
+    r = StatusResponse(
+        intelligence_metrics=im, learning_progress={}, improvement_rates={}
+    )
     assert r.improvement_rates == {}
 
 
 def test_feedback_response():
     im = IntelligenceMetrics(
-        template_selection_accuracy=0.8, user_acceptance_rate=0.9, learning_rate=0.7,
+        template_selection_accuracy=0.8,
+        user_acceptance_rate=0.9,
+        learning_rate=0.7,
     )
     sr = StatusResponse(intelligence_metrics=im)
-    r = FeedbackResponse(message="ok", metrics_updated=True, learning_applied=True, updated_status=sr)
+    r = FeedbackResponse(
+        message="ok", metrics_updated=True, learning_applied=True, updated_status=sr
+    )
     assert r.learning_applied is True
 
 

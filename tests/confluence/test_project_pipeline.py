@@ -1,5 +1,4 @@
 # US-16: Tests for project_scanner, project_analyzer, project_template_matcher
-import json
 import os
 import tempfile
 from pathlib import Path
@@ -18,12 +17,17 @@ def _ensure_imports():
     try:
         from app.confluence.project_analyzer import ProjectAnalysis, analyze_project
         from app.confluence.project_template_matcher import match_project_template
+
         return ProjectAnalysis, analyze_project, match_project_template
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_analyzer import ProjectAnalysis, analyze_project
         from app.confluence.project_template_matcher import match_project_template
+
         return ProjectAnalysis, analyze_project, match_project_template
 
 
@@ -33,7 +37,10 @@ def test_project_scanner_returns_paths() -> None:
         from app.confluence.project_scanner import scan
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_scanner import scan
     tests_dir = _tests_dir()
     paths = scan(str(tests_dir), limit=20)
@@ -47,10 +54,13 @@ def test_project_scanner_excludes_sensitive() -> None:
         from app.confluence.project_scanner import scan
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_scanner import scan
     import tempfile
-    import os
+
     with tempfile.TemporaryDirectory() as tmp:
         Path(tmp, "main.py").write_text("x = 1")
         Path(tmp, ".env").write_text("secret")
@@ -70,11 +80,16 @@ def test_project_scanner_progress_callback() -> None:
         from app.confluence.project_scanner import scan
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_scanner import scan
     calls: list[tuple[int, int]] = []
+
     def cb(current: int, total: int) -> None:
         calls.append((current, total))
+
     paths = scan(str(_tests_dir()), progress_callback=cb, limit=5)
     assert isinstance(paths, list)
 
@@ -85,7 +100,10 @@ def test_project_analyzer_returns_analysis() -> None:
         from app.confluence.project_analyzer import analyze_project, ProjectAnalysis
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_analyzer import analyze_project, ProjectAnalysis
     tests_dir = _tests_dir()
     py_files = [str(p) for p in Path(tests_dir).rglob("*.py")][:10]
@@ -93,19 +111,35 @@ def test_project_analyzer_returns_analysis() -> None:
         pytest.skip("No Python files in tests dir")
     analysis = analyze_project(py_files)
     assert isinstance(analysis, ProjectAnalysis)
-    assert analysis.project_type in ("web app", "API", "library", "mixed", "testing", "database")
+    assert analysis.project_type in (
+        "web app",
+        "API",
+        "library",
+        "mixed",
+        "testing",
+        "database",
+    )
 
 
 def test_project_template_matcher_fallback() -> None:
     """project_template_matcher falls back to Mixed when confidence < 70%."""
     try:
         from app.confluence.project_analyzer import ProjectAnalysis
-        from app.confluence.project_template_matcher import match_project_template, FALLBACK_TEMPLATE
+        from app.confluence.project_template_matcher import (
+            match_project_template,
+            FALLBACK_TEMPLATE,
+        )
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_analyzer import ProjectAnalysis
-        from app.confluence.project_template_matcher import match_project_template, FALLBACK_TEMPLATE
+        from app.confluence.project_template_matcher import (
+            match_project_template,
+            FALLBACK_TEMPLATE,
+        )
     analysis = ProjectAnalysis(
         project_type="unknown",
         key_file_types=[],
@@ -144,18 +178,29 @@ def test_project_template_matcher_returns_match() -> None:
 def test_project_analyzer_infers_testing_type() -> None:
     """_infer_project_type returns 'testing' when test_score > 3, lib < 2, api < 2."""
     _, analyze_project, _ = _ensure_imports()
-    fake_profile = type("FakeProfile", (), {"model_dump": lambda s: {
-        "content_types": ["pytest", "jest", "unittest", "spec"],
-        "detected_patterns": ["test_", "e2e"],
-        "languages": [],
-        "structure_signals": [],
-    }})()
+    fake_profile = type(
+        "FakeProfile",
+        (),
+        {
+            "model_dump": lambda s: {
+                "content_types": ["pytest", "jest", "unittest", "spec"],
+                "detected_patterns": ["test_", "e2e"],
+                "languages": [],
+                "structure_signals": [],
+            }
+        },
+    )()
     with tempfile.TemporaryDirectory() as tmp:
         base = Path(tmp)
         for name in ["test_pytest.py", "test_jest.js", "unittest_x.py", "spec_y.py"]:
             (base / name).write_text("# minimal")
-        paths = [str(base / n) for n in ["test_pytest.py", "test_jest.js", "unittest_x.py", "spec_y.py"]]
-        with patch("app.confluence.project_analyzer.analyze", return_value=fake_profile):
+        paths = [
+            str(base / n)
+            for n in ["test_pytest.py", "test_jest.js", "unittest_x.py", "spec_y.py"]
+        ]
+        with patch(
+            "app.confluence.project_analyzer.analyze", return_value=fake_profile
+        ):
             analysis = analyze_project(paths)
         assert analysis.project_type == "testing"
 
@@ -216,7 +261,14 @@ def test_project_analyzer_skips_non_file_paths() -> None:
         paths = [str(base), str(base / "real.py")]  # dir then file
         analysis = analyze_project(paths)
         assert analysis.source_file_count == 2
-        assert analysis.project_type in ("web app", "API", "library", "mixed", "testing", "database")
+        assert analysis.project_type in (
+            "web app",
+            "API",
+            "library",
+            "mixed",
+            "testing",
+            "database",
+        )
 
 
 def test_project_analyzer_handles_large_or_empty_preferred_files() -> None:
@@ -228,7 +280,11 @@ def test_project_analyzer_handles_large_or_empty_preferred_files() -> None:
         (base / "empty.py").write_text("")
         paths = [str(base / "large.py"), str(base / "empty.py")]
         analysis = analyze_project(paths)
-        assert "document" in analysis.content_types or "large_file" in analysis.detected_patterns or "empty" in analysis.detected_patterns
+        assert (
+            "document" in analysis.content_types
+            or "large_file" in analysis.detected_patterns
+            or "empty" in analysis.detected_patterns
+        )
 
 
 def test_project_analyzer_handles_oserror() -> None:
@@ -330,10 +386,16 @@ def test_project_template_matcher_low_confidence_fallback() -> None:
         from app.confluence.project_template_matcher import FALLBACK_TEMPLATE
     except ImportError:
         import sys
-        sys.path.insert(0, str(_tests_dir().parents[1] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0, str(_tests_dir().parents[1] / "repo_analysis_rag" / "backend_confluence")
+        )
         from app.confluence.project_template_matcher import FALLBACK_TEMPLATE
     ProjectAnalysis, _, match_project_template = _ensure_imports()
-    with patch("app.confluence.project_template_matcher._load_project_examples", return_value=[]):
+    with patch(
+        "app.confluence.project_template_matcher._load_project_examples",
+        return_value=[],
+    ):
         analysis = ProjectAnalysis(
             project_type="mixed",
             key_file_types=[],
@@ -383,7 +445,9 @@ def test_project_template_matcher_examples_load_error() -> None:
             raise OSError("file not found")
         return orig_open(path, *args, **kwargs)
 
-    with patch("app.confluence.project_template_matcher.open", side_effect=raise_oserror):
+    with patch(
+        "app.confluence.project_template_matcher.open", side_effect=raise_oserror
+    ):
         analysis = ProjectAnalysis(
             project_type="API",
             key_file_types=[],

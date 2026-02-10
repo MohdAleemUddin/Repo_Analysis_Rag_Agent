@@ -1,3 +1,3 @@
 {
-  "extraPaths": ["offline-folder-rag/edge_agent"]
+  "extraPaths": ["repo_analysis_rag/backend_confluence","repo_analysis_rag/backend_rag"]
 }

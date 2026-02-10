@@ -4,7 +4,7 @@ import pytest
 pytestmark = pytest.mark.performance
 
 try:
-    from offline_folder_rag.edge_agent.app.confluence.prd_monitor import (
+    from app.confluence.prd_monitor import (
         ANALYSIS_TARGET_SEC,
         TEMPLATE_SELECT_TARGET_SEC,
         CREATION_TARGET_SEC,
@@ -18,7 +18,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.confluence.prd_monitor import (
         ANALYSIS_TARGET_SEC,
         TEMPLATE_SELECT_TARGET_SEC,
@@ -71,6 +79,7 @@ def test_performance_regression_config_source_of_truth() -> None:
         CREATE_E2E_MAX_SECONDS,
         CONFLUENCE_MEMORY_LIMIT_MB,
     )
+
     targets = check_prd()
     assert targets["analysis_target_sec"] == ANALYSIS_MAX_SECONDS_PER_FILE
     assert targets["template_select_target_sec"] == TEMPLATE_SELECTION_MAX_SECONDS
@@ -133,7 +142,11 @@ def test_creation_time_under_15_seconds_including_api():
         )
         elapsed = time.perf_counter() - start
         assert elapsed < 15 + 0.5
-        page_id = result.page.id if hasattr(result, "page") else (result.get("id") if isinstance(result, dict) else None)
+        page_id = (
+            result.page.id
+            if hasattr(result, "page")
+            else (result.get("id") if isinstance(result, dict) else None)
+        )
         assert page_id == "123"
 
 
@@ -317,17 +330,25 @@ def test_ui_remains_responsive_during_heavy_operation():
 def test_mcp_server_extension_compatibility():
     """MCP server extension works with Confluence intelligence (no conflict)."""
     try:
-        from offline_folder_rag.edge_agent.app.api import register_confluence_routes
-        from offline_folder_rag.edge_agent.app.mcp_server import __init__ as mcp_init
+        from app.api import register_confluence_routes
+        from app.mcp_server import __init__ as mcp_init
     except ImportError:
         import sys
         from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from app.api import register_confluence_routes
         from app.mcp_server import __init__ as mcp_init
     from unittest.mock import MagicMock
+
     router = MagicMock()
     register_confluence_routes(router)
     assert mcp_init is not None
     assert router.post.called
-

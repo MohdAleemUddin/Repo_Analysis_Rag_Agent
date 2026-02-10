@@ -1,4 +1,5 @@
 """Unit tests for app.agents.content_analysis_agent."""
+
 from unittest.mock import patch
 
 try:
@@ -11,7 +12,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.agents.content_analysis_agent import (
         analyze,
         analyze_file_with_timer,
@@ -85,8 +94,15 @@ def test_analyze_small(mock_chain):
 @patch("app.agents.content_analysis_agent.CONFLUENCE_CHUNK_SIZE_BYTES", 5)
 @patch("app.agents.content_analysis_agent.run_analysis_chain")
 def test_analyze_large_chunked(mock_chain):
-    mock_chain.return_value = {"content_types": ["document"], "languages": ["text"], "structure_signals": [],
-                               "detected_patterns": [], "relationships": [], "confidence_scores": {}, "ai_reasoning": ""}
+    mock_chain.return_value = {
+        "content_types": ["document"],
+        "languages": ["text"],
+        "structure_signals": [],
+        "detected_patterns": [],
+        "relationships": [],
+        "confidence_scores": {},
+        "ai_reasoning": "",
+    }
     out = analyze("x" * 100, file_index=0)
     assert "chunked" in out.structure_signals or "document" in out.content_types
 
@@ -100,8 +116,15 @@ def test_analyze_file_with_timer():
 @patch("app.agents.content_analysis_agent.CONFLUENCE_ANALYSIS_CACHE_TTL_SECONDS", 3600)
 @patch("app.agents.content_analysis_agent.run_analysis_chain")
 def test_analyze_cache_hit(mock_chain):
-    mock_chain.return_value = {"content_types": ["doc"], "languages": ["text"], "structure_signals": [],
-                               "detected_patterns": [], "relationships": [], "confidence_scores": {}, "ai_reasoning": ""}
+    mock_chain.return_value = {
+        "content_types": ["doc"],
+        "languages": ["text"],
+        "structure_signals": [],
+        "detected_patterns": [],
+        "relationships": [],
+        "confidence_scores": {},
+        "ai_reasoning": "",
+    }
     c = "same content for cache"
     analyze(c)
     out2 = analyze(c)
@@ -114,9 +137,17 @@ def test_analyze_cache_hit(mock_chain):
 @patch("app.agents.content_analysis_agent.run_analysis_chain")
 def test_analyze_cache_ttl_expired(mock_chain):
     from app.agents.content_analysis_agent import _analysis_cache
+
     _analysis_cache.clear()
-    mock_chain.return_value = {"content_types": ["x"], "languages": ["text"], "structure_signals": [],
-                               "detected_patterns": [], "relationships": [], "confidence_scores": {}, "ai_reasoning": ""}
+    mock_chain.return_value = {
+        "content_types": ["x"],
+        "languages": ["text"],
+        "structure_signals": [],
+        "detected_patterns": [],
+        "relationships": [],
+        "confidence_scores": {},
+        "ai_reasoning": "",
+    }
     analyze("unique_ttl_content_xyz")
     analyze("unique_ttl_content_xyz")
     assert mock_chain.call_count >= 1
@@ -126,8 +157,15 @@ def test_analyze_cache_ttl_expired(mock_chain):
 @patch("app.agents.content_analysis_agent.CONFLUENCE_ANALYSIS_CACHE_MAX_ENTRIES", 2)
 @patch("app.agents.content_analysis_agent.run_analysis_chain")
 def test_analyze_cache_eviction(mock_chain):
-    mock_chain.return_value = {"content_types": ["doc"], "languages": ["text"], "structure_signals": [],
-                               "detected_patterns": [], "relationships": [], "confidence_scores": {}, "ai_reasoning": ""}
+    mock_chain.return_value = {
+        "content_types": ["doc"],
+        "languages": ["text"],
+        "structure_signals": [],
+        "detected_patterns": [],
+        "relationships": [],
+        "confidence_scores": {},
+        "ai_reasoning": "",
+    }
     analyze("a")
     analyze("b")
     analyze("c")
@@ -137,7 +175,14 @@ def test_analyze_cache_eviction(mock_chain):
 @patch("app.agents.content_analysis_agent._cache_get")
 @patch("app.agents.content_analysis_agent._content_hash", return_value="k1")
 def test_analyze_cached_dict_returned(mock_hash, mock_cache_get):
-    mock_cache_get.return_value = {"content_types": ["cached"], "languages": ["text"], "structure_signals": [],
-                                   "detected_patterns": [], "relationships": [], "confidence_scores": {}, "ai_reasoning": ""}
+    mock_cache_get.return_value = {
+        "content_types": ["cached"],
+        "languages": ["text"],
+        "structure_signals": [],
+        "detected_patterns": [],
+        "relationships": [],
+        "confidence_scores": {},
+        "ai_reasoning": "",
+    }
     out = analyze("any")
     assert out.content_types == ["cached"]

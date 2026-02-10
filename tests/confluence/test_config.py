@@ -1,5 +1,4 @@
 """Tests for app.config.config: load_config, get_app_config, get_database_config, get_confluence_config."""
-import pytest
 
 
 def _import_config():
@@ -9,6 +8,7 @@ def _import_config():
         get_database_config,
         get_confluence_config,
     )
+
     return load_config, get_app_config, get_database_config, get_confluence_config
 
 
@@ -49,6 +49,7 @@ def test_get_confluence_config_uses_env(monkeypatch):
 def test_merge_confluence_settings_retry_invalid(monkeypatch):
     """Covers config.py lines 58-59: except ValueError in retry_attempts."""
     from app.config.config import _merge_confluence_settings_from_env
+
     out = {}
     monkeypatch.setenv("CONFLUENCE_RETRY_ATTEMPTS", "not_a_number")
     _merge_confluence_settings_from_env(out)

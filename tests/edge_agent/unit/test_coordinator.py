@@ -1,4 +1,5 @@
 """Unit tests for app.agents.coordinator."""
+
 import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -16,7 +17,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.agents.coordinator import (
         get_pipeline_state,
         get_last_coordinator_error,
@@ -30,8 +39,15 @@ except ImportError:
 
 def test_get_pipeline_state():
     s = get_pipeline_state()
-    assert s in (PipelineState.Idle, PipelineState.Analyzing, PipelineState.Matching,
-                 PipelineState.Formatting, PipelineState.Integrating, PipelineState.Completed, PipelineState.Failed)
+    assert s in (
+        PipelineState.Idle,
+        PipelineState.Analyzing,
+        PipelineState.Matching,
+        PipelineState.Formatting,
+        PipelineState.Integrating,
+        PipelineState.Completed,
+        PipelineState.Failed,
+    )
 
 
 def test_get_last_coordinator_error():
@@ -73,6 +89,7 @@ def test_run_create_memory_limit(mock_start, mock_mem):
 @patch("app.agents.coordinator.match")
 def test_run_analyze_success(mock_match, mock_analyze, mock_start, mock_mem):
     from app.agents.contracts import ContentProfile, TemplateDecision
+
     prof = ContentProfile(
         content_types=["code"],
         languages=["python"],
@@ -89,7 +106,11 @@ def test_run_analyze_success(mock_match, mock_analyze, mock_start, mock_mem):
         intelligence_score=0.9,
         ai_reasoning="",
         intelligence_reason="Matches 1 similar successful examples",
-        confidence_breakdown={"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9},
+        confidence_breakdown={
+            "content_match": 0.9,
+            "structure_match": 0.9,
+            "context_match": 0.9,
+        },
     )
     out = run_analyze(["def foo(): pass"])
     assert "intelligence_analysis" in out
@@ -102,8 +123,11 @@ def test_run_analyze_success(mock_match, mock_analyze, mock_start, mock_mem):
 @patch("app.agents.coordinator.start_operation")
 @patch("app.agents.coordinator.analyze_file_with_timer")
 @patch("app.agents.coordinator.match")
-def test_run_analyze_intelligent_title_module(mock_match, mock_analyze, mock_start, mock_mem):
+def test_run_analyze_intelligent_title_module(
+    mock_match, mock_analyze, mock_start, mock_mem
+):
     from app.agents.contracts import ContentProfile, TemplateDecision
+
     mock_analyze.return_value = ContentProfile(
         content_types=["module"],
         languages=["python"],
@@ -119,7 +143,11 @@ def test_run_analyze_intelligent_title_module(mock_match, mock_analyze, mock_sta
         intelligence_score=0.9,
         ai_reasoning="",
         intelligence_reason="",
-        confidence_breakdown={"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9},
+        confidence_breakdown={
+            "content_match": 0.9,
+            "structure_match": 0.9,
+            "context_match": 0.9,
+        },
     )
     out = run_analyze(["def foo(): pass"])
     assert out["intelligence_analysis"]["intelligent_title"] == "Module documentation"
@@ -129,8 +157,11 @@ def test_run_analyze_intelligent_title_module(mock_match, mock_analyze, mock_sta
 @patch("app.agents.coordinator.start_operation")
 @patch("app.agents.coordinator.analyze_file_with_timer")
 @patch("app.agents.coordinator.match")
-def test_run_analyze_intelligent_title_document(mock_match, mock_analyze, mock_start, mock_mem):
+def test_run_analyze_intelligent_title_document(
+    mock_match, mock_analyze, mock_start, mock_mem
+):
     from app.agents.contracts import ContentProfile, TemplateDecision
+
     mock_analyze.return_value = ContentProfile(
         content_types=["document"],
         languages=["python"],
@@ -146,7 +177,11 @@ def test_run_analyze_intelligent_title_document(mock_match, mock_analyze, mock_s
         intelligence_score=0.9,
         ai_reasoning="",
         intelligence_reason="",
-        confidence_breakdown={"content_match": 0.9, "structure_match": 0.9, "context_match": 0.9},
+        confidence_breakdown={
+            "content_match": 0.9,
+            "structure_match": 0.9,
+            "context_match": 0.9,
+        },
     )
     out = run_analyze(["x"])
     assert out["intelligence_analysis"]["intelligent_title"] == "Documentation"
@@ -157,8 +192,18 @@ def test_run_analyze_intelligent_title_document(mock_match, mock_analyze, mock_s
 @patch("app.agents.coordinator.analyze_file_with_timer")
 @patch("app.agents.coordinator.format_content")
 @patch("app.agents.coordinator.integration_create_page")
-def test_run_create_with_file_contents(mock_create, mock_format, mock_analyze, mock_start, mock_mem):
-    from app.agents.contracts import ContentProfile, FormattedConfluencePayload, IntegrationResult, PageInfo, VerificationResult, ValidationResults
+def test_run_create_with_file_contents(
+    mock_create, mock_format, mock_analyze, mock_start, mock_mem
+):
+    from app.agents.contracts import (
+        ContentProfile,
+        FormattedConfluencePayload,
+        IntegrationResult,
+        PageInfo,
+        VerificationResult,
+        ValidationResults,
+    )
+
     mock_analyze.return_value = ContentProfile(
         content_types=["code"],
         languages=["python"],
@@ -200,8 +245,18 @@ def test_run_create_with_file_contents(mock_create, mock_format, mock_analyze, m
 @patch("app.agents.coordinator.analyze_file_with_timer")
 @patch("app.agents.coordinator.format_content")
 @patch("app.agents.coordinator.integration_create_page")
-def test_run_create_success(mock_create, mock_format, mock_analyze, mock_start, mock_mem):
-    from app.agents.contracts import ContentProfile, FormattedConfluencePayload, IntegrationResult, PageInfo, VerificationResult, ValidationResults
+def test_run_create_success(
+    mock_create, mock_format, mock_analyze, mock_start, mock_mem
+):
+    from app.agents.contracts import (
+        ContentProfile,
+        FormattedConfluencePayload,
+        IntegrationResult,
+        PageInfo,
+        VerificationResult,
+        ValidationResults,
+    )
+
     prof = ContentProfile(
         content_types=["code"],
         languages=["python"],
@@ -235,14 +290,34 @@ def test_run_create_success(mock_create, mock_format, mock_analyze, mock_start, 
 @patch("app.agents.coordinator.format_content")
 @patch("app.agents.coordinator.integration_create_page")
 @patch("app.agents.coordinator.schedule_learning_after_create")
-def test_run_create_dict_result_with_feedback(mock_sched, mock_create, mock_format, mock_analyze, mock_start, mock_mem):
-    from app.agents.contracts import ContentProfile, FormattedConfluencePayload, ValidationResults
-    mock_analyze.return_value = ContentProfile(content_types=["code"], languages=["python"], structure_signals=[],
-        detected_patterns=[], relationships=[], confidence_scores={}, ai_reasoning="")
-    mock_format.return_value = FormattedConfluencePayload(confluence_storage_format="<p>hi</p>", attachments=[],
-        validation_results=ValidationResults(warnings=[], corrections_applied=[]), ai_reasoning="")
+def test_run_create_dict_result_with_feedback(
+    mock_sched, mock_create, mock_format, mock_analyze, mock_start, mock_mem
+):
+    from app.agents.contracts import (
+        ContentProfile,
+        FormattedConfluencePayload,
+        ValidationResults,
+    )
+
+    mock_analyze.return_value = ContentProfile(
+        content_types=["code"],
+        languages=["python"],
+        structure_signals=[],
+        detected_patterns=[],
+        relationships=[],
+        confidence_scores={},
+        ai_reasoning="",
+    )
+    mock_format.return_value = FormattedConfluencePayload(
+        confluence_storage_format="<p>hi</p>",
+        attachments=[],
+        validation_results=ValidationResults(warnings=[], corrections_applied=[]),
+        ai_reasoning="",
+    )
     mock_create.return_value = {"id": "1", "title": "T", "space": "DOC"}
-    out = run_create("http://x", "DOC", "Title", "body", auth=None, feedback_for_learning="good")
+    out = run_create(
+        "http://x", "DOC", "Title", "body", auth=None, feedback_for_learning="good"
+    )
     assert out.get("id") == "1" or "title" in out
     mock_sched.assert_called_once()
 
@@ -325,13 +400,20 @@ def test_run_document_project_success(
         )
         mock_format.return_value = MagicMock(confluence_storage_format="<p>doc</p>")
         mock_create.return_value = IntegrationResult(
-            page=PageInfo(id="1", url="http://x/page", title="API Project Documentation", space="DOC"),
+            page=PageInfo(
+                id="1",
+                url="http://x/page",
+                title="API Project Documentation",
+                space="DOC",
+            ),
             intelligence_tag="AI",
             retries_used=0,
             rate_limit_state="ok",
             verification=VerificationResult(passed=True, checks=[]),
         )
-        out = run_document_project(tmp, "DOC", "http://x", auth=None, progress_callback=track_progress)
+        out = run_document_project(
+            tmp, "DOC", "http://x", auth=None, progress_callback=track_progress
+        )
     assert out["confluence_url"] == "http://x/page"
     assert out["template_name"] == "T1"
     assert out["learning_indicator"] is True
@@ -371,13 +453,21 @@ def test_run_document_project_success_dict_result(
             ai_reasoning="",
         )
         mock_format.return_value = MagicMock(confluence_storage_format="<p>x</p>")
-        mock_create.return_value = {"id": "2", "title": "Mixed Project Documentation", "space": "DOC", "url": "http://y"}
+        mock_create.return_value = {
+            "id": "2",
+            "title": "Mixed Project Documentation",
+            "space": "DOC",
+            "url": "http://y",
+        }
         out = run_document_project(tmp, "DOC", "http://x", auth=None)
     assert out["confluence_url"] == "http://y"
     assert out["intelligence_analysis"]["project_type"] == "mixed"
 
 
-@patch("app.agents.coordinator.integration_create_page", side_effect=RuntimeError("create failed"))
+@patch(
+    "app.agents.coordinator.integration_create_page",
+    side_effect=RuntimeError("create failed"),
+)
 @patch("app.agents.coordinator.format_project_content")
 @patch("app.agents.coordinator.match_project_template")
 @patch("app.agents.coordinator.analyze_project")

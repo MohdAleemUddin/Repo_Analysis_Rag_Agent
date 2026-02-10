@@ -1,6 +1,5 @@
-# Root requirements: install confluence + offline-folder-rag deps
+# Root requirements: confluence + backends installed separately in CI/local
 -r confluence_requirements.txt
--r offline-folder-rag/requirements.txt
 pytest>=7.0
 pytest-cov>=4.0
 pytest-asyncio>=0.21.0

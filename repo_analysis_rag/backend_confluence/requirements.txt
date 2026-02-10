@@ -1,0 +1,6 @@
+# Confluence API (PRD §9.0) and Edge Agent
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+httpx>=0.25.0
+requests>=2.28.0

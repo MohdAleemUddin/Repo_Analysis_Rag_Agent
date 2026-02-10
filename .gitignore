@@ -1,4 +1,5 @@
 logs/
+.cursor/
 .env
 # VS Code extension test runner binary (exceeds Windows path limit; not for version control)
 **/.vscode-test/
@@ -13,3 +14,5 @@ htmlcov/
 docs/
 confluence_data/examples/vector_embeddings/*.index
 errors.log/
+# Leftover Zeroui folder (delete with scripts/delete_zeroui_remnant.ps1 after closing Cursor)
+repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/

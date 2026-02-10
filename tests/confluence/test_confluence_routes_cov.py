@@ -1,4 +1,5 @@
 """Tests for confluence_routes coverage."""
+
 from unittest.mock import MagicMock, patch
 
 try:
@@ -18,7 +19,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.api.confluence_routes import (
         _get_query_param,
         _get_json_body,
@@ -94,13 +103,17 @@ def test_intelligent_analyze_handler_content_only():
 
 
 def test_intelligent_analyze_handler_memory_limit():
-    with patch("app.api.confluence_routes.check_memory_before_step", return_value=False):
+    with patch(
+        "app.api.confluence_routes.check_memory_before_step", return_value=False
+    ):
         out = intelligent_analyze_handler({"files": ["a"]})
     assert "error" in out or "resource_limit" in str(out)
 
 
 def test_intelligent_create_handler_memory_limit():
-    with patch("app.api.confluence_routes.check_memory_before_step", return_value=False):
+    with patch(
+        "app.api.confluence_routes.check_memory_before_step", return_value=False
+    ):
         out = intelligent_create_handler({"content": "x"})
     assert "error" in out or "resource_limit" in str(out)
 
@@ -121,8 +134,13 @@ def test_intelligence_status_handler_with_request():
 
 def test_intelligence_feedback_handler_with_score():
     with patch("app.api.confluence_routes.learn_from_feedback"):
-        with patch("app.api.confluence_routes.get_intelligence_status", return_value={"intelligence_metrics": {}}):
-            out = intelligence_feedback_handler({"creation_id": "c1", "intelligence_score": 5})
+        with patch(
+            "app.api.confluence_routes.get_intelligence_status",
+            return_value={"intelligence_metrics": {}},
+        ):
+            out = intelligence_feedback_handler(
+                {"creation_id": "c1", "intelligence_score": 5}
+            )
     assert (isinstance(out, tuple) and out[0].get("updated")) or out.get("updated")
 
 
@@ -153,12 +171,17 @@ def test_register_confluence_routes_fastapi():
         register_confluence_routes(router)
     except Exception:
         pass
-    assert router.post.called or router.get.called or hasattr(router, "confluence_handlers")
+    assert (
+        router.post.called
+        or router.get.called
+        or hasattr(router, "confluence_handlers")
+    )
 
 
 def test_register_confluence_routes_handlers_dict():
     class NoPostGet:
         pass
+
     router = NoPostGet()
     register_confluence_routes(router)
     assert hasattr(router, "confluence_handlers")

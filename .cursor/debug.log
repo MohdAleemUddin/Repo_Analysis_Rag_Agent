@@ -1,21 +1,8 @@
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"timestamp":1770369357928,"sessionId":"debug-session","hypothesisId":"H1"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770369644466,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770370160380,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770370254904,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770371321142,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770371379694,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770375485727,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770375538358,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770378728384,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770378762984,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770379532951,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770379561301,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770380151199,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770382131969,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770385476424,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770386512283,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770386837535,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770386938255,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770387140770,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770388051123,"sessionId":"debug-session"}
-{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770388443142,"sessionId":"debug-session"}
+﻿{"timestamp":1770723403108,"location":"run-local-cicd.ps1:Invoke-Lint","message":"Lint stage started","data":{},"hypothesisId":"H4"}
+{"timestamp":1770723411065,"location":"run-local-cicd.ps1:MyPy","message":"About to run MyPy","data":{},"hypothesisId":"H4"}
+{"timestamp":1770723413353,"location":"run-local-cicd.ps1:MyPy","message":"MyPy finished","data":{"exitCode":1},"hypothesisId":"H4"}
+{"timestamp":1770723413360,"location":"run-local-cicd.ps1:Pylint","message":"About to run Pylint","data":{"pythonPathsCount":4},"hypothesisId":"H1,H2,H3,H5"}
+{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"Confluence analysis script ran","data":{},"hypothesisId":"H1","timestamp":1770725816824,"sessionId":"debug-session"}
+{"location":"ChatPanelViewProvider.ts:onDidReceiveMessage","message":"confluenceCreate received","data":{"title":"Documentation 22","space":"ADG"},"hypothesisId":"H2","timestamp":1770725822427,"sessionId":"debug-session"}
+{"location":"ChatPanelViewProvider.ts:handleConfluenceCreate","message":"handler entered","data":{"title":"Documentation 22","space":"ADG"},"hypothesisId":"H3","timestamp":1770725822430,"sessionId":"debug-session"}
+{"location":"ChatPanelViewProvider.ts:handleConfluenceCreate","message":"handler success","data":{},"hypothesisId":"H3","timestamp":1770725824511,"sessionId":"debug-session"}

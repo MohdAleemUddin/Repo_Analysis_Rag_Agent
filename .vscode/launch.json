@@ -6,10 +6,10 @@
             "type": "extensionHost",
             "request": "launch",
             "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension"
+                "--extensionDevelopmentPath=${workspaceFolder}/repo_analysis_rag/vscode-extension"
             ],
             "outFiles": [
-                "${workspaceFolder}/repo_analysis_rag/Zeroui_Repo_Analysis_Rag_Agent/offline-folder-rag/vscode-extension/out/**/*.js"
+                "${workspaceFolder}/repo_analysis_rag/vscode-extension/out/**/*.js"
             ],
             "preLaunchTask": "compile-rag"
         }

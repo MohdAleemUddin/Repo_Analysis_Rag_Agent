@@ -218,7 +218,9 @@ def test_verify_confluence_security_https_enforcement_true_via_value_error() -> 
     import app.confluence.client as client_mod
     from app.confluence.verification import verify_confluence_security
 
-    with patch.object(client_mod, "create_page", side_effect=ValueError("must use HTTPS")):
+    with patch.object(
+        client_mod, "create_page", side_effect=ValueError("must use HTTPS")
+    ):
         results = verify_confluence_security()
     assert results["https_enforcement"] is True
 
@@ -252,6 +254,8 @@ def test_verify_confluence_security_credential_store_raises() -> None:
 
     from app.confluence.verification import verify_confluence_security
 
-    with patch("app.config.config.get_confluence_config", side_effect=RuntimeError("mock")):
+    with patch(
+        "app.config.config.get_confluence_config", side_effect=RuntimeError("mock")
+    ):
         results = verify_confluence_security()
     assert results["uses_credential_store"] is False

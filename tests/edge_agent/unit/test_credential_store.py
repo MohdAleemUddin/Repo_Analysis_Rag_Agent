@@ -1,4 +1,5 @@
 """Unit tests for app.auth.credential_store (coverage for ValueError branches)."""
+
 import os
 from unittest.mock import patch
 
@@ -7,7 +8,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[3]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.auth.credential_store import get_workspace_credentials
 
 
@@ -22,7 +31,11 @@ def test_get_workspace_credentials_unknown_service_raises():
 
 
 def test_get_workspace_credentials_missing_base_url_raises():
-    with patch.dict(os.environ, {"CONFLUENCE_EMAIL": "a@b.com", "CONFLUENCE_API_TOKEN": "t"}, clear=False):
+    with patch.dict(
+        os.environ,
+        {"CONFLUENCE_EMAIL": "a@b.com", "CONFLUENCE_API_TOKEN": "t"},
+        clear=False,
+    ):
         orig_base = os.environ.pop("CONFLUENCE_BASE_URL", None)
         try:
             get_workspace_credentials(service="confluence")
@@ -36,7 +49,14 @@ def test_get_workspace_credentials_missing_base_url_raises():
 
 
 def test_get_workspace_credentials_missing_email_raises():
-    with patch.dict(os.environ, {"CONFLUENCE_BASE_URL": "https://wiki.example.com", "CONFLUENCE_API_TOKEN": "t"}, clear=False):
+    with patch.dict(
+        os.environ,
+        {
+            "CONFLUENCE_BASE_URL": "https://wiki.example.com",
+            "CONFLUENCE_API_TOKEN": "t",
+        },
+        clear=False,
+    ):
         orig_email = os.environ.pop("CONFLUENCE_EMAIL", None)
         try:
             get_workspace_credentials(service="confluence")
@@ -50,7 +70,14 @@ def test_get_workspace_credentials_missing_email_raises():
 
 
 def test_get_workspace_credentials_missing_api_token_raises():
-    with patch.dict(os.environ, {"CONFLUENCE_BASE_URL": "https://wiki.example.com", "CONFLUENCE_EMAIL": "a@b.com"}, clear=False):
+    with patch.dict(
+        os.environ,
+        {
+            "CONFLUENCE_BASE_URL": "https://wiki.example.com",
+            "CONFLUENCE_EMAIL": "a@b.com",
+        },
+        clear=False,
+    ):
         orig_token = os.environ.pop("CONFLUENCE_API_TOKEN", None)
         try:
             get_workspace_credentials(service="confluence")

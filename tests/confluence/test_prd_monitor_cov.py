@@ -1,12 +1,19 @@
 """Tests for prd_monitor coverage."""
-from unittest.mock import MagicMock, patch
 
 try:
     from app.confluence import prd_monitor
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.confluence import prd_monitor
 
 
@@ -46,10 +53,11 @@ def test_get_current_record():
 
 
 def test_record_confluence_operation_missed_targets():
-    rec = prd_monitor.record_confluence_operation(
-        "op1", [4000], 3000, 20000, 350
+    rec = prd_monitor.record_confluence_operation("op1", [4000], 3000, 20000, 350)
+    assert (
+        rec.targets_met["analysis_per_file"] is False
+        or rec.targets_met["template_selection"] is False
     )
-    assert rec.targets_met["analysis_per_file"] is False or rec.targets_met["template_selection"] is False
 
 
 def test_append_record():

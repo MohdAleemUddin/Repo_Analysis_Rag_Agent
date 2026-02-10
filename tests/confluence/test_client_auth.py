@@ -1,4 +1,5 @@
 """Tests for app.confluence.client: HTTPS, token validation, get_client, create_page paths."""
+
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -86,7 +87,7 @@ def test_create_page_raises_when_client_unavailable():
 
 
 def test_create_page_429_then_success():
-    from app.confluence.client import create_page, RATE_LIMIT_WAIT_SECONDS
+    from app.confluence.client import create_page
 
     with patch("app.confluence.client.get_client") as g:
         sess = MagicMock()
@@ -141,7 +142,10 @@ def test_create_page_network_retry_then_success():
     with patch("app.confluence.client.get_client") as g:
         sess = MagicMock()
         g.return_value = sess
-        sess.post.side_effect = [ConnectionError("net"), MagicMock(status_code=200, json=lambda: {"id": "1"})]
+        sess.post.side_effect = [
+            ConnectionError("net"),
+            MagicMock(status_code=200, json=lambda: {"id": "1"}),
+        ]
         with patch("time.sleep"):
             out = create_page("https://x", "DOC", "T", "<p>x</p>", None)
         assert out == {"id": "1"}

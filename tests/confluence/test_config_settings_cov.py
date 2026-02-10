@@ -1,7 +1,7 @@
 """Tests for Confluence settings integration: config_routes, config, confluence_config, confluence_schema (100% coverage)."""
+
 from __future__ import annotations
 
-import os
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -49,7 +49,15 @@ try:
 except ImportError:
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+    sys.path.insert(
+        0,
+        str(
+            Path(__file__).resolve().parents[2]
+            / "repo_analysis_rag"
+            / "backend_confluence"
+        ),
+    )
     from app.api.config_routes import (
         test_connection_handler as config_test_connection_handler,
         spaces_handler,
@@ -114,19 +122,27 @@ def test_test_connection_handler_body_not_dict():
 
 
 def test_test_connection_handler_validation_fails():
-    out = config_test_connection_handler({"url": "not-a-url", "email": "x", "api_token": "t"})
+    out = config_test_connection_handler(
+        {"url": "not-a-url", "email": "x", "api_token": "t"}
+    )
     assert out["ok"] is False
     assert "error" in out
 
 
 @patch("app.api.config_routes.test_connection")
 def test_test_connection_handler_success(mock_tc):
-    mock_tc.return_value = {"ok": True, "latency_ms": 100, "spaces": [{"key": "DOC", "name": "Docs"}]}
-    out = config_test_connection_handler({
-        "url": "https://example.atlassian.net",
-        "email": "u@example.com",
-        "api_token": "tok",
-    })
+    mock_tc.return_value = {
+        "ok": True,
+        "latency_ms": 100,
+        "spaces": [{"key": "DOC", "name": "Docs"}],
+    }
+    out = config_test_connection_handler(
+        {
+            "url": "https://example.atlassian.net",
+            "email": "u@example.com",
+            "api_token": "tok",
+        }
+    )
     assert out["ok"] is True
     assert out["latency_ms"] == 100
     assert out["spaces"] == [{"key": "DOC", "name": "Docs"}]
@@ -152,11 +168,13 @@ def test_spaces_handler_validation_fails():
 @patch("app.api.config_routes.get_available_spaces")
 def test_spaces_handler_success(mock_spaces):
     mock_spaces.return_value = [{"key": "DEV"}]
-    out = spaces_handler({
-        "url": "https://x.atlassian.net",
-        "email": "u@x.com",
-        "api_token": "t",
-    })
+    out = spaces_handler(
+        {
+            "url": "https://x.atlassian.net",
+            "email": "u@x.com",
+            "api_token": "t",
+        }
+    )
     assert out["spaces"] == [{"key": "DEV"}]
 
 
@@ -172,7 +190,15 @@ def test_validate_handler_body_not_dict():
 
 
 def test_validate_handler_validation_fails_with_errors():
-    out = validate_handler({"credentials": {"url": "http://bad.atlassian.net", "email": "a@b.com", "api_token": "t"}})
+    out = validate_handler(
+        {
+            "credentials": {
+                "url": "http://bad.atlassian.net",
+                "email": "a@b.com",
+                "api_token": "t",
+            }
+        }
+    )
     assert out["valid"] is False
     assert "errors" in out and len(out["errors"]) >= 0
 
@@ -215,12 +241,17 @@ def test_register_config_routes_no_fastapi():
     router = MagicMock()
     router.post = MagicMock()
     router.get = MagicMock()
+
     class FakeFastAPI:
         pass
-    fake_fastapi = FakeFastAPI()  # no Body/Query so "from fastapi import Body" raises AttributeError
+
+    fake_fastapi = (
+        FakeFastAPI()
+    )  # no Body/Query so "from fastapi import Body" raises AttributeError
     with patch.dict("sys.modules", {"fastapi": fake_fastapi}):
         import importlib
         import app.api.config_routes as cr
+
         importlib.reload(cr)
         cr.register_config_routes(router)
     assert router.post.called
@@ -231,6 +262,7 @@ def test_config_routes_via_fastapi_test_client():
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from fastapi import APIRouter
+
     app = FastAPI()
     router = APIRouter()
     register_config_routes(router)
@@ -257,6 +289,7 @@ def test_config_routes_via_fastapi_test_client():
 def test_config_routes_request_style_handlers_invoked():
     class NoPostGet:
         pass
+
     router = NoPostGet()
     register_config_routes(router)
     out = router.config_handlers["test_connection"](None)
@@ -273,6 +306,7 @@ def test_config_routes_request_style_via_test_client():
     import types
     from fastapi import FastAPI, APIRouter
     from fastapi.testclient import TestClient
+
     fake_fastapi = types.ModuleType("fastapi")
     fake_fastapi.Body = None
     fake_fastapi.Query = None
@@ -300,6 +334,7 @@ def test_config_routes_request_style_defaults_with_query_params():
     """Covers config_routes line 134: defaults_route with request.query_params.get('url')."""
     import types
     from fastapi import APIRouter as RealAPIRouter
+
     fake_fastapi = types.ModuleType("fastapi")
     fake_fastapi.Body = None
     fake_fastapi.Query = None
@@ -307,11 +342,16 @@ def test_config_routes_request_style_defaults_with_query_params():
     with patch.dict("sys.modules", {"fastapi": fake_fastapi}):
         import importlib
         import app.api.config_routes as cr
+
         importlib.reload(cr)
         router = RealAPIRouter()
         cr.register_config_routes(router)
         for r in router.routes:
-            if getattr(r, "path", "") == "/confluence/config/defaults" and "GET" in getattr(r, "methods", set()):
+            if getattr(
+                r, "path", ""
+            ) == "/confluence/config/defaults" and "GET" in getattr(
+                r, "methods", set()
+            ):
                 req = MagicMock()
                 req.query_params = {"url": "https://x.atlassian.net"}
                 out = r.endpoint(req)
@@ -320,10 +360,16 @@ def test_config_routes_request_style_defaults_with_query_params():
         else:
             pytest.fail("GET /confluence/config/defaults route not found")
         for r in router.routes:
-            if getattr(r, "path", "") == "/confluence/config/preferred-space" and "GET" in getattr(r, "methods", set()):
+            if getattr(
+                r, "path", ""
+            ) == "/confluence/config/preferred-space" and "GET" in getattr(
+                r, "methods", set()
+            ):
                 req = MagicMock()
                 req.query_params = MagicMock()
-                req.query_params.get = lambda k: "/my/proj" if k == "project_path" else None
+                req.query_params.get = lambda k: (
+                    "/my/proj" if k == "project_path" else None
+                )
                 out = r.endpoint(req)
                 assert "preferred_space" in out
                 break
@@ -334,6 +380,7 @@ def test_config_routes_request_style_defaults_with_query_params():
 def test_register_config_routes_handlers_dict():
     class NoPostGet:
         pass
+
     router = NoPostGet()
     register_config_routes(router)
     assert hasattr(router, "config_handlers")
@@ -528,13 +575,18 @@ def test_get_intelligent_defaults_with_url():
 
 def test_confluence_request_no_requests():
     import builtins
+
     real_import = builtins.__import__
+
     def fake_import(name, *args, **kwargs):
         if name == "requests":
             raise ImportError("No module named 'requests'")
         return real_import(name, *args, **kwargs)
+
     with patch.object(builtins, "__import__", side_effect=fake_import):
-        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request(
+            "https://x.com", "/api", ("u", "t")
+        )
     assert data is None
     assert elapsed == 0.0
 
@@ -546,7 +598,9 @@ def test_confluence_request_200_json():
     mock_resp.json.return_value = {"user": "me"}
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request(
+            "https://x.com", "/api", ("u", "t")
+        )
     assert data == {"user": "me"}
     assert elapsed >= 0
 
@@ -558,7 +612,9 @@ def test_confluence_request_200_bad_json():
     mock_resp.json.side_effect = ValueError()
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request(
+            "https://x.com", "/api", ("u", "t")
+        )
     assert data is None
 
 
@@ -568,7 +624,9 @@ def test_confluence_request_non_200():
     mock_resp.status_code = 401
     mock_requests.request.return_value = mock_resp
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, _el, status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, _el, status_code, _parse_error = _confluence_request(
+            "https://x.com", "/api", ("u", "t")
+        )
     assert data is None
 
 
@@ -576,7 +634,9 @@ def test_confluence_request_exception():
     mock_requests = MagicMock()
     mock_requests.request.side_effect = OSError()
     with patch.dict("sys.modules", {"requests": mock_requests}):
-        data, elapsed, _status_code, _parse_error = _confluence_request("https://x.com", "/api", ("u", "t"))
+        data, elapsed, _status_code, _parse_error = _confluence_request(
+            "https://x.com", "/api", ("u", "t")
+        )
     assert data is None
     assert elapsed >= 0
 
@@ -595,7 +655,10 @@ def test_test_connection_success_with_spaces(mock_req):
 
 @patch("app.config.confluence_config._confluence_request")
 def test_test_connection_success_no_spaces(mock_req):
-    mock_req.side_effect = [({"type": "user"}, 0.1, 200, False), (None, 0.0, None, False)]
+    mock_req.side_effect = [
+        ({"type": "user"}, 0.1, 200, False),
+        (None, 0.0, None, False),
+    ]
     out = confluence_test_connection("https://x.atlassian.net", "u@x.com", "tok")
     assert out["ok"] is True
     assert out["spaces"] == []
@@ -655,7 +718,9 @@ def test_no_path_traversal_valid():
 
 def test_credentials_url_cloud_http():
     with pytest.raises(ValueError, match="HTTPS"):
-        ConfluenceCredentials(url="http://x.atlassian.net", email="u@x.com", api_token="t")
+        ConfluenceCredentials(
+            url="http://x.atlassian.net", email="u@x.com", api_token="t"
+        )
 
 
 def test_credentials_url_no_scheme():
@@ -692,11 +757,15 @@ def test_credentials_email_domain_no_dot_second_branch():
 
 def test_credentials_email_has_at_no_dot_after():
     with pytest.raises(ValueError, match="Invalid"):
-        ConfluenceCredentials(url="https://x.com", email="user@domainnodot", api_token="t")
+        ConfluenceCredentials(
+            url="https://x.com", email="user@domainnodot", api_token="t"
+        )
 
 
 def test_credentials_valid():
-    c = ConfluenceCredentials(url="https://x.atlassian.net", email="u@x.com", api_token="t")
+    c = ConfluenceCredentials(
+        url="https://x.atlassian.net", email="u@x.com", api_token="t"
+    )
     assert c.url == "https://x.atlassian.net"
     assert c.email == "u@x.com"
 
@@ -806,4 +875,10 @@ def test_confluence_config_validate_valid():
 
 def test_confluence_config_validate_invalid_credentials():
     with pytest.raises(Exception):
-        ConfluenceConfigValidate(credentials={"url": "http://bad.atlassian.net", "email": "x", "api_token": "t"})
+        ConfluenceConfigValidate(
+            credentials={
+                "url": "http://bad.atlassian.net",
+                "email": "x",
+                "api_token": "t",
+            }
+        )

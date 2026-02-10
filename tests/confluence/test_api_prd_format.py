@@ -11,7 +11,14 @@ STATUS_KEYS = {"intelligence_metrics", "learning_progress", "intelligence_summar
 FEEDBACK_KEYS = {"updated", "intelligence_metrics"}
 ERROR_KEYS = {"error", "message", "intelligence_suggestion", "fallback_available"}
 # US-16 document-project PRD §9.1 success keys
-DOCUMENT_PROJECT_KEYS = {"confluence_url", "intelligence_analysis", "intelligent_recommendation", "confidence", "template_name", "learning_indicator"}
+DOCUMENT_PROJECT_KEYS = {
+    "confluence_url",
+    "intelligence_analysis",
+    "intelligent_recommendation",
+    "confidence",
+    "template_name",
+    "learning_indicator",
+}
 
 DATA_API = Path(__file__).resolve().parent / "data" / "api"
 
@@ -20,24 +27,59 @@ pytestmark = pytest.mark.api_format
 
 def test_tc_api_001_intelligent_analyze_format() -> None:
     """TC-API-001: POST /confluence/intelligent-analyze returns PRD §9.1 format."""
-    mock = {"intelligence_analysis": {"content_types": [], "detected_patterns": [], "intelligent_title": "", "intelligence_confidence": 0.0, "ai_reasoning": ""}, "intelligent_recommendation": {"template_id": "", "template_name": "", "intelligence_reason": "", "confidence_breakdown": {}}}
+    mock = {
+        "intelligence_analysis": {
+            "content_types": [],
+            "detected_patterns": [],
+            "intelligent_title": "",
+            "intelligence_confidence": 0.0,
+            "ai_reasoning": "",
+        },
+        "intelligent_recommendation": {
+            "template_id": "",
+            "template_name": "",
+            "intelligence_reason": "",
+            "confidence_breakdown": {},
+        },
+    }
     assert set(mock.keys()) >= ANALYZE_KEYS
 
 
 def test_tc_api_002_intelligent_create_format() -> None:
     """TC-API-002: POST /confluence/intelligent-create returns PRD format."""
-    mock = {"success": True, "intelligence_summary": {"ai_decisions_made": [], "intelligence_confidence": {}}, "intelligent_page": {"url": "", "id": "", "title": "", "space": "", "intelligence_tag": ""}}
+    mock = {
+        "success": True,
+        "intelligence_summary": {
+            "ai_decisions_made": [],
+            "intelligence_confidence": {},
+        },
+        "intelligent_page": {
+            "url": "",
+            "id": "",
+            "title": "",
+            "space": "",
+            "intelligence_tag": "",
+        },
+    }
     assert set(mock.keys()) >= CREATE_KEYS
 
 
 def test_tc_api_003_intelligence_status_format() -> None:
     """TC-API-003: GET /confluence/intelligence-status returns metrics."""
     try:
-        from offline_folder_rag.edge_agent.app.api.confluence_routes import intelligence_status_handler
+        from app.api.confluence_routes import intelligence_status_handler
     except ImportError:
         import sys
         from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from app.api.confluence_routes import intelligence_status_handler
 
     class MockReq:
@@ -58,11 +100,19 @@ def test_tc_api_003_intelligence_status_format() -> None:
 def test_tc_api_004_intelligence_feedback_format() -> None:
     """TC-API-004: POST /confluence/intelligence-feedback updates learning."""
     try:
-        from offline_folder_rag.edge_agent.app.api.confluence_routes import intelligence_feedback_handler
+        from app.api.confluence_routes import intelligence_feedback_handler
     except ImportError:
         import sys
         from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from app.api.confluence_routes import intelligence_feedback_handler
 
     class MockReq:
@@ -70,6 +120,7 @@ def test_tc_api_004_intelligence_feedback_format() -> None:
 
         def get_json(self, silent=True):
             import json
+
             return json.loads(self.body)
 
     resp, code = intelligence_feedback_handler(MockReq())
@@ -81,7 +132,12 @@ def test_tc_api_004_intelligence_feedback_format() -> None:
 
 def test_tc_api_005_error_responses_format() -> None:
     """TC-API-005: Error responses PRD §9.2 exact format."""
-    mock = {"error": "intelligence_error", "message": "", "intelligence_suggestion": "", "fallback_available": False}
+    mock = {
+        "error": "intelligence_error",
+        "message": "",
+        "intelligence_suggestion": "",
+        "fallback_available": False,
+    }
     assert set(mock.keys()) >= ERROR_KEYS
 
 
@@ -92,7 +148,10 @@ def test_tc_api_006_rate_limiting_contract() -> None:
 
 def test_tc_api_007_authentication_contract() -> None:
     """TC-API-007: Invalid token returns proper auth error."""
-    mock_error = {"error": "intelligence_error", "message": "Invalid credentials, update in settings"}
+    mock_error = {
+        "error": "intelligence_error",
+        "message": "Invalid credentials, update in settings",
+    }
     assert "message" in mock_error and "credential" in mock_error["message"].lower()
 
 
@@ -103,7 +162,10 @@ def test_tc_api_008_parameter_validation_contract() -> None:
 
 def test_tc_api_009_exact_format_analyze() -> None:
     """TC-API-009: intelligent-analyze ALL fields exactly PRD §9.1."""
-    assert "intelligence_analysis" in ANALYZE_KEYS or "intelligence_analysis" in {"intelligence_analysis", "intelligent_recommendation"}
+    assert "intelligence_analysis" in ANALYZE_KEYS or "intelligence_analysis" in {
+        "intelligence_analysis",
+        "intelligent_recommendation",
+    }
 
 
 def test_tc_api_010_exact_format_create() -> None:
@@ -113,20 +175,33 @@ def test_tc_api_010_exact_format_create() -> None:
 
 def test_tc_api_011_all_four_endpoints_validated() -> None:
     """TC-API-011: All 4 PRD endpoints match PRD exactly."""
-    assert len(ANALYZE_KEYS) >= 2 and len(CREATE_KEYS) >= 3 and len(STATUS_KEYS) >= 2 and len(FEEDBACK_KEYS) >= 2
+    assert (
+        len(ANALYZE_KEYS) >= 2
+        and len(CREATE_KEYS) >= 3
+        and len(STATUS_KEYS) >= 2
+        and len(FEEDBACK_KEYS) >= 2
+    )
 
 
 def test_tc_api_012_intelligence_metrics_validation() -> None:
     """TC-API-012: Intelligence metrics track learning."""
     try:
-        from offline_folder_rag.edge_agent.app.api.confluence_routes import (
+        from app.api.confluence_routes import (
             intelligence_status_handler,
             intelligence_feedback_handler,
         )
     except ImportError:
         import sys
         from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from app.api.confluence_routes import (
             intelligence_status_handler,
             intelligence_feedback_handler,
@@ -141,11 +216,18 @@ def test_tc_api_012_intelligence_metrics_validation() -> None:
 
         def get_json(self, silent=True):
             import json
+
             return json.loads(self.body)
 
     status_resp, _ = intelligence_status_handler(MockReqStatus())
     feedback_resp, _ = intelligence_feedback_handler(MockReqFeedback())
-    metrics_keys = {"template_selection_intelligence", "user_intelligence_acceptance", "learning_intelligence_improvement", "confidence_intelligence_calibration", "ai_decision_quality"}
+    metrics_keys = {
+        "template_selection_intelligence",
+        "user_intelligence_acceptance",
+        "learning_intelligence_improvement",
+        "confidence_intelligence_calibration",
+        "ai_decision_quality",
+    }
     assert "intelligence_metrics" in status_resp
     assert "intelligence_metrics" in feedback_resp
     im = status_resp.get("intelligence_metrics", {})
@@ -157,8 +239,14 @@ def test_tc_api_document_project_format() -> None:
     """TC-API: POST /confluence/document-project returns PRD §9.1 format on success."""
     mock_success = {
         "confluence_url": "https://confluence.example.com/page/123",
-        "intelligence_analysis": {"content_types": [], "project_type": "API", "source_file_count": 10},
-        "intelligent_recommendation": {"template_name": "Python FastAPI Project Template"},
+        "intelligence_analysis": {
+            "content_types": [],
+            "project_type": "API",
+            "source_file_count": 10,
+        },
+        "intelligent_recommendation": {
+            "template_name": "Python FastAPI Project Template"
+        },
         "confidence": 85,
         "template_name": "Python FastAPI Project Template",
         "learning_indicator": True,
@@ -174,10 +262,18 @@ def test_error_responses_match_prd_section_9_1_format() -> None:
     try:
         from fastapi import APIRouter, FastAPI
         from fastapi.testclient import TestClient
-        from offline_folder_rag.edge_agent.app.api import register_confluence_routes
+        from app.api import register_confluence_routes
     except ImportError:
         import sys
-        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "offline-folder-rag" / "edge_agent"))
+
+        sys.path.insert(
+            0,
+            str(
+                Path(__file__).resolve().parents[2]
+                / "repo_analysis_rag"
+                / "backend_confluence"
+            ),
+        )
         from fastapi import APIRouter, FastAPI
         from fastapi.testclient import TestClient
         from app.api import register_confluence_routes

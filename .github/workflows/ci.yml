@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'confluence_requirements.txt', 'offline-folder-rag/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'confluence_requirements.txt', 'repo_analysis_rag/backend_confluence/requirements.txt', 'repo_analysis_rag/backend_rag/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -71,29 +71,30 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r confluence_requirements.txt || true
-          pip install -r offline-folder-rag/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_confluence/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_rag/requirements.txt || true
           pip install black ruff mypy pylint flake8
 
       - name: Run Black formatter check
-        run: black --check --diff repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/
+        run: black --check --diff repo_analysis_rag/ repo_analysis_rag/backend_confluence/ repo_analysis_rag/backend_rag/ tests/
         continue-on-error: true
 
       - name: Run Ruff linter
-        run: ruff check repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/
+        run: ruff check repo_analysis_rag/ repo_analysis_rag/backend_confluence/ repo_analysis_rag/backend_rag/ tests/
         continue-on-error: true
 
       - name: Run MyPy type checker
-        run: mypy repo_analysis_rag offline-folder-rag/edge_agent --ignore-missing-imports
+        run: mypy repo_analysis_rag/backend_confluence repo_analysis_rag/backend_rag --ignore-missing-imports --explicit-package-bases
         continue-on-error: true
 
       - name: Run Pylint
         env:
-          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag/edge_agent
-        run: pylint repo_analysis_rag/ offline-folder-rag/edge_agent/ --disable=all --enable=E,F
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/repo_analysis_rag/backend_confluence:${{ github.workspace }}/repo_analysis_rag/backend_rag
+        run: pylint repo_analysis_rag/ repo_analysis_rag/backend_confluence/ repo_analysis_rag/backend_rag/ --disable=all --enable=E,F
         continue-on-error: true
 
       - name: Run Flake8
-        run: flake8 repo_analysis_rag/ offline-folder-rag/edge_agent/ tests/ --max-line-length=88 --extend-ignore=E203,W503
+        run: flake8 repo_analysis_rag/ repo_analysis_rag/backend_confluence/ repo_analysis_rag/backend_rag/ tests/ --max-line-length=88 --extend-ignore=E203,W503
         continue-on-error: true
 
   security:
@@ -115,7 +116,7 @@ jobs:
           pip install bandit safety
 
       - name: Run Bandit security scan
-        run: bandit -r repo_analysis_rag/ offline-folder-rag/edge_agent/ -f json -o bandit-report.json --severity-level high
+        run: bandit -r repo_analysis_rag/ repo_analysis_rag/backend_confluence/ repo_analysis_rag/backend_rag/ -f json -o bandit-report.json --severity-level high
         continue-on-error: true
 
       - name: Upload Bandit report
@@ -155,7 +156,7 @@ jobs:
           - 6379:6379
 
     env:
-      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/repo_analysis_rag/backend_confluence:${{ github.workspace }}/repo_analysis_rag/backend_rag
       ZEROUI_IDE_DB_URL: postgresql://zeroui_ide_user:change_me_ide@localhost:5436/zeroui_ide_pg
       REDIS_URL: redis://localhost:6379
 
@@ -173,7 +174,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r confluence_requirements.txt || true
-          pip install -r offline-folder-rag/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_confluence/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_rag/requirements.txt || true
           pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist
 
       - name: Wait for services
@@ -229,15 +231,15 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install TypeScript dependencies
-        working-directory: offline-folder-rag/vscode-extension
+        working-directory: repo_analysis_rag/vscode-extension
         run: npm install --no-audit --no-fund
 
       - name: Build TypeScript
-        working-directory: offline-folder-rag/vscode-extension
+        working-directory: repo_analysis_rag/vscode-extension
         run: npm run build || true
 
       - name: Run TypeScript unit tests
-        working-directory: offline-folder-rag/vscode-extension
+        working-directory: repo_analysis_rag/vscode-extension
         run: |
           if [ -f jest.config.js ] || [ -f jest.config.ts ]; then
             npx jest --testPathPattern="__tests__|tests" --no-cache
@@ -269,7 +271,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, lint, security]
     env:
-      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/offline-folder-rag
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/repo_analysis_rag/backend_confluence:${{ github.workspace }}/repo_analysis_rag/backend_rag
       ZEROUI_IDE_DB_URL: postgresql://zeroui_ide_user:change_me_ide@localhost:5436/zeroui_ide_pg
       REDIS_URL: redis://localhost:6379
     services:
@@ -309,7 +311,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r confluence_requirements.txt || true
-          pip install -r offline-folder-rag/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_confluence/requirements.txt || true
+          pip install -r repo_analysis_rag/backend_rag/requirements.txt || true
           pip install pytest pytest-cov pytest-asyncio pytest-mock pytest-xdist pytest-timeout
 
       - name: Wait for services
