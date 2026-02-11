@@ -1,6 +1,17 @@
 {
-  "python.analysis.extraPaths": ["${workspaceFolder}/repo_analysis_rag/backend_confluence","${workspaceFolder}/repo_analysis_rag/backend_rag"],
-  "basedpyright.analysis.extraPaths": ["${workspaceFolder}/repo_analysis_rag/backend_confluence","${workspaceFolder}/repo_analysis_rag/backend_rag"],
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/repo_analysis_rag/backend_confluence",
+    "${workspaceFolder}/repo_analysis_rag/backend_rag"
+  ],
+  "basedpyright.analysis.extraPaths": [
+    "${workspaceFolder}/repo_analysis_rag/backend_confluence",
+    "${workspaceFolder}/repo_analysis_rag/backend_rag"
+  ],
   "confluence.credentials.url": "https://mohdaleemuddin016-1769759431628.atlassian.net/wiki",
-  "confluence.credentials.email": "mohdaleemuddin016@gmail.com"
+  "confluence.credentials.email": "mohdaleemuddin016@gmail.com",
+  "cursorpyright.analysis.extraPaths": [
+    "${workspaceFolder}/repo_analysis_rag/backend_confluence",
+    "${workspaceFolder}/repo_analysis_rag/backend_rag"
+  ],
+  "rag.agentBaseUrl": "http://localhost:8001"
 }

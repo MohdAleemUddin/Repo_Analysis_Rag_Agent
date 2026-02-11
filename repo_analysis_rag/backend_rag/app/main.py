@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from .api.routes import router as api_router
 from .indexing import indexer
+from .security.token_store import get_or_create_token
 
 
 def _error_response(
@@ -22,6 +23,7 @@ def _error_response(
 def create_app() -> FastAPI:
     app = FastAPI()
     indexer.reset_indexer_state()
+    get_or_create_token()
 
     @app.exception_handler(HTTPException)
     async def http_exception_handler(_, exc: HTTPException):

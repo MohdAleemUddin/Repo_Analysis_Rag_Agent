@@ -19,9 +19,35 @@ import {
     getConfluenceDocumentProjectProgressHtml,
     getConfluenceDocumentProjectSuccessHtml,
 } from "./ui/confluenceHtml";
-import { triggerFullIndex, setIndexing, clearIndexing, isPathInsideRoot } from "../services/indexGate";
-// import { renderAssistantResponse } from "./components/AssistantResponseRenderer";
-const renderAssistantResponse = (payload: any) => JSON.stringify(payload);
+import { triggerFullIndex, setIndexing, clearIndexing, isPathInsideRoot, checkIndexExists } from "../services/indexGate";
+/** Renders RAG assistant payload as HTML (answer + optional confidence + citations). */
+function renderAssistantResponse(payload: any): string {
+    if (!payload || typeof payload !== "object") return "";
+    const escape = (s: string) => String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    const answer = escape(payload.answer ?? "");
+    const confidence = payload.confidence ?? "found";
+    const citations: Array<{ file_path?: string; path?: string; line_number?: number; snippet?: string }> = Array.isArray(payload.citations) ? payload.citations : [];
+    let html = `<div class="rag-response"><div class="rag-answer">${answer.replace(/\n/g, "<br>")}</div>`;
+    if (confidence !== "found") {
+        html += `<div class="rag-confidence" data-confidence="${escape(confidence)}">${escape(confidence)}</div>`;
+    }
+    if (citations.length > 0) {
+        html += `<div class="rag-citations"><strong>Citations</strong><ul>`;
+        for (const c of citations) {
+            const path = escape((c.file_path ?? c.path ?? "").toString());
+            const line = (c.line_number ?? c.line_start ?? "").toString();
+            const snippet = escape((c.snippet ?? "").toString().slice(0, 300));
+            html += `<li><code>${path}${line ? `:${line}` : ""}</code>${snippet ? `<br><pre>${snippet}</pre>` : ""}</li>`;
+        }
+        html += `</ul></div>`;
+    }
+    html += `</div>`;
+    return html;
+}
 import {
     askWithOverride,
     startHealthPolling,
@@ -33,7 +59,10 @@ import {
     ComposerMode,
     DEFAULT_AGENT_BASE_URL,
     getIndexReport,
-    trackConfluenceUsage
+    getRagBaseUrl,
+    getTokenFilePath,
+    trackConfluenceUsage,
+    triggerIndex
 } from "../services/agentClient";
 import { readRecentFolders, readRootPath, writeRootPath, readAutoIndex, writeAutoIndex } from "../services/storage";
 import { AutoIndexScheduler } from "../services/autoIndexScheduler";
@@ -41,6 +70,8 @@ import { getOnboardingState, markTooltipShown, incrementUsage } from "../conflue
 import { getSpacePreference, setSpacePreference, getSuggestedSpaceFromProjectType } from "../confluence/confluenceSpacePreferences";
 
 const COMPOSER_PLACEHOLDER = "Plan · @ for context · / for commands";
+
+const SUMMARY_PROMPT = "Summarize this codebase. What is this project about? List the main components, technologies, and purpose in a few paragraphs. Use only the provided code and documentation excerpts.";
 
 class ModeState {
     private mode: ComposerMode;
@@ -93,14 +124,18 @@ export class ChatPanelViewProvider {
     private confluenceState: ConfluenceState = {};
     private conversationHistory: Array<{ content: string }> = [];
     private readonly confluenceOutput: vscode.OutputChannel | undefined;
+    private readonly ragLog: vscode.OutputChannel | undefined;
+    private lastRagSummaryPlainText: string | undefined = undefined;
 
     constructor(
         private readonly extensionContext: vscode.ExtensionContext,
         private readonly extensionUri: vscode.Uri,
-        confluenceOutput?: vscode.OutputChannel
+        confluenceOutput?: vscode.OutputChannel,
+        ragLog?: vscode.OutputChannel
     ) {
         this.confluenceOutput = confluenceOutput;
-        this.router = new CommandRouter(extensionContext, (message) => this.postMessage(message));
+        this.ragLog = ragLog;
+        this.router = new CommandRouter(extensionContext, (message) => this.postMessage(message), ragLog);
         this.modeState = new ModeState();
         this.scheduler = new AutoIndexScheduler({
             triggerIndex: () => this.handleIndexAndReport('incremental'),
@@ -117,6 +152,34 @@ export class ChatPanelViewProvider {
                 }
             }
         });
+    }
+
+    /**
+     * Run a full index once in the background (e.g. when extension loads).
+     * Does not post to chat; logs to ragLog. Manual /index full and Index button still work.
+     */
+    public async runInitialFullIndex(): Promise<void> {
+        const rootPath = this.getWorkspaceRootPath();
+        if (!rootPath || !rootPath.trim()) return;
+        const indexOnLoad = vscode.workspace.getConfiguration("rag").get<boolean>("indexOnLoad", true);
+        if (!indexOnLoad) return;
+
+        this.ragLog?.appendLine("[Offline RAG] Index on load: starting full index in background.");
+        setIndexing(rootPath);
+        try {
+            await triggerIndex(getRagBaseUrl(), "full", rootPath);
+            await triggerFullIndex(
+                { storageRoot: this.extensionContext.globalStorageUri.fsPath },
+                rootPath,
+                (msg) => this.ragLog?.appendLine(msg)
+            );
+            this.ragLog?.appendLine("[Offline RAG] Index on load: completed.");
+        } catch (error) {
+            const errMsg = error instanceof Error ? error.message : String(error);
+            this.ragLog?.appendLine(`[Offline RAG] Index on load failed: ${errMsg}`);
+        } finally {
+            clearIndexing(rootPath);
+        }
     }
 
     private pushToConversationHistory(content: string): void {
@@ -359,8 +422,9 @@ export class ChatPanelViewProvider {
             await this.handleWebviewMessage(message);
             if (message.type === "dispatch") {
                 const { text, mode } = message;
-                this.pushToConversationHistory(text);
                 const normalizedMode = isComposerMode(mode) ? mode : this.modeState.getMode();
+                this.ragLog?.appendLine(`[RAG] Message received: type=dispatch mode=${String(mode)} normalizedMode=${normalizedMode} text=${(text?.length ?? 0) > 60 ? (String(text).slice(0, 60) + "...") : String(text)}`);
+                this.pushToConversationHistory(text);
                 
                 if (text.startsWith("/")) {
                     const result = await parseSlashCommand(text, this.extensionContext);
@@ -382,16 +446,94 @@ export class ChatPanelViewProvider {
                         this.postMessage(result);
                     }
                 } else {
-                    const extraContext = this.buildExtraContext();
-                    if (normalizedMode === "rag") {
+                    const normalized = (text || "").toLowerCase().trim();
+                    if (!this.isSaveToConfluenceIntent(normalized)) {
+                        this.lastRagSummaryPlainText = undefined;
+                    }
+                    if (this.isSaveToConfluenceIntent(normalized)) {
+                        if (!this.lastRagSummaryPlainText) {
+                            this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
+                            return;
+                        }
+                        await this.handleSaveLastSummaryToConfluence();
+                        return;
+                    }
+                    if (this.isSummaryIntent(normalized)) {
+                        const rootPath = this.getEffectiveRootPath();
+                        if (!rootPath) {
+                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
+                            return;
+                        }
+                        const storageRoot = this.extensionContext.globalStorageUri.fsPath;
+                        const exists = await checkIndexExists({ storageRoot }, rootPath);
+                        if (!exists) {
+                            this.postMessage({ type: "showIndexModal" });
+                            return;
+                        }
+                        const extraContextSummary = this.buildExtraContext();
+                        if (!extraContextSummary) {
+                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
+                            return;
+                        }
                         try {
-                            const response = await askWithOverride(text, "rag", extraContext);
+                            const response = await askWithOverride(SUMMARY_PROMPT, "rag", extraContextSummary);
+                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
                             const result = await response.json();
-                            
-                            if (result.error === "INVALID_TOKEN") {
-                                this.postMessage({ type: "commandResult", payload: "Error: INVALID_TOKEN. Please check your agent token." });
+                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                            if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                this.postMessage({ type: "commandResult", payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + getTokenFilePath() });
                                 return;
                             }
+                            if (!response.ok) {
+                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                return;
+                            }
+                            this.lastRagSummaryPlainText = result.answer;
+                            const assistantResponseHtml = renderAssistantResponse({
+                                mode: "rag",
+                                confidence: result.confidence || "found",
+                                answer: result.answer || JSON.stringify(result),
+                                citations: result.citations || []
+                            });
+                            this.postMessage({ type: "commandResult", payload: assistantResponseHtml, isHtml: true });
+                            return;
+                        } catch (error) {
+                            const errMsg = error instanceof Error ? error.message : String(error);
+                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                            this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
+                            return;
+                        }
+                    }
+                    const extraContext = this.buildExtraContext();
+                    if (normalizedMode === "rag") {
+                        const baseUrl = getRagBaseUrl();
+                        const askUrl = `${baseUrl}/ask`;
+                        this.ragLog?.appendLine(`[RAG] Target: POST ${askUrl}`);
+                        this.ragLog?.appendLine(`[RAG] Sending request: POST ${askUrl}`);
+                        this.ragLog?.appendLine(`[RAG] Query: ${text.length > 80 ? text.slice(0, 80) + "..." : text}`);
+                        try {
+                            const response = await askWithOverride(text, "rag", extraContext);
+                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
+                            const result = await response.json();
+                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                            if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                this.ragLog?.appendLine(`[RAG] Token file: ${getTokenFilePath()}`);
+                                this.postMessage({
+                                    type: "commandResult",
+                                    payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + getTokenFilePath(),
+                                });
+                                return;
+                            }
+                            if (!response.ok) {
+                                this.ragLog?.appendLine(`[RAG] Server error response: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
+                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                return;
+                            }
+                            this.ragLog?.appendLine(`[RAG] Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}, confidence=${result?.confidence ?? "—"}`);
 
                             let payload = result.answer || JSON.stringify(result);
                             
@@ -408,21 +550,26 @@ export class ChatPanelViewProvider {
                                 isHtml: true
                             });
                         } catch (error) {
+                            const errMsg = error instanceof Error ? error.message : String(error);
+                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
                             this.postMessage({
                                 type: "commandResult",
-                                payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                                payload: `Error: ${errMsg}`,
                             });
                         }
                     } else if (normalizedMode === "auto") {
+                        this.ragLog?.appendLine(`[RAG] Routing to auto (overview/search/ask).`);
                         try {
                             await this.router.autoRouteInput(text, extraContext);
                         } catch (error) {
+                            this.ragLog?.appendLine(`[RAG] Auto route failed: ${error instanceof Error ? error.message : String(error)}`);
                             this.postMessage({
                                 type: "commandResult",
                                 payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
                             });
                         }
                     } else {
+                        this.ragLog?.appendLine(`[RAG] Routing to tools (no /ask).`);
                         await this.router.handleCommand(text, extraContext);
                     }
                 }
@@ -538,56 +685,8 @@ export class ChatPanelViewProvider {
     }
 
     private async handleWebviewMessage(message: any): Promise<void> {
-        if (message.type === "dispatch") {
-            const { text, mode } = message;
-            const normalizedMode = isComposerMode(mode) ? mode : this.modeState.getMode();
-            
-            if (text.startsWith("/")) {
-                const result = await parseSlashCommand(text, this.extensionContext);
-                if (result.type === 'assistantResponse') {
-                    const html = renderAssistantResponse(result.payload);
-                    this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
-                } else {
-                    this.postMessage(result);
-                }
-            } else {
-                const extraContext = this.buildExtraContext();
-                if (normalizedMode === "rag") {
-                    try {
-                        const response = await askWithOverride(text, "rag", extraContext);
-                        const result = await response.json();
-                        let payload = result.answer || JSON.stringify(result);
-                        
-                        if (result.citations && Array.isArray(result.citations)) {
-                            const citationsHtml = result.citations.map((c: any) => this.renderCitation(c)).join('<br>');
-                            payload = `${payload}<br><br><b>Citations:</b><br>${citationsHtml}`;
-                        }
-
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: payload,
-                            isHtml: true
-                        });
-                    } catch (error) {
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                        });
-                    }
-                } else if (normalizedMode === "auto") {
-                    try {
-                        await this.router.autoRouteInput(text, extraContext);
-                    } catch (error) {
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                        });
-                    }
-                } else {
-                    await this.router.handleCommand(text, extraContext);
-                }
-            }
-        } else if (message.type === "indexAction") {
+        // dispatch is handled only in onDidReceiveMessage (single path: logging, token/response checks, renderAssistantResponse)
+        if (message.type === "indexAction") {
             const workspaceFolders = vscode.workspace.workspaceFolders;
             if (!workspaceFolders || workspaceFolders.length === 0) return;
             const rootPath = workspaceFolders[0].uri.fsPath;
@@ -596,11 +695,18 @@ export class ChatPanelViewProvider {
                 this.postMessage({ type: "dismissIndexModal" });
                 setIndexing(rootPath);
                 try {
+                    await triggerIndex(getRagBaseUrl(), "full", rootPath);
                     await triggerFullIndex(
                         { storageRoot: this.extensionContext.globalStorageUri.fsPath },
                         rootPath,
                         (msg) => this.postMessage({ type: "commandResult", payload: msg })
                     );
+                } catch (error) {
+                    this.postMessage({
+                        type: "commandResult",
+                        payload: `Indexing failed: ${error instanceof Error ? error.message : String(error)}`
+                    });
+                    return;
                 } finally {
                     clearIndexing(rootPath);
                 }
@@ -654,12 +760,13 @@ export class ChatPanelViewProvider {
 
         setIndexing(rootPath);
         try {
+            await triggerIndex(getRagBaseUrl(), mode, rootPath);
             await triggerFullIndex(
                 { storageRoot: this.extensionContext.globalStorageUri.fsPath },
                 rootPath,
                 (msg) => this.postMessage({ type: "commandResult", payload: msg })
             );
-            
+
             const report = await getIndexReport(this.agentBaseUrl, rootPath);
             const reportHtml = this.renderIndexReport(report);
             this.postMessage({
@@ -1037,6 +1144,80 @@ export class ChatPanelViewProvider {
         }
     }
 
+    private async handleSaveLastSummaryToConfluence(): Promise<void> {
+        if (!this.lastRagSummaryPlainText) {
+            this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
+            return;
+        }
+        try {
+            const config = await getConfluenceConfigAsync(this.extensionContext);
+            if (!config.auth || config.auth.length < 2) {
+                const html = getConfluenceErrorHtml({
+                    error: 'missing_credentials',
+                    message: 'Confluence credentials not set.',
+                    suggestion: 'Open Settings (Confluence: Configure Settings), set Confluence URL, email, and store your API token.',
+                    confidence: 0,
+                    fallbackAvailable: false,
+                    actions: ['Update Settings', 'Cancel'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            const folderName = this.getEffectiveRootPath() ? path.basename(this.getEffectiveRootPath()!) : "Workspace";
+            const title = "Codebase Summary – " + folderName;
+            let space = getSpacePreference(this.extensionContext, this.getEffectiveRootPath());
+            if (!space) {
+                space = await getPreferredSpace(config.baseUrl, this.getEffectiveRootPath() ?? "");
+            }
+            const result = await intelligentCreate(config, {
+                content: this.lastRagSummaryPlainText,
+                intelligent_mode: true,
+                auto_title: false,
+                space,
+                intelligence_context: { suggested_title: title, title_override: title },
+                base_url: config.confluenceInstanceUrl || undefined,
+                auth: config.auth ?? undefined,
+            });
+            if ('error' in result && result.error) {
+                const err = result as IntelligenceErrorResponse;
+                const html = getConfluenceErrorHtml({
+                    error: err.error,
+                    message: err.message,
+                    suggestion: err.intelligence_suggestion ?? 'Check Confluence settings, network, and credentials.',
+                    confidence: err.intelligence_confidence ?? 0.5,
+                    fallbackAvailable: err.fallback_available ?? true,
+                    actions: err.actions ?? ['Retry', 'Cancel', 'Update Settings'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            this.lastRagSummaryPlainText = undefined;
+            const pageUrl = (result as { url?: string }).url;
+            const pageTitle = (result as { title?: string }).title ?? title;
+            const successPayload = pageUrl
+                ? `Confluence page created: <a href="${pageUrl}" data-href="${pageUrl}">${pageTitle}</a>`
+                : "Confluence page created: " + pageTitle;
+            this.postMessage({ type: "commandResult", payload: successPayload, isHtml: true });
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const html = getConfluenceErrorHtml({
+                error: 'create_failed',
+                message: msg,
+                suggestion: 'Check Confluence settings, network, and credentials.',
+                confidence: 0.5,
+                fallbackAvailable: true,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
+
     private async handleConfluenceIntelligenceFeedback(creationId: string | undefined, intelligenceScore: number | undefined, feedback?: string): Promise<void> {
         if (!this.panel || !creationId || typeof intelligenceScore !== 'number' || intelligenceScore < 1 || intelligenceScore > 5) return;
         try {
@@ -1186,6 +1367,30 @@ export class ChatPanelViewProvider {
     /** Nonce used in Confluence HTML must match panel CSP; use panel nonce when available. */
     private getConfluenceNonce(): string {
         return this.panelNonce ?? this.getNonce();
+    }
+
+    private isSaveToConfluenceIntent(normalized: string): boolean {
+        const phrases = [
+            "save this to confluence",
+            "save this summary",
+            "save this summary in a confluence page",
+            "create a confluence page with this",
+            "put this in confluence",
+            "publish this to confluence",
+        ];
+        return phrases.some((phrase) => normalized.includes(phrase));
+    }
+
+    private isSummaryIntent(normalized: string): boolean {
+        const phrases = [
+            "analyze this codebase",
+            "codebase summary",
+            "summarize this project",
+            "project summary",
+            "give me a summary of this code",
+            "what is this project about",
+        ];
+        return phrases.some((phrase) => normalized.includes(phrase));
     }
 
     private buildExtraContext(): { root_path: string } | undefined {

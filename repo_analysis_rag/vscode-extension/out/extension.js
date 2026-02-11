@@ -99,11 +99,18 @@ function activate(context) {
     confluenceOutput.show(true);
     try {
         log.appendLine("[Offline RAG] Activating...");
-        const provider = new ChatPanelViewProvider_1.ChatPanelViewProvider(context, context.extensionUri, confluenceOutput);
+        log.appendLine("[Offline RAG] RAG request/response logs will appear here when you send messages.");
+        const provider = new ChatPanelViewProvider_1.ChatPanelViewProvider(context, context.extensionUri, confluenceOutput, log);
         const command = vscode.commands.registerCommand("offlineFolderRag.openChat", () => {
             provider.show();
         });
         context.subscriptions.push(command);
+        // Run full index in background when extension loads (if workspace folder open and rag.indexOnLoad is true)
+        const indexOnLoadDelayMs = 2000;
+        const indexOnLoadTimer = setTimeout(() => {
+            void provider.runInitialFullIndex();
+        }, indexOnLoadDelayMs);
+        context.subscriptions.push({ dispose: () => clearTimeout(indexOnLoadTimer) });
         const analyzeCommand = vscode.commands.registerCommand("offlineFolderRag.analyzeFolder", () => {
             vscode.window.showInformationMessage('Analyzing folder...');
         });

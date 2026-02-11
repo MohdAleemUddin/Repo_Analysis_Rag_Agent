@@ -44,14 +44,42 @@ const confluence_settings_1 = require("../confluence/confluence-settings");
 const chatPanelHtml_1 = require("./ui/chatPanelHtml");
 const confluenceHtml_1 = require("./ui/confluenceHtml");
 const indexGate_1 = require("../services/indexGate");
-// import { renderAssistantResponse } from "./components/AssistantResponseRenderer";
-const renderAssistantResponse = (payload) => JSON.stringify(payload);
+/** Renders RAG assistant payload as HTML (answer + optional confidence + citations). */
+function renderAssistantResponse(payload) {
+    if (!payload || typeof payload !== "object")
+        return "";
+    const escape = (s) => String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    const answer = escape(payload.answer ?? "");
+    const confidence = payload.confidence ?? "found";
+    const citations = Array.isArray(payload.citations) ? payload.citations : [];
+    let html = `<div class="rag-response"><div class="rag-answer">${answer.replace(/\n/g, "<br>")}</div>`;
+    if (confidence !== "found") {
+        html += `<div class="rag-confidence" data-confidence="${escape(confidence)}">${escape(confidence)}</div>`;
+    }
+    if (citations.length > 0) {
+        html += `<div class="rag-citations"><strong>Citations</strong><ul>`;
+        for (const c of citations) {
+            const path = escape((c.file_path ?? c.path ?? "").toString());
+            const line = (c.line_number ?? c.line_start ?? "").toString();
+            const snippet = escape((c.snippet ?? "").toString().slice(0, 300));
+            html += `<li><code>${path}${line ? `:${line}` : ""}</code>${snippet ? `<br><pre>${snippet}</pre>` : ""}</li>`;
+        }
+        html += `</ul></div>`;
+    }
+    html += `</div>`;
+    return html;
+}
 const agentClient_1 = require("../services/agentClient");
 const storage_1 = require("../services/storage");
 const autoIndexScheduler_1 = require("../services/autoIndexScheduler");
 const onboarding_1 = require("../confluence/onboarding");
 const confluenceSpacePreferences_1 = require("../confluence/confluenceSpacePreferences");
 const COMPOSER_PLACEHOLDER = "Plan · @ for context · / for commands";
+const SUMMARY_PROMPT = "Summarize this codebase. What is this project about? List the main components, technologies, and purpose in a few paragraphs. Use only the provided code and documentation excerpts.";
 class ModeState {
     mode;
     constructor() {
@@ -91,11 +119,14 @@ class ChatPanelViewProvider {
     confluenceState = {};
     conversationHistory = [];
     confluenceOutput;
-    constructor(extensionContext, extensionUri, confluenceOutput) {
+    ragLog;
+    lastRagSummaryPlainText = undefined;
+    constructor(extensionContext, extensionUri, confluenceOutput, ragLog) {
         this.extensionContext = extensionContext;
         this.extensionUri = extensionUri;
         this.confluenceOutput = confluenceOutput;
-        this.router = new commandRouter_1.CommandRouter(extensionContext, (message) => this.postMessage(message));
+        this.ragLog = ragLog;
+        this.router = new commandRouter_1.CommandRouter(extensionContext, (message) => this.postMessage(message), ragLog);
         this.modeState = new ModeState();
         this.scheduler = new autoIndexScheduler_1.AutoIndexScheduler({
             triggerIndex: () => this.handleIndexAndReport('incremental'),
@@ -111,6 +142,32 @@ class ChatPanelViewProvider {
                 }
             }
         });
+    }
+    /**
+     * Run a full index once in the background (e.g. when extension loads).
+     * Does not post to chat; logs to ragLog. Manual /index full and Index button still work.
+     */
+    async runInitialFullIndex() {
+        const rootPath = this.getWorkspaceRootPath();
+        if (!rootPath || !rootPath.trim())
+            return;
+        const indexOnLoad = vscode.workspace.getConfiguration("rag").get("indexOnLoad", true);
+        if (!indexOnLoad)
+            return;
+        this.ragLog?.appendLine("[Offline RAG] Index on load: starting full index in background.");
+        (0, indexGate_1.setIndexing)(rootPath);
+        try {
+            await (0, agentClient_1.triggerIndex)((0, agentClient_1.getRagBaseUrl)(), "full", rootPath);
+            await (0, indexGate_1.triggerFullIndex)({ storageRoot: this.extensionContext.globalStorageUri.fsPath }, rootPath, (msg) => this.ragLog?.appendLine(msg));
+            this.ragLog?.appendLine("[Offline RAG] Index on load: completed.");
+        }
+        catch (error) {
+            const errMsg = error instanceof Error ? error.message : String(error);
+            this.ragLog?.appendLine(`[Offline RAG] Index on load failed: ${errMsg}`);
+        }
+        finally {
+            (0, indexGate_1.clearIndexing)(rootPath);
+        }
     }
     pushToConversationHistory(content) {
         if (!content || typeof content !== 'string')
@@ -352,8 +409,9 @@ class ChatPanelViewProvider {
             await this.handleWebviewMessage(message);
             if (message.type === "dispatch") {
                 const { text, mode } = message;
-                this.pushToConversationHistory(text);
                 const normalizedMode = (0, agentClient_1.isComposerMode)(mode) ? mode : this.modeState.getMode();
+                this.ragLog?.appendLine(`[RAG] Message received: type=dispatch mode=${String(mode)} normalizedMode=${normalizedMode} text=${(text?.length ?? 0) > 60 ? (String(text).slice(0, 60) + "...") : String(text)}`);
+                this.pushToConversationHistory(text);
                 if (text.startsWith("/")) {
                     const result = await (0, commandRouter_1.parseSlashCommand)(text, this.extensionContext);
                     if (result.type === 'assistantResponse') {
@@ -380,15 +438,95 @@ class ChatPanelViewProvider {
                     }
                 }
                 else {
-                    const extraContext = this.buildExtraContext();
-                    if (normalizedMode === "rag") {
+                    const normalized = (text || "").toLowerCase().trim();
+                    if (!this.isSaveToConfluenceIntent(normalized)) {
+                        this.lastRagSummaryPlainText = undefined;
+                    }
+                    if (this.isSaveToConfluenceIntent(normalized)) {
+                        if (!this.lastRagSummaryPlainText) {
+                            this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
+                            return;
+                        }
+                        await this.handleSaveLastSummaryToConfluence();
+                        return;
+                    }
+                    if (this.isSummaryIntent(normalized)) {
+                        const rootPath = this.getEffectiveRootPath();
+                        if (!rootPath) {
+                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
+                            return;
+                        }
+                        const storageRoot = this.extensionContext.globalStorageUri.fsPath;
+                        const exists = await (0, indexGate_1.checkIndexExists)({ storageRoot }, rootPath);
+                        if (!exists) {
+                            this.postMessage({ type: "showIndexModal" });
+                            return;
+                        }
+                        const extraContextSummary = this.buildExtraContext();
+                        if (!extraContextSummary) {
+                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
+                            return;
+                        }
                         try {
-                            const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext);
+                            const response = await (0, agentClient_1.askWithOverride)(SUMMARY_PROMPT, "rag", extraContextSummary);
+                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
                             const result = await response.json();
-                            if (result.error === "INVALID_TOKEN") {
-                                this.postMessage({ type: "commandResult", payload: "Error: INVALID_TOKEN. Please check your agent token." });
+                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                            if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                this.postMessage({ type: "commandResult", payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)() });
                                 return;
                             }
+                            if (!response.ok) {
+                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                return;
+                            }
+                            this.lastRagSummaryPlainText = result.answer;
+                            const assistantResponseHtml = renderAssistantResponse({
+                                mode: "rag",
+                                confidence: result.confidence || "found",
+                                answer: result.answer || JSON.stringify(result),
+                                citations: result.citations || []
+                            });
+                            this.postMessage({ type: "commandResult", payload: assistantResponseHtml, isHtml: true });
+                            return;
+                        }
+                        catch (error) {
+                            const errMsg = error instanceof Error ? error.message : String(error);
+                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                            this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
+                            return;
+                        }
+                    }
+                    const extraContext = this.buildExtraContext();
+                    if (normalizedMode === "rag") {
+                        const baseUrl = (0, agentClient_1.getRagBaseUrl)();
+                        const askUrl = `${baseUrl}/ask`;
+                        this.ragLog?.appendLine(`[RAG] Target: POST ${askUrl}`);
+                        this.ragLog?.appendLine(`[RAG] Sending request: POST ${askUrl}`);
+                        this.ragLog?.appendLine(`[RAG] Query: ${text.length > 80 ? text.slice(0, 80) + "..." : text}`);
+                        try {
+                            const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext);
+                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
+                            const result = await response.json();
+                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                            if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                this.ragLog?.appendLine(`[RAG] Token file: ${(0, agentClient_1.getTokenFilePath)()}`);
+                                this.postMessage({
+                                    type: "commandResult",
+                                    payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)(),
+                                });
+                                return;
+                            }
+                            if (!response.ok) {
+                                this.ragLog?.appendLine(`[RAG] Server error response: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
+                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                return;
+                            }
+                            this.ragLog?.appendLine(`[RAG] Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}, confidence=${result?.confidence ?? "—"}`);
                             let payload = result.answer || JSON.stringify(result);
                             const assistantResponseHtml = renderAssistantResponse({
                                 mode: "rag",
@@ -403,17 +541,21 @@ class ChatPanelViewProvider {
                             });
                         }
                         catch (error) {
+                            const errMsg = error instanceof Error ? error.message : String(error);
+                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
                             this.postMessage({
                                 type: "commandResult",
-                                payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                                payload: `Error: ${errMsg}`,
                             });
                         }
                     }
                     else if (normalizedMode === "auto") {
+                        this.ragLog?.appendLine(`[RAG] Routing to auto (overview/search/ask).`);
                         try {
                             await this.router.autoRouteInput(text, extraContext);
                         }
                         catch (error) {
+                            this.ragLog?.appendLine(`[RAG] Auto route failed: ${error instanceof Error ? error.message : String(error)}`);
                             this.postMessage({
                                 type: "commandResult",
                                 payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
@@ -421,6 +563,7 @@ class ChatPanelViewProvider {
                         }
                     }
                     else {
+                        this.ragLog?.appendLine(`[RAG] Routing to tools (no /ask).`);
                         await this.router.handleCommand(text, extraContext);
                     }
                 }
@@ -558,60 +701,8 @@ class ChatPanelViewProvider {
         this.postOnboardingState();
     }
     async handleWebviewMessage(message) {
-        if (message.type === "dispatch") {
-            const { text, mode } = message;
-            const normalizedMode = (0, agentClient_1.isComposerMode)(mode) ? mode : this.modeState.getMode();
-            if (text.startsWith("/")) {
-                const result = await (0, commandRouter_1.parseSlashCommand)(text, this.extensionContext);
-                if (result.type === 'assistantResponse') {
-                    const html = renderAssistantResponse(result.payload);
-                    this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
-                }
-                else {
-                    this.postMessage(result);
-                }
-            }
-            else {
-                const extraContext = this.buildExtraContext();
-                if (normalizedMode === "rag") {
-                    try {
-                        const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext);
-                        const result = await response.json();
-                        let payload = result.answer || JSON.stringify(result);
-                        if (result.citations && Array.isArray(result.citations)) {
-                            const citationsHtml = result.citations.map((c) => this.renderCitation(c)).join('<br>');
-                            payload = `${payload}<br><br><b>Citations:</b><br>${citationsHtml}`;
-                        }
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: payload,
-                            isHtml: true
-                        });
-                    }
-                    catch (error) {
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                        });
-                    }
-                }
-                else if (normalizedMode === "auto") {
-                    try {
-                        await this.router.autoRouteInput(text, extraContext);
-                    }
-                    catch (error) {
-                        this.postMessage({
-                            type: "commandResult",
-                            payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                        });
-                    }
-                }
-                else {
-                    await this.router.handleCommand(text, extraContext);
-                }
-            }
-        }
-        else if (message.type === "indexAction") {
+        // dispatch is handled only in onDidReceiveMessage (single path: logging, token/response checks, renderAssistantResponse)
+        if (message.type === "indexAction") {
             const workspaceFolders = vscode.workspace.workspaceFolders;
             if (!workspaceFolders || workspaceFolders.length === 0)
                 return;
@@ -620,7 +711,15 @@ class ChatPanelViewProvider {
                 this.postMessage({ type: "dismissIndexModal" });
                 (0, indexGate_1.setIndexing)(rootPath);
                 try {
+                    await (0, agentClient_1.triggerIndex)((0, agentClient_1.getRagBaseUrl)(), "full", rootPath);
                     await (0, indexGate_1.triggerFullIndex)({ storageRoot: this.extensionContext.globalStorageUri.fsPath }, rootPath, (msg) => this.postMessage({ type: "commandResult", payload: msg }));
+                }
+                catch (error) {
+                    this.postMessage({
+                        type: "commandResult",
+                        payload: `Indexing failed: ${error instanceof Error ? error.message : String(error)}`
+                    });
+                    return;
                 }
                 finally {
                     (0, indexGate_1.clearIndexing)(rootPath);
@@ -681,6 +780,7 @@ class ChatPanelViewProvider {
         const rootPath = workspaceFolders[0].uri.fsPath;
         (0, indexGate_1.setIndexing)(rootPath);
         try {
+            await (0, agentClient_1.triggerIndex)((0, agentClient_1.getRagBaseUrl)(), mode, rootPath);
             await (0, indexGate_1.triggerFullIndex)({ storageRoot: this.extensionContext.globalStorageUri.fsPath }, rootPath, (msg) => this.postMessage({ type: "commandResult", payload: msg }));
             const report = await (0, agentClient_1.getIndexReport)(this.agentBaseUrl, rootPath);
             const reportHtml = this.renderIndexReport(report);
@@ -1069,6 +1169,80 @@ class ChatPanelViewProvider {
             this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true, updateId: progressUpdateId });
         }
     }
+    async handleSaveLastSummaryToConfluence() {
+        if (!this.lastRagSummaryPlainText) {
+            this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
+            return;
+        }
+        try {
+            const config = await (0, confluence_settings_1.getConfluenceConfigAsync)(this.extensionContext);
+            if (!config.auth || config.auth.length < 2) {
+                const html = (0, confluenceHtml_1.getConfluenceErrorHtml)({
+                    error: 'missing_credentials',
+                    message: 'Confluence credentials not set.',
+                    suggestion: 'Open Settings (Confluence: Configure Settings), set Confluence URL, email, and store your API token.',
+                    confidence: 0,
+                    fallbackAvailable: false,
+                    actions: ['Update Settings', 'Cancel'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            const folderName = this.getEffectiveRootPath() ? path.basename(this.getEffectiveRootPath()) : "Workspace";
+            const title = "Codebase Summary – " + folderName;
+            let space = (0, confluenceSpacePreferences_1.getSpacePreference)(this.extensionContext, this.getEffectiveRootPath());
+            if (!space) {
+                space = await (0, confluence_api_1.getPreferredSpace)(config.baseUrl, this.getEffectiveRootPath() ?? "");
+            }
+            const result = await (0, confluence_api_1.intelligentCreate)(config, {
+                content: this.lastRagSummaryPlainText,
+                intelligent_mode: true,
+                auto_title: false,
+                space,
+                intelligence_context: { suggested_title: title, title_override: title },
+                base_url: config.confluenceInstanceUrl || undefined,
+                auth: config.auth ?? undefined,
+            });
+            if ('error' in result && result.error) {
+                const err = result;
+                const html = (0, confluenceHtml_1.getConfluenceErrorHtml)({
+                    error: err.error,
+                    message: err.message,
+                    suggestion: err.intelligence_suggestion ?? 'Check Confluence settings, network, and credentials.',
+                    confidence: err.intelligence_confidence ?? 0.5,
+                    fallbackAvailable: err.fallback_available ?? true,
+                    actions: err.actions ?? ['Retry', 'Cancel', 'Update Settings'],
+                    retryContext: 'create',
+                    nonce: this.getConfluenceNonce(),
+                });
+                this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+                return;
+            }
+            this.lastRagSummaryPlainText = undefined;
+            const pageUrl = result.url;
+            const pageTitle = result.title ?? title;
+            const successPayload = pageUrl
+                ? `Confluence page created: <a href="${pageUrl}" data-href="${pageUrl}">${pageTitle}</a>`
+                : "Confluence page created: " + pageTitle;
+            this.postMessage({ type: "commandResult", payload: successPayload, isHtml: true });
+        }
+        catch (e) {
+            const msg = e instanceof Error ? e.message : String(e);
+            const html = (0, confluenceHtml_1.getConfluenceErrorHtml)({
+                error: 'create_failed',
+                message: msg,
+                suggestion: 'Check Confluence settings, network, and credentials.',
+                confidence: 0.5,
+                fallbackAvailable: true,
+                actions: ['Retry', 'Update Settings', 'Cancel'],
+                retryContext: 'create',
+                nonce: this.getConfluenceNonce(),
+            });
+            this.postMessage({ type: 'commandResult', payload: html, isHtml: true, isConfluence: true });
+        }
+    }
     async handleConfluenceIntelligenceFeedback(creationId, intelligenceScore, feedback) {
         if (!this.panel || !creationId || typeof intelligenceScore !== 'number' || intelligenceScore < 1 || intelligenceScore > 5)
             return;
@@ -1222,6 +1396,28 @@ class ChatPanelViewProvider {
     /** Nonce used in Confluence HTML must match panel CSP; use panel nonce when available. */
     getConfluenceNonce() {
         return this.panelNonce ?? this.getNonce();
+    }
+    isSaveToConfluenceIntent(normalized) {
+        const phrases = [
+            "save this to confluence",
+            "save this summary",
+            "save this summary in a confluence page",
+            "create a confluence page with this",
+            "put this in confluence",
+            "publish this to confluence",
+        ];
+        return phrases.some((phrase) => normalized.includes(phrase));
+    }
+    isSummaryIntent(normalized) {
+        const phrases = [
+            "analyze this codebase",
+            "codebase summary",
+            "summarize this project",
+            "project summary",
+            "give me a summary of this code",
+            "what is this project about",
+        ];
+        return phrases.some((phrase) => normalized.includes(phrase));
     }
     buildExtraContext() {
         const rootPath = this.getEffectiveRootPath();

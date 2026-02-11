@@ -74,8 +74,7 @@ def db_fetch_examples(
                        confidence_score, user_feedback, intelligence_embedding
                 FROM intelligence_examples
                 WHERE 1=1
-                """
-                + where,
+                """ + where,
                 tuple(params),
             )
             rows = cur.fetchall()

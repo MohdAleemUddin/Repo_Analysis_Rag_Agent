@@ -2,20 +2,23 @@
 
 from __future__ import annotations
 
+import hashlib
 import os
 import threading
 import time
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Any, Dict, List, Tuple
 
 try:
-    from chromadb import Client
+    from chromadb import PersistentClient
     from chromadb.config import Settings
 except ImportError:  # pragma: no cover - chromadb is optional at runtime
-    Client = None
+    PersistentClient = None
     Settings = None
 
 from . import scan_rules
+from .chunking.chunker import chunk_file as chunk_file_impl
+from .chunking.chunker import classify_file_type
 from .manifest_store import ManifestStore
 from .config_store import RepoConfigStore
 from ..logging.logger import logger
@@ -41,18 +44,15 @@ def _get_persist_directory(repo_id: str) -> Path:
 
 
 def _build_chroma_client(persist_directory: Path | str) -> object:
-    if Client is None or Settings is None:
+    if PersistentClient is None or Settings is None:
         raise RuntimeError("chromadb dependency is missing")
     key = str(persist_directory)
     with _chroma_lock:
         client = _chroma_client_cache.get(key)
         if client is None:
-            client = Client(
-                Settings(
-                    persist_directory=key,
-                    chroma_db_impl="duckdb+parquet",
-                    anonymized_telemetry=False,
-                )
+            client = PersistentClient(
+                path=key,
+                settings=Settings(anonymized_telemetry=False),
             )
             _chroma_client_cache[key] = client
         return client
@@ -87,6 +87,61 @@ def ensure_repo_collections(repo_id: str) -> dict[str, object]:
         "code": _get_or_create_collection(repo_id, "code"),
         "doc": _get_or_create_collection(repo_id, "doc"),
     }
+
+
+def _delete_repo_collections(repo_id: str) -> None:
+    """Delete existing code and doc collections for repo_id and clear cache (for full re-index)."""
+    persist_dir = _get_persist_directory(repo_id)
+    client = _build_chroma_client(persist_dir)
+    for chunk_type in ("code", "doc"):
+        name = _collection_name(repo_id, chunk_type)
+        try:
+            client.delete_collection(name)
+        except Exception:
+            pass
+        with _chroma_lock:
+            _chroma_collection_cache.pop((repo_id, chunk_type), None)
+
+
+def _chunks_to_chroma_triples(
+    repo_id: str,
+    file_path: str,
+    content_str: str,
+    manifest_path: str,
+) -> List[Tuple[str, str, Dict[str, Any]]]:
+    """Run chunker on file and return list of (id, document_text, metadata) for Chroma add."""
+    try:
+        chunks = chunk_file_impl(file_path, manifest_path=manifest_path)
+    except Exception as exc:
+        logger.warning("chunk_file failed for %s: %s", file_path, exc)
+        return []
+    if not chunks:
+        return []
+    lines = content_str.splitlines()
+    triples: List[Tuple[str, str, Dict[str, Any]]] = []
+    path_hash = hashlib.sha256(file_path.encode("utf-8")).hexdigest()[:16]
+    for ch in chunks:
+        line_start = max(1, int(ch.get("line_start", 1)))
+        line_end = max(line_start, int(ch.get("line_end", line_start)))
+        # 1-based to 0-based slice
+        start_idx = line_start - 1
+        end_idx = min(line_end, len(lines))
+        doc_text = "\n".join(lines[start_idx:end_idx]) if lines else ""
+        meta: Dict[str, Any] = {
+            "path": str(ch.get("path", file_path)),
+            "line_start": line_start,
+            "line_end": line_end,
+        }
+        chunk_id = ch.get("chunk_id", "")
+        if isinstance(chunk_id, str):
+            meta["chunk_id"] = chunk_id
+        if isinstance(ch.get("file_type"), str):
+            meta["file_type"] = ch["file_type"]
+        if isinstance(ch.get("truncated"), bool):
+            meta["truncated"] = ch["truncated"]
+        uid = f"{repo_id}_{path_hash}_{chunk_id}"
+        triples.append((uid, doc_text, meta))
+    return triples
 
 
 def reset_chroma_state() -> None:
@@ -272,18 +327,24 @@ def acquire_indexing_lock(repo_id: str) -> RepoIndexingLock:
 def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
     """
     Traverse the file system starting from root_path, enforcing boundaries and exclusions.
+    Chunk indexed files, embed, and add to Chroma code/doc collections.
     """
     indexed_files = 0
     skipped_files = 0
+    chunks_added_total = 0
     start_time = time.time()
 
     # Initialize manifest store
     manifest_path = scan_rules.index_dir() / repo_id / "manifest.json"
     manifest = ManifestStore(str(manifest_path))
+
+    # Full index: clear existing Chroma collections so removed files don't leave stale chunks
+    _delete_repo_collections(repo_id)
     try:
-        ensure_repo_collections(repo_id)
+        collections = ensure_repo_collections(repo_id)
     except Exception as exc:
         logger.warning("chroma_init_failed repo_id=%s err=%s", repo_id, exc)
+        collections = {}
 
     # Use os.walk to traverse the directory tree
     for root, dirs, files in os.walk(root_path):
@@ -325,28 +386,12 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
                 )
                 skipped_files += 1
             else:
-                # Binary detection: skip if first 4096 bytes contain a null byte
+                # Binary detection: skip only if UTF-8 decode fails or null bytes exceed ~1%
                 try:
                     with open(file_path, "rb") as bf:
-                        chunk = bf.read(4096)
-                        if b"\x00" in chunk:
-                            mtime_ms = int(os.path.getmtime(file_path) * 1000)
-                            indexed_at_ms = int(time.time() * 1000)
-                            manifest.add_entry(
-                                scan_rules.normalize_root_path(file_path),
-                                status="SKIPPED",
-                                skip_reason=ManifestStore.BINARY,
-                                mtime_epoch_ms=mtime_ms,
-                                indexed_at_epoch_ms=indexed_at_ms,
-                            )
-                            skipped_files += 1
-                            continue
+                        content_bytes = bf.read()
                 except Exception as e:
-                    logger.warning(
-                        "Error checking for binary file %s: %s", file_path, e
-                    )
-                    # If we can't read it, we might want to skip it or handle it as an error
-                    # For now, following the requirement to not crash
+                    logger.warning("Error reading file %s: %s", file_path, e)
                     manifest.add_entry(
                         scan_rules.normalize_root_path(file_path),
                         status="SKIPPED",
@@ -355,39 +400,81 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
                     skipped_files += 1
                     continue
 
+                # Try UTF-8 decode; if it fails, treat as binary
+                try:
+                    content_str = content_bytes.decode("utf-8")
+                except UnicodeDecodeError:
+                    try:
+                        content_str = content_bytes.decode("utf-8", errors="replace")
+                    except Exception:
+                        mtime_ms = int(os.path.getmtime(file_path) * 1000)
+                        indexed_at_ms = int(time.time() * 1000)
+                        manifest.add_entry(
+                            scan_rules.normalize_root_path(file_path),
+                            status="SKIPPED",
+                            skip_reason=ManifestStore.BINARY,
+                            mtime_epoch_ms=mtime_ms,
+                            indexed_at_epoch_ms=indexed_at_ms,
+                        )
+                        skipped_files += 1
+                        continue
+                # Optional: skip if null bytes exceed ~1% of sample (reduce false positives)
+                sample = content_bytes[:4096]
+                if len(sample) > 0 and sample.count(b"\x00") / len(sample) > 0.01:
+                    mtime_ms = int(os.path.getmtime(file_path) * 1000)
+                    indexed_at_ms = int(time.time() * 1000)
+                    manifest.add_entry(
+                        scan_rules.normalize_root_path(file_path),
+                        status="SKIPPED",
+                        skip_reason=ManifestStore.BINARY,
+                        mtime_epoch_ms=mtime_ms,
+                        indexed_at_epoch_ms=indexed_at_ms,
+                    )
+                    skipped_files += 1
+                    continue
+
+                mtime_ms = int(os.path.getmtime(file_path) * 1000)
+                indexed_at_ms = int(time.time() * 1000)
+                manifest.add_entry(
+                    scan_rules.normalize_root_path(file_path),
+                    status="INDEXED",
+                    mtime_epoch_ms=mtime_ms,
+                    indexed_at_epoch_ms=indexed_at_ms,
+                )
                 indexed_files += 1
                 increment_indexed_files(repo_id)
 
-                # UTF-8 decoding with fallback
-                try:
-                    with open(file_path, "rb") as f_bytes:
-                        content_bytes = f_bytes.read()
-                        mtime_ms = int(os.path.getmtime(file_path) * 1000)
-                        indexed_at_ms = int(time.time() * 1000)
-                        try:
-                            # Attempt normal UTF-8 decode
-                            content_bytes.decode("utf-8")
-                            manifest.add_entry(
-                                scan_rules.normalize_root_path(file_path),
-                                status="INDEXED",
-                                mtime_epoch_ms=mtime_ms,
-                                indexed_at_epoch_ms=indexed_at_ms,
-                            )
-                        except UnicodeDecodeError:
-                            # Fallback to replace on error
-                            content_bytes.decode("utf-8", errors="replace")
-                            manifest.add_entry(
-                                scan_rules.normalize_root_path(file_path),
-                                status="INDEXED",
-                                encoding="utf-8-replace",
-                                mtime_epoch_ms=mtime_ms,
-                                indexed_at_epoch_ms=indexed_at_ms,
-                            )
-                except Exception as e:
-                    logger.warning("Error reading file content %s: %s", file_path, e)
-                    # If we already incremented indexed_files but now fail to read,
-                    # we might want to adjust, but following the "must not crash" rule.
+                # Chunk, build (id, document, metadata), add to Chroma
+                triples = _chunks_to_chroma_triples(
+                    repo_id, file_path, content_str, str(manifest_path)
+                )
+                if not triples:
                     continue
+                classification = classify_file_type(file_path, None)
+                coll_key = "doc" if classification == "markdown" else "code"
+                collection = collections.get(coll_key)
+                if collection is None:
+                    continue
+                batch_size = 100
+                for i in range(0, len(triples), batch_size):
+                    batch = triples[i : i + batch_size]
+                    ids_batch = [t[0] for t in batch]
+                    docs_batch = [t[1] for t in batch]
+                    metas_batch = [t[2] for t in batch]
+                    try:
+                        collection.add(
+                            ids=ids_batch,
+                            documents=docs_batch,
+                            metadatas=metas_batch,
+                        )
+                        chunks_added_total += len(batch)
+                    except Exception as exc:
+                        logger.warning(
+                            "Chroma add failed for %s batch %s: %s",
+                            file_path,
+                            i,
+                            exc,
+                        )
 
     # Save manifest
     manifest.save()
@@ -400,7 +487,7 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
         "mode": "full",
         "indexed_files": indexed_files,
         "skipped_files": skipped_files,
-        "chunks_added": 0,  # Placeholder until chunking is integrated
+        "chunks_added": chunks_added_total,
         "duration_ms": duration_ms,
         "manifest_path": str(manifest_path),
     }

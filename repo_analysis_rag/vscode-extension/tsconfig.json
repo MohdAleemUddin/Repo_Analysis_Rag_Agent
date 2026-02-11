@@ -10,6 +10,7 @@
     "outDir": "out",
     "jsx": "react",
     "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "types": ["node", "vscode", "mocha"],
     "baseUrl": ".",
     "paths": {
@@ -21,9 +22,7 @@
   },
   "ts-node": {
     "transpileOnly": true,
-    "compilerOptions": {
-      "module": "commonjs"
-    }
+    "compilerOptions": { "module": "commonjs" }
   },
   "include": ["src", "../tests", "../unittests"]
 }

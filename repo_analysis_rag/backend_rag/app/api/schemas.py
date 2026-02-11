@@ -83,3 +83,13 @@ class DoctorRequest(BaseModel):
 
 class IndexReportRequest(BaseModel):
     root_path: str
+
+
+class IndexReportResponse(BaseModel):
+    """Report from manifest: indexed/skipped file lists and top skip reasons."""
+
+    indexed_files: List[str] = []
+    skipped_files: List[dict] = []  # [{"path": str, "reason": str}, ...]
+    top_skip_reasons: List[dict] = []  # [{"reason": str, "count": int}, ...]
+
+    model_config = ConfigDict(extra="ignore")

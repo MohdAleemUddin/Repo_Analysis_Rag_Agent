@@ -154,9 +154,11 @@ function handleToolsSlashCommand(input) {
 class CommandRouter {
     context;
     onResult;
-    constructor(context, onResult) {
+    ragLog;
+    constructor(context, onResult, ragLog) {
         this.context = context;
         this.onResult = onResult;
+        this.ragLog = ragLog;
     }
     postResult(payload, isHtml = false) {
         this.onResult({ type: "commandResult", payload, isHtml });
@@ -179,21 +181,54 @@ class CommandRouter {
         const trimmed = input.trim();
         const overviewKeywords = ['overview', 'structure', 'languages'];
         const searchKeywords = ['search', 'find', 'where', 'locate'];
+        const baseUrl = (0, agentClient_1.getRagBaseUrl)();
+        let endpoint;
         let response;
         if (overviewKeywords.some(k => trimmed.toLowerCase().includes(k))) {
+            endpoint = "/overview";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await (0, agentClient_1.overview)(trimmed, extraContext);
         }
         else if (searchKeywords.some(k => trimmed.toLowerCase().includes(k))) {
+            endpoint = "/search";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await (0, agentClient_1.search)(trimmed, extraContext);
         }
         else {
+            endpoint = "/ask";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await (0, agentClient_1.ask)(trimmed, extraContext);
         }
-        const result = await response.json();
-        this.onResult({
-            type: "commandResult",
-            payload: result.answer || JSON.stringify(result)
-        });
+        this.ragLog?.appendLine(`[RAG] (Auto) Response status: ${response.status} ${response.statusText}`);
+        try {
+            const result = await response.json();
+            if (!response.ok && (result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN")) {
+                this.ragLog?.appendLine("[RAG] (Auto) Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                this.onResult({
+                    type: "commandResult",
+                    payload: "Error: RAG token missing or invalid. Start the backend and ensure the token file exists, then retry.",
+                });
+                return;
+            }
+            if (!response.ok) {
+                this.ragLog?.appendLine(`[RAG] (Auto) Server error: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
+            }
+            else {
+                this.ragLog?.appendLine(`[RAG] (Auto) Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}`);
+            }
+            this.onResult({
+                type: "commandResult",
+                payload: result.answer || JSON.stringify(result)
+            });
+        }
+        catch (error) {
+            const errMsg = error instanceof Error ? error.message : String(error);
+            this.ragLog?.appendLine(`[RAG] (Auto) Request failed: ${errMsg}`);
+            throw error;
+        }
     }
     async handleIndexAction(action) {
         if (action === "full" || action === "cancel") {
@@ -206,6 +241,13 @@ class CommandRouter {
             try {
                 const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext);
                 const result = await response.json();
+                if (!response.ok && (result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN")) {
+                    this.onResult({
+                        type: "commandResult",
+                        payload: "Error: RAG token missing or invalid. Start the backend and ensure the token file exists, then retry.",
+                    });
+                    return;
+                }
                 this.onResult({
                     type: "commandResult",
                     payload: result.answer || JSON.stringify(result),

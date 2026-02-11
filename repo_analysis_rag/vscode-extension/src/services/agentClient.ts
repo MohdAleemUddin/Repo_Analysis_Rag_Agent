@@ -9,13 +9,22 @@ const MODE_STATE_FILENAME = "composer_mode.json";
 
 const COMPOSER_MODES = ["auto", "rag", "tools"] as const;
 
-/** RAG/Agent API base URL (chat, index, search, doctor). Default 8001. */
-export const DEFAULT_AGENT_BASE_URL = (process.env.OFFLINE_RAG_AGENT_URL?.trim() || "http://localhost:8001");
+/** Chat/RAG requests use RAG backend; default port 8001. */
+const RAG_CHAT_BASE_URL = "http://localhost:8001";
 
+/** RAG/Agent API base URL (chat, index, search, doctor). Default 8001. */
+export const DEFAULT_AGENT_BASE_URL = RAG_CHAT_BASE_URL;
+
+/** Base URL for RAG backend. Uses rag.agentBaseUrl from settings when available. */
 export function getRagBaseUrl(): string {
-    const cfg = vscode.workspace.getConfiguration("rag");
-    const url = (cfg.get<string>("agentBaseUrl") ?? DEFAULT_AGENT_BASE_URL).replace(/\/$/, "");
-    return url || DEFAULT_AGENT_BASE_URL;
+    try {
+        const cfg = vscode.workspace.getConfiguration("rag");
+        const url = cfg.get<string>("agentBaseUrl");
+        if (url && typeof url === "string" && url.trim()) return url.trim().replace(/\/$/, "");
+    } catch {
+        // ignore when vscode not available (e.g. tests)
+    }
+    return RAG_CHAT_BASE_URL;
 }
 
 function buildAgentUrl(endpoint: string): string {
@@ -108,6 +117,11 @@ export async function authenticatedFetch(url: string, options: RequestInit = {})
         headers.set("X-LOCAL-TOKEN", token);
     }
 
+    // Diagnostic: log request (no body/token content) to Debug Console when extension runs
+    const method = (options.method || "GET").toUpperCase();
+    const tokenPresent = !!token;
+    console.log(`[RAG] Request: ${method} ${url} token_present=${tokenPresent}`);
+
     return fetch(url, {
         ...options,
         headers,
@@ -127,10 +141,14 @@ export async function getIndexReport(baseUrl: string, rootPath: string): Promise
 }
 
 export async function triggerIndex(baseUrl: string, mode: 'full' | 'incremental', rootPath?: string): Promise<IndexReport | { status: string }> {
+    const body: { mode: string; root_path?: string } = { mode };
+    if (typeof rootPath === "string" && rootPath.trim()) {
+        body.root_path = path.resolve(rootPath);
+    }
     const response = await authenticatedFetch(`${baseUrl}/index`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode }),
+        body: JSON.stringify(body),
     });
     
     if (!response.ok) {

@@ -22,19 +22,21 @@ from ..retrieval.ask import (
     DEFAULT_SEARCH_ROOT,
     retrieve_vector_results,
 )
+from ..llm import generate_answer_if_configured
 from ..security import require_token
 from ..tools.doctor import check_ollama, check_ripgrep, check_chroma
 from .schemas import (
     ErrorResponse,
     IndexRequest,
     IndexResponse,
+    IndexReportRequest,
+    IndexReportResponse,
     HealthResponse,
     ToolResponse,
     AskRequest,
     OverviewRequest,
     SearchRequest,
     DoctorRequest,
-    IndexReportRequest,
 )
 
 router = APIRouter(
@@ -79,10 +81,25 @@ async def index_route(request: IndexRequest):
     # We'll pass an empty list if not provided, or the implementation can be extended.
     changed_files = []  # Placeholder or logic to get changed files
 
+    logger.info(
+        "POST /index root_path=%s normalized_path=%s repo_id=%s mode=%s",
+        request.root_path,
+        normalized_path,
+        repo_id,
+        mode,
+    )
     results = scan_repository(
         request.root_path,
         mode=mode,
         changed_files=changed_files if mode == "incremental" else None,
+    )
+    logger.info(
+        "POST /index complete repo_id=%s indexed_files=%s skipped_files=%s chunks_added=%s duration_ms=%s",
+        repo_id,
+        results.get("indexed_files", 0),
+        results.get("skipped_files", 0),
+        results.get("chunks_added", 0),
+        results.get("duration_ms", 0),
     )
     return results
 
@@ -148,6 +165,14 @@ def _summarize_vector_hits(query: str, citation_count: int, truncated: bool) -> 
 
 @router.post("/ask", response_model=ToolResponse)
 async def ask(request: AskRequest):
+    q = (request.query or "").strip()
+    q_preview = (q[:80] + "…") if len(q) > 80 else q
+    logger.info(
+        "POST /ask received query_len=%s root_path=%s query_preview=%s",
+        len(q),
+        "set" if request.root_path else "none",
+        repr(q_preview),
+    )
     top_k = request.top_k or DEFAULT_TOP_K
     max_chunks = request.max_context_chunks
     persist_directory = None
@@ -188,15 +213,14 @@ async def ask(request: AskRequest):
     logger.info(
         "retrieved_chunk_count=%s query=%s", retrieved_chunk_count, request.query
     )
-    if retrieved_chunk_count == 0:
-        return {
-            "mode": "rag",
-            "confidence": "not_found",
-            "answer": "NOT FOUND IN INDEXED FILES",
-            "citations": [],
-            "truncated": False,
-        }
-    answer = _summarize_vector_hits(request.query, retrieved_chunk_count, truncated)
+    answer = generate_answer_if_configured(request.query, citations)
+    if answer is None:
+        if retrieved_chunk_count == 0:
+            answer = "NOT FOUND IN INDEXED FILES"
+        else:
+            answer = _summarize_vector_hits(
+                request.query, retrieved_chunk_count, truncated
+            )
     if not citations:
         confidence = "not_found"
     elif truncated:
@@ -242,11 +266,44 @@ async def doctor(request: DoctorRequest):
     }
 
 
-@router.post("/index_report", response_model=ToolResponse)
-async def index_report(request: IndexReportRequest):
+def _read_index_report_from_manifest(root_path: str) -> dict:
+    """Read manifest for repo and return indexed_files, skipped_files, top_skip_reasons."""
+    import json
+    from collections import Counter
+
+    try:
+        normalized_path = normalize_root_path(root_path)
+    except ValueError:
+        return {"indexed_files": [], "skipped_files": [], "top_skip_reasons": []}
+    repo_id = compute_repo_id_func(normalized_path)
+    manifest_path = resolve_index_dir() / repo_id / "manifest.json"
+    if not manifest_path.exists():
+        return {"indexed_files": [], "skipped_files": [], "top_skip_reasons": []}
+    try:
+        raw = manifest_path.read_text(encoding="utf-8")
+        data = json.loads(raw)
+    except (OSError, json.JSONDecodeError):
+        return {"indexed_files": [], "skipped_files": [], "top_skip_reasons": []}
+    entries = data.get("entries") or []
+    indexed_files = [e["path"] for e in entries if e.get("status") == "INDEXED"]
+    skipped_files = [
+        {"path": e.get("path", ""), "reason": e.get("skip_reason", "UNKNOWN")}
+        for e in entries
+        if e.get("status") == "SKIPPED"
+    ]
+    reason_counts = Counter(
+        e.get("skip_reason", "UNKNOWN") for e in entries if e.get("status") == "SKIPPED"
+    )
+    top_skip_reasons = [
+        {"reason": r, "count": c} for r, c in reason_counts.most_common(10)
+    ]
     return {
-        "mode": "report",
-        "confidence": "high",
-        "answer": "Index report placeholder",
-        "citations": [],
+        "indexed_files": indexed_files,
+        "skipped_files": skipped_files,
+        "top_skip_reasons": top_skip_reasons,
     }
+
+
+@router.post("/index_report", response_model=IndexReportResponse)
+async def index_report(request: IndexReportRequest):
+    return _read_index_report_from_manifest(request.root_path)

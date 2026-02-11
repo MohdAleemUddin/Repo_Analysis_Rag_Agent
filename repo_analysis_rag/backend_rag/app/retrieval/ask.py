@@ -7,16 +7,16 @@ from pathlib import Path
 from typing import Any, Mapping
 
 try:
-    from chromadb import Client
+    from chromadb import PersistentClient
     from chromadb.config import Settings
 except ImportError:  # pragma: no cover - optional dependency
-    Client = None
+    PersistentClient = None
     Settings = None
 
 from ..logging.logger import logger
 from ..tools.search import execute_ask_query
 
-DEFAULT_TOP_K = 5
+DEFAULT_TOP_K = 50
 DEFAULT_CODE_COLLECTION = "code_chunks"
 DEFAULT_DOC_COLLECTION = "doc_chunks"
 DEFAULT_PERSIST_DIRECTORY = Path(__file__).resolve().parents[2] / ".chromadb"
@@ -29,20 +29,17 @@ def _normalize_top_k(top_k: int | None) -> int:
     return top_k
 
 
-def _build_client(persist_directory: Path | str | None) -> Client:
+def _build_client(persist_directory: Path | str | None):
     directory = (
         Path(persist_directory) if persist_directory else DEFAULT_PERSIST_DIRECTORY
     )
-    if Client is None or Settings is None:
+    if PersistentClient is None or Settings is None:
         raise RuntimeError(
             "Chromadb dependency is missing. Install it via `pip install chromadb` to use vector retrieval."
         )
-    return Client(
-        Settings(
-            persist_directory=str(directory),
-            chroma_db_impl="duckdb+parquet",
-            anonymized_telemetry=False,
-        )
+    return PersistentClient(
+        path=str(directory),
+        settings=Settings(anonymized_telemetry=False),
     )
 
 
@@ -109,7 +106,7 @@ def _map_to_citation(
 
 
 def _query_collection(
-    client: Client,
+    client: Any,
     collection_name: str,
     query_text: str,
     top_k: int,

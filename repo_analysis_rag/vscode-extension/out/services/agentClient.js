@@ -60,12 +60,22 @@ const vscode = __importStar(require("vscode"));
 const TOKEN_FILENAME = "agent_token.txt";
 const MODE_STATE_FILENAME = "composer_mode.json";
 const COMPOSER_MODES = ["auto", "rag", "tools"];
+/** Chat/RAG requests use RAG backend; default port 8001. */
+const RAG_CHAT_BASE_URL = "http://localhost:8001";
 /** RAG/Agent API base URL (chat, index, search, doctor). Default 8001. */
-exports.DEFAULT_AGENT_BASE_URL = (process.env.OFFLINE_RAG_AGENT_URL?.trim() || "http://localhost:8001");
+exports.DEFAULT_AGENT_BASE_URL = RAG_CHAT_BASE_URL;
+/** Base URL for RAG backend. Uses rag.agentBaseUrl from settings when available. */
 function getRagBaseUrl() {
-    const cfg = vscode.workspace.getConfiguration("rag");
-    const url = (cfg.get("agentBaseUrl") ?? exports.DEFAULT_AGENT_BASE_URL).replace(/\/$/, "");
-    return url || exports.DEFAULT_AGENT_BASE_URL;
+    try {
+        const cfg = vscode.workspace.getConfiguration("rag");
+        const url = cfg.get("agentBaseUrl");
+        if (url && typeof url === "string" && url.trim())
+            return url.trim().replace(/\/$/, "");
+    }
+    catch {
+        // ignore when vscode not available (e.g. tests)
+    }
+    return RAG_CHAT_BASE_URL;
 }
 function buildAgentUrl(endpoint) {
     return new url_1.URL(endpoint, getRagBaseUrl()).toString();
@@ -128,6 +138,10 @@ async function authenticatedFetch(url, options = {}) {
     if (token) {
         headers.set("X-LOCAL-TOKEN", token);
     }
+    // Diagnostic: log request (no body/token content) to Debug Console when extension runs
+    const method = (options.method || "GET").toUpperCase();
+    const tokenPresent = !!token;
+    console.log(`[RAG] Request: ${method} ${url} token_present=${tokenPresent}`);
     return fetch(url, {
         ...options,
         headers,
@@ -145,10 +159,14 @@ async function getIndexReport(baseUrl, rootPath) {
     return await response.json();
 }
 async function triggerIndex(baseUrl, mode, rootPath) {
+    const body = { mode };
+    if (typeof rootPath === "string" && rootPath.trim()) {
+        body.root_path = path.resolve(rootPath);
+    }
     const response = await authenticatedFetch(`${baseUrl}/index`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode }),
+        body: JSON.stringify(body),
     });
     if (!response.ok) {
         throw new Error(`Indexing failed: ${response.statusText}`);

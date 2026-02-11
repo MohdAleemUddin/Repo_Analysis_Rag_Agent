@@ -26,6 +26,13 @@ def test_tc_e2e_006_complete_learning_cycle() -> None:
             intelligence_feedback_handler,
         )
 
+    try:
+        from app.confluence import db_adapter
+
+        db_adapter._conn = None
+    except ImportError:
+        pass
+
     class MockReqStatus:
         args = {}
         query_params = {}

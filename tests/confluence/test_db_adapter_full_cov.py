@@ -20,16 +20,19 @@ except ImportError:
 
 
 def test_get_connection_with_url():
-    with patch.object(
-        db_adapter,
-        "get_confluence_config",
-        return_value={"database_url": "postgres://x"},
-    ):
-        with patch("psycopg2.connect") as mock_conn:
-            mock_conn.return_value = MagicMock(closed=False)
-            db_adapter._conn = None
-            conn = db_adapter.get_connection()
-            assert conn is not None or db_adapter._conn is None
+    try:
+        with patch.object(
+            db_adapter,
+            "get_confluence_config",
+            return_value={"database_url": "postgres://x"},
+        ):
+            with patch("psycopg2.connect") as mock_conn:
+                mock_conn.return_value = MagicMock(closed=False)
+                db_adapter._conn = None
+                conn = db_adapter.get_connection()
+                assert conn is not None or db_adapter._conn is None
+    finally:
+        db_adapter._conn = None
 
 
 def test_db_execute_with_conn():

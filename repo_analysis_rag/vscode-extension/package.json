@@ -3,7 +3,7 @@
   "displayName": "Offline Folder RAG (DEV)",
   "publisher": "offline-folder-rag",
   "version": "0.0.1",
-  "main": "./out/vscode-extension/src/extension.js",
+  "main": "./out/extension.js",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -24,7 +24,7 @@
     "axios-mock-adapter": "^2.1.0",
     "chai": "^4.5.0",
     "expect": "^29.7.0",
-    "jest-mock-vscode": "^4.10.0",
+    "jest-mock-vscode": "^3.0.3",
     "mocha": "^10.8.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
@@ -121,6 +121,11 @@
           "type": "string",
           "default": "http://localhost:8001",
           "description": "RAG / Agent API base URL (chat, index, search, doctor)."
+        },
+        "rag.indexOnLoad": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run a full index automatically when the extension loads (when a workspace folder is open). Manual /index full still works."
         },
         "confluence.credentials.url": {
           "type": "string",

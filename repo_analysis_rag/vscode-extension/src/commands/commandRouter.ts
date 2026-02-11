@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { slashCommandRegistry } from './slashCommands';
-import { overview, search, ask, askWithOverride } from '../services/agentClient';
+import { overview, search, ask, askWithOverride, getRagBaseUrl } from '../services/agentClient';
 import { checkIndexExists, isIndexing } from '../services/indexGate';
 import { parseSlashCommandInstruction, SlashCommandInstruction } from "./slashCommands";
 import { readRootPath, writeAutoIndex } from '../services/storage';
@@ -138,7 +138,8 @@ export function handleToolsSlashCommand(input: string): string {
 export class CommandRouter {
     constructor(
         private readonly context: vscode.ExtensionContext,
-        private readonly onResult: (message: CommandResultMessage) => void
+        private readonly onResult: (message: CommandResultMessage) => void,
+        private readonly ragLog?: vscode.OutputChannel
     ) {}
 
     private postResult(payload: string, isHtml: boolean = false) {
@@ -164,20 +165,51 @@ export class CommandRouter {
         const overviewKeywords = ['overview', 'structure', 'languages'];
         const searchKeywords = ['search', 'find', 'where', 'locate'];
 
+        const baseUrl = getRagBaseUrl();
+        let endpoint: string;
         let response: any;
         if (overviewKeywords.some(k => trimmed.toLowerCase().includes(k))) {
+            endpoint = "/overview";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await overview(trimmed, extraContext);
         } else if (searchKeywords.some(k => trimmed.toLowerCase().includes(k))) {
+            endpoint = "/search";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await search(trimmed, extraContext);
         } else {
+            endpoint = "/ask";
+            this.ragLog?.appendLine(`[RAG] (Auto) Connected to server: ${baseUrl}`);
+            this.ragLog?.appendLine(`[RAG] (Auto) Sending request: POST ${baseUrl}${endpoint}`);
             response = await ask(trimmed, extraContext);
         }
 
-        const result = await response.json() as any;
-        this.onResult({
-            type: "commandResult",
-            payload: result.answer || JSON.stringify(result)
-        });
+        this.ragLog?.appendLine(`[RAG] (Auto) Response status: ${response.status} ${response.statusText}`);
+        try {
+            const result = await response.json() as any;
+            if (!response.ok && (result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN")) {
+                this.ragLog?.appendLine("[RAG] (Auto) Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                this.onResult({
+                    type: "commandResult",
+                    payload: "Error: RAG token missing or invalid. Start the backend and ensure the token file exists, then retry.",
+                });
+                return;
+            }
+            if (!response.ok) {
+                this.ragLog?.appendLine(`[RAG] (Auto) Server error: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
+            } else {
+                this.ragLog?.appendLine(`[RAG] (Auto) Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}`);
+            }
+            this.onResult({
+                type: "commandResult",
+                payload: result.answer || JSON.stringify(result)
+            });
+        } catch (error) {
+            const errMsg = error instanceof Error ? error.message : String(error);
+            this.ragLog?.appendLine(`[RAG] (Auto) Request failed: ${errMsg}`);
+            throw error;
+        }
     }
 
     public async handleIndexAction(action: string): Promise<void> {
@@ -192,6 +224,13 @@ export class CommandRouter {
             try {
                 const response = await askWithOverride(text, "rag", extraContext);
                 const result = await response.json();
+                if (!response.ok && (result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN")) {
+                    this.onResult({
+                        type: "commandResult",
+                        payload: "Error: RAG token missing or invalid. Start the backend and ensure the token file exists, then retry.",
+                    });
+                    return;
+                }
                 this.onResult({
                     type: "commandResult",
                     payload: result.answer || JSON.stringify(result),

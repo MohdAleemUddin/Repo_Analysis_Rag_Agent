@@ -50,10 +50,15 @@ def get_intelligence_status(
             "ai_decision_quality": round(avg_fb),
         }
 
-    accuracy = metrics.get("template_selection_accuracy", 94)
-    examples_count = metrics.get("examples_learned", 247)
-    learning_rate = metrics.get("learning_rate_pct", 15)
-    confidence = metrics.get("confidence_calibration", 94)
+    def _num(v: Any, default: int | float) -> int | float:
+        if isinstance(v, (int, float)):
+            return v
+        return default
+
+    accuracy = _num(metrics.get("template_selection_accuracy", 94), 94)
+    examples_count = _num(metrics.get("examples_learned", 247), 247)
+    learning_rate = _num(metrics.get("learning_rate_pct", 15), 15)
+    confidence = _num(metrics.get("confidence_calibration", 94), 94)
     conf_frac = confidence / 100.0
 
     status_summary = (

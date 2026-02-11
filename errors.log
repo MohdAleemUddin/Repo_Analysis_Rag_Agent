@@ -3136,3 +3136,549 @@ Traceback (most recent call last):
   File "C:\Users\aleem\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
     raise effect
 ValueError: learn fail
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:54: in test_tc_it_002_agents_database_data_flow
+    assert isinstance(count, int)
+E   AssertionError: assert False
+E    +  where False = isinstance(<MagicMock name='connect().cursor().__enter__().fetchone().__getitem__()' id='1971654720272'>, int)
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:65: in test_tc_it_002_database_read_templates_exist
+    assert n >= 7, "Expected at least 7 seed templates from PRD §8.2"
+           ^^^^^^
+E   TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:100: in test_tc_it_008_learning_system_can_store_example
+    assert count >= 0
+           ^^^^^^^^^^
+E   TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+--- Test failure ---
+tests\confluence\test_e2e_workflows.py:41: in test_tc_e2e_006_complete_learning_cycle
+    status1, _ = intelligence_status_handler(MockReqStatus())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:447: in intelligence_status_handler
+    data = get_intelligence_status(
+repo_analysis_rag\backend_confluence\app\confluence\status_manager.py:92: in get_intelligence_status
+    "content_detection": round(conf_frac * 1.02, 2) if conf_frac < 1 else 0.96,
+                                                       ^^^^^^^^^^^^^
+E   TypeError: '<' not supported between instances of 'MagicMock' and 'int'
+2026-02-11 20:31:15,759 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-11 20:31:22,820 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-11 20:31:22,822 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-11 20:31:24,822 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-11 20:31:25,108 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:54: in test_tc_it_002_agents_database_data_flow
+    assert isinstance(count, int)
+E   AssertionError: assert False
+E    +  where False = isinstance(<MagicMock name='connect().cursor().__enter__().fetchone().__getitem__()' id='1456171228176'>, int)
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:65: in test_tc_it_002_database_read_templates_exist
+    assert n >= 7, "Expected at least 7 seed templates from PRD §8.2"
+           ^^^^^^
+E   TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:100: in test_tc_it_008_learning_system_can_store_example
+    assert count >= 0
+           ^^^^^^^^^^
+E   TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+--- Test failure ---
+tests\confluence\test_e2e_workflows.py:41: in test_tc_e2e_006_complete_learning_cycle
+    status1, _ = intelligence_status_handler(MockReqStatus())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:447: in intelligence_status_handler
+    data = get_intelligence_status(
+repo_analysis_rag\backend_confluence\app\confluence\status_manager.py:92: in get_intelligence_status
+    "content_detection": round(conf_frac * 1.02, 2) if conf_frac < 1 else 0.96,
+                                                       ^^^^^^^^^^^^^
+E   TypeError: '<' not supported between instances of 'MagicMock' and 'int'
+2026-02-11 20:36:02,260 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-11 20:36:09,280 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-11 20:36:09,290 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-11 20:36:10,724 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-11 20:36:10,917 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+
+--- Test failure ---
+def test_tc_it_002_agents_database_data_flow() -> None:
+        """Agents read/write path: count is int >= 0 (DB or file fallback)."""
+        count = db_fetch_examples_count()
+>       assert isinstance(count, int)
+E       AssertionError: assert False
+E        +  where False = isinstance(<MagicMock name='connect().cursor().__enter__().fetchone().__getitem__()' id='1292260581904'>, int)
+
+tests\confluence\test_db_integration.py:54: AssertionError
+
+--- Test failure ---
+def test_tc_it_002_database_read_templates_exist() -> None:
+        """At least 7 templates exist: from DB (intelligent_templates) or from confluence_data/templates (PRD §8.2)."""
+        conn = get_connection()
+        if conn is not None:
+            with conn.cursor() as cur:
+                cur.execute("SELECT COUNT(*) FROM intelligent_templates")
+                n = cur.fetchone()[0]
+>           assert n >= 7, "Expected at least 7 seed templates from PRD §8.2"
+                   ^^^^^^
+E           TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+tests\confluence\test_db_integration.py:65: TypeError
+
+--- Test failure ---
+def test_tc_it_008_learning_system_can_store_example() -> None:
+        """Learning system can store an example (DB or file fallback)."""
+        conn = get_connection()
+        if conn is not None:
+            with conn.cursor() as cur:
+                cur.execute("SELECT id FROM intelligent_templates LIMIT 1")
+                row = cur.fetchone()
+            if row is None:
+                assert True, "No template in DB (migration not run); write path N/A"
+                return
+            template_id = row[0]
+            db_execute(
+                """
+                INSERT INTO intelligence_examples (content_profile, template_used, confidence_score)
+                VALUES (%s, %s, %s)
+                """,
+                ('{"content_types": ["test"]}', str(template_id), 0.95),
+            )
+            count = db_fetch_examples_count()
+>           assert count >= 0
+                   ^^^^^^^^^^
+E           TypeError: '>=' not supported between instances of 'MagicMock' and 'int'
+
+tests\confluence\test_db_integration.py:100: TypeError
+
+--- Test failure ---
+def test_tc_e2e_006_complete_learning_cycle() -> None:
+        """TC-E2E-006: Complete learning cycle -> Measurable improvement in intelligence."""
+        try:
+            from app.api.confluence_routes import (
+                intelligence_status_handler,
+                intelligence_feedback_handler,
+            )
+        except ImportError:
+            import sys
+            from pathlib import Path
+    
+            sys.path.insert(
+                0,
+                str(
+                    Path(__file__).resolve().parents[2]
+                    / "repo_analysis_rag"
+                    / "backend_confluence"
+                ),
+            )
+            from app.api.confluence_routes import (
+                intelligence_status_handler,
+                intelligence_feedback_handler,
+            )
+    
+        class MockReqStatus:
+            args = {}
+            query_params = {}
+    
+        class MockReqFeedback:
+            body = b'{"creation_id": "c0000001-0001-4000-8000-000000000001", "intelligence_score": 5, "feedback": "Perfect AI formatting!"}'
+    
+            def get_json(self, silent=True):
+                import json
+    
+                return json.loads(self.body)
+    
+>       status1, _ = intelligence_status_handler(MockReqStatus())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\confluence\test_e2e_workflows.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+repo_analysis_rag\backend_confluence\app\api\confluence_routes.py:447: in intelligence_status_handler
+    data = get_intelligence_status(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+detail_level = 'full'
+db_fetch_metrics = <function db_fetch_intelligence_metrics at 0x0000012CDFFBCA40>
+examples_base_dir = None
+
+    def get_intelligence_status(
+        detail_level: str = "full",
+        db_fetch_metrics: Optional[Callable[[], dict]] = None,
+        examples_base_dir: Optional[str] = None,
+    ) -> dict[str, Any]:
+        """
+        Returns intelligence metrics, learning progress, improvement rates.
+        PRD §9.1 EXACT format including intelligence_summary.
+        Status query: <500ms response time.
+        """
+        metrics = {}
+        if db_fetch_metrics:
+            try:
+                metrics = db_fetch_metrics()
+            except Exception:
+                pass
+        if not metrics:
+            examples = _get_file_examples(examples_base_dir)
+            n = len(examples)
+            avg_conf = (
+                sum(e.get("confidence_score") or 0 for e in examples) / n * 100 if n else 94
+            )
+            with_fb = [e for e in examples if e.get("user_feedback") is not None]
+            avg_fb = (
+                sum((e.get("user_feedback") or 5) / 5.0 * 100 for e in with_fb)
+                / len(with_fb)
+                if with_fb
+                else 94
+            )
+            metrics = {
+                "examples_learned": n or 247,
+                "template_selection_accuracy": round(avg_conf) if n else 94,
+                "user_acceptance_rate": round(avg_fb),
+                "learning_rate_pct": 15,
+                "confidence_calibration": round(avg_conf) if n else 94,
+                "ai_decision_quality": round(avg_fb),
+            }
+    
+        accuracy = metrics.get("template_selection_accuracy", 94)
+        examples_count = metrics.get("examples_learned", 247)
+        learning_rate = metrics.get("learning_rate_pct", 15)
+        confidence = metrics.get("confidence_calibration", 94)
+        conf_frac = confidence / 100.0
+    
+        status_summary = (
+            f"Intelligence Status: {accuracy}% accuracy, {examples_count} examples learned"
+        )
+    
+        intelligence_metrics = {
+            "template_selection_intelligence": metrics.get(
+                "template_selection_accuracy", 94
+            ),
+            "user_intelligence_acceptance": metrics.get("user_acceptance_rate", 94),
+            "learning_intelligence_improvement": learning_rate,
+            "confidence_intelligence_calibration": confidence,
+            "ai_decision_quality": metrics.get("ai_decision_quality", 94),
+            "status_summary": status_summary,
+            "intelligence_confidence_pct": confidence,
+            "learning_rate_pct": learning_rate,
+        }
+    
+        learning_progress = {
+            "examples_learned": examples_count,
+            "template_selection_accuracy": accuracy,
+            "user_acceptance_rate": metrics.get("user_acceptance_rate", 94),
+            "learning_rate_pct": learning_rate,
+        }
+    
+        improvement_rates = {"learning_rate_pct": learning_rate}
+    
+        ai_decisions_made = [
+            "Template selection based on learned examples",
+            "Content analysis applied",
+            "Confidence scoring calibrated",
+        ]
+    
+        intelligence_confidence = {
+>           "content_detection": round(conf_frac * 1.02, 2) if conf_frac < 1 else 0.96,
+                                                               ^^^^^^^^^^^^^
+            "template_intelligence": round(conf_frac * 0.98, 2) if conf_frac < 1 else 0.92,
+            "formatting_intelligence": (
+                round(conf_frac * 1.01, 2) if conf_frac < 1 else 0.95
+            ),
+            "overall_intelligence": conf_frac,
+        }
+E       TypeError: '<' not supported between instances of 'MagicMock' and 'int'
+
+repo_analysis_rag\backend_confluence\app\confluence\status_manager.py:92: TypeError
+2026-02-11 20:38:54,824 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-11 20:39:01,889 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-11 20:39:01,898 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-11 20:39:04,028 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-11 20:39:04,438 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:73: in test_tc_it_002_database_read_templates_exist
+    cur.execute("SELECT COUNT(*) FROM intelligent_templates")
+E   psycopg2.errors.UndefinedTable: relation "intelligent_templates" does not exist
+E   LINE 1: SELECT COUNT(*) FROM intelligent_templates
+E                                ^
+
+--- Test failure ---
+tests\confluence\test_db_integration.py:101: in test_tc_it_008_learning_system_can_store_example
+    cur.execute("SELECT id FROM intelligent_templates LIMIT 1")
+E   psycopg2.errors.UndefinedTable: relation "intelligent_templates" does not exist
+E   LINE 1: SELECT id FROM intelligent_templates LIMIT 1
+E                          ^
+2026-02-11 20:41:01,192 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-11 20:41:08,212 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-11 20:41:08,213 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-11 20:41:09,128 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-11 20:41:09,279 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
+2026-02-11 20:43:29,259 [ERROR] app.api.confluence_routes: intelligent-create failed: 401 Unauthorized
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401 Unauthorized
+2026-02-11 20:43:36,281 [ERROR] app.api.confluence_routes: intelligent-create failed: Confluence unreachable
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ConnectionError: Confluence unreachable
+2026-02-11 20:43:36,284 [ERROR] app.api.confluence_routes: intelligent-create failed: 401
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\api\confluence_routes.py", line 380, in intelligent_create_handler
+    result = run_create(
+             ^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: 401
+2026-02-11 20:43:37,523 [ERROR] test_security_logger_leak: fail: auth=***MASKED***
+NoneType: None
+2026-02-11 20:43:37,738 [ERROR] app.agents.integration_agent: Background learning failed: learn fail
+Traceback (most recent call last):
+  File "C:\Repo_Analysis_Rag_Agent\repo_analysis_rag\backend_confluence\app\agents\integration_agent.py", line 128, in _run
+    learn(feedback, creation_metadata)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+ValueError: learn fail
