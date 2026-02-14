@@ -337,6 +337,7 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
     # Initialize manifest store
     manifest_path = scan_rules.index_dir() / repo_id / "manifest.json"
     manifest = ManifestStore(str(manifest_path))
+    max_file_size_mb = _config_store.get_max_file_size_mb(repo_id)
 
     # Full index: clear existing Chroma collections so removed files don't leave stale chunks
     _delete_repo_collections(repo_id)
@@ -360,7 +361,7 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
 
             # 2. Directory Exclusion: Skip excluded directories
             skip, reason = scan_rules.should_skip_path_with_reason(
-                root_path, dir_path, is_dir=True
+                root_path, dir_path, is_dir=True, max_file_size_mb=max_file_size_mb
             )
             if skip:
                 dirs.remove(d)
@@ -376,7 +377,7 @@ def perform_indexing_scan(root_path: str, repo_id: str) -> dict:
                 continue
 
             skip, reason = scan_rules.should_skip_path_with_reason(
-                root_path, file_path, is_dir=False
+                root_path, file_path, is_dir=False, max_file_size_mb=max_file_size_mb
             )
             if skip:
                 manifest.add_entry(

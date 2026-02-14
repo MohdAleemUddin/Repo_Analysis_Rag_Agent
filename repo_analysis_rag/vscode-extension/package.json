@@ -19,7 +19,8 @@
     "@types/node": "^20.19.30",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
-    "@types/vscode": "^1.85.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/vsce": "^3.7.1",
     "axios": "^1.13.4",
     "axios-mock-adapter": "^2.1.0",
     "chai": "^4.5.0",
@@ -117,6 +118,16 @@
           "default": "http://localhost:8000",
           "description": "Confluence API base URL (analyze, create, spaces, config)."
         },
+        "confluence.autoStartServer": {
+          "type": "boolean",
+          "default": true,
+          "description": "When the extension activates, start the Confluence backend server automatically if it is not already running."
+        },
+        "confluence.backendPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the backend_confluence folder containing run_server.py. If empty, the extension uses workspace or sibling backend_confluence."
+        },
         "rag.agentBaseUrl": {
           "type": "string",
           "default": "http://localhost:8001",
@@ -126,6 +137,16 @@
           "type": "boolean",
           "default": true,
           "description": "Run a full index automatically when the extension loads (when a workspace folder is open). Manual /index full still works."
+        },
+        "rag.autoStartServer": {
+          "type": "boolean",
+          "default": true,
+          "description": "When the extension activates, start the RAG backend server automatically if it is not already running (requires rag.backendPath or sibling backend_rag)."
+        },
+        "rag.backendPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the backend_rag folder containing run_server.py. If empty, the extension uses a sibling backend_rag folder next to the extension."
         },
         "confluence.credentials.url": {
           "type": "string",
@@ -159,17 +180,31 @@
         },
         "confluence.performance.timeouts": {
           "type": "object",
-          "default": { "analysis": 3000, "templateSelection": 2000, "pageCreation": 15000, "connection": 5000 },
+          "default": {
+            "analysis": 3000,
+            "templateSelection": 2000,
+            "pageCreation": 15000,
+            "connection": 5000
+          },
           "description": "Timeouts in ms: analysis, templateSelection, pageCreation, connection"
         },
         "confluence.performance.cache": {
           "type": "object",
-          "default": { "enabled": true, "ttl": 300, "maxSize": 100 },
+          "default": {
+            "enabled": true,
+            "ttl": 300,
+            "maxSize": 100
+          },
           "description": "Cache settings: enabled, ttl (seconds), maxSize"
         },
         "confluence.logging.level": {
           "type": "string",
-          "enum": ["DEBUG", "INFO", "WARN", "ERROR"],
+          "enum": [
+            "DEBUG",
+            "INFO",
+            "WARN",
+            "ERROR"
+          ],
           "default": "INFO",
           "description": "Logging level for Confluence operations"
         },
@@ -220,7 +255,11 @@
         },
         "confluence.templates.overrides": {
           "type": "object",
-          "default": { "disabledTemplates": [], "priorityOrder": [], "customTemplatesPath": "" },
+          "default": {
+            "disabledTemplates": [],
+            "priorityOrder": [],
+            "customTemplatesPath": ""
+          },
           "description": "Template overrides: disabledTemplates, priorityOrder, customTemplatesPath (e.g. ${workspaceFolder}/.confluence/templates)"
         },
         "confluence.intelligence.confidenceThreshold": {
@@ -255,8 +294,13 @@
         },
         "confluence.risks.fallbackTemplates": {
           "type": "array",
-          "items": { "type": "string" },
-          "default": ["mixed_project", "generic"],
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "mixed_project",
+            "generic"
+          ],
           "description": "Fallback template IDs"
         },
         "confluence.risks.maxFileSize": {
@@ -410,5 +454,7 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "activationEvents": ["*"]
+  "activationEvents": [
+    "*"
+  ]
 }

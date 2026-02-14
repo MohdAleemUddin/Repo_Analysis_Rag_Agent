@@ -1,7 +1,174 @@
+import * as child_process from "child_process";
+import * as fs from "fs";
+import * as path from "path";
 import * as vscode from "vscode";
 
 import { getConfluenceCredentialsFromSettings, getStoredToken, setStoredToken, validateConfluenceUrl } from "./confluence/confluence-settings";
+import { fetchHealth, getRagBaseUrl } from "./services/agentClient";
 import { ChatPanelViewProvider } from "./webview/ChatPanelViewProvider";
+
+const INDEX_ON_LOAD_DELAY_MS = 1000;
+const SERVER_POLL_INTERVAL_MS = 500;
+const SERVER_POLL_MAX_ATTEMPTS = 60;
+
+/**
+ * Ensure the RAG backend is running: if rag.autoStartServer is true and the server
+ * is not reachable, start run_server.py in the background, then poll until healthy.
+ * Does not change behavior when the server is already running or autoStartServer is false.
+ */
+async function ensureRagServerStarted(context: vscode.ExtensionContext, log: vscode.OutputChannel): Promise<void> {
+    const cfg = vscode.workspace.getConfiguration("rag");
+    const autoStart = cfg.get<boolean>("autoStartServer", true);
+    if (!autoStart) return;
+
+    const baseUrl = getRagBaseUrl();
+    const health = await fetchHealth(baseUrl);
+    if (health !== null) {
+        log.appendLine("[Offline RAG] RAG server already running.");
+        return;
+    }
+
+    let backendDir: string;
+    const configuredPath = cfg.get<string>("backendPath", "")?.trim();
+    if (configuredPath) {
+        backendDir = path.resolve(configuredPath);
+    } else {
+        const folders = vscode.workspace.workspaceFolders;
+        let found = false;
+        if (folders?.length) {
+            for (const folder of folders) {
+                const root = folder.uri.fsPath;
+                const candidates = [
+                    path.join(root, "repo_analysis_rag", "backend_rag"),
+                    path.join(root, "backend_rag"),
+                ];
+                for (const candidate of candidates) {
+                    const runServerPath = path.join(candidate, "run_server.py");
+                    if (fs.existsSync(runServerPath)) {
+                        backendDir = candidate;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        }
+        if (!found) {
+            backendDir = path.resolve(context.extensionPath, "..", "backend_rag");
+        }
+    }
+    const runServerPath = path.join(backendDir, "run_server.py");
+    if (!fs.existsSync(runServerPath)) {
+        log.appendLine("[Offline RAG] Auto-start skipped: run_server.py not found at " + runServerPath);
+        return;
+    }
+
+    const port = new URL(baseUrl).port || "8001";
+    const env = { ...process.env, RAG_PORT: port };
+    const pythonCmd = process.platform === "win32" ? "python" : "python3";
+    const child = child_process.spawn(pythonCmd, [runServerPath], {
+        cwd: backendDir,
+        env,
+        detached: true,
+        stdio: "ignore",
+        windowsHide: true,
+    });
+    child.unref();
+    log.appendLine("[Offline RAG] Starting RAG server in background...");
+
+    for (let i = 0; i < SERVER_POLL_MAX_ATTEMPTS; i++) {
+        await new Promise((r) => setTimeout(r, SERVER_POLL_INTERVAL_MS));
+        const h = await fetchHealth(baseUrl);
+        if (h !== null) {
+            log.appendLine("[Offline RAG] RAG server ready.");
+            return;
+        }
+    }
+    log.appendLine("[Offline RAG] RAG server may still be starting; index on load will retry or use manual /index full.");
+}
+
+/**
+ * Ensure the Confluence backend is running: if confluence.autoStartServer is true and the server
+ * is not reachable, start run_server.py in the background, then poll until healthy.
+ */
+async function ensureConfluenceServerStarted(context: vscode.ExtensionContext, confluenceOutput: vscode.OutputChannel): Promise<void> {
+    const cfg = vscode.workspace.getConfiguration("confluence");
+    const autoStart = cfg.get<boolean>("autoStartServer", true);
+    if (!autoStart) return;
+
+    const baseUrl = (cfg.get<string>("apiBaseUrl") ?? "http://localhost:8000").replace(/\/$/, "");
+    try {
+        const res = await fetch(`${baseUrl}/health`);
+        if (res.ok) {
+            confluenceOutput.appendLine("[Confluence] Confluence server already running.");
+            return;
+        }
+    } catch {
+        // Server not reachable; continue to start
+    }
+
+    let backendDir: string;
+    const configuredPath = cfg.get<string>("backendPath", "")?.trim();
+    if (configuredPath) {
+        backendDir = path.resolve(configuredPath);
+    } else {
+        const folders = vscode.workspace.workspaceFolders;
+        let found = false;
+        if (folders?.length) {
+            for (const folder of folders) {
+                const root = folder.uri.fsPath;
+                const candidates = [
+                    path.join(root, "repo_analysis_rag", "backend_confluence"),
+                    path.join(root, "backend_confluence"),
+                ];
+                for (const candidate of candidates) {
+                    const runServerPath = path.join(candidate, "run_server.py");
+                    if (fs.existsSync(runServerPath)) {
+                        backendDir = candidate;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        }
+        if (!found) {
+            backendDir = path.resolve(context.extensionPath, "..", "backend_confluence");
+        }
+    }
+    const runServerPath = path.join(backendDir, "run_server.py");
+    if (!fs.existsSync(runServerPath)) {
+        confluenceOutput.appendLine("[Confluence] Auto-start skipped: run_server.py not found at " + runServerPath);
+        return;
+    }
+
+    const port = new URL(baseUrl).port || "8000";
+    const env = { ...process.env, CONFLUENCE_PORT: port };
+    const pythonCmd = process.platform === "win32" ? "python" : "python3";
+    const child = child_process.spawn(pythonCmd, [runServerPath], {
+        cwd: backendDir,
+        env,
+        detached: true,
+        stdio: "ignore",
+        windowsHide: true,
+    });
+    child.unref();
+    confluenceOutput.appendLine("[Confluence] Starting Confluence server in background...");
+
+    for (let i = 0; i < SERVER_POLL_MAX_ATTEMPTS; i++) {
+        await new Promise((r) => setTimeout(r, SERVER_POLL_INTERVAL_MS));
+        try {
+            const res = await fetch(`${baseUrl}/health`);
+            if (res.ok) {
+                confluenceOutput.appendLine("[Confluence] Confluence server ready.");
+                return;
+            }
+        } catch {
+            // keep polling
+        }
+    }
+    confluenceOutput.appendLine("[Confluence] Confluence server may still be starting.");
+}
 
 /** US-10: Test Confluence connection via command (no webview panel). */
 async function runTestConnection(context: vscode.ExtensionContext): Promise<void> {
@@ -66,12 +233,21 @@ export function activate(context: vscode.ExtensionContext) {
 
         context.subscriptions.push(command);
 
-        // Run full index in background when extension loads (if workspace folder open and rag.indexOnLoad is true)
-        const indexOnLoadDelayMs = 2000;
-        const indexOnLoadTimer = setTimeout(() => {
-            void provider.runInitialFullIndex();
-        }, indexOnLoadDelayMs);
-        context.subscriptions.push({ dispose: () => clearTimeout(indexOnLoadTimer) });
+        const ragStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 90);
+        ragStatusBarItem.text = "RAG";
+        ragStatusBarItem.tooltip = "Open Offline Folder RAG chat";
+        ragStatusBarItem.command = "offlineFolderRag.openChat";
+        ragStatusBarItem.show();
+        context.subscriptions.push(ragStatusBarItem);
+
+        // Ensure both RAG and Confluence servers are running (auto-start if configured), then run full index on load when applicable
+        void Promise.all([
+            ensureConfluenceServerStarted(context, confluenceOutput),
+            ensureRagServerStarted(context, log),
+        ]).then(() => {
+            const t = setTimeout(() => void provider.runInitialFullIndex(), INDEX_ON_LOAD_DELAY_MS);
+            context.subscriptions.push({ dispose: () => clearTimeout(t) });
+        });
 
         const analyzeCommand = vscode.commands.registerCommand("offlineFolderRag.analyzeFolder", () => {
             vscode.window.showInformationMessage('Analyzing folder...');

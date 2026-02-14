@@ -1,6 +1,6 @@
 import messages from "../../confluence/simple-language.json";
 
-const PLACEHOLDER_TEXT = "Plan · @ for context · / for commands";
+const PLACEHOLDER_TEXT = "";
 
 /** Escape string for embedding inside a JavaScript double-quoted string (avoid XSS and broken script). */
 function escapeForJs(s: string): string {
@@ -30,6 +30,8 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-${nonce}'; style-src 'unsafe-inline';" />
     <title>Offline Folder RAG</title>
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
         :root {
             color-scheme: light dark;
             --bg: #f4f4f5;
@@ -53,6 +55,11 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             }
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             margin: 0;
             background: var(--bg);
@@ -63,9 +70,9 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
         #chat-panel-container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
+            min-height: 100%;
             padding: 16px;
-            box-sizing: border-box;
             gap: 16px;
             position: relative;
         }
@@ -96,10 +103,17 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             border-bottom: 1px solid var(--border);
         }
 
+        #header-titles {
+            min-width: 0;
+        }
+
         #header-titles h1 {
             margin: 0;
             font-size: 1.1rem;
             font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         #header-titles p {
@@ -142,6 +156,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
 
         #conversation {
             flex: 1;
+            min-height: 0;
             overflow-y: auto;
             background: var(--panel-bg);
             border: 1px solid var(--border);
@@ -202,16 +217,74 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             font-size: 0.95rem;
         }
 
+        .composer-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .composer-input-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            display: flex;
+        }
+
         #composer-input {
-            width: 100%;
-            min-height: 120px;
+            flex: 1;
+            min-width: 0;
+            min-height: 72px;
+            max-height: 160px;
             border-radius: 12px;
             border: 1px solid var(--border);
-            padding: 12px;
+            padding: 12px 48px 12px 12px;
             background: var(--surface);
             color: var(--text);
             font-size: 1rem;
-            resize: vertical;
+            resize: none;
+        }
+
+        .composer-input-wrap .send-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: 0;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .composer-input-wrap .send-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .clear-chat-button,
+        .composer-input-row #confluence-button {
+            flex-shrink: 0;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .clear-chat-button:hover,
+        .composer-input-row #confluence-button:hover {
+            border-color: var(--accent);
+            background: var(--panel-bg);
+        }
+
+        .composer-input-row #confluence-button {
+            font-size: 0.9rem !important;
         }
 
         #composer-input:focus-visible {
@@ -223,6 +296,10 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             margin: 0;
             font-size: 0.85rem;
             color: var(--muted);
+        }
+
+        .composer-hint:empty {
+            display: none;
         }
 
         .assistant-response {
@@ -334,6 +411,17 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.2);
         }
 
+        #attachment-button,
+        #microphone-button {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+        }
+
         .composer-send-row {
             display: flex;
             align-items: center;
@@ -428,7 +516,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
         }
 
         #local-row {
-            display: flex;
+            display: none;
             align-items: center;
             gap: 12px;
             border: 1px solid var(--border);
@@ -490,6 +578,16 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             cursor: pointer;
         }
 
+        @media (max-width: 360px) {
+            #chat-panel-container { padding: 8px; gap: 8px; }
+            #chat-panel-header { padding-bottom: 6px; }
+            #composer-card { padding: 12px; }
+            .composer-dropdown select { min-width: 0; }
+            #composer-bottom-row { gap: 8px; }
+            .composer-send-row { flex-wrap: wrap; }
+            .send-hint { font-size: 0.75rem; }
+        }
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -508,8 +606,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
         <div id="confluence-overlay"></div>
         <header id="chat-panel-header">
             <div id="header-titles">
-                <h1>Chat</h1>
-                <p>Offline Folder RAG</p>
+                <h1>AZA AI Agent</h1>
             </div>
             <div id="header-actions" role="toolbar" aria-label="Chat header actions">
                 <button type="button" aria-label="Start a new conversation" title="Start new chat">+</button>
@@ -523,13 +620,21 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
 
         <section id="composer-card" aria-label="Chat composer">
             <form id="composer-form">
-                <label for="composer-input">Message</label>
-                <textarea
-                    id="composer-input"
-                    placeholder="${placeholderText}"
-                    aria-label="Message input"
-                    autocomplete="off"
-                ></textarea>
+                <div class="composer-input-row">
+                    <div class="composer-input-wrap">
+                        <textarea
+                            id="composer-input"
+                            placeholder="${(placeholderText && placeholderText.trim()) ? placeholderText : " Ask "}"
+                            aria-label="Message input"
+                            autocomplete="off"
+                        ></textarea>
+                        <button type="button" id="send-button" class="send-button" aria-label="Send message" title="Send message">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </button>
+                    </div>
+                    <button type="button" class="clear-chat-button" id="clear-chat-button" aria-label="Clear chat" title="Clear chat">Clear Chat</button>
+                    <button id="confluence-button" type="button" aria-label="Save to Confluence" title="Save to Confluence">Save to Confluence</button>
+                </div>
                 <p class="composer-hint">${placeholderText}</p>
 
                 <div id="context-attachments" class="context-attachments hidden" aria-live="polite"></div>
@@ -541,14 +646,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                 </div>
 
                 <div id="composer-bottom-row" aria-label="Composer quick controls">
-                    <div class="composer-dropdown">
-                        <label for="infinity-dropdown">∞</label>
-                        <select id="infinity-dropdown" aria-label="Infinity dropdown">
-                            <option value="local" selected>Local</option>
-                            <option value="future-1" disabled>Future entry 1</option>
-                            <option value="future-2" disabled>Future entry 2</option>
-                        </select>
-                    </div>
+                    <!-- Mode dropdown hidden from UI; default is RAG. Uncomment to show.
                     <div class="composer-dropdown">
                         <label for="mode-select">Mode</label>
                         <select id="mode-select" aria-label="Composer mode">
@@ -557,14 +655,9 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                             <option value="tools">Tools</option>
                         </select>
                     </div>
+                    -->
                     <button id="attachment-button" type="button" aria-label="Attach file" title="Attach file">📎</button>
                     <button id="microphone-button" type="button" aria-label="Record voice" title="Not available" disabled>🎤</button>
-                    <button id="confluence-button" type="button" aria-label="Save to Confluence" title="Save to Confluence">💾</button>
-                </div>
-
-                <div class="composer-send-row">
-                    <button type="submit" class="send-button" aria-label="Send message" title="Send message">Send</button>
-                    <span class="send-hint">Press Ctrl+Enter to send</span>
                 </div>
             </form>
         </section>
@@ -602,16 +695,18 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             const indexModal = document.getElementById("indexModal");
             const indexFullButton = document.getElementById("indexFull");
             const indexCancelButton = document.getElementById("indexCancel");
-            const infinityDropdown = document.getElementById("infinity-dropdown");
             const attachmentButton = document.getElementById("attachment-button");
             const microphoneButton = document.getElementById("microphone-button");
             const confluenceButton = document.getElementById("confluence-button");
+            const clearChatButton = document.getElementById("clear-chat-button");
+            const sendButton = document.getElementById("send-button");
             const localDropdown = document.getElementById("local-dropdown");
 
-            const COMPOSER_MODES = ["auto", "rag", "tools"];
+            const COMPOSER_MODES = ["auto", "rag"];
             const LOCAL_SELECT_VALUE = "__select_folder__";
 
-            let currentMode = "auto";
+            let currentMode = "rag";
+            let isGenerating = false;
             let lastLocalSelection = LOCAL_SELECT_VALUE;
             let onboardingTooltipShown = 0;
             let onboardingUsageCount = 0;
@@ -622,6 +717,22 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                 if (confluenceButton) {
                     confluenceButton.title = onboardingUsageCount === 0 ? FIRST_TIME_TOOLTIP : SAVE_TO_CONFLUENCE_LABEL;
                     confluenceButton.setAttribute("aria-label", confluenceButton.title);
+                }
+            }
+
+            const SEND_ICON_SVG = "<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 24 24\\" fill=\\"currentColor\\" aria-hidden=\\"true\\"><path d=\\"M2.01 21L23 12 2.01 3 2 10l15 2-15 2z\\"/></svg>";
+            const STOP_ICON_SVG = "<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 24 24\\" fill=\\"currentColor\\" aria-hidden=\\"true\\"><rect x=\\"6\\" y=\\"6\\" width=\\"12\\" height=\\"12\\" rx=\\"1\\"/></svg>";
+
+            function updateSendButtonState() {
+                if (!sendButton) return;
+                if (isGenerating) {
+                    sendButton.innerHTML = STOP_ICON_SVG;
+                    sendButton.setAttribute("aria-label", "Stop generation");
+                    sendButton.title = "Stop generation";
+                } else {
+                    sendButton.innerHTML = SEND_ICON_SVG;
+                    sendButton.setAttribute("aria-label", "Send message");
+                    sendButton.title = "Send message";
                 }
             }
 
@@ -720,8 +831,9 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             function appendMessage(text, role, isHtml = false) {
                 if (!conversation || !text) return;
 
-                if (emptyState) {
-                    emptyState.remove();
+                const emptyEl = document.getElementById("empty-state");
+                if (emptyEl && emptyEl.parentNode) {
+                    emptyEl.remove();
                 }
 
                 const entry = document.createElement("div");
@@ -820,7 +932,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                 if (!text) return;
 
                 appendMessage(text, "user");
-                const mode = modeSelect?.value || "auto";
+                const mode = modeSelect?.value || "rag";
                 const extraContext = buildExtraContext();
 
                 vscode.postMessage({
@@ -833,11 +945,22 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                 composerInput.value = "";
                 composerInput.focus();
                 clearContext();
+                isGenerating = true;
+                updateSendButtonState();
             }
 
             composerForm?.addEventListener("submit", (event) => {
                 event.preventDefault();
+                if (isGenerating) return;
                 sendMessage();
+            });
+
+            sendButton?.addEventListener("click", () => {
+                if (isGenerating) {
+                    vscode.postMessage({ type: "abortRequest" });
+                } else {
+                    sendMessage();
+                }
             });
 
             composerInput?.addEventListener("keydown", (event) => {
@@ -847,6 +970,7 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
 
                 if (event.key === "Enter" && !event.shiftKey) {
                     event.preventDefault();
+                    if (isGenerating) return;
                     sendMessage();
                 }
             });
@@ -861,14 +985,6 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
                 const mode = modeSelect.value;
                 vscode.postMessage({ type: "modeChange", mode });
             });
-
-            if (infinityDropdown) {
-                infinityDropdown.addEventListener("change", () => {
-                    if (infinityDropdown.value !== "local") {
-                        infinityDropdown.value = "local";
-                    }
-                });
-            }
 
             contextMenu?.addEventListener("click", (event) => {
                 const target = event.target;
@@ -928,6 +1044,21 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
             if (attachmentButton) {
                 attachmentButton.addEventListener("click", () => {
                     vscode.postMessage({ type: "attachmentPick" });
+                });
+            }
+
+            if (clearChatButton) {
+                clearChatButton.addEventListener("click", () => {
+                    if (!conversation) return;
+                    while (conversation.firstChild) {
+                        conversation.removeChild(conversation.firstChild);
+                    }
+                    const emptyEl = document.createElement("div");
+                    emptyEl.id = "empty-state";
+                    emptyEl.className = "conversation-empty";
+                    emptyEl.textContent = "No conversation yet.";
+                    conversation.appendChild(emptyEl);
+                    vscode.postMessage({ type: "clearChat" });
                 });
             }
 
@@ -1063,6 +1194,12 @@ export function getChatPanelHtml(extensionUri: vscode.Uri, placeholderText: stri
 
                 if (message.type === "modeState" && typeof message.mode === "string") {
                     applyMode(message.mode);
+                    return;
+                }
+
+                if (message.type === "generationEnded") {
+                    isGenerating = false;
+                    updateSendButtonState();
                     return;
                 }
 

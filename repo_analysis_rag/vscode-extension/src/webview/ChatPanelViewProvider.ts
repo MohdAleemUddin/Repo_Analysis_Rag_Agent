@@ -69,7 +69,7 @@ import { AutoIndexScheduler } from "../services/autoIndexScheduler";
 import { getOnboardingState, markTooltipShown, incrementUsage } from "../confluence/onboarding";
 import { getSpacePreference, setSpacePreference, getSuggestedSpaceFromProjectType } from "../confluence/confluenceSpacePreferences";
 
-const COMPOSER_PLACEHOLDER = "Plan · @ for context · / for commands";
+const COMPOSER_PLACEHOLDER = "";
 
 const SUMMARY_PROMPT = "Summarize this codebase. What is this project about? List the main components, technologies, and purpose in a few paragraphs. Use only the provided code and documentation excerpts.";
 
@@ -126,6 +126,7 @@ export class ChatPanelViewProvider {
     private readonly confluenceOutput: vscode.OutputChannel | undefined;
     private readonly ragLog: vscode.OutputChannel | undefined;
     private lastRagSummaryPlainText: string | undefined = undefined;
+    private currentAbortController: AbortController | null = null;
 
     constructor(
         private readonly extensionContext: vscode.ExtensionContext,
@@ -382,14 +383,14 @@ export class ChatPanelViewProvider {
 
     public show(): void {
         if (this.panel) {
-            this.panel.reveal(vscode.ViewColumn.One);
+            this.panel.reveal(vscode.ViewColumn.Two);
             return;
         }
 
         this.panel = vscode.window.createWebviewPanel(
             "offlineFolderRag.chat",
-            "Offline Folder RAG",
-            vscode.ViewColumn.One,
+            "AZA AI Agent",
+            vscode.ViewColumn.Two,
             {
                 enableScripts: true,
                 enableCommandUris: true,
@@ -425,7 +426,8 @@ export class ChatPanelViewProvider {
                 const normalizedMode = isComposerMode(mode) ? mode : this.modeState.getMode();
                 this.ragLog?.appendLine(`[RAG] Message received: type=dispatch mode=${String(mode)} normalizedMode=${normalizedMode} text=${(text?.length ?? 0) > 60 ? (String(text).slice(0, 60) + "...") : String(text)}`);
                 this.pushToConversationHistory(text);
-                
+                this.currentAbortController = new AbortController();
+                try {
                 if (text.startsWith("/")) {
                     const result = await parseSlashCommand(text, this.extensionContext);
                     if (result.type === 'assistantResponse') {
@@ -476,7 +478,7 @@ export class ChatPanelViewProvider {
                             return;
                         }
                         try {
-                            const response = await askWithOverride(SUMMARY_PROMPT, "rag", extraContextSummary);
+                            const response = await askWithOverride(SUMMARY_PROMPT, "rag", extraContextSummary, this.currentAbortController.signal);
                             this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
                             const result = await response.json();
                             const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
@@ -500,9 +502,13 @@ export class ChatPanelViewProvider {
                             this.postMessage({ type: "commandResult", payload: assistantResponseHtml, isHtml: true });
                             return;
                         } catch (error) {
-                            const errMsg = error instanceof Error ? error.message : String(error);
-                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
-                            this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
+                            if (error instanceof Error && error.name === "AbortError") {
+                                this.postMessage({ type: "commandResult", payload: "Request cancelled." });
+                            } else {
+                                const errMsg = error instanceof Error ? error.message : String(error);
+                                this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                                this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
+                            }
                             return;
                         }
                     }
@@ -514,7 +520,7 @@ export class ChatPanelViewProvider {
                         this.ragLog?.appendLine(`[RAG] Sending request: POST ${askUrl}`);
                         this.ragLog?.appendLine(`[RAG] Query: ${text.length > 80 ? text.slice(0, 80) + "..." : text}`);
                         try {
-                            const response = await askWithOverride(text, "rag", extraContext);
+                            const response = await askWithOverride(text, "rag", extraContext, this.currentAbortController.signal);
                             this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
                             const result = await response.json();
                             const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
@@ -550,12 +556,16 @@ export class ChatPanelViewProvider {
                                 isHtml: true
                             });
                         } catch (error) {
-                            const errMsg = error instanceof Error ? error.message : String(error);
-                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
-                            this.postMessage({
-                                type: "commandResult",
-                                payload: `Error: ${errMsg}`,
-                            });
+                            if (error instanceof Error && error.name === "AbortError") {
+                                this.postMessage({ type: "commandResult", payload: "Request cancelled." });
+                            } else {
+                                const errMsg = error instanceof Error ? error.message : String(error);
+                                this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                                this.postMessage({
+                                    type: "commandResult",
+                                    payload: `Error: ${errMsg}`,
+                                });
+                            }
                         }
                     } else if (normalizedMode === "auto") {
                         this.ragLog?.appendLine(`[RAG] Routing to auto (overview/search/ask).`);
@@ -572,6 +582,10 @@ export class ChatPanelViewProvider {
                         this.ragLog?.appendLine(`[RAG] Routing to tools (no /ask).`);
                         await this.router.handleCommand(text, extraContext);
                     }
+                }
+                } finally {
+                    this.postMessage({ type: "generationEnded" });
+                    this.currentAbortController = null;
                 }
             } else if (message.type === "indexAction") {
                 const workspaceFolders = vscode.workspace.workspaceFolders;
@@ -604,6 +618,10 @@ export class ChatPanelViewProvider {
                 this.postOnboardingState();
             } else if (message.type === "confluenceSave") {
                 await this.handleConfluenceSaveWithContext([]);
+            } else if (message.type === "clearChat") {
+                this.conversationHistory = [];
+            } else if (message.type === "abortRequest") {
+                this.currentAbortController?.abort();
             } else if (message.type === "contextRequest") {
                 this.handleContextRequest(message.action);
             } else if (message.type === "attachmentPick") {

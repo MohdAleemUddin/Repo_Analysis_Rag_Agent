@@ -174,7 +174,7 @@ async def ask(request: AskRequest):
         repr(q_preview),
     )
     top_k = request.top_k or DEFAULT_TOP_K
-    max_chunks = request.max_context_chunks
+    max_chunks = request.max_context_chunks if request.max_context_chunks is not None else 5000
     persist_directory = None
     code_collection = DEFAULT_CODE_COLLECTION
     doc_collection = DEFAULT_DOC_COLLECTION

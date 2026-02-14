@@ -49,10 +49,16 @@ def generate_answer_if_configured(
             user_content = (
                 f"Context from the codebase:\n\n{context}\n\nQuestion: {query.strip()}"
             )
-            system_content = "You answer the user's question using only the provided code or documentation excerpts. Be concise. If the context does not contain the answer, say so. Cite file paths and line numbers when relevant."
+            system_content = (
+                "Answer using only the provided code or documentation excerpts. Use plain, crisp English: short sentences, no filler or repetition. "
+                "Synthesize into a clear summary; do not list or dump code or excerpts. Cite file paths and line numbers only when they add value. "
+                "If the context does not contain the answer, say so in one sentence."
+            )
         else:
             user_content = query.strip() or "Hello"
-            system_content = "Answer the user's question concisely. If no codebase context was provided, answer generally or say so."
+            system_content = (
+                "Answer in plain, crisp English. Be brief. If no codebase context was provided, say so and answer generally in one or two sentences."
+            )
 
         response = client.chat.completions.create(
             model=OPENAI_MODEL.strip(),

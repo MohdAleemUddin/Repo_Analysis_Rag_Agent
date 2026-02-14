@@ -5,7 +5,7 @@ from .code_chunker import chunk as code_chunk
 from .line_chunker import chunk as line_chunk
 from .markdown_chunker import chunk as markdown_chunk
 
-MAX_CHUNKS_PER_FILE = 200
+MAX_CHUNKS_PER_FILE = 500
 
 REQUIRED_METADATA_KEYS = (
     "path",

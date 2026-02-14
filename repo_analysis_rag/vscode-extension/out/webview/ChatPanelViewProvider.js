@@ -78,7 +78,7 @@ const storage_1 = require("../services/storage");
 const autoIndexScheduler_1 = require("../services/autoIndexScheduler");
 const onboarding_1 = require("../confluence/onboarding");
 const confluenceSpacePreferences_1 = require("../confluence/confluenceSpacePreferences");
-const COMPOSER_PLACEHOLDER = "Plan · @ for context · / for commands";
+const COMPOSER_PLACEHOLDER = "";
 const SUMMARY_PROMPT = "Summarize this codebase. What is this project about? List the main components, technologies, and purpose in a few paragraphs. Use only the provided code and documentation excerpts.";
 class ModeState {
     mode;
@@ -121,6 +121,7 @@ class ChatPanelViewProvider {
     confluenceOutput;
     ragLog;
     lastRagSummaryPlainText = undefined;
+    currentAbortController = null;
     constructor(extensionContext, extensionUri, confluenceOutput, ragLog) {
         this.extensionContext = extensionContext;
         this.extensionUri = extensionUri;
@@ -378,10 +379,10 @@ class ChatPanelViewProvider {
     }
     show() {
         if (this.panel) {
-            this.panel.reveal(vscode.ViewColumn.One);
+            this.panel.reveal(vscode.ViewColumn.Two);
             return;
         }
-        this.panel = vscode.window.createWebviewPanel("offlineFolderRag.chat", "Offline Folder RAG", vscode.ViewColumn.One, {
+        this.panel = vscode.window.createWebviewPanel("offlineFolderRag.chat", "AZA AI Agent", vscode.ViewColumn.Two, {
             enableScripts: true,
             enableCommandUris: true,
         });
@@ -412,160 +413,177 @@ class ChatPanelViewProvider {
                 const normalizedMode = (0, agentClient_1.isComposerMode)(mode) ? mode : this.modeState.getMode();
                 this.ragLog?.appendLine(`[RAG] Message received: type=dispatch mode=${String(mode)} normalizedMode=${normalizedMode} text=${(text?.length ?? 0) > 60 ? (String(text).slice(0, 60) + "...") : String(text)}`);
                 this.pushToConversationHistory(text);
-                if (text.startsWith("/")) {
-                    const result = await (0, commandRouter_1.parseSlashCommand)(text, this.extensionContext);
-                    if (result.type === 'assistantResponse') {
-                        const html = renderAssistantResponse(result.payload);
-                        this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
-                    }
-                    else if (result.type === 'commandResult' && result.payload === 'Indexing started: full scan') {
-                        this.postMessage(result);
-                        this.handleIndexAndReport('full');
-                    }
-                    else if (result.type === 'commandResult' && result.payload === 'Indexing started: incremental scan') {
-                        this.postMessage(result);
-                        this.handleIndexAndReport('incremental');
-                    }
-                    else if (result.type === 'commandResult' && result.payload === 'Auto-index disabled.') {
-                        this.scheduler.stop();
-                        this.postMessage(result);
-                    }
-                    else if (result.type === 'commandResult' && result.payload === 'CONFLUENCE_DOCUMENT_PROJECT') {
-                        await this.triggerDocumentProject();
+                this.currentAbortController = new AbortController();
+                try {
+                    if (text.startsWith("/")) {
+                        const result = await (0, commandRouter_1.parseSlashCommand)(text, this.extensionContext);
+                        if (result.type === 'assistantResponse') {
+                            const html = renderAssistantResponse(result.payload);
+                            this.postMessage({ type: 'commandResult', payload: html, isHtml: true });
+                        }
+                        else if (result.type === 'commandResult' && result.payload === 'Indexing started: full scan') {
+                            this.postMessage(result);
+                            this.handleIndexAndReport('full');
+                        }
+                        else if (result.type === 'commandResult' && result.payload === 'Indexing started: incremental scan') {
+                            this.postMessage(result);
+                            this.handleIndexAndReport('incremental');
+                        }
+                        else if (result.type === 'commandResult' && result.payload === 'Auto-index disabled.') {
+                            this.scheduler.stop();
+                            this.postMessage(result);
+                        }
+                        else if (result.type === 'commandResult' && result.payload === 'CONFLUENCE_DOCUMENT_PROJECT') {
+                            await this.triggerDocumentProject();
+                        }
+                        else {
+                            this.postMessage(result);
+                        }
                     }
                     else {
-                        this.postMessage(result);
-                    }
-                }
-                else {
-                    const normalized = (text || "").toLowerCase().trim();
-                    if (!this.isSaveToConfluenceIntent(normalized)) {
-                        this.lastRagSummaryPlainText = undefined;
-                    }
-                    if (this.isSaveToConfluenceIntent(normalized)) {
-                        if (!this.lastRagSummaryPlainText) {
-                            this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
-                            return;
+                        const normalized = (text || "").toLowerCase().trim();
+                        if (!this.isSaveToConfluenceIntent(normalized)) {
+                            this.lastRagSummaryPlainText = undefined;
                         }
-                        await this.handleSaveLastSummaryToConfluence();
-                        return;
-                    }
-                    if (this.isSummaryIntent(normalized)) {
-                        const rootPath = this.getEffectiveRootPath();
-                        if (!rootPath) {
-                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
-                            return;
-                        }
-                        const storageRoot = this.extensionContext.globalStorageUri.fsPath;
-                        const exists = await (0, indexGate_1.checkIndexExists)({ storageRoot }, rootPath);
-                        if (!exists) {
-                            this.postMessage({ type: "showIndexModal" });
-                            return;
-                        }
-                        const extraContextSummary = this.buildExtraContext();
-                        if (!extraContextSummary) {
-                            this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
-                            return;
-                        }
-                        try {
-                            const response = await (0, agentClient_1.askWithOverride)(SUMMARY_PROMPT, "rag", extraContextSummary);
-                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
-                            const result = await response.json();
-                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
-                            if (invalidToken || (response.status === 401 && result?.error_code)) {
-                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
-                                this.postMessage({ type: "commandResult", payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)() });
+                        if (this.isSaveToConfluenceIntent(normalized)) {
+                            if (!this.lastRagSummaryPlainText) {
+                                this.postMessage({ type: "commandResult", payload: "No summary to save. Ask for a codebase summary first (e.g. 'Analyze this codebase and give its summary'), then say 'Save this summary to Confluence'.", isHtml: false });
                                 return;
                             }
-                            if (!response.ok) {
-                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
-                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                            await this.handleSaveLastSummaryToConfluence();
+                            return;
+                        }
+                        if (this.isSummaryIntent(normalized)) {
+                            const rootPath = this.getEffectiveRootPath();
+                            if (!rootPath) {
+                                this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
                                 return;
                             }
-                            this.lastRagSummaryPlainText = result.answer;
-                            const assistantResponseHtml = renderAssistantResponse({
-                                mode: "rag",
-                                confidence: result.confidence || "found",
-                                answer: result.answer || JSON.stringify(result),
-                                citations: result.citations || []
-                            });
-                            this.postMessage({ type: "commandResult", payload: assistantResponseHtml, isHtml: true });
-                            return;
+                            const storageRoot = this.extensionContext.globalStorageUri.fsPath;
+                            const exists = await (0, indexGate_1.checkIndexExists)({ storageRoot }, rootPath);
+                            if (!exists) {
+                                this.postMessage({ type: "showIndexModal" });
+                                return;
+                            }
+                            const extraContextSummary = this.buildExtraContext();
+                            if (!extraContextSummary) {
+                                this.postMessage({ type: "commandResult", payload: "Please open a project folder first.", isHtml: false });
+                                return;
+                            }
+                            try {
+                                const response = await (0, agentClient_1.askWithOverride)(SUMMARY_PROMPT, "rag", extraContextSummary, this.currentAbortController.signal);
+                                this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
+                                const result = await response.json();
+                                const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                                if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                    this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                    this.postMessage({ type: "commandResult", payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)() });
+                                    return;
+                                }
+                                if (!response.ok) {
+                                    const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                    this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                    return;
+                                }
+                                this.lastRagSummaryPlainText = result.answer;
+                                const assistantResponseHtml = renderAssistantResponse({
+                                    mode: "rag",
+                                    confidence: result.confidence || "found",
+                                    answer: result.answer || JSON.stringify(result),
+                                    citations: result.citations || []
+                                });
+                                this.postMessage({ type: "commandResult", payload: assistantResponseHtml, isHtml: true });
+                                return;
+                            }
+                            catch (error) {
+                                if (error instanceof Error && error.name === "AbortError") {
+                                    this.postMessage({ type: "commandResult", payload: "Request cancelled." });
+                                }
+                                else {
+                                    const errMsg = error instanceof Error ? error.message : String(error);
+                                    this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                                    this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
+                                }
+                                return;
+                            }
                         }
-                        catch (error) {
-                            const errMsg = error instanceof Error ? error.message : String(error);
-                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
-                            this.postMessage({ type: "commandResult", payload: `Error: ${errMsg}` });
-                            return;
-                        }
-                    }
-                    const extraContext = this.buildExtraContext();
-                    if (normalizedMode === "rag") {
-                        const baseUrl = (0, agentClient_1.getRagBaseUrl)();
-                        const askUrl = `${baseUrl}/ask`;
-                        this.ragLog?.appendLine(`[RAG] Target: POST ${askUrl}`);
-                        this.ragLog?.appendLine(`[RAG] Sending request: POST ${askUrl}`);
-                        this.ragLog?.appendLine(`[RAG] Query: ${text.length > 80 ? text.slice(0, 80) + "..." : text}`);
-                        try {
-                            const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext);
-                            this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
-                            const result = await response.json();
-                            const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
-                            if (invalidToken || (response.status === 401 && result?.error_code)) {
-                                this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
-                                this.ragLog?.appendLine(`[RAG] Token file: ${(0, agentClient_1.getTokenFilePath)()}`);
+                        const extraContext = this.buildExtraContext();
+                        if (normalizedMode === "rag") {
+                            const baseUrl = (0, agentClient_1.getRagBaseUrl)();
+                            const askUrl = `${baseUrl}/ask`;
+                            this.ragLog?.appendLine(`[RAG] Target: POST ${askUrl}`);
+                            this.ragLog?.appendLine(`[RAG] Sending request: POST ${askUrl}`);
+                            this.ragLog?.appendLine(`[RAG] Query: ${text.length > 80 ? text.slice(0, 80) + "..." : text}`);
+                            try {
+                                const response = await (0, agentClient_1.askWithOverride)(text, "rag", extraContext, this.currentAbortController.signal);
+                                this.ragLog?.appendLine(`[RAG] Response status: ${response.status} ${response.statusText}`);
+                                const result = await response.json();
+                                const invalidToken = result?.error_code === "INVALID_TOKEN" || result?.error === "INVALID_TOKEN";
+                                if (invalidToken || (response.status === 401 && result?.error_code)) {
+                                    this.ragLog?.appendLine("[RAG] Error: INVALID_TOKEN (missing or invalid X-LOCAL-TOKEN).");
+                                    this.ragLog?.appendLine(`[RAG] Token file: ${(0, agentClient_1.getTokenFilePath)()}`);
+                                    this.postMessage({
+                                        type: "commandResult",
+                                        payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)(),
+                                    });
+                                    return;
+                                }
+                                if (!response.ok) {
+                                    this.ragLog?.appendLine(`[RAG] Server error response: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
+                                    const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
+                                    this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
+                                    return;
+                                }
+                                this.ragLog?.appendLine(`[RAG] Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}, confidence=${result?.confidence ?? "—"}`);
+                                let payload = result.answer || JSON.stringify(result);
+                                const assistantResponseHtml = renderAssistantResponse({
+                                    mode: "rag",
+                                    confidence: result.confidence || "found",
+                                    answer: payload,
+                                    citations: result.citations || []
+                                });
                                 this.postMessage({
                                     type: "commandResult",
-                                    payload: "Error: RAG server requires a valid token. Ensure the backend has been started at least once so the token file exists, then reload the extension. Token file: " + (0, agentClient_1.getTokenFilePath)(),
+                                    payload: assistantResponseHtml,
+                                    isHtml: true
                                 });
-                                return;
                             }
-                            if (!response.ok) {
-                                this.ragLog?.appendLine(`[RAG] Server error response: ${typeof result?.detail === "string" ? result.detail : JSON.stringify(result).slice(0, 300)}`);
-                                const errPayload = result?.message || result?.remediation || JSON.stringify(result).slice(0, 300);
-                                this.postMessage({ type: "commandResult", payload: `Error: ${errPayload}` });
-                                return;
+                            catch (error) {
+                                if (error instanceof Error && error.name === "AbortError") {
+                                    this.postMessage({ type: "commandResult", payload: "Request cancelled." });
+                                }
+                                else {
+                                    const errMsg = error instanceof Error ? error.message : String(error);
+                                    this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
+                                    this.postMessage({
+                                        type: "commandResult",
+                                        payload: `Error: ${errMsg}`,
+                                    });
+                                }
                             }
-                            this.ragLog?.appendLine(`[RAG] Response OK: answer length=${String(result?.answer ?? "").length}, citations=${result?.citations?.length ?? 0}, confidence=${result?.confidence ?? "—"}`);
-                            let payload = result.answer || JSON.stringify(result);
-                            const assistantResponseHtml = renderAssistantResponse({
-                                mode: "rag",
-                                confidence: result.confidence || "found",
-                                answer: payload,
-                                citations: result.citations || []
-                            });
-                            this.postMessage({
-                                type: "commandResult",
-                                payload: assistantResponseHtml,
-                                isHtml: true
-                            });
                         }
-                        catch (error) {
-                            const errMsg = error instanceof Error ? error.message : String(error);
-                            this.ragLog?.appendLine(`[RAG] Request failed: ${errMsg}`);
-                            this.postMessage({
-                                type: "commandResult",
-                                payload: `Error: ${errMsg}`,
-                            });
+                        else if (normalizedMode === "auto") {
+                            this.ragLog?.appendLine(`[RAG] Routing to auto (overview/search/ask).`);
+                            try {
+                                await this.router.autoRouteInput(text, extraContext);
+                            }
+                            catch (error) {
+                                this.ragLog?.appendLine(`[RAG] Auto route failed: ${error instanceof Error ? error.message : String(error)}`);
+                                this.postMessage({
+                                    type: "commandResult",
+                                    payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
+                                });
+                            }
+                        }
+                        else {
+                            this.ragLog?.appendLine(`[RAG] Routing to tools (no /ask).`);
+                            await this.router.handleCommand(text, extraContext);
                         }
                     }
-                    else if (normalizedMode === "auto") {
-                        this.ragLog?.appendLine(`[RAG] Routing to auto (overview/search/ask).`);
-                        try {
-                            await this.router.autoRouteInput(text, extraContext);
-                        }
-                        catch (error) {
-                            this.ragLog?.appendLine(`[RAG] Auto route failed: ${error instanceof Error ? error.message : String(error)}`);
-                            this.postMessage({
-                                type: "commandResult",
-                                payload: `Error: ${error instanceof Error ? error.message : String(error)}`,
-                            });
-                        }
-                    }
-                    else {
-                        this.ragLog?.appendLine(`[RAG] Routing to tools (no /ask).`);
-                        await this.router.handleCommand(text, extraContext);
-                    }
+                }
+                finally {
+                    this.postMessage({ type: "generationEnded" });
+                    this.currentAbortController = null;
                 }
             }
             else if (message.type === "indexAction") {
@@ -604,6 +622,12 @@ class ChatPanelViewProvider {
             }
             else if (message.type === "confluenceSave") {
                 await this.handleConfluenceSaveWithContext([]);
+            }
+            else if (message.type === "clearChat") {
+                this.conversationHistory = [];
+            }
+            else if (message.type === "abortRequest") {
+                this.currentAbortController?.abort();
             }
             else if (message.type === "contextRequest") {
                 this.handleContextRequest(message.action);

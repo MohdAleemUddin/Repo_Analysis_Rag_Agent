@@ -5,7 +5,7 @@ from ..security.token_store import index_dir
 class ConfigStore:
     """Legacy class to support existing tests."""
 
-    ALLOWED_MAX_FILE_SIZE_MB = {5, 10, 20}
+    ALLOWED_MAX_FILE_SIZE_MB = {5, 10, 20, 1000}
 
     def __init__(self, config_dict: dict = None):
         self.max_file_size_mb = 5
@@ -22,7 +22,25 @@ class ConfigStore:
 
 
 class RepoConfigStore:
-    DEFAULT_MAX_FILES = 2000
+    DEFAULT_MAX_FILES = 5000
+
+    def get_max_file_size_mb(self, repo_id: str) -> int:
+        """
+        Read max_file_size_mb from repo config. Default 5.
+        Config location: {RAG_INDEX_DIR}/{repo_id}/config.json
+        """
+        config_path = index_dir() / repo_id / "config.json"
+        if not config_path.exists():
+            return 5
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                val = data.get("max_file_size_mb")
+                if isinstance(val, int) and val in ConfigStore.ALLOWED_MAX_FILE_SIZE_MB:
+                    return val
+        except (json.JSONDecodeError, OSError):
+            pass
+        return 5
 
     def get_max_files_per_incremental_run(self, repo_id: str) -> int:
         """

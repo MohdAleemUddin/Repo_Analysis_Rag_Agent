@@ -252,7 +252,7 @@ export function overview(question: string, extraContext?: any) {
   });
 }
 
-export function askWithOverride(question: string, modeOverride: string, extraContext?: any) {
+export function askWithOverride(question: string, modeOverride: string, extraContext?: any, signal?: AbortSignal) {
   const payload = buildQueryPayload(question, extraContext);
   payload.mode_override = modeOverride;
   return authenticatedFetch(buildAgentUrl("/ask"), {
@@ -261,6 +261,7 @@ export function askWithOverride(question: string, modeOverride: string, extraCon
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload),
+    signal,
   });
 }
 

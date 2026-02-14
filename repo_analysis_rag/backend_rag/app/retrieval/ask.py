@@ -16,7 +16,7 @@ except ImportError:  # pragma: no cover - optional dependency
 from ..logging.logger import logger
 from ..tools.search import execute_ask_query
 
-DEFAULT_TOP_K = 50
+DEFAULT_TOP_K = 1000
 DEFAULT_CODE_COLLECTION = "code_chunks"
 DEFAULT_DOC_COLLECTION = "doc_chunks"
 DEFAULT_PERSIST_DIRECTORY = Path(__file__).resolve().parents[2] / ".chromadb"

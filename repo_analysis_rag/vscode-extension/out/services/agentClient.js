@@ -252,7 +252,7 @@ function overview(question, extraContext) {
         body: JSON.stringify(buildQueryPayload(question, extraContext)),
     });
 }
-function askWithOverride(question, modeOverride, extraContext) {
+function askWithOverride(question, modeOverride, extraContext, signal) {
     const payload = buildQueryPayload(question, extraContext);
     payload.mode_override = modeOverride;
     return authenticatedFetch(buildAgentUrl("/ask"), {
@@ -261,6 +261,7 @@ function askWithOverride(question, modeOverride, extraContext) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload),
+        signal,
     });
 }
 function search(question, extraContext) {

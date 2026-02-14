@@ -148,16 +148,8 @@ def should_skip_path(
         if ext.lower() in {e.lower() for e in EXCLUDED_EXTENSIONS}:
             return True
 
-        # 4. Classification-aware size cap
-        # "code" and "other" use a fixed 5MB cap.
-        # "docs/config" (markdown or others) use the configurable max_file_size_mb.
-
-        # Simple classification logic matching chunker.py
-        if ext.lower() == ".md":
-            effective_max_mb = max_file_size_mb
-        else:
-            # For now, we treat non-markdown as "code" or "other" which have fixed 5MB cap
-            effective_max_mb = 5
+        # 4. Classification-aware size cap: all file types use configurable max_file_size_mb
+        effective_max_mb = max_file_size_mb
 
         try:
             # Only check size if file exists (to avoid issues with mock paths in tests)
@@ -174,7 +166,7 @@ def should_skip_path(
 
 def should_skip_path_with_reason(
     root_path: str, file_path: str, is_dir: bool, max_file_size_mb: int = 5
-) -> (bool, str | None):
+) -> tuple[bool, str | None]:
     """
     Deterministic exclusion logic based on PRD §11.1-11.3.
     Returns (True, skip_reason) if the path should be skipped, (False, None) otherwise.
@@ -204,16 +196,8 @@ def should_skip_path_with_reason(
         if ext.lower() in {e.lower() for e in EXCLUDED_EXTENSIONS}:
             return True, "EXCLUDED_EXT"
 
-        # 4. Classification-aware size cap
-        # "code" and "other" use a fixed 5MB cap.
-        # "docs/config" (markdown or others) use the configurable max_file_size_mb.
-
-        # Simple classification logic matching chunker.py
-        if ext.lower() == ".md":
-            effective_max_mb = max_file_size_mb
-        else:
-            # For now, we treat non-markdown as "code" or "other" which have fixed 5MB cap
-            effective_max_mb = 5
+        # 4. Classification-aware size cap: all file types use configurable max_file_size_mb
+        effective_max_mb = max_file_size_mb
 
         try:
             if os.path.exists(file_path):
